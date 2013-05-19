@@ -1,0 +1,12 @@
+############################################
+#										   #
+#				  ROGUE, MD 			   #
+#										   #
+############################################
+using SDL, libtcod
+
+PREALPHA
+
+A roguelike (eventually...) with a focus on a detailed injury system.
+
+bilwis.de - 2013

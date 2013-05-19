@@ -1,8 +1,13 @@
 #include "Engine.hpp"
+#include <stdio.h>
 
 Engine::Engine() {
     TCODConsole::initRoot(80,50,"libtcod C++ tutorial",false);
     player = new Actor(40,25,'@',TCODColor::white);
+
+    player->destructible = new Destructible();
+    player->destructible->body = new Body("Body.xml");
+
     actors.push(player);
     actors.push(new Actor(60,13,'@',TCODColor::yellow));
     map = new Map(80,45);
@@ -19,7 +24,8 @@ void Engine::update() {
     switch(key.vk) {
         case TCODK_UP :
             if ( ! map->isWall(player->x,player->y-1)) {
-                player->y--;  
+                player->y--;
+                printf("UP!");
             }
         break;
         case TCODK_DOWN :
