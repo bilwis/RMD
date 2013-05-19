@@ -11,8 +11,20 @@
 #include "rapidxml.hpp"
 #include "libtcod.hpp"
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <fstream>
+#include <exception>
 #include <map>
+
+/**The comparator for the tissue_map and organ_map map keys, which are std::string instances.
+ */
+class strless {
+public:
+	bool operator() (const std::string & first, const std::string & second) const {
+		return first.compare(second) < 0;
+	}
+};
 
 /** This class holds the definition of a tissue, i.e. the 'leaves' of the body 'tree'.
  * Tissue definitions are generalized, not localized, so a 'muscle' tissue in the 'right leg'
@@ -31,15 +43,25 @@ private:
 	float impairment;
 
 public:
+	/**This value represents the amount of vascularisation of the Tissue in question.
+	 * The higher the value, the more blood flows from the tissue when it is destroyed.
+	 *
+	 * @return A float value representing the blood flow from/through the tissue.
+	 */
 	float getBloodFlow() const {
 		return blood_flow;
 	}
 
+	/**The name of the Tissue is what is reported to the player when he inspects a body.
+	 * It is distinct from its internal id returned by getId().
+	 *
+	 * @return The 'given name' of the tissue.
+	 */
 	const char* getName() const {
 		return name;
 	}
 
-	/** Returns the internal id of the tissue (distinct from its name) so special functions
+	/**Returns the internal id of the tissue (distinct from its name) so special functions
 	 * may be assigned to certain tissues and so that they may be referenced from code.
 	 *
 	 *     if (tissue_hit.getId() == "NERVE"){
@@ -53,14 +75,28 @@ public:
 		return id;
 	}
 
+	/**This value represents the amount (quality) of nervous innervation of the Tissue in question.
+	 * The higher the value, the more pain the Actor experiences when the tissue is destroyed.
+	 *
+	 * @return A float value representing the pain that damage to this tissue causes.
+	 */
 	float getPain() const {
 		return pain;
 	}
 
+	/**This value represents how much this tissue deforms an intruding object, such as bullets or
+	 * knives, etc.
+	 *
+	 * @return A float value representing the resistance against intruding objects.
+	 */
 	float getResistance() const {
 		return resistance;
 	}
 
+	/**This value represents how much an Actor is impaired by damage to this tissue.
+	 *
+	 * @return A float value representing the impairment that is inflicted upon tissue damage.
+	 */
 	float getImpairment() const {
 		return impairment;
 	}
@@ -71,12 +107,12 @@ public:
 	 *
 	 * @brief Creates a new tissue definition.
 	 *
-	 * @param id Internal tissue identifier
-	 * @param name Common name for the tissue
-	 * @param pain The pain damage to this tissue causes
-	 * @param blood_flow The blood loss damage to this tissue causes
-	 * @param resistance How much this tissue absorbs energy
-	 * @param impairment How much damage to this tissue impairs the Actor
+	 * @param id Internal tissue identifier.
+	 * @param name Common name for the tissue.
+	 * @param pain The pain damage to this tissue causes.
+	 * @param blood_flow The blood loss damage to this tissue causes.
+	 * @param resistance How much this tissue absorbs energy.
+	 * @param impairment How much damage to this tissue impairs the Actor.
 	 */
 	Tissue(const char *id, const char *name, float pain,
 			float blood_flow, float resistance, float impairment);
@@ -106,28 +142,35 @@ public:
  * @brief This struct represents the link between an organ and its tissues.
  */
 struct tissue_def{
+public:
 	Tissue *tissue;
 	float hit_prob;
-	char *name;
-	char *custom_id;
+	const char *name;
+	const char *custom_id;
 };
 
-/** Currently, only BodyPart and Organ are derived from this class. In itself it holds
+/**BodyPart and Organ are derived from this class. In itself it holds
  * the Name, the ID and the relative surface of a part.
  *
  * @brief This class is the abstract superclass for all parts that make up a body.
  */
 class Part{
 protected:
-	const char *name;
 	const char *id;
+	const char *name;
 	float surface;
 
+	/**This function is only called by Part's child classes BodyPart and Organ to
+	 * assign the base variables.
+	 *
+	 * @param id The internal part identifier.
+	 * @param name The name of the part.
+	 * @param surface The surface area of the part. See getSurface().
+	 */
 	Part(const char *id, const char *name, float surface);
-	~Part();
 
 public:
-	/** Surface Area in RMD's body definition XML is not absolute.
+	/**Surface Area in RMD's body definition XML is not absolute.
 	 * It represents the percentage of the total surface of the BodyPart _one level
 	 * above_ that this Part occupies.
 	 *
@@ -155,50 +198,148 @@ public:
 		return surface;
 	}
 
+	/**The name of the Part is what is reported to the player when he inspects a body.
+	 * It is distinct from its internal id returned by getId().
+	 *
+	 * @return The 'given name' of the part.
+	 */
 	const char* getName() const {
 		return name;
 	}
 
+	/**Returns the internal id of the part (distinct from its name) so special functions
+	 * may be assigned to certain parts and so that they may be referenced from code.
+	 *
+	 *     if (part_hit.getId() == "LEFT_HAND"){
+	 *      print("Your hand is hit and you drop your weapon!");
+	 *     }
+	 *
+	 * @return Internal part identifier.
+	 */
 	const char* getId() const {
 		return id;
 	}
 
+	~Part();
 };
 
-class BodyPart:Part{
-private:
-	TCODList<Part*> *children;
-
-public:
-	BodyPart(const char *id, const char *name, float surface);
-	~BodyPart();
-
-	void addChild(Part *child);
-	bool removeChild(char *id);
-};
-
-class Organ:Part{
+/**This class represents the second-deepest level of the body definition, "above" the Tissue objects
+ * and "below" the BodyPart objects.
+ * _This definition of 'Organ' is very much different from the common meaning of 'Organ', as in
+ * internal organs such as the stomach or liver._
+ * Instances of this class contain an array of tissue definitions, a reference to the
+ * organ to which this one is connected (upstream root) and a list of references to the organs
+ * which are connected to this one (downstream branches).
+ *
+ * @brief The 'leaves' of the Body tree.
+ */
+class Organ: public Part{
 private:
 	tissue_def *tissues;
 	int tissue_count;
 
-	bool root;
-	Organ *connector;
+	const char *connector_id;
 
-	//TODO: Add "connected organs" list for removal!
+	bool root; //Is it root?
+
+	Organ *connector; //The upstream root
+	TCODList<Organ*> *connected_organs; //The downstream branches
 
 public:
+	/**Creates a new instance of the organ class.
+	 *
+	 * @param id The organ's unique internal identifier.
+	 * @param name The name of the organ.
+	 * @param surface The relative surface area of the organ, see Part.
+	 * @param tissues A pointer to the first element of the tissue_def array.
+	 * @param tissue_count The number of elements in the array pointed at by tissues.
+	 * @param connector_id The internal id of the connector organ, later used when the organ map
+	 * is available. See linkToConnector(std::map<std::string, Organ*> *organ_map).
+	 * @param is_root Whether or not this is the root element, which is the only organ
+	 * without a connector.
+	 */
 	Organ(const char *id, const char *name, float surface,
-			tissue_def *tissues, int tissue_count, bool is_root=false);
+			tissue_def *tissues, int tissue_count, const char *connector_id,
+			bool is_root=false);
 	~Organ();
 
-	void linkConnector(Organ *connector);
+	/**
+	 * @brief Links this organ to its local root.
+	 * @param organ_map A map which links the internal id strings to the
+	 * organ pointers.
+	 */
+	void linkToConnector(std::map<std::string, Organ*, strless> *organ_map);
 
+	/**If this organ is removed/destroyed, all branches are also removed.
+	 *
+	 * @brief Called by the branch organs to register with their root.
+	 * @param connectee The branch connecting to this organ.
+	 */
+	void addConnectedOrgan(Organ *connectee);
+
+	/**Whether or not this is the root element, which is the only organ
+	 * without a connector.
+	 *
+	 * @return Is this Organ the root organ?
+	 */
 	bool isRoot() const {
 		return root;
 	}
 };
 
+/**This class represents the upper level of the body definition. Every BodyPart connects upstream
+ * to _one_ BodyPart (except for the root) and downstream to _either_ one or more BodyPart objects _or_ one
+ * or more Organ objects. _It cannot hold both BodyPart and Organ children, because Organs represent the
+ * 'leaves' of the body tree. (No branches grow from leaves, right?)_
+ *
+ * Instances of this class contain a TCODList of Part objects, which are the Organs or BodyParts
+ * connected to this one.
+ *
+ *@brief The code representation of a part of the body (such as 'Left Arm').
+ */
+class BodyPart: public Part{
+private:
+	TCODList<Part*> *children;
+
+public:
+	/**@brief Adds a Part to the BodyPart's list of children.
+	 * @param child A pointer to the Part object to add.
+	 */
+	void addChild(Part *child);
+
+	/**@brief Adds several Parts to the BodyPart's list of children.
+	 * @param child_array A pointer to the pointer pointing to the first of the Part objects to add.
+	 * @param count The count of objects to add.
+	 */
+	void addChildren(Part **child_array, int count);
+
+	/**@brief Returns a list of all the children of this BodyPart.
+	 * @return A pointer to the children list.
+	 */
+	TCODList<Part*>* getChildList();
+
+	/**@brief Removes a child object from the body part.
+	 * @param id The internal id of the object to remove.
+	 * @return Whether the removal has succeeded.
+	 */
+	bool removeChild(char *id);
+
+	/**Creates a new instance of the BodyPart class. See Part() constructor.
+	 *
+	 * @param id The internal part identifier.
+	 * @param name The name of the part.
+	 * @param surface The surface area of the part. See getSurface().
+	 */
+	BodyPart(const char *id, const char *name, float surface);
+	~BodyPart();
+};
+
+/**This class represents the uppermost level of the body definition. It holds a single BodyPart
+ * which is the root part. It also contains functions related to damage handling, loading and
+ * saving of body definitions.
+ *
+ * @brief The code representation of a body of an Actor.
+ */
 class Body{
 private:
 	BodyPart *root;
@@ -212,10 +353,44 @@ private:
 	 */
 	bool loadBody(const char *filename);
 
+	BodyPart* enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,strless> *tissue_map);
+
+
 public:
+	/**This function creates a new instance of the Body class and loads and parses the body definition
+	 * from a [body-definition XML](xml_help.html).
+	 * @param filename The path to the [body-definition XML](xml_help.html).
+	 */
 	Body(const char *filename);
 	~Body();
 
+};
+
+/**An exception that is thrown by the functions loading and parsing the [body-definition XML](xml_help.html).
+ */
+class bdef_parse_error:std::exception
+{
+private:
+	const char* msg;
+	rapidxml::xml_node<> *node;
+
+public:
+	bdef_parse_error(const char* msg, rapidxml::xml_node<>* node);
+
+	virtual const char* what() const throw()
+	{
+		std::ostringstream os;
+
+		os << "Error while parsing body definition XML:\n"
+		<< msg
+		<< "\n On node: '"
+		<< node->name()
+		<< "' with value: '"
+		<< node->value()
+		<< "'\n";
+
+		return os.str().c_str();
+	}
 };
 
 
