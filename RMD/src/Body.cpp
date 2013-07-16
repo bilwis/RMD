@@ -560,9 +560,15 @@ void Body::printBodyMap(const char* filename) {
 
 	file << "digraph G {" << "\n";
 
+	std::cout << "\nCreating Subgraphs...";
 	createSubgraphs(&file, root);
+	std::cout << "done.\n";
+
 	file << "\n";
+
+	std::cout << "Creating Links...";
 	createLinks(&file, root);
+	std::cout << "done.\n";
 
 	file << "}" << "\n";
 
