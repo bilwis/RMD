@@ -16,8 +16,8 @@ Tissue::Tissue(const char *id, const char *name, float pain,
 
 }
 
-Part::Part(const char *id, const char *name, float surface):
-	id(id), name(name), surface(surface){
+Part::Part(const char *id, const char *name, float surface, PartType type):
+	id(id), name(name), surface(surface), type(type){
 
 }
 
@@ -27,7 +27,7 @@ Part::~Part()
 }
 
 BodyPart::BodyPart(const char *id, const char *name, float surface):
-		Part(id, name, surface){
+		Part(id, name, surface, TYPE_BODYPART){
 	children = new TCODList<Part*>();
 }
 
@@ -74,7 +74,7 @@ bool BodyPart::removeChild(char *id){
 
 Organ::Organ(const char *id, const char *name, float surface,
 		tissue_def *tissues, int tissue_count, const char *connector_id, bool is_root):
-		Part(id, name, surface), tissues(tissues), tissue_count(tissue_count),
+		Part(id, name, surface, TYPE_ORGAN), tissues(tissues), tissue_count(tissue_count),
 		connector_id(connector_id), root(is_root), connector(NULL){
 	connected_organs = new TCODList<Organ*>();
 }
@@ -85,7 +85,27 @@ Organ::~Organ(){
 }
 
 void Organ::linkToConnector(std::map<std::string, Organ*, strless> *organ_map){
-	//TODO: Implement
+	//Check if the Organ is the root, if yes, exit
+	if (!strcmp(connector_id, "_ROOT")) { return; }
+
+	//Find the connector in the organ map
+	std::map<std::string, Organ*>::const_iterator pos = organ_map->find(connector_id);
+
+	//If not found, error
+	if (pos == organ_map->end()){ throw std::exception(); }
+
+	//Otherwise store pointer to connector in connector variable
+	connector = pos->second;
+
+	//Add this organ to the root's list of branches
+	connector->addConnectedOrgan(this);
+
+	std::cout << "\nLINKED " << id << " to connector " << pos->first;
+}
+
+const char* Organ::getConnectorId() {
+	if (connector == NULL) { return NULL; }
+	return connector->getId();
 }
 
 void Organ::addConnectedOrgan(Organ *connectee){
@@ -96,7 +116,8 @@ Body::Body(const char *filename){
 	root = NULL;
 	if (loadBody(filename))
 	{
-		std::cout << "SUCCESS!";
+		printBodyMap("body.gv");
+		std::cout << "Printed Body Map!\n";
 	}
 }
 
@@ -178,9 +199,7 @@ bool Body::loadBody(const char *filename){
 
 	//###BODYPART DATA###
 
-	//Temporary organ map, variables needed for init
-	std::map<std::string, Organ*> organ_map;
-
+	//variables needed for init
 	id = NULL;
 	name = NULL;
 
@@ -191,23 +210,67 @@ bool Body::loadBody(const char *filename){
 	//recursively load the data
 	root = enter(body->first_node(), &tissue_map);
 
-
-
 	//go through all of the parsed data and make a list with pointers to the organs
+	std::map<std::string, Organ*, strless>* organ_map = new std::map<std::string, Organ*, strless>();
+	organ_map = extractOrgans(root, organ_map);
+
+	/*DEBUG: Print all objects in the organ map
+	std::map<std::string, Organ*>::iterator iter;
+	for (iter = organ_map->begin(); iter != organ_map->end(); ++iter){
+		std::cout << "\n" << iter->first << " = " << iter->second->getName();
+	}
+	*/
 
 	//go through all of the parsed data and link the organ connections
+	// (that is, store the pointer to the connector as identified by
+	// "connector_id" in the connector variable)
+	linkOrgans(root, organ_map);
 
-
+	//Organ map is no longer needed
+	delete organ_map;
 
 	//Destroy the XML data in memory
 	delete[] buffer;
 
-	} catch (bdef_parse_error& e) {
+	//Successfully parsed the body definition file!
+	return true;
+
+	} catch (std::exception& e) {
 			std::cerr << "ERROR: " << e.what() << "\n";
 			return false;
 	}
 
 	return false;
+}
+
+std::map<std::string, Organ*, strless>* Body::extractOrgans(BodyPart* bp,
+		std::map<std::string, Organ*, strless> *organ_map) {
+
+	TCODList<Part*>* templ = bp->getChildList();
+	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+		Part* p = *iterator;
+
+		if(p->getType() == TYPE_BODYPART){
+			organ_map = extractOrgans(static_cast<BodyPart*>(p), organ_map);
+		} else if (p->getType() == TYPE_ORGAN) {
+			organ_map->insert(std::pair<std::string, Organ*>(std::string(p->getId()), static_cast<Organ*>(p)));
+		}
+	}
+
+	return organ_map;
+}
+
+void Body::linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map){
+	TCODList<Part*>* templ = bp->getChildList();
+	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+		Part* p = *iterator;
+
+		if(p->getType() == TYPE_BODYPART){
+			linkOrgans(static_cast<BodyPart*>(p), organ_map);
+		} else if (p->getType() == TYPE_ORGAN) {
+			static_cast<Organ*>(p)->linkToConnector(organ_map);
+		}
+	}
 }
 
 BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*, strless> *tissue_map) {
@@ -430,7 +493,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 					<< "\n\t\t Root?: " << connector
 					<< "\n\t\t Tissues:";
 
-			for (int di = 0; di < tdef_count; di++){
+			for (int di = 0; di < (tdef_count * (symmetrical+1))-1; di++){
 				std::cout << "\n\t\t\t Base Tissue Name: "
 						<< tdefs[di].tissue->getName()
 						<< "\n\t\t\t\t Hit Prob.: " << tdefs[di].hit_prob;
@@ -480,4 +543,66 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	return bp;
 }
 
+void Body::removeRandomBodyPart() {
+	//TODO: Implement
+
+	//iterate through the bodyparts and make a list
+
+	//choose one randomly from the list
+
+	//iterate again through all bodyparts and remove the
+	// chosen part
+}
+
+void Body::printBodyMap(const char* filename) {
+	std::ofstream file;
+	file.open(filename);
+
+	file << "digraph G {" << "\n";
+
+	createSubgraphs(&file, root);
+	file << "\n";
+	createLinks(&file, root);
+
+	file << "}" << "\n";
+
+	file.close();
+}
+
+void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
+
+	*stream << "\t" << "subgraph cluster_" << bp->getId() << " {" << "\n";
+
+	*stream << "\t\t" << "label = \"" << bp->getName() << "\";\n";
+
+	TCODList<Part*>* templ = bp->getChildList();
+	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+		Part* p = *iterator;
+
+		if(p->getType() == TYPE_BODYPART){
+			createSubgraphs(stream, static_cast<BodyPart*>(p));
+		} else if (p->getType() == TYPE_ORGAN) {
+			Organ* o = static_cast<Organ*>(p);
+			*stream << "\t\t" << o->getId() << " [label=\"" << o->getName() << "\"];" << "\n";
+		}
+	}
+
+	*stream << "\t } \n";
+}
+
+void Body::createLinks(std::ofstream* stream, BodyPart* bp) {
+	TCODList<Part*>* templ = bp->getChildList();
+	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+		Part* p = *iterator;
+
+		if(p->getType() == TYPE_BODYPART){
+			createLinks(stream, static_cast<BodyPart*>(p));
+		} else if (p->getType() == TYPE_ORGAN) {
+			Organ* o = static_cast<Organ*>(p);
+			if (o->getConnectorId() != NULL) {
+				*stream << o->getConnectorId() << " -> " << o->getId() << ";\n";
+			}
+		}
+	}
+}
 

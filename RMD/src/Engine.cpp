@@ -5,7 +5,7 @@ Engine::Engine() {
     TCODConsole::initRoot(80,50,"libtcod C++ tutorial",false);
     player = new Actor(40,25,'@',TCODColor::white);
 
-    player->destructible = new Destructible();
+    player->destructible = new Destructible(100);
     player->destructible->body = new Body("Body.xml");
 
     actors.push(player);
@@ -43,6 +43,13 @@ void Engine::update() {
                 player->x++;
             }
         break;
+        case TCODK_CHAR:
+        	switch (key.c) {
+        		case 'k':
+        			player->destructible->body->removeRandomBodyPart();
+        		break;
+        	}
+        	break;
         default:break;
     }
 }

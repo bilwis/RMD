@@ -7,7 +7,8 @@
 
 #include "Destructible.hpp"
 
-Destructible::Destructible(){
+Destructible::Destructible(float hp):
+	hp(hp),body(NULL){
 
 }
 

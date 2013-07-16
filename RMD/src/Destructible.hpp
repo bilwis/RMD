@@ -16,7 +16,7 @@ private:
 	float hp, cur_hp;
 
 public:
-	Destructible();
+	Destructible(float hp);
 	~Destructible();
 
 	Body *body;

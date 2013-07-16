@@ -149,6 +149,11 @@ public:
 	const char *custom_id;
 };
 
+enum PartType{
+	TYPE_BODYPART,
+	TYPE_ORGAN
+};
+
 /**BodyPart and Organ are derived from this class. In itself it holds
  * the Name, the ID and the relative surface of a part.
  *
@@ -159,6 +164,7 @@ protected:
 	const char *id;
 	const char *name;
 	float surface;
+	PartType type;
 
 	/**This function is only called by Part's child classes BodyPart and Organ to
 	 * assign the base variables.
@@ -166,8 +172,9 @@ protected:
 	 * @param id The internal part identifier.
 	 * @param name The name of the part.
 	 * @param surface The surface area of the part. See getSurface().
+	 * @param type The type of part, i.e. Organ or BodyPart. See PartType enum.
 	 */
-	Part(const char *id, const char *name, float surface);
+	Part(const char *id, const char *name, float surface, PartType type);
 
 public:
 	/**Surface Area in RMD's body definition XML is not absolute.
@@ -220,6 +227,15 @@ public:
 		return id;
 	}
 
+	/**Returns the type of this part. This is necessary to distinguish Organs from BodyParts
+	 * when only a Part* is given.
+	 *
+	 * @return Enum value TYPE_BODYPART or TYPE_ORGAN.
+	 */
+	PartType getType() const {
+		return type;
+	}
+
 	~Part();
 };
 
@@ -269,6 +285,8 @@ public:
 	 * organ pointers.
 	 */
 	void linkToConnector(std::map<std::string, Organ*, strless> *organ_map);
+
+	const char* getConnectorId();
 
 	/**If this organ is removed/destroyed, all branches are also removed.
 	 *
@@ -353,8 +371,36 @@ private:
 	 */
 	bool loadBody(const char *filename);
 
+	/**This is the function that is recursively called on all nodes of the body
+	 * definition XML. The node it is pointed at _must_ be a '<body_part>' node.
+	 * The function will always create and return the BodyPart that is defined in that node.
+	 *
+	 * If the node contains organ definitions, the function creates the Organ objects,
+	 * adds them to the BodyPart and returns it.
+	 *
+	 * If the node contains further '<body_part>' nodes, the function calls itself on all
+	 * of them.
+	 *
+	 * The tissue map is needed for organ creation. Please refer to the [body-definition XML help](xml_help.html)
+	 * or the source code for more.
+	 * @param node The '<body_part>' XML node to parse.
+	 * @param tissue_map A map of the 'default' tissues, sorted by their internal id.
+	 * @return The BodyPart that is defined by node.
+	 */
 	BodyPart* enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,strless> *tissue_map);
 
+	/**This function is first called on the root BodyPart by loadBody and recursively on all its children.
+	 * It extracts all Organs and maps them by their internal id's.
+	 *
+	 * @param bp The BodyPart to extract the organs from.
+	 * @param organ_map The Organ map to modify.
+	 * @return The modified Organ map.
+	 */
+	std::map<std::string, Organ*, strless>* extractOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
+	void linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
+
+	void createSubgraphs(std::ofstream* stream, BodyPart* bp);
+	void createLinks(std::ofstream* stream, BodyPart* bp);
 
 public:
 	/**This function creates a new instance of the Body class and loads and parses the body definition
@@ -363,6 +409,9 @@ public:
 	 */
 	Body(const char *filename);
 	~Body();
+
+	void removeRandomBodyPart();
+	void printBodyMap(const char* filename);
 
 };
 
