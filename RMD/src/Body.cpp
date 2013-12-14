@@ -11,14 +11,28 @@ bdef_parse_error::bdef_parse_error(const char* msg, rapidxml::xml_node<>* node):
 
 Tissue::Tissue(const char *id, const char *name, float pain,
 		float blood_flow, float resistance, float impairment) :
-		id(id),name(name),pain(pain),blood_flow(blood_flow),resistance(resistance),
+		pain(pain),blood_flow(blood_flow),resistance(resistance),
 		impairment(impairment){
 
+	char* buf = (char*)malloc(strlen(id));
+	this->id = strcpy(buf, id);
+
+	buf = (char*)malloc(strlen(name));
+	this->name = strcpy(buf, name);
+
+	buf = NULL;
 }
 
 Part::Part(const char *id, const char *name, float surface, PartType type):
-	id(id), name(name), surface(surface), type(type){
+	surface(surface), type(type){
 
+	char* buf = (char*)malloc(strlen(id));
+	this->id = strcpy(buf, id);
+
+	buf = (char*)malloc(strlen(name));
+	this->name = strcpy(buf, name);
+
+	buf = NULL;
 }
 
 Part::~Part()
@@ -75,7 +89,13 @@ bool BodyPart::removeChild(char *id){
 Organ::Organ(const char *id, const char *name, float surface,
 		tissue_def *tissues, int tissue_count, const char *connector_id, bool is_root):
 		Part(id, name, surface, TYPE_ORGAN), tissues(tissues), tissue_count(tissue_count),
-		connector_id(connector_id), root(is_root), connector(NULL){
+		root(is_root), connector(NULL){
+
+	char* buf = (char*)malloc(strlen(connector_id));
+	this->connector_id = strcpy(buf, connector_id);
+
+	buf = NULL;
+
 	connected_organs = new TCODList<Organ*>();
 }
 
@@ -100,7 +120,7 @@ void Organ::linkToConnector(std::map<std::string, Organ*, strless> *organ_map){
 	//Add this organ to the root's list of branches
 	connector->addConnectedOrgan(this);
 
-	std::cout << "\nLINKED " << id << " to connector " << pos->first;
+	debug_print("\nLINKED %s to connector %s", id, pos->first.c_str());
 }
 
 const char* Organ::getConnectorId() {
@@ -116,8 +136,10 @@ Body::Body(const char *filename){
 	root = NULL;
 	if (loadBody(filename))
 	{
-		printBodyMap("body.gv");
-		std::cout << "Printed Body Map!\n";
+#ifdef DEBUG
+		printBodyMap("body.gv", root);
+		debug_print("Printed Body Map! \n");
+#endif
 	}
 }
 
@@ -160,8 +182,8 @@ bool Body::loadBody(const char *filename){
 	//Temporary tissue map, list & variables
 	std::map<std::string, Tissue*, strless> tissue_map;
 
-	char *id, *name;
-	float pain, blood_flow, resistance, impairment;
+	char *id = NULL, *name = NULL;
+	float pain = -1.0f, blood_flow = -1.0f, resistance = -1.0f, impairment = -1.0f; //Initialize with illegal values
 
 	//Load the tissue data (First first_node() is "body_def",
 	// data starts with second level "tissues")
@@ -189,9 +211,8 @@ bool Body::loadBody(const char *filename){
 			else if (!strcmp(_name,"impairment")){ impairment = atof(attr->value()); }
 		}
 
-		std::cout << "Read Tissue:\n\tID: " << id << "\n\tName: " << name
-				<< "\n\tBlood Flow: " << blood_flow << "\n\tResistance: " << resistance
-				<< "\n\tImpairment: " << impairment << "\n";
+		debug_print("Read Tissue:\n\tID: %s \n\tName: %s \n\tBlood Flow: %f \n\tResistance: %f \n\tImpairment: %f\n",
+				id, name, blood_flow, resistance, impairment);
 
 		//Create a new Tissue and store the pointer to it in the tissue map
 		tissue_map.insert(std::pair<std::string, Tissue*>(std::string(id), new Tissue(id, name, pain, blood_flow, resistance, impairment)));
@@ -213,13 +234,6 @@ bool Body::loadBody(const char *filename){
 	//go through all of the parsed data and make a list with pointers to the organs
 	std::map<std::string, Organ*, strless>* organ_map = new std::map<std::string, Organ*, strless>();
 	organ_map = extractOrgans(root, organ_map);
-
-	/*DEBUG: Print all objects in the organ map
-	std::map<std::string, Organ*>::iterator iter;
-	for (iter = organ_map->begin(); iter != organ_map->end(); ++iter){
-		std::cout << "\n" << iter->first << " = " << iter->second->getName();
-	}
-	*/
 
 	//go through all of the parsed data and link the organ connections
 	// (that is, store the pointer to the connector as identified by
@@ -281,8 +295,8 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	xml_node<> **organ_node_list;
 
 	BodyPart *bp;
-	char *id, *name, *_name;
-	float surface;
+	char *id = NULL, *name = NULL, *_name = NULL;
+	float surface = 0.0f;
 
 	//Make a count of the body_part nodes in this node and parse all standard
 	// nodes for the bodypart of this node
@@ -311,10 +325,8 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	id = NULL; name = NULL;
 
 	//DEBUG: Print new BodyPart
-	std::cout << "\nNew BodyPart created: \n"
-			<< "\t ID: " << bp->getId()
-			<< "\n\t Name: " << bp->getName()
-			<< "\n\t Surface: " << bp->getSurface();
+	debug_print("New BodyPart created: \n\tID: %s \n\tName: %s \n\tSurface: %f\n",
+			bp->getId(), bp->getName(), bp->getSurface());
 
 	//If there are no body_part nodes...
 	if (bodyparts == 0){
@@ -324,7 +336,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 		xml_attribute<> *attr;
 		xml_node<> *tdef_node;
 
-		char *connector;
+		char *connector = NULL;
 		bool symmetrical = false;
 
 		it = 0;
@@ -333,8 +345,8 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 		char *tdef_id, *tdef_custom_id, *tdef_name;
 		float tdef_hit_prob;
 
-		tissue_def *tdefs;
-		int tdef_count, tdef_it;
+		tissue_def *tdefs = NULL;
+		int tdef_count = 0, tdef_it = 0;
 
 
 		//Reset back to the first node in the given node
@@ -486,22 +498,20 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 			organs[i] = new Organ(id, name, surface, tdefs, tdef_count, connector, !strcmp(connector, "_ROOT"));
 
 			//DEBUG: Print Organ
-			std::cout << " \n\tNew Organ created: \n"
-					<< "\t\t ID: " << organs[i]->getId()
-					<< "\n\t\t Name: " << organs[i]->getName()
-					<< "\n\t\t Surface: " << organs[i]->getSurface()
-					<< "\n\t\t Root?: " << connector
-					<< "\n\t\t Tissues:";
+#ifdef DEBUG
+			debug_print("\tNew Organ created:\n\t\tID: %s \n\t\tName: %s \n\t\tSurface: %f \n\t\tRoot: %s \n\t\tTissues:",
+					organs[i]->getId(), organs[i]->getName(), organs[i]->getSurface(), connector);
 
 			for (int di = 0; di < (tdef_count * (symmetrical+1))-1; di++){
-				std::cout << "\n\t\t\t Base Tissue Name: "
-						<< tdefs[di].tissue->getName()
-						<< "\n\t\t\t\t Hit Prob.: " << tdefs[di].hit_prob;
-				if (tdefs[di].name != NULL){ std::cout << "\n\t\t\t\t Custom Name: " << tdefs[di].name; }
-				if (tdefs[di].custom_id != NULL){ std::cout << "\n\t\t\t\t Custom ID: " << tdefs[di].custom_id; }
+				debug_print("\n\t\t\tBase Tissue Name: %s \n\t\t\t\tHit Prob.: %f",
+						tdefs[di].tissue->getName(), tdefs[di].hit_prob);
+
+				if (tdefs[di].name != NULL){ debug_print("\n\t\t\t\tCustom Name: %s", tdefs[di].name); }
+				if (tdefs[di].custom_id != NULL){ debug_print("\n\t\t\t\tCustom ID: %s", tdefs[di].custom_id); }
 			}
 
-			std::cout << "\n\tEND Organ.\n";
+			debug_print("\n\tEND Organ.\n");
+#endif
 		}
 
 		//...and add all organs to the bodypart
@@ -526,18 +536,19 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	}
 
 	//DEBUG: Print BodyPart Parts
+#ifdef DEBUG
 	TCODList<Part*>* templ = bp->getChildList();
 
-	std::cout << "\n\t Parts:";
+	debug_print("\n\t Parts:");
 
 	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
 
-		std::cout << "\n\t\t Part Name: "
-			<< p->getName();
+		debug_print("\n\t\t Part Name: %s", p->getName());
 	}
 
-	std::cout << "\nEND BodyPart.\n";
+	debug_print("\nEND BodyPart.\n");
+#endif
 
 	//return this bodypart
 	return bp;
@@ -554,20 +565,20 @@ void Body::removeRandomBodyPart() {
 	// chosen part
 }
 
-void Body::printBodyMap(const char* filename) {
+void Body::printBodyMap(const char* filename, BodyPart* mroot) {
 	std::ofstream file;
 	file.open(filename);
 
 	file << "digraph G {" << "\n";
 
 	std::cout << "\nCreating Subgraphs...";
-	createSubgraphs(&file, root);
+	createSubgraphs(&file, mroot);
 	std::cout << "done.\n";
 
 	file << "\n";
 
 	std::cout << "Creating Links...";
-	createLinks(&file, root);
+	createLinks(&file, mroot);
 	std::cout << "done.\n";
 
 	file << "}" << "\n";
@@ -587,9 +598,11 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 
 		if(p->getType() == TYPE_BODYPART){
 			createSubgraphs(stream, static_cast<BodyPart*>(p));
+
 		} else if (p->getType() == TYPE_ORGAN) {
 			Organ* o = static_cast<Organ*>(p);
 			*stream << "\t\t" << o->getId() << " [label=\"" << o->getName() << "\"];" << "\n";
+
 		}
 	}
 

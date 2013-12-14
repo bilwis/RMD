@@ -10,6 +10,7 @@
 
 #include "rapidxml.hpp"
 #include "libtcod.hpp"
+#include "Diagnostics.hpp"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -150,8 +151,8 @@ public:
 };
 
 enum PartType{
-	TYPE_BODYPART,
-	TYPE_ORGAN
+	TYPE_BODYPART = 0,
+	TYPE_ORGAN = 1
 };
 
 /**BodyPart and Organ are derived from this class. In itself it holds
@@ -397,6 +398,7 @@ private:
 	 * @return The modified Organ map.
 	 */
 	std::map<std::string, Organ*, strless>* extractOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
+
 	void linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
 
 	void createSubgraphs(std::ofstream* stream, BodyPart* bp);
@@ -411,7 +413,7 @@ public:
 	~Body();
 
 	void removeRandomBodyPart();
-	void printBodyMap(const char* filename);
+	void printBodyMap(const char* filename, BodyPart* mroot);
 
 };
 
