@@ -616,7 +616,7 @@
 							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
 						</organ_tissue>
 					</organ>
-					<!--
+					
 					<organ>
 						<id>R_FIFTH_TOE</id>
 						<name>Right Fifth Toe</name>
@@ -626,7 +626,7 @@
 							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
 						</organ_tissue>
 					</organ>
-					!-->
+					
 				</body_part>
 	
 			</body_part>

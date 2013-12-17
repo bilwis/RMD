@@ -14,9 +14,9 @@
 #define DEBUG_FLAG 0
 #endif
 
-/*#define debug_print(fmt, ...) \
+#define debug_error(fmt, ...) \
 	do { if (DEBUG_FLAG) fprintf(stderr, "%s:%d:%s(): " fmt, __FILE__, \
-			__LINE__, __func__, __VA_ARGS__); } while (0)*/
+			__LINE__, __func__, ##__VA_ARGS__); } while (0)
 
 #define debug_print(fmt, ...) \
             do { if (DEBUG_FLAG) fprintf(stdout, fmt, ##__VA_ARGS__); } while (0)

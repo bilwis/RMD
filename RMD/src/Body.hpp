@@ -17,6 +17,8 @@
 #include <fstream>
 #include <exception>
 #include <map>
+#include <stdlib.h>
+#include <time.h>
 
 /**The comparator for the tissue_map and organ_map map keys, which are std::string instances.
  */
@@ -156,7 +158,8 @@ enum PartType{
 };
 
 /**BodyPart and Organ are derived from this class. In itself it holds
- * the Name, the ID and the relative surface of a part.
+ * the Name, the ID and the relative surface of a part as well as a pointer
+ * to the node of the organ tree that it is a child of.
  *
  * @brief This class is the abstract superclass for all parts that make up a body.
  */
@@ -166,6 +169,11 @@ protected:
 	const char *name;
 	float surface;
 	PartType type;
+
+	/**This is a pointer to the node of the organ tree that this Part is a child of.
+	 * It is NULL for the root element, and a pointer to a BodyPart for all others.
+	 */
+	Part* super;
 
 	/**This function is only called by Part's child classes BodyPart and Organ to
 	 * assign the base variables.
@@ -237,6 +245,21 @@ public:
 		return type;
 	}
 
+	/**Sets the given Part (BodyPart) as the node that this Part is a child of.
+	 *
+	 */
+	void setSuperPart(Part* bp) {
+		super = bp;
+	}
+
+	/**Returns the node that this Part is a child of.
+	 *
+	 * @return A pointer to a Part, or BodyPart.
+	 */
+	Part* getSuperPart() const {
+		return super;
+	}
+
 	~Part();
 };
 
@@ -278,6 +301,10 @@ public:
 	Organ(const char *id, const char *name, float surface,
 			tissue_def *tissues, int tissue_count, const char *connector_id,
 			bool is_root=false);
+
+	/**The destructor handles deregistering with the BodyPart that this Organ is a child of,
+	 * as well as the destruction of all downstream organs connected to this one.
+	 */
 	~Organ();
 
 	/**
@@ -341,7 +368,7 @@ public:
 	 * @param id The internal id of the object to remove.
 	 * @return Whether the removal has succeeded.
 	 */
-	bool removeChild(char *id);
+	bool removeChild(const char *id);
 
 	/**Creates a new instance of the BodyPart class. See Part() constructor.
 	 *
@@ -363,14 +390,20 @@ class Body{
 private:
 	BodyPart *root;
 
+	/**This map holds a list of all Parts (BodyParts and Organs) of a body, the key
+	 * being the internal id, and the value a pointer to the Part.
+	 */
+	std::map<std::string, Part*, strless> *part_map;
+	typedef std::map<std::string, Part*, strless>::iterator part_map_iterator;
+
 	/**This function loads and parses a [body-definition XML](xml_help.html).
 	 * The library used for this is RapidXML.
 	 * __The file must be null-terminated!__
 	 *
 	 * @param filename The _null-terminated_ file to load.
-	 * @return Returns whether or not the file was successfully loaded and parsed.
+	 * @return Returns the loaded Body as a BodyPart with all children.
 	 */
-	bool loadBody(const char *filename);
+	BodyPart* loadBody(const char *filename);
 
 	/**This is the function that is recursively called on all nodes of the body
 	 * definition XML. The node it is pointed at _must_ be a '<body_part>' node.
@@ -390,7 +423,7 @@ private:
 	 */
 	BodyPart* enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,strless> *tissue_map);
 
-	/**This function is first called on the root BodyPart by loadBody and recursively on all its children.
+	/**This function is first called on the root BodyPart by the Body constructor and recursively on all its children.
 	 * It extracts all Organs and maps them by their internal id's.
 	 *
 	 * @param bp The BodyPart to extract the organs from.
@@ -399,6 +432,21 @@ private:
 	 */
 	std::map<std::string, Organ*, strless>* extractOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
 
+	/**This function recusively iterates through all BodyParts and Organs that lie downstream of the given BodyPart
+	 * and compiles a map of pointers to them, keyed by their internal ids.
+	 *
+	 * @param bp The BodyPart to extract the parts from.
+	 * @param part_map The Part map to modify.
+	 * @return The modified Part map.
+	 */
+	std::map<std::string, Part*, strless>* extractParts(BodyPart* bp, std::map<std::string, Part*, strless> *part_map);
+
+	/**This function recursively iterates through bodyparts until it reaches the Organ "leaves" and calls the
+	 * Organ.linkToConnector(organ_map) function on them.
+	 *
+	 * @param bp The BodyPart to "scan" for organs.
+	 * @param organ_map A map which links the internal id strings of the organs to pointers to their instance.
+	 */
 	void linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
 
 	void createSubgraphs(std::ofstream* stream, BodyPart* bp);
@@ -412,7 +460,18 @@ public:
 	Body(const char *filename);
 	~Body();
 
-	void removeRandomBodyPart();
+	/**This function removes the a Part of the Body, identified by the given internal id.
+	 * It also handles deregistering and destruction of the removed elements via their destructors.
+	 *
+	 * @param part_id The internal id of the Part to remove.
+	 * @returns True if the operation was succesful, False otherwise.
+	 */
+	bool removePart(std::string part_id);
+
+	/**This function removes a random Part of the Body.
+	 */
+	void removeRandomPart();
+
 	void printBodyMap(const char* filename, BodyPart* mroot);
 
 };

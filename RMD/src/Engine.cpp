@@ -46,7 +46,7 @@ void Engine::update() {
         case TCODK_CHAR:
         	switch (key.c) {
         		case 'k':
-        			player->destructible->body->removeRandomBodyPart();
+        			player->destructible->body->removeRandomPart();
         		break;
         	}
         	break;

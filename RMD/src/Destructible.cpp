@@ -9,7 +9,7 @@
 
 Destructible::Destructible(float hp):
 	hp(hp),body(NULL){
-
+	cur_hp = hp;
 }
 
 Destructible::~Destructible(){

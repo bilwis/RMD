@@ -14,6 +14,15 @@ Tissue::Tissue(const char *id, const char *name, float pain,
 		pain(pain),blood_flow(blood_flow),resistance(resistance),
 		impairment(impairment){
 
+	/* The XML parsing function works with pointers to strings only.
+	 * Every "id", "name" and any other string is only copied into memory ONCE, and that
+	 * is during the initial call of rapidxml.parse. All subsequent references to the variables
+	 * are pointers to this initial memory location. The rapidxml memory buffer is wiped
+	 * at the end of the loadBody function, however. Therefore all new instances of the Part
+	 * or Tissue class, which hold the strings for later use in the program, must ACTUALLY COPY
+	 * THE MEMORY to which the "parsing pointer" points and maintain a reference to it via their
+	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
+	 */
 	char* buf = (char*)malloc(strlen(id));
 	this->id = strcpy(buf, id);
 
@@ -26,6 +35,15 @@ Tissue::Tissue(const char *id, const char *name, float pain,
 Part::Part(const char *id, const char *name, float surface, PartType type):
 	surface(surface), type(type){
 
+	/* The XML parsing function works with pointers to strings only.
+	 * Every "id", "name" and any other string is only copied into memory ONCE, and that
+	 * is during the initial call of rapidxml.parse. All subsequent references to the variables
+	 * are pointers to this initial memory location. The rapidxml memory buffer is wiped
+	 * at the end of the loadBody function, however. Therefore all new instances of the Part
+	 * or Tissue class, which hold the strings for later use in the program, must ACTUALLY COPY
+	 * THE MEMORY to which the "parsing pointer" points and maintain a reference to it via their
+	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
+	 */
 	char* buf = (char*)malloc(strlen(id));
 	this->id = strcpy(buf, id);
 
@@ -33,6 +51,7 @@ Part::Part(const char *id, const char *name, float surface, PartType type):
 	this->name = strcpy(buf, name);
 
 	buf = NULL;
+	super = NULL;
 }
 
 Part::~Part()
@@ -53,11 +72,13 @@ BodyPart::~BodyPart()
 
 void BodyPart::addChild(Part *child){
 	children->insertBefore(child, 0);
+	child->setSuperPart(this);
 }
 
 void BodyPart::addChildren(Part **child_array, int count){
 	for (int i=0; i < count; i++){
 		children->push(child_array[i]);
+		child_array[i]->setSuperPart(this);
 	}
 }
 
@@ -66,18 +87,12 @@ TCODList<Part*>* BodyPart::getChildList()
 	return children;
 }
 
-bool BodyPart::removeChild(char *id){
-	//Iterate trough the list of (pointers to) the child parts.
+bool BodyPart::removeChild(const char *id){
+	//Iterate though the list of children and remove it
 	for (Part** it = children->begin(); it != children->end(); it++)
 	{
 		Part *part = *it;
-		//If id's match
 		if (strcmp(part->getId(), id) == 0){
-			//Destroy the Part and remove the pointer from the list.
-			// Why destroy? Because the pointer in the children list of the parent
-			// is the only reference to it, so it must be destroyed before being
-			// removed from that list!
-			delete part;
 			children->removeFast(it);
 			return true;
 		}
@@ -91,6 +106,16 @@ Organ::Organ(const char *id, const char *name, float surface,
 		Part(id, name, surface, TYPE_ORGAN), tissues(tissues), tissue_count(tissue_count),
 		root(is_root), connector(NULL){
 
+	/* The XML parsing function works with pointers to strings only.
+	 * Every "id", "name" and any other string is only copied into memory ONCE, and that
+	 * is during the initial call of rapidxml.parse. All subsequent references to the variables
+	 * are pointers to this initial memory location. The rapidxml memory buffer is wiped
+	 * at the end of the loadBody function, however. Therefore all new instances of the Part
+	 * or Tissue class, which hold the strings for later use in the program, must ACTUALLY COPY
+	 * THE MEMORY to which the "parsing pointer" points and maintain a reference to it via their
+	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
+	 */
+
 	char* buf = (char*)malloc(strlen(connector_id));
 	this->connector_id = strcpy(buf, connector_id);
 
@@ -100,6 +125,14 @@ Organ::Organ(const char *id, const char *name, float surface,
 }
 
 Organ::~Organ(){
+	//The organ destructor automatically removes it from the child
+	//list of it's BodyPart. It also calls the destructor on all of its
+	//own children.
+
+	debug_print("Organ %s is kill.\n", this->id);
+
+	BodyPart* bp = static_cast<BodyPart*>(super);
+	bp->removeChild(this->id);
 	connected_organs->clearAndDelete();
 	delete connected_organs;
 }
@@ -120,7 +153,7 @@ void Organ::linkToConnector(std::map<std::string, Organ*, strless> *organ_map){
 	//Add this organ to the root's list of branches
 	connector->addConnectedOrgan(this);
 
-	debug_print("\nLINKED %s to connector %s", id, pos->first.c_str());
+	debug_print("LINKED %s to connector %s\n", id, pos->first.c_str());
 }
 
 const char* Organ::getConnectorId() {
@@ -133,13 +166,30 @@ void Organ::addConnectedOrgan(Organ *connectee){
 }
 
 Body::Body(const char *filename){
-	root = NULL;
-	if (loadBody(filename))
+	root = loadBody(filename);
+	if (root != NULL)
 	{
+		//go through all of the parsed data and make a list with pointers to the organs
+		std::map<std::string, Organ*, strless>* organ_map = new std::map<std::string, Organ*, strless>();
+		organ_map = extractOrgans(root, organ_map);
+
+		//go through all of the parsed data and link the organ connections
+		// (that is, store the pointer to the connector as identified by
+		// "connector_id" in the connector variable)
+		linkOrgans(root, organ_map);
+
+		//Organ map is no longer needed
+		delete organ_map;
+
+		//go through all of the parsed data and make a list with pointers to every part of the Body
+		part_map = new std::map<std::string, Part*, strless>();
+		part_map = extractParts(root, part_map);
+
 #ifdef DEBUG
 		printBodyMap("body.gv", root);
 		debug_print("Printed Body Map! \n");
 #endif
+
 	}
 }
 
@@ -147,7 +197,9 @@ Body::~Body(){
 
 }
 
-bool Body::loadBody(const char *filename){
+BodyPart* Body::loadBody(const char *filename){
+
+	BodyPart* temproot;
 
 	//###XML FILE HANDLING###
 	using namespace rapidxml;
@@ -229,36 +281,27 @@ bool Body::loadBody(const char *filename){
 	xml_node<> *body = doc.first_node()->first_node("body");
 
 	//recursively load the data
-	root = enter(body->first_node(), &tissue_map);
-
-	//go through all of the parsed data and make a list with pointers to the organs
-	std::map<std::string, Organ*, strless>* organ_map = new std::map<std::string, Organ*, strless>();
-	organ_map = extractOrgans(root, organ_map);
-
-	//go through all of the parsed data and link the organ connections
-	// (that is, store the pointer to the connector as identified by
-	// "connector_id" in the connector variable)
-	linkOrgans(root, organ_map);
-
-	//Organ map is no longer needed
-	delete organ_map;
+	temproot = enter(body->first_node(), &tissue_map);
 
 	//Destroy the XML data in memory
 	delete[] buffer;
 
 	//Successfully parsed the body definition file!
-	return true;
+	//Return the address of the newly created body part.
+	return temproot;
 
 	} catch (std::exception& e) {
 			std::cerr << "ERROR: " << e.what() << "\n";
 			return false;
 	}
 
-	return false;
+	return NULL;
 }
 
 std::map<std::string, Organ*, strless>* Body::extractOrgans(BodyPart* bp,
 		std::map<std::string, Organ*, strless> *organ_map) {
+	//Iterate through the children of the given BodyPart, if it is an Organ,
+	//add it to the organ_map; if it is a BodyPart, recursively call this function on it.
 
 	TCODList<Part*>* templ = bp->getChildList();
 	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
@@ -275,6 +318,10 @@ std::map<std::string, Organ*, strless>* Body::extractOrgans(BodyPart* bp,
 }
 
 void Body::linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map){
+	//Iterate through the children of the given BodyPart, if it is an Organ,
+	//call its linkToConnector function with the organ_map parameter;
+	//if it is a BodyPart, recursively call this function on it.
+
 	TCODList<Part*>* templ = bp->getChildList();
 	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
@@ -479,7 +526,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 				temp = temp->next_sibling();
 			}
 
-			//Check whether all necessary data for organ creation has been read+
+			//Check whether all necessary data for organ creation has been read
 			// if not, ERROR!
 			if (id == NULL || name == NULL || connector == NULL || tdefs == NULL){
 				throw bdef_parse_error("Not all necessary data for organ creation found.", organ_node_list[i]);
@@ -554,15 +601,84 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	return bp;
 }
 
-void Body::removeRandomBodyPart() {
-	//TODO: Implement
-
-	//iterate through the bodyparts and make a list
+void Body::removeRandomPart() {
+	debug_print("Remove Random Part from Body:\n");
 
 	//choose one randomly from the list
+	Part* random_part;
+	srand(time(NULL));
+	int stopid = rand() % part_map->size();
+	debug_print("Random element chosen: Nr. %i\n", stopid);
+	int it_count = 0;
 
-	//iterate again through all bodyparts and remove the
-	// chosen part
+	for(part_map_iterator iterator = part_map->begin(); iterator != part_map->end(); iterator++) {
+	    if (it_count == stopid)
+	    {
+	    	random_part = iterator->second;
+	    	break;
+	    }
+	    it_count++;
+	}
+
+	if (random_part == NULL)
+	{
+		debug_error("No element %i.\n", stopid);
+		debug_print("Remove Random Part from Body failed.\n");
+		return;
+	}
+
+	debug_print("Chose %s.\n", random_part->getId());
+
+	removePart(random_part->getId());
+	return;
+}
+
+std::map<std::string, Part*, strless>* Body::extractParts(BodyPart* bp,
+		std::map<std::string, Part*, strless>* part_map) {
+
+	TCODList<Part*>* templ = bp->getChildList();
+	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+		Part* p = *iterator;
+
+		part_map->insert(std::pair<std::string, Part*>(std::string(p->getId()), p));
+		debug_print("Added to part_map: %s \n", p->getId());
+
+		if(p->getType() == TYPE_BODYPART){
+			part_map = extractParts(static_cast<BodyPart*>(p), part_map);
+		}
+	}
+
+	return part_map;
+}
+
+bool Body::removePart(std::string part_id) {
+	Part* part = NULL;
+	try{
+		part = part_map->at(part_id);
+	} catch (int e) {
+		debug_error("Part %s does not exist.\n", part_id.c_str());
+		return false;
+	}
+
+	//Remove the chosen part and all downstream elements
+
+	//Part is an Organ: remove it, destructor handles killing the children
+	if (part->getType() == TYPE_ORGAN){
+		debug_print("Part %s is type ORGAN, deleting...\n", part->getId());
+		Organ* o = static_cast<Organ*>(part);
+		delete o;
+		debug_print("done.\n");
+	}
+
+	//Part is a BodyPart: make list of all children, remove them
+	// and the part itself
+
+
+	//Refresh part map
+	part_map->clear();
+	part_map = extractParts(root, part_map);
+
+	return true;
 }
 
 void Body::printBodyMap(const char* filename, BodyPart* mroot) {
@@ -585,6 +701,7 @@ void Body::printBodyMap(const char* filename, BodyPart* mroot) {
 
 	file.close();
 }
+
 
 void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 
