@@ -23,13 +23,19 @@ Tissue::Tissue(const char *id, const char *name, float pain,
 	 * THE MEMORY to which the "parsing pointer" points and maintain a reference to it via their
 	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
 	 */
-	char* buf = (char*)malloc(strlen(id));
+	char* buf = new char[sizeof(id)];
 	this->id = strcpy(buf, id);
 
-	buf = (char*)malloc(strlen(name));
+	buf = new char[sizeof(name)];
 	this->name = strcpy(buf, name);
 
 	buf = NULL;
+}
+
+Tissue::~Tissue()
+{
+	delete id;
+	delete name;
 }
 
 Part::Part(const char *id, const char *name, float surface, PartType type):
@@ -44,10 +50,10 @@ Part::Part(const char *id, const char *name, float surface, PartType type):
 	 * THE MEMORY to which the "parsing pointer" points and maintain a reference to it via their
 	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
 	 */
-	char* buf = (char*)malloc(strlen(id));
+	char* buf = new char[sizeof(id)];
 	this->id = strcpy(buf, id);
 
-	buf = (char*)malloc(strlen(name));
+	buf = new char[sizeof(name)];
 	this->name = strcpy(buf, name);
 
 	buf = NULL;
@@ -56,11 +62,13 @@ Part::Part(const char *id, const char *name, float surface, PartType type):
 
 Part::~Part()
 {
-
+	delete id;
+	delete name;
 }
 
 BodyPart::BodyPart(const char *id, const char *name, float surface):
 		Part(id, name, surface, TYPE_BODYPART){
+
 	children = new TCODList<Part*>();
 }
 
@@ -116,7 +124,7 @@ Organ::Organ(const char *id, const char *name, float surface,
 	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
 	 */
 
-	char* buf = (char*)malloc(strlen(connector_id));
+	char* buf = new char[sizeof(connector_id)];
 	this->connector_id = strcpy(buf, connector_id);
 
 	buf = NULL;
@@ -135,6 +143,8 @@ Organ::~Organ(){
 	bp->removeChild(this->id);
 	connected_organs->clearAndDelete();
 	delete connected_organs;
+
+	delete connector_id;
 }
 
 void Organ::linkToConnector(std::map<std::string, Organ*, strless> *organ_map){
