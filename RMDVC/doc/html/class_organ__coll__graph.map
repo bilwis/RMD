@@ -1,0 +1,5 @@
+<map id="Organ" name="Organ">
+<area shape="rect" id="node2" href="$class_part.html" title="This class is the abstract superclass for all parts that make up a body. " alt="" coords="5,95,52,121"/>
+<area shape="rect" id="node3" href="$structtissue__def.html" title="This struct represents the link between an organ and its tissues. " alt="" coords="137,95,219,121"/>
+<area shape="rect" id="node4" href="$class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. " alt="" coords="148,5,208,32"/>
+</map>
