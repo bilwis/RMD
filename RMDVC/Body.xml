@@ -1,0 +1,793 @@
+<?xml version="1.0"?>
+<body_def>
+	<tissues>
+		<tissue>
+			<id>SKIN</id>
+			<name>Skin</name>
+			<pain>0.2</pain>
+			<blood_flow>0.1</blood_flow>
+			<resistance>0.2</resistance>
+			<impairment>0.0</impairment>
+		</tissue>
+		<tissue>
+			<id>FAT</id>
+			<name>Fat</name>
+			<pain>0.1</pain>
+			<blood_flow>0.2</blood_flow>
+			<resistance>0.1</resistance>
+			<impairment>0.0</impairment>
+		</tissue>
+		<tissue>
+			<id>ARTERY</id>
+			<name>Artery</name>
+			<pain>0.1</pain>
+			<blood_flow>0.5</blood_flow>
+			<resistance>0.2</resistance>
+			<impairment>0.25</impairment>
+		</tissue>
+		<tissue>
+			<id>M_ARTERY</id>
+			<name>Major Artery</name>
+			<pain>0.1</pain>
+			<blood_flow>1.0</blood_flow>
+			<resistance>0.2</resistance>
+			<impairment>0.5</impairment>
+		</tissue>
+		<tissue>
+			<id>VEIN</id>
+			<name>Vein</name>
+			<pain>0.1</pain>
+			<blood_flow>0.3</blood_flow>
+			<resistance>0.2</resistance>
+			<impairment>0.2</impairment>
+		</tissue>
+		<tissue>
+			<id>M_VEIN</id>
+			<name>Major Vein</name>
+			<pain>0.1</pain>
+			<blood_flow>0.6</blood_flow>
+			<resistance>0.2</resistance>
+			<impairment>0.4</impairment>
+		</tissue>
+		<tissue>
+			<id>MUSCLE</id>
+			<name>Muscle</name>
+			<pain>0.5</pain>
+			<blood_flow>0.25</blood_flow>
+			<resistance>0.5</resistance>
+			<impairment>0.6</impairment>
+		</tissue>
+		<tissue>
+			<id>BONE</id>
+			<name>Bone</name>
+			<pain>0.8</pain>
+			<blood_flow>0.75</blood_flow>
+			<resistance>1.0</resistance>
+			<impairment>0.8</impairment>
+		</tissue>
+		<tissue>
+			<id>NERVE</id>
+			<name>Nerve</name>
+			<pain>0.7</pain>
+			<blood_flow>0.05</blood_flow>
+			<resistance>0.1</resistance>
+			<impairment>0.75</impairment>
+		</tissue>
+		<tissue>
+			<id>M_NERVE</id>
+			<name>Major Nerve</name>
+			<pain>1.0</pain>
+			<blood_flow>0.1</blood_flow>
+			<resistance>0.15</resistance>
+			<impairment>1.0</impairment>
+		</tissue>
+		<tissue>
+			<id>JOINT</id>
+			<name>Joint</name>
+			<pain>0.7</pain>
+			<blood_flow>0.45</blood_flow>
+			<resistance>0.75</resistance>
+			<impairment>1.0</impairment>
+		</tissue>
+		<tissue>
+			<id>DEBUG</id>
+			<name>Debug Tissue</name>
+			<pain>0.0</pain>
+			<blood_flow>0.0</blood_flow>
+			<resistance>0.0</resistance>
+			<impairment>0.0</impairment>
+		</tissue>
+	</tissues>
+	<body>
+		<body_part>
+			<id>ROOT</id>
+			<name>Body</name>
+			<surface>1.0</surface>
+			<body_part>
+				<id>L_ARM</id>
+				<name>Left Arm</name>
+				<surface>0.09</surface>
+				
+				<body_part>
+					<id>L_UPPER_ARM</id>
+					<name>Left Upper Arm</name>
+					<surface>0.4</surface>
+					
+					<organ>
+						<id>L_SHOULDER</id>
+						<name>Left Shoulder</name>
+						<surface>0.4</surface>
+						<connector>UPPER_TORSO</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_UPPER_ARM_PROPER</id>
+						<name>Left Upper Arm Proper</name>
+						<surface>0.6</surface>
+						<connector>L_SHOULDER</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">SKIN</tissue_def>
+							<tissue_def hit_prob="1.0">FAT</tissue_def>
+							<tissue_def hit_prob="0.8">MUSCLE</tissue_def>
+							<tissue_def hit_prob="0.3">VEIN</tissue_def>
+							<tissue_def hit_prob="0.2">ARTERY</tissue_def>
+							<tissue_def hit_prob="0.1">NERVE</tissue_def>
+							<tissue_def hit_prob="0.05">M_VEIN</tissue_def>
+							<tissue_def hit_prob="0.05" name="Arteria brachialis" custom_id="A_BRACHIALIS">M_ARTERY</tissue_def>
+							<tissue_def hit_prob="0.05">M_NERVE</tissue_def>
+							<tissue_def hit_prob="0.4" name="Humerus">BONE</tissue_def>
+						</organ_tissue>
+					</organ>
+				</body_part>
+				
+				<body_part>
+					<id>L_LOWER_ARM</id>
+					<name>Left Lower Arm</name>
+					<surface>0.4</surface>
+									
+					<organ>
+						<id>L_ELBOW</id>
+						<name>Left Elbow</name>
+						<surface>0.2</surface>
+						<connector>L_UPPER_ARM_PROPER</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_LOWER_ARM_PROPER</id>
+						<name>Left Lower Arm Proper</name>
+						<surface>0.8</surface>
+						<connector>L_ELBOW</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+				</body_part>
+				
+				<body_part>
+					<id>L_HAND</id>
+					<name>Left Hand</name>
+					<surface>0.2</surface>
+					
+					<organ>
+						<id>L_WRIST</id>
+						<name>Left Wrist</name>
+						<surface>0.2</surface>
+						<connector>L_LOWER_ARM_PROPER</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_PALM</id>
+						<name>Left Palm</name>
+						<surface>0.3</surface>
+						<connector>L_WRIST</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_THUMB</id>
+						<name>Left Thumb</name>
+						<surface>0.1</surface>
+						<connector>L_PALM</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_INDEX</id>
+						<name>Left Index Finger</name>
+						<surface>0.1</surface>
+						<connector>L_PALM</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_MIDDLE</id>
+						<name>Left Middle Finger</name>
+						<surface>0.1</surface>
+						<connector>L_PALM</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_RING</id>
+						<name>Left Ring Finger</name>
+						<surface>0.1</surface>
+						<connector>L_PALM</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_LITTLE</id>
+						<name>Left Little Finger</name>
+						<surface>0.1</surface>
+						<connector>L_PALM</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+				</body_part>
+	
+			</body_part>
+			
+			<body_part>
+				<id>R_ARM</id>
+				<name>Right Arm</name>
+				<surface>0.09</surface>
+				
+				<body_part>
+					<id>R_UPPER_ARM</id>
+					<name>Right Upper Arm</name>
+					<surface>0.4</surface>
+					
+					<organ>
+						<id>R_SHOULDER</id>
+						<name>Right Shoulder</name>
+						<surface>0.4</surface>
+						<connector>UPPER_TORSO</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_UPPER_ARM_PROPER</id>
+						<name>Right Upper Arm Proper</name>
+						<surface>0.6</surface>
+						<connector>R_SHOULDER</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">SKIN</tissue_def>
+							<tissue_def hit_prob="1.0">FAT</tissue_def>
+							<tissue_def hit_prob="0.8">MUSCLE</tissue_def>
+							<tissue_def hit_prob="0.3">VEIN</tissue_def>
+							<tissue_def hit_prob="0.2">ARTERY</tissue_def>
+							<tissue_def hit_prob="0.1">NERVE</tissue_def>
+							<tissue_def hit_prob="0.05">M_VEIN</tissue_def>
+							<tissue_def hit_prob="0.05" name="Arteria brachialis" custom_id="A_BRACHIALIS">M_ARTERY</tissue_def>
+							<tissue_def hit_prob="0.05">M_NERVE</tissue_def>
+							<tissue_def hit_prob="0.4" name="Humerus">BONE</tissue_def>
+						</organ_tissue>
+					</organ>
+				</body_part>
+				
+				<body_part>
+					<id>R_LOWER_ARM</id>
+					<name>Right Lower Arm</name>
+					<surface>0.4</surface>
+									
+					<organ>
+						<id>R_ELBOW</id>
+						<name>Right Elbow</name>
+						<surface>0.2</surface>
+						<connector>R_UPPER_ARM_PROPER</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_LOWER_ARM_PROPER</id>
+						<name>Right Lower Arm Proper</name>
+						<surface>0.8</surface>
+						<connector>R_ELBOW</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+				</body_part>
+				
+				<body_part>
+					<id>R_HAND</id>
+					<name>Right Hand</name>
+					<surface>0.2</surface>
+					
+					<organ>
+						<id>R_WRIST</id>
+						<name>Right Wrist</name>
+						<surface>0.2</surface>
+						<connector>R_LOWER_ARM_PROPER</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_PALM</id>
+						<name>Right Palm</name>
+						<surface>0.3</surface>
+						<connector>R_WRIST</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_THUMB</id>
+						<name>Right Thumb</name>
+						<surface>0.1</surface>
+						<connector>R_PALM</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_INDEX</id>
+						<name>Right Index Finger</name>
+						<surface>0.1</surface>
+						<connector>R_PALM</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_MIDDLE</id>
+						<name>Right Middle Finger</name>
+						<surface>0.1</surface>
+						<connector>R_PALM</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_RING</id>
+						<name>Right Ring Finger</name>
+						<surface>0.1</surface>
+						<connector>R_PALM</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_LITTLE</id>
+						<name>Right Little Finger</name>
+						<surface>0.1</surface>
+						<connector>R_PALM</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+				</body_part>
+	
+			</body_part>
+			
+			<body_part>
+				<id>TORSO</id>
+				<name>Torso</name>
+				<surface>0.18</surface>
+				
+				<organ>
+					<id>UPPER_TORSO</id>
+					<name>Upper Torso</name>
+					<surface>0.5</surface>
+					<connector>_ROOT</connector>
+					<organ_tissue symmetrical="true">
+						<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+					</organ_tissue>
+				</organ>
+				
+				<organ>
+					<id>ABDOMEN</id>
+					<name>Lower Torso</name>
+					<surface>0.4</surface>
+					<connector>UPPER_TORSO</connector>
+					<organ_tissue symmetrical="true">
+						<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+					</organ_tissue>
+				</organ>
+				
+				<organ>
+					<id>PELVIS</id>
+					<name>Pelvic Region</name>
+					<surface>0.1</surface>
+					<connector>ABDOMEN</connector>
+					<organ_tissue symmetrical="true">
+						<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+					</organ_tissue>
+				</organ>
+												
+			</body_part>
+			
+			<body_part>
+				<id>HEAD</id>
+				<name>Head</name>
+				<surface>0.09</surface>
+				
+				<organ>
+					<id>NECK</id>
+					<name>Neck</name>
+					<surface>0.4</surface>
+					<connector>UPPER_TORSO</connector>
+					<organ_tissue symmetrical="true">
+						<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+					</organ_tissue>
+				</organ>
+				
+				<organ>
+					<id>VISCEROCRANIUM</id>
+					<name>Face</name>
+					<surface>0.3</surface>
+					<connector>NECK</connector>
+					<organ_tissue symmetrical="true">
+						<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+					</organ_tissue>
+				</organ>
+				
+				<organ>
+					<id>NEUROCRANIUM</id>
+					<name>Skull</name>
+					<surface>0.3</surface>
+					<connector>NECK</connector>
+					<organ_tissue symmetrical="true">
+						<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+					</organ_tissue>
+				</organ>
+				
+			</body_part>
+			
+			<body_part>
+				<id>R_LEG</id>
+				<name>Right Leg</name>
+				<surface>0.18</surface>
+				
+				<body_part>
+					<id>R_UPPER_LEG</id>
+					<name>Right Upper Leg</name>
+					<surface>0.45</surface>
+					
+					<organ>
+						<id>R_HIP</id>
+						<name>Right Hip</name>
+						<surface>0.2</surface>
+						<connector>PELVIS</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_THIGH</id>
+						<name>Right Thigh</name>
+						<surface>0.8</surface>
+						<connector>R_HIP</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">SKIN</tissue_def>
+							<tissue_def hit_prob="1.0">FAT</tissue_def>
+							<tissue_def hit_prob="0.9">MUSCLE</tissue_def>
+							<tissue_def hit_prob="0.3">VEIN</tissue_def>
+							<tissue_def hit_prob="0.2">ARTERY</tissue_def>
+							<tissue_def hit_prob="0.1">NERVE</tissue_def>
+							<tissue_def hit_prob="0.05">M_VEIN</tissue_def>
+							<tissue_def hit_prob="0.05">M_ARTERY</tissue_def>
+							<tissue_def hit_prob="0.05">M_NERVE</tissue_def>
+							<tissue_def hit_prob="0.4" name="Femur">BONE</tissue_def>
+						</organ_tissue>
+					</organ>
+				</body_part>
+				
+				<body_part>
+					<id>R_LOWER_LEG</id>
+					<name>Right Lower Leg</name>
+					<surface>0.45</surface>
+									
+					<organ>
+						<id>R_KNEE</id>
+						<name>Right Knee</name>
+						<surface>0.2</surface>
+						<connector>R_THIGH</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_CALF</id>
+						<name>Right Calf</name>
+						<surface>0.8</surface>
+						<connector>R_KNEE</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+				</body_part>
+				
+				<body_part>
+					<id>R_FOOT</id>
+					<name>Right Foot</name>
+					<surface>0.1</surface>
+					
+					<organ>
+						<id>R_ANKLE</id>
+						<name>Right Ankle</name>
+						<surface>0.05</surface>
+						<connector>R_CALF</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_HINDFOOT</id>
+						<name>Right Hindfoot</name>
+						<surface>0.2</surface>
+						<connector>R_ANKLE</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_MIDFOOT</id>
+						<name>Right Midfoot</name>
+						<surface>0.4</surface>
+						<connector>R_HINDFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_FOREFOOT</id>
+						<name>Right Forefoot</name>
+						<surface>0.1</surface>
+						<connector>R_MIDFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_HALLUX</id>
+						<name>Right Big Toe</name>
+						<surface>0.1</surface>
+						<connector>R_FOREFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_SECOND_TOE</id>
+						<name>Right Second Toe</name>
+						<surface>0.0375</surface>
+						<connector>R_FOREFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_THIRD_TOE</id>
+						<name>Right Third Toe</name>
+						<surface>0.0375</surface>
+						<connector>R_FOREFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					
+					<organ>
+						<id>R_FOURTH_TOE</id>
+						<name>Right Fourth Toe</name>
+						<surface>0.0375</surface>
+						<connector>R_FOREFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>R_FIFTH_TOE</id>
+						<name>Right Fifth Toe</name>
+						<surface>0.0375</surface>
+						<connector>R_FOREFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+				</body_part>
+	
+			</body_part>
+			
+			<body_part>
+				<id>L_LEG</id>
+				<name>Left Leg</name>
+				<surface>0.18</surface>
+				
+				<body_part>
+					<id>L_UPPER_LEG</id>
+					<name>Left Upper Leg</name>
+					<surface>0.45</surface>
+					
+					<organ>
+						<id>L_HIP</id>
+						<name>Left Hip</name>
+						<surface>0.2</surface>
+						<connector>PELVIS</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_THIGH</id>
+						<name>Left Thigh</name>
+						<surface>0.8</surface>
+						<connector>L_HIP</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+				</body_part>
+				
+				<body_part>
+					<id>L_LOWER_LEG</id>
+					<name>Left Lower Leg</name>
+					<surface>0.45</surface>
+									
+					<organ>
+						<id>L_KNEE</id>
+						<name>Left Knee</name>
+						<surface>0.2</surface>
+						<connector>L_THIGH</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_CALF</id>
+						<name>Left Calf</name>
+						<surface>0.8</surface>
+						<connector>L_KNEE</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+				</body_part>
+				
+				<body_part>
+					<id>L_FOOT</id>
+					<name>Left Foot</name>
+					<surface>0.1</surface>
+					
+					<organ>
+						<id>L_ANKLE</id>
+						<name>Left Ankle</name>
+						<surface>0.05</surface>
+						<connector>L_CALF</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_HINDFOOT</id>
+						<name>Left Hindfoot</name>
+						<surface>0.2</surface>
+						<connector>L_ANKLE</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_MIDFOOT</id>
+						<name>Left Midfoot</name>
+						<surface>0.4</surface>
+						<connector>L_HINDFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_FOREFOOT</id>
+						<name>Left Forefoot</name>
+						<surface>0.1</surface>
+						<connector>L_MIDFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_HALLUX</id>
+						<name>Left Big Toe</name>
+						<surface>0.1</surface>
+						<connector>L_FOREFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_SECOND_TOE</id>
+						<name>Left Second Toe</name>
+						<surface>0.0375</surface>
+						<connector>L_FOREFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_THIRD_TOE</id>
+						<name>Left Third Toe</name>
+						<surface>0.0375</surface>
+						<connector>L_FOREFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+										
+					<organ>
+						<id>L_FOURTH_TOE</id>
+						<name>Left Fourth Toe</name>
+						<surface>0.0375</surface>
+						<connector>L_FOREFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+					<organ>
+						<id>L_FIFTH_TOE</id>
+						<name>Left Fifth Toe</name>
+						<surface>0.0375</surface>
+						<connector>L_FOREFOOT</connector>
+						<organ_tissue symmetrical="true">
+							<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+						</organ_tissue>
+					</organ>
+					
+				</body_part>
+	
+			</body_part>
+			
+		</body_part>
+	</body>
+</body_def>
+ 
