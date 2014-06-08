@@ -17,14 +17,17 @@
 #include <fstream>
 #include <exception>
 #include <map>
+#include <memory>
 #include <stdlib.h>
 #include <time.h>
+
+using std::string;
 
 /**The comparator for the tissue_map and organ_map map keys, which are std::string instances.
  */
 class strless {
 public:
-	bool operator() (const std::string & first, const std::string & second) const {
+	bool operator() (const string & first, const string & second) const {
 		return first.compare(second) < 0;
 	}
 };
@@ -38,8 +41,8 @@ public:
  */
 class Tissue{
 private:
-	const char *id;
-	const char *name;
+	string id;
+	string name;
 	float pain;
 	float blood_flow;
 	float resistance;
@@ -60,7 +63,7 @@ public:
 	 *
 	 * @return The 'given name' of the tissue.
 	 */
-	const char* getName() const {
+	string getName() const {
 		return name;
 	}
 
@@ -74,7 +77,7 @@ public:
 	 * The internal id is also used in the XML file itself, for the organ definitions.
 	 * @return Internal tissue identifier.
 	 */
-	const char* getId() const {
+	string getId() const {
 		return id;
 	}
 
@@ -117,7 +120,7 @@ public:
 	 * @param resistance How much this tissue absorbs energy.
 	 * @param impairment How much damage to this tissue impairs the Actor.
 	 */
-	Tissue(const char *id, const char *name, float pain,
+	Tissue(string id, string name, float pain,
 			float blood_flow, float resistance, float impairment);
 	~Tissue();
 };
@@ -148,8 +151,8 @@ struct tissue_def{
 public:
 	Tissue *tissue;
 	float hit_prob;
-	const char *name;
-	const char *custom_id;
+	string name;
+	string custom_id;
 };
 
 enum PartType{
@@ -165,8 +168,8 @@ enum PartType{
  */
 class Part{
 protected:
-	const char *id;
-	const char *name;
+	string id;
+	string name;
 	float surface;
 	PartType type;
 
@@ -183,7 +186,7 @@ protected:
 	 * @param surface The surface area of the part. See getSurface().
 	 * @param type The type of part, i.e. Organ or BodyPart. See PartType enum.
 	 */
-	Part(const char *id, const char *name, float surface, PartType type);
+	Part(string id, string name, float surface, PartType type);
 
 public:
 	/**Surface Area in RMD's body definition XML is not absolute.
@@ -219,7 +222,7 @@ public:
 	 *
 	 * @return The 'given name' of the part.
 	 */
-	const char* getName() const {
+	string getName() const {
 		return name;
 	}
 
@@ -232,7 +235,7 @@ public:
 	 *
 	 * @return Internal part identifier.
 	 */
-	const char* getId() const {
+	string getId() const {
 		return id;
 	}
 
@@ -278,7 +281,7 @@ private:
 	tissue_def *tissues;
 	int tissue_count;
 
-	const char *connector_id;
+	string connector_id;
 
 	bool root; //Is it root?
 
@@ -298,7 +301,7 @@ public:
 	 * @param is_root Whether or not this is the root element, which is the only organ
 	 * without a connector.
 	 */
-	Organ(const char *id, const char *name, float surface,
+	Organ(string id, string name, float surface,
 			tissue_def *tissues, int tissue_count, const char *connector_id,
 			bool is_root=false);
 
@@ -314,7 +317,7 @@ public:
 	 */
 	void linkToConnector(std::map<std::string, Organ*, strless> *organ_map);
 
-	const char* getConnectorId();
+	string getConnectorId();
 
 	/**If this organ is removed/destroyed, all branches are also removed.
 	 *
@@ -326,7 +329,7 @@ public:
 	/**Whether or not this is the root element, which is the only organ
 	 * without a connector.
 	 *
-	 * @return Is this Organ the root organ?
+	 * @return true, if the Organ is the root; false otherwise.
 	 */
 	bool isRoot() const {
 		return root;
@@ -368,7 +371,7 @@ public:
 	 * @param id The internal id of the object to remove.
 	 * @return Whether the removal has succeeded.
 	 */
-	bool removeChild(const char *id);
+	bool removeChild(string id);
 
 	/**Creates a new instance of the BodyPart class. See Part() constructor.
 	 *
@@ -376,7 +379,7 @@ public:
 	 * @param name The name of the part.
 	 * @param surface The surface area of the part. See getSurface().
 	 */
-	BodyPart(const char *id, const char *name, float surface);
+	BodyPart(string id, string name, float surface);
 	~BodyPart();
 };
 
@@ -478,29 +481,10 @@ public:
 
 /**An exception that is thrown by the functions loading and parsing the [body-definition XML](xml_help.html).
  */
-class bdef_parse_error:std::exception
+class bdef_parse_error:public std::runtime_error
 {
-private:
-	const char* msg;
-	rapidxml::xml_node<> *node;
-
 public:
-	bdef_parse_error(const char* msg, rapidxml::xml_node<>* node);
-
-	virtual const char* what() const throw()
-	{
-		std::ostringstream os;
-
-		os << "Error while parsing body definition XML:\n"
-		<< msg
-		<< "\n On node: '"
-		<< node->name()
-		<< "' with value: '"
-		<< node->value()
-		<< "'\n";
-
-		return os.str().c_str();
-	}
+	bdef_parse_error(const std::string& msg, rapidxml::xml_node<>* node);
 };
 
 

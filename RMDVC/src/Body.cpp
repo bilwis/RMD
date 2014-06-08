@@ -7,9 +7,12 @@
 
 #include "Body.hpp"
 
-bdef_parse_error::bdef_parse_error(const char* msg, rapidxml::xml_node<>* node):msg(msg), node(node){}
+bdef_parse_error::bdef_parse_error(const std::string& msg, rapidxml::xml_node<>* node):
+	std::runtime_error("\aError while parsing body definition XML:\n" + msg + " on node " + node->name() + " with value " + node->value() + "\n")
+{
+};
 
-Tissue::Tissue(const char *id, const char *name, float pain,
+Tissue::Tissue(string id, string name, float pain,
 		float blood_flow, float resistance, float impairment) :
 		pain(pain),blood_flow(blood_flow),resistance(resistance),
 		impairment(impairment){
@@ -23,22 +26,29 @@ Tissue::Tissue(const char *id, const char *name, float pain,
 	 * THE MEMORY to which the "parsing pointer" points and maintain a reference to it via their
 	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
 	 */
-	char* buf = new char[sizeof(id)];
-	this->id = strcpy(buf, id);
 
-	buf = new char[sizeof(name)];
-	this->name = strcpy(buf, name);
+	/*
+	
+	char* buf = new char[strlen(id) + 1]{};
+	strcpy_s(buf, strlen(id) + 1, id);
+	this->id = buf;
 
-	buf = NULL;
+	buf = new char[strlen(name) + 1]{};
+	strcpy_s(buf, strlen(name) + 1, name);
+	this->name = buf;
+
+	buf = nullptr;
+	*/
+	this->id = string(id);
+	this->name = string(name);
+
 }
 
 Tissue::~Tissue()
 {
-	delete id;
-	delete name;
 }
 
-Part::Part(const char *id, const char *name, float surface, PartType type):
+Part::Part(string id, string name, float surface, PartType type) :
 	surface(surface), type(type){
 
 	/* The XML parsing function works with pointers to strings only.
@@ -50,23 +60,17 @@ Part::Part(const char *id, const char *name, float surface, PartType type):
 	 * THE MEMORY to which the "parsing pointer" points and maintain a reference to it via their
 	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
 	 */
-	char* buf = new char[sizeof(id)];
-	this->id = strcpy(buf, id);
+	this->id = string(id);
+	this->name = string(name);
 
-	buf = new char[sizeof(name)];
-	this->name = strcpy(buf, name);
-
-	buf = NULL;
 	super = NULL;
 }
 
 Part::~Part()
 {
-	delete id;
-	delete name;
 }
 
-BodyPart::BodyPart(const char *id, const char *name, float surface):
+BodyPart::BodyPart(string id, string name, float surface) :
 		Part(id, name, surface, TYPE_BODYPART){
 
 	children = new TCODList<Part*>();
@@ -95,12 +99,12 @@ TCODList<Part*>* BodyPart::getChildList()
 	return children;
 }
 
-bool BodyPart::removeChild(const char *id){
+bool BodyPart::removeChild(string id){
 	//Iterate though the list of children and remove it
 	for (Part** it = children->begin(); it != children->end(); it++)
 	{
 		Part *part = *it;
-		if (strcmp(part->getId(), id) == 0){
+		if (id.compare(part->getId()) == 0){
 			children->removeFast(it);
 			return true;
 		}
@@ -109,7 +113,7 @@ bool BodyPart::removeChild(const char *id){
 	return false;
 }
 
-Organ::Organ(const char *id, const char *name, float surface,
+Organ::Organ(string id, string name, float surface,
 		tissue_def *tissues, int tissue_count, const char *connector_id, bool is_root):
 		Part(id, name, surface, TYPE_ORGAN), tissues(tissues), tissue_count(tissue_count),
 		root(is_root), connector(NULL){
@@ -124,11 +128,7 @@ Organ::Organ(const char *id, const char *name, float surface,
 	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
 	 */
 
-	char* buf = new char[sizeof(connector_id)];
-	this->connector_id = strcpy(buf, connector_id);
-
-	buf = NULL;
-
+	this->connector_id = string(connector_id);
 	connected_organs = new TCODList<Organ*>();
 }
 
@@ -137,19 +137,18 @@ Organ::~Organ(){
 	//list of it's BodyPart. It also calls the destructor on all of its
 	//own children.
 
-	debug_print("Organ %s is kill.\n", this->id);
+	debug_print("Organ %s is kill.\n", this->id.c_str());
 
 	BodyPart* bp = static_cast<BodyPart*>(super);
 	bp->removeChild(this->id);
 	connected_organs->clearAndDelete();
 	delete connected_organs;
 
-	delete connector_id;
 }
 
 void Organ::linkToConnector(std::map<std::string, Organ*, strless> *organ_map){
 	//Check if the Organ is the root, if yes, exit
-	if (!strcmp(connector_id, "_ROOT")) { return; }
+	if (!connector_id.compare("_ROOT")) { return; }
 
 	//Find the connector in the organ map
 	std::map<std::string, Organ*>::const_iterator pos = organ_map->find(connector_id);
@@ -163,11 +162,11 @@ void Organ::linkToConnector(std::map<std::string, Organ*, strless> *organ_map){
 	//Add this organ to the root's list of branches
 	connector->addConnectedOrgan(this);
 
-	debug_print("LINKED %s to connector %s\n", id, pos->first.c_str());
+	debug_print("LINKED %s to connector %s\n", id.c_str(), pos->first.c_str());
 }
 
-const char* Organ::getConnectorId() {
-	if (connector == NULL) { return NULL; }
+string Organ::getConnectorId() {
+	if (connector == NULL) { return ""; }
 	return connector->getId();
 }
 
@@ -200,6 +199,13 @@ Body::Body(const char *filename){
 		debug_print("Printed Body Map! \n");
 #endif
 
+	}
+	else {
+		TCODConsole::root->setDefaultForeground(TCODColor::lightRed);
+		TCODConsole::root->print(10, 10, "ERROR WHILE CREATING ACTOR BODY - Press any key to continue.");
+		TCODConsole::root->print(10, 11, "For detailed error check console window.");
+		TCODConsole::root->flush();
+		TCODConsole::root->waitForKeypress(true);
 	}
 }
 
@@ -301,8 +307,13 @@ BodyPart* Body::loadBody(const char *filename){
 	return temproot;
 
 	} catch (std::exception& e) {
-			std::cerr << "ERROR: " << e.what() << "\n";
-			return false;
+		std::cerr << "ERROR: " << e.what() << "\n";
+		return NULL;
+	}
+	catch (bdef_parse_error& pe) {
+		std::cerr << "ERROR: " << pe.what() << "\n";
+		
+		return NULL;
 	}
 
 	return NULL;
@@ -378,12 +389,12 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	}
 
 	//make the bodypart, reset temporary variables for reuse with the organs
-	bp = new BodyPart(id, name, surface);
+	bp = new BodyPart((string)id, (string)name, surface);
 	id = NULL; name = NULL;
 
 	//DEBUG: Print new BodyPart
 	debug_print("New BodyPart created: \n\tID: %s \n\tName: %s \n\tSurface: %f\n",
-			bp->getId(), bp->getName(), bp->getSurface());
+			bp->getId().c_str(), bp->getName().c_str(), bp->getSurface());
 
 	//If there are no body_part nodes...
 	if (bodyparts == 0){
@@ -489,7 +500,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 					tdef_it = 0;
 					tdef_node = temp->first_node();
 					while (tdef_node != NULL){
-						//The value of a tissue_def node is the id of the tissue
+						//The value of a tissue_def node is the id of the tissue (e.g. M_ARTERY)
 						tdef_id = tdef_node->value();
 
 						tdef_hit_prob = 0;
@@ -511,8 +522,16 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 
 
 						//Store the parameters in the tissue definition
-						tdefs[tdef_it].custom_id = tdef_custom_id;
-						tdefs[tdef_it].name = tdef_name;
+						if (tdef_custom_id != NULL) {
+							tdefs[tdef_it].custom_id = string(tdef_custom_id);
+						}
+						else { tdefs[tdef_it].custom_id = ""; }
+
+						if (tdef_name != NULL) {
+							tdefs[tdef_it].name = string(tdef_name);
+						}
+						else { tdefs[tdef_it].name = ""; }
+						
 						tdefs[tdef_it].hit_prob = tdef_hit_prob;
 
 						//Link the tissue definition to it's base tissue
@@ -552,19 +571,19 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 			}
 
 			//Create the organ
-			organs[i] = new Organ(id, name, surface, tdefs, tdef_count, connector, !strcmp(connector, "_ROOT"));
+			organs[i] = new Organ(string(id), string(name), surface, tdefs, tdef_count, connector, !strcmp(connector, "_ROOT"));
 
 			//DEBUG: Print Organ
 #ifdef _DEBUG
 			debug_print("\tNew Organ created:\n\t\tID: %s \n\t\tName: %s \n\t\tSurface: %f \n\t\tRoot: %s \n\t\tTissues:",
-					organs[i]->getId(), organs[i]->getName(), organs[i]->getSurface(), connector);
+				organs[i]->getId().c_str(), organs[i]->getName().c_str(), organs[i]->getSurface(), connector);
 
 			for (int di = 0; di < (tdef_count * (symmetrical+1))-1; di++){
 				debug_print("\n\t\t\tBase Tissue Name: %s \n\t\t\t\tHit Prob.: %f",
-						tdefs[di].tissue->getName(), tdefs[di].hit_prob);
+					tdefs[di].tissue->getName().c_str(), tdefs[di].hit_prob);
 
-				if (tdefs[di].name != NULL){ debug_print("\n\t\t\t\tCustom Name: %s", tdefs[di].name); }
-				if (tdefs[di].custom_id != NULL){ debug_print("\n\t\t\t\tCustom ID: %s", tdefs[di].custom_id); }
+				if (!tdefs[di].name.empty()){ debug_print("\n\t\t\t\tCustom Name: %s", tdefs[di].name.c_str()); }
+				if (!tdefs[di].custom_id.empty()){ debug_print("\n\t\t\t\tCustom ID: %s", tdefs[di].custom_id.c_str()); }
 			}
 
 			debug_print("\n\tEND Organ.\n");
@@ -601,7 +620,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
 
-		debug_print("\n\t\t Part Name: %s", p->getName());
+		debug_print("\n\t\t Part Name: %s", p->getName().c_str());
 	}
 
 	debug_print("\nEND BodyPart.\n");
@@ -637,7 +656,7 @@ void Body::removeRandomPart() {
 		return;
 	}
 
-	debug_print("Chose %s.\n", random_part->getId());
+	debug_print("Chose %s.\n", random_part->getId().c_str());
 
 	removePart(random_part->getId());
 	return;
@@ -651,7 +670,7 @@ std::map<std::string, Part*, strless>* Body::extractParts(BodyPart* bp,
 		Part* p = *iterator;
 
 		part_map->insert(std::pair<std::string, Part*>(std::string(p->getId()), p));
-		debug_print("Added to part_map: %s \n", p->getId());
+		debug_print("Added to part_map: %s \n", p->getId().c_str());
 
 		if(p->getType() == TYPE_BODYPART){
 			part_map = extractParts(static_cast<BodyPart*>(p), part_map);
@@ -674,7 +693,7 @@ bool Body::removePart(std::string part_id) {
 
 	//Part is an Organ: remove it, destructor handles killing the children
 	if (part->getType() == TYPE_ORGAN){
-		debug_print("Part %s is type ORGAN, deleting...\n", part->getId());
+		debug_print("Part %s is type ORGAN, deleting...\n", part->getId().c_str());
 		Organ* o = static_cast<Organ*>(part);
 		delete o;
 		debug_print("done.\n");
@@ -745,10 +764,9 @@ void Body::createLinks(std::ofstream* stream, BodyPart* bp) {
 			createLinks(stream, static_cast<BodyPart*>(p));
 		} else if (p->getType() == TYPE_ORGAN) {
 			Organ* o = static_cast<Organ*>(p);
-			if (o->getConnectorId() != NULL) {
+			if (!o->getConnectorId().empty()) {
 				*stream << o->getConnectorId() << " -> " << o->getId() << ";\n";
 			}
 		}
 	}
 }
-
