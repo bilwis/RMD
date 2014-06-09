@@ -209,6 +209,7 @@
     <ClCompile Include="src\GUI.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\Object.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\bresenham.h" />
@@ -284,6 +285,7 @@
     <ClInclude Include="src\Engine.hpp" />
     <ClInclude Include="src\GUI.hpp" />
     <ClInclude Include="src\Map.hpp" />
+    <ClInclude Include="src\Object.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Body.xml">

@@ -422,6 +422,9 @@
     <ClCompile Include="src\GUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Actor.hpp">
@@ -642,6 +645,9 @@
     </ClInclude>
     <ClInclude Include="include\bresenham.h">
       <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Object.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

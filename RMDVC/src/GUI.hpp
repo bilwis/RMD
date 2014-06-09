@@ -2,53 +2,77 @@
 #define GUI_HPP
 
 #include "libtcod.hpp"
+#include "Object.hpp"
 #include <string>
 
 using std::string;
 
-/** It holds the most basic parameters: Position, Size and ID as well as Fore and Back Color.
-*
-* @brief Base class for GUI Elements and Containers.
-*/
-class Element
+const TCODColor gui_default_fore = TCODColor::white;
+const TCODColor gui_default_back = TCODColor::black;
+
+const TCOD_keycode_t list_up = TCODK_UP;
+const TCOD_keycode_t list_down = TCODK_DOWN;
+const TCOD_keycode_t list_select = TCODK_ENTER;
+
+class ColoredText
 {
 protected:
-	string id;
-
-	TCODColor background_color;
 	TCODColor foreground_color;
+	TCODColor background_color;
 
-	int pos_x;
-	int pos_y;
+	string text;
+
+public:
+	ColoredText(string text, 
+		TCODColor fore = gui_default_fore,
+		TCODColor back = gui_default_back)
+	{
+		this->text = text; 
+		foreground_color = fore;
+		background_color = back;
+	};
+	~ColoredText();
+
+	string getText(){ return text; }
+	TCODColor getForeColor() { return foreground_color; }
+	TCODColor getBackColor() { return background_color; }
+};
+
+struct GuiObjectLink
+{
+	Object* object;
+	ColoredText* text;
+
+	GuiObjectLink(Object* o, ColoredText* t){ object = o; text = t; };
+	~GuiObjectLink(){};
+};
+
+class GuiRenderObject : public RenderObject
+{
+protected:
 	int width;
 	int height;
 
-	void setPosX(int x){ pos_x = x; }
-	void setPosY(int y){ pos_y = y; }
-	void setWidth(int w){ width = w; }
-	void setHeight(int h){ height = h; }
+	bool visible = true;
 
-	void setForeColor(TCODColor color){ foreground_color = color; }
-	void setBackColor(TCODColor color){ background_color = color; }
-
-	Element(string id, int x, int y, int width, int height, TCODColor fore, TCODColor back);
+	GuiRenderObject(string id, int x, int y, int width, int height, TCODColor fore, TCODColor back);
 
 public:
-
-	string getId(){ return id; }
-	int getPosX(){ return pos_x; }
-	int getPosY(){ return pos_y; }
 	int getWidth(){ return width; }
 	int getHeight(){ return height; }
 
-	TCODColor getForeColor() { return foreground_color; }
-	TCODColor getBackColor() { return background_color; }
+	void setWidth(int w){ width = w; }
+	void setHeight(int h){ height = h; }
 
-	~Element();
+	bool isVisible(){ return visible; }
+	void setVisibility(bool visible) { this->visible = visible; }
+
+	~GuiRenderObject();
 };
 
 //Forward declaration for use in GuiContainer
 class GuiElement;
+class Gui;
 
 /** It provides Element management and rendering functions.
 * It is intended to be used as a sort of 'Panel' which can be moved,
@@ -56,7 +80,7 @@ class GuiElement;
 *
 * @brief A class that can hold several GuiElement children.
 */
-class GuiContainer :public Element
+class GuiContainer :public GuiRenderObject
 {
 protected:
 	/** The TCODList holding pointers to the 'child' elements.
@@ -98,7 +122,7 @@ public:
 *
 * @brief Base class for GuiElements.
 */
-class GuiElement : public Element
+class GuiElement : public GuiRenderObject
 {
 protected:
 	GuiContainer* parent;
@@ -114,25 +138,6 @@ public:
 	~GuiElement();
 };
 
-
-/** It contains a render function, which will draw every registered GuiContainer
-* with all of its elements onto the given console.
-*
-* @brief A class which provides Gui handling to the Engine.
-*/
-class Gui
-{
-private:
-	TCODList<GuiContainer*>* containers;
-
-public:
-	Gui();
-	~Gui();
-
-	void render(TCODConsole* con);
-	void addContainer(GuiContainer* container);
-	bool removeContainer(string id);
-};
 
 /** @brief A simple multi-line text box.
 */
@@ -158,12 +163,111 @@ public:
 
 class ActiveGuiElement : public GuiElement
 {
+protected:
+	bool active = false;
 
+	bool item_change = false; //Set true when changing item list
+							  // handle in update(), then set false
+	
+	//The colors for the selected item(s), when
+	// the Element is focus (active) and when it's not.
+	TCODColor sel_fore_active; 
+	TCODColor sel_back_active;
+	TCODColor sel_fore_inactive;
+	TCODColor sel_back_inactive;
+
+	TCODList<GuiObjectLink*>* items;
+	int item_count = 0;
+
+	ActiveGuiElement(string id, int x, int y, int width, int height,
+		TCODColor fore, TCODColor back,
+		TCODColor sel_fore_act, TCODColor sel_back_act,
+		TCODColor sel_fore_inact, TCODColor sel_back_inact);
+
+public:
+	~ActiveGuiElement();
+
+	bool isActive(){ return active; }
+	void makeActive(Gui* gui);
+
+	void setSelectionForeColorInactive(TCODColor color){ sel_fore_inactive = color; }
+	void setSelectionBackColorInactive(TCODColor color){ sel_back_inactive = color; }
+	void setSelectionForeColorActive(TCODColor color){ sel_fore_active = color; }
+	void setSelectionBackColorActive(TCODColor color){ sel_back_active = color; }
+
+	TCODColor getSelectionForeColorInactive() { return sel_fore_inactive; }
+	TCODColor getSelectionBackColorInactive() { return sel_back_inactive; }
+	TCODColor getSelectionForeColorActive() { return sel_fore_active; }
+	TCODColor getSelectionBackColorActive() { return sel_back_active; }
+
+	void addItem(Object* o, string text, TCODColor fore = gui_default_fore, TCODColor back = gui_default_back);
+	void addItem(Object* o, ColoredText* text);
+
+	/* This has to be virtual, because the removed Item might be part of the
+	current selection, which needs to be handled in order to avoid having
+	the selection pointer pointing at a destroyed element!*/
+	virtual bool removeItem(string text) = 0; 
+	
+
+	int getItemCount(){ return item_count; }
+	
+	virtual void update(TCOD_key_t key) = 0;
+
+	//There may be multiple Objects selected. Return the number
+	// of Objects and modify the parameter array within the function to 
+	// point at the Objects.
+	virtual int getSelected(Object* obj[]) = 0;
 };
 
-class GuiListBox : public GuiElement
+class GuiListChooser : public ActiveGuiElement
 {
+protected:
+	GuiObjectLink* selected = nullptr;
+	int selected_index = 0;
 
+	void render(TCODConsole* con);
+public:
+	GuiListChooser(string id, int x, int y, int width, int height,
+		TCODColor fore, TCODColor back,
+		TCODColor sel_fore_act, TCODColor sel_back_act,
+		TCODColor sel_fore_inact, TCODColor sel_back_inact);
+	~GuiListChooser();
+
+	bool removeItem(string text);
+
+	void update(TCOD_key_t key);
+	int getSelected(Object* obj[]);
+};
+
+/** It contains a render function, which will draw every registered GuiContainer
+* with all of its elements onto the given console.
+*
+* @brief A class which provides Gui handling to the Engine.
+*/
+class Gui
+{
+private:
+	TCODList<GuiContainer*>* containers;
+	TCODList<ActiveGuiElement*>* active_elements;
+	ActiveGuiElement* current_active = nullptr;
+
+	void makeActive(ActiveGuiElement* element);
+public:
+	Gui();
+	~Gui();
+
+	void render(TCODConsole* con);
+	void update(TCOD_key_t key);
+
+	void addContainer(GuiContainer* container);
+	bool removeContainer(string id);
+
+	void registerActiveElement(ActiveGuiElement* element);
+	bool removeActiveElement(string id);
+
+	bool makeActive(string id);
+
+	const ActiveGuiElement* getCurrentActiveElement() { return current_active; }
 };
 
 #endif

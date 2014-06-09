@@ -26,6 +26,7 @@ public :
 	Gui *gui;
 	GuiContainer *sampleContainer;
 	GuiTextBox *sampleTextBox;
+	GuiListChooser *sampleList;
  
     Engine();
     ~Engine();
