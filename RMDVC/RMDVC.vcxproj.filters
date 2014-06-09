@@ -13,10 +13,392 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Include Files">
+      <UniqueIdentifier>{1c2c98f0-59eb-48a2-84b9-654700874299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library Files">
+      <UniqueIdentifier>{628fbf5c-fb38-4bc3-8a12-20731c3717e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text Files">
+      <UniqueIdentifier>{0959f22c-93a4-43b4-b251-b2ef64776601}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation Files">
+      <UniqueIdentifier>{b6236891-8c13-4982-9816-a1872d446e8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="libtcod-gui-VS.dll" />
+    <None Include="zlib1.dll" />
+    <None Include="SDL.dll" />
     <None Include="libtcod-VS.dll" />
+    <None Include="libtcod-gui-VS.dll" />
+    <None Include="RMDVC.doxyfile" />
+    <None Include="make_graph.bat" />
+    <None Include="doc\html\_destructible_8hpp_source.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\_diagnostics_8hpp_source.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\_engine_8hpp_source.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\_g_u_i_8hpp_source.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\_map_8hpp_source.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\annotated.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\annotated.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_actor.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_actor.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_actor__coll__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_actor__coll__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_actor-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body__coll__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body__coll__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body_part.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body_part.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body_part__coll__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body_part__coll__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body_part__inherit__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body_part__inherit__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body_part-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_body-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_destructible.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_destructible.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_destructible__coll__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_destructible__coll__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_destructible-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_engine.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_engine.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_engine__coll__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_engine__coll__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_engine-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_map.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_map.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_map__coll__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_map__coll__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_map-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_organ.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_organ.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_organ__coll__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_organ__coll__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_organ__inherit__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_organ__inherit__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_organ-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_part.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_part.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_part__coll__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_part__coll__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_part__inherit__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_part__inherit__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_part-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_tissue.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_tissue.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\class_tissue-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classbdef__parse__error.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classbdef__parse__error.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classbdef__parse__error__coll__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classbdef__parse__error__coll__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classbdef__parse__error__inherit__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classbdef__parse__error__inherit__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classbdef__parse__error-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classes.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classstrless.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classstrless.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\classstrless-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\dir_68267d1309a1af8e8297ef4c3efbcdba.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\dir_68267d1309a1af8e8297ef4c3efbcdba.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\dir_68267d1309a1af8e8297ef4c3efbcdba_dep.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\dir_68267d1309a1af8e8297ef4c3efbcdba_dep.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\doxygen.css">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\dynsections.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\files.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\files.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\functions.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\functions_func.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\functions_vars.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\graph_legend.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\graph_legend.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\hierarchy.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\hierarchy.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\index.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_0.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_0.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_1.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_1.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_2.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_2.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_3.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_3.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_4.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_4.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_5.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_5.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_6.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_6.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_7.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_7.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_8.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_8.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_9.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_9.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_10.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherit_graph_10.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\inherits.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\jquery.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\navtree.css">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\navtree.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\navtreeindex0.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\resize.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\struct_tile.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\struct_tile.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\struct_tile-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\structtissue__def.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\structtissue__def.js">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\structtissue__def__coll__graph.map">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\structtissue__def__coll__graph.md5">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\structtissue__def-members.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\tabs.css">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\_actor_8hpp_source.html">
+      <Filter>Documentation Files</Filter>
+    </None>
+    <None Include="doc\html\_body_8hpp_source.html">
+      <Filter>Documentation Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Actor.cpp">
@@ -35,6 +417,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,10 +445,397 @@
     <ClInclude Include="src\Map.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\bresenham.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bsp.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bsp.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\color.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\color.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\console.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\console.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\console_types.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fov.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fov.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fov_types.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\heightmap.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\heightmap.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lex.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lex.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\libtcod.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\libtcod.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\libtcod_int.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\list.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\list.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mersenne.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mersenne.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mersenne_types.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mouse.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mouse.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mouse_types.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\namegen.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\namegen.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\noise.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\noise.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\noise_defaults.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\parser.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\parser.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\path.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\path.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidxml.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidxml_iterators.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidxml_print.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rapidxml_utils.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sys.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sys.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tree.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tree.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\txtfield.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\txtfield.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\wrappers.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zip.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\zip.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\button.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\container.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\flatlist.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\gui.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\hbox.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\image.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\label.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\radiobutton.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\slider.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\statusbar.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\textbox.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\togglebutton.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\toolbar.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\vbox.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\gui\widget.hpp">
+      <Filter>Include Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bresenham.h">
+      <Filter>Include Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Body.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\libtcod-gui-VS.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+    <Library Include="lib\libtcod-VS.lib">
+      <Filter>Library Files</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="README-SDL.txt">
+      <Filter>Text Files</Filter>
+    </Text>
+    <Text Include="LIBTCOD-CREDITS.txt">
+      <Filter>Text Files</Filter>
+    </Text>
+    <Text Include="LIBTCOD-LICENSE.txt">
+      <Filter>Text Files</Filter>
+    </Text>
+    <Text Include="README.txt">
+      <Filter>Text Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="terminal.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="doc\html\bc_s.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\bdwn.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_actor__coll__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_body__coll__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_body_part__coll__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_body_part__inherit__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_destructible__coll__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_engine__coll__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_map__coll__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_organ__coll__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_organ__inherit__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_part__coll__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\class_part__inherit__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\classbdef__parse__error__coll__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\classbdef__parse__error__inherit__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\closed.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\dir_68267d1309a1af8e8297ef4c3efbcdba_dep.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\doxygen.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2blank.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2doc.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2folderclosed.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2folderopen.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2lastnode.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2link.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2mlastnode.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2mnode.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2node.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2plastnode.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2pnode.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2splitbar.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\ftv2vertline.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\graph_legend.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_0.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_1.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_2.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_3.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_4.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_5.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_6.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_7.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_8.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_9.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\inherit_graph_10.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\nav_f.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\nav_g.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\nav_h.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\open.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\structtissue__def__coll__graph.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\sync_off.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\sync_on.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\tab_a.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\tab_b.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\tab_h.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
+    <Image Include="doc\html\tab_s.png">
+      <Filter>Documentation Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

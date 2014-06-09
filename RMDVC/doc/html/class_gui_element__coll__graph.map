@@ -1,0 +1,4 @@
+<map id="GuiElement" name="GuiElement">
+<area shape="rect" id="node2" href="$class_element.html" title="Base class for GUI Elements and Containers. " alt="" coords="5,95,76,121"/>
+<area shape="rect" id="node4" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="76,171,173,197"/>
+</map>

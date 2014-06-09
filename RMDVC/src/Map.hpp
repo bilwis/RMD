@@ -15,7 +15,7 @@ public :
     Map(int width, int height);
     ~Map();
     bool isWall(int x, int y) const;
- 	void render() const;
+ 	void render(TCODConsole* con) const;
 protected :
     Tile *tiles;
  

@@ -27,18 +27,6 @@ Tissue::Tissue(string id, string name, float pain,
 	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
 	 */
 
-	/*
-	
-	char* buf = new char[strlen(id) + 1]{};
-	strcpy_s(buf, strlen(id) + 1, id);
-	this->id = buf;
-
-	buf = new char[strlen(name) + 1]{};
-	strcpy_s(buf, strlen(name) + 1, name);
-	this->name = buf;
-
-	buf = nullptr;
-	*/
 	this->id = string(id);
 	this->name = string(name);
 
@@ -707,6 +695,7 @@ bool Body::removePart(std::string part_id) {
 	part_map->clear();
 	part_map = extractParts(root, part_map);
 
+	printBodyMap("body_mt.gv", root);
 	return true;
 }
 

@@ -1,0 +1,25 @@
+var class_element =
+[
+    [ "Element", "class_element.html#a174b9eee6c59bc680a0ba540f2b7d372", null ],
+    [ "~Element", "class_element.html#a13d54ba9c08b6bec651402f1c2bb002c", null ],
+    [ "getBackColor", "class_element.html#a69dab2973050d8b86678dbcd4f758971", null ],
+    [ "getForeColor", "class_element.html#a89bbab50dc2f89aa97f7f5abeaabf9f6", null ],
+    [ "getHeight", "class_element.html#a074f39b6597dc2e645f172743acd6aae", null ],
+    [ "getId", "class_element.html#aa2a7ebf678d0022bce380b0bbc5a0ba0", null ],
+    [ "getPosX", "class_element.html#a9bab5ad9f2344fca1bea19a2c326b70f", null ],
+    [ "getPosY", "class_element.html#a7da7c0569202cd980908718fb326f630", null ],
+    [ "getWidth", "class_element.html#a55e892653daaa496ea7964962c839a03", null ],
+    [ "setBackColor", "class_element.html#a7e19ff6103c6f0b191614cd9ee5b6483", null ],
+    [ "setForeColor", "class_element.html#aa0b7fb133fca264e1dbfcb18b8ca6e94", null ],
+    [ "setHeight", "class_element.html#aed3faf9479bf4e992de9e78b90b958ba", null ],
+    [ "setPosX", "class_element.html#a40e8bb9198d7041ad1998daac007840c", null ],
+    [ "setPosY", "class_element.html#a381a6eed084aacf75f915a1507a81ea3", null ],
+    [ "setWidth", "class_element.html#af638dfaf0d0e4a07a7222696d21f290a", null ],
+    [ "background_color", "class_element.html#a52f2e1ffa18eaaa7634e603a3ed70bc6", null ],
+    [ "foreground_color", "class_element.html#ad4f5dfd63c47e2064b77841ce5e205d3", null ],
+    [ "height", "class_element.html#a83c3447e889f8ef4f27eb630ba1c749f", null ],
+    [ "id", "class_element.html#ac784587bcec8c38031db7ba9602ce7e5", null ],
+    [ "pos_x", "class_element.html#af1b3d5e3f9607d2b3a6e86794764793d", null ],
+    [ "pos_y", "class_element.html#ae8056d8df4e7f35c95d370b3f0ec6d24", null ],
+    [ "width", "class_element.html#ae34187587d4c18c52a2502fd712e1938", null ]
+];

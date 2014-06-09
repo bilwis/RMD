@@ -18,13 +18,13 @@ void Map::setWall(int x, int y) {
     tiles[x+y*width].canWalk=false;
 }
 
-void Map::render() const {
+void Map::render(TCODConsole* con) const {
     static const TCODColor darkWall(0,0,100);
     static const TCODColor darkGround(50,50,150);
 
 	for (int x=0; x < width; x++) {
 	    for (int y=0; y < height; y++) {
-	        TCODConsole::root->setCharBackground( x,y,
+	        con->setCharBackground( x,y,
 	            isWall(x,y) ? darkWall : darkGround );
 	    }
 	}

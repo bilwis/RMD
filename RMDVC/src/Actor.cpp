@@ -9,7 +9,7 @@ Actor::~Actor()
 	delete destructible;
 }
  
-void Actor::render() const {
-    TCODConsole::root->setChar(x,y,ch);
-    TCODConsole::root->setCharForeground(x,y,col);
+void Actor::render(TCODConsole* con) const {
+    con->setChar(x,y,ch);
+    con->setCharForeground(x,y,col);
 }

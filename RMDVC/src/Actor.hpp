@@ -14,7 +14,7 @@ public :
  
     Actor(int x, int y, int ch, const TCODColor &col);
     ~Actor();
-    void render() const;
+    void render(TCODConsole* con) const;
 };
 
 #endif
