@@ -68,7 +68,6 @@ $(document).ready(function(){initNavTree('class_gui_text_box.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_gui_text_box-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -85,14 +84,14 @@ Inheritance diagram for GuiTextBox:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_gui_text_box__inherit__graph.png" border="0" usemap="#_gui_text_box_inherit__map" alt="Inheritance graph"/></div>
 <map name="_gui_text_box_inherit__map" id="_gui_text_box_inherit__map">
-<area shape="rect" id="node2" href="class_gui_element.html" title="Base class for GuiElements. " alt="" coords="5,80,96,107"/><area shape="rect" id="node3" href="class_element.html" title="Base class for GUI Elements and Containers. " alt="" coords="15,5,86,32"/></map>
+<area shape="rect" id="node2" href="class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="21,229,111,256"/><area shape="rect" id="node3" href="class_gui_render_object.html" title="GuiRenderObject" alt="" coords="5,155,127,181"/><area shape="rect" id="node4" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="15,80,117,107"/><area shape="rect" id="node5" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="36,5,96,32"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for GuiTextBox:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_gui_text_box__coll__graph.png" border="0" usemap="#_gui_text_box_coll__map" alt="Collaboration graph"/></div>
 <map name="_gui_text_box_coll__map" id="_gui_text_box_coll__map">
-<area shape="rect" id="node2" href="class_gui_element.html" title="Base class for GuiElements. " alt="" coords="60,260,151,287"/><area shape="rect" id="node3" href="class_element.html" title="Base class for GUI Elements and Containers. " alt="" coords="61,95,131,121"/><area shape="rect" id="node5" href="class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="131,171,229,197"/></map>
+<area shape="rect" id="node2" href="class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="71,412,161,439"/><area shape="rect" id="node3" href="class_gui_render_object.html" title="GuiRenderObject" alt="" coords="70,247,191,273"/><area shape="rect" id="node7" href="class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="154,323,251,349"/><area shape="rect" id="node4" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="80,171,181,197"/><area shape="rect" id="node5" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="101,95,161,121"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -112,6 +111,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setAlignment</b> (TCO
 <tr class="memitem:aecc20c389e47f56e20a3db682868c2bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecc20c389e47f56e20a3db682868c2bb"></a>
 TCOD_alignment_t&#160;</td><td class="memItemRight" valign="bottom"><b>getAlignment</b> ()</td></tr>
 <tr class="separator:aecc20c389e47f56e20a3db682868c2bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a534890c7137a710b246676efb42c858c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a534890c7137a710b246676efb42c858c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>render</b> (TCODConsole *con)</td></tr>
+<tr class="separator:a534890c7137a710b246676efb42c858c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_gui_element"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_gui_element')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_gui_element.html">GuiElement</a></td></tr>
 <tr class="memitem:a753b86756247fe623981607e0efc0274 inherit pub_methods_class_gui_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a753b86756247fe623981607e0efc0274"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setParent</b> (<a class="el" href="class_gui_container.html">GuiContainer</a> *parent)</td></tr>
@@ -119,60 +121,66 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setParent</b> (<a cla
 <tr class="memitem:abc9dc29a444098fb1ba9c6b16debd0ec inherit pub_methods_class_gui_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc9dc29a444098fb1ba9c6b16debd0ec"></a>
 const <a class="el" href="class_gui_container.html">GuiContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getParent</b> ()</td></tr>
 <tr class="separator:abc9dc29a444098fb1ba9c6b16debd0ec inherit pub_methods_class_gui_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_class_element"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_element')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_element.html">Element</a></td></tr>
-<tr class="memitem:aa2a7ebf678d0022bce380b0bbc5a0ba0 inherit pub_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa2a7ebf678d0022bce380b0bbc5a0ba0"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>getId</b> ()</td></tr>
-<tr class="separator:aa2a7ebf678d0022bce380b0bbc5a0ba0 inherit pub_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bab5ad9f2344fca1bea19a2c326b70f inherit pub_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9bab5ad9f2344fca1bea19a2c326b70f"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getPosX</b> ()</td></tr>
-<tr class="separator:a9bab5ad9f2344fca1bea19a2c326b70f inherit pub_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7da7c0569202cd980908718fb326f630 inherit pub_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7da7c0569202cd980908718fb326f630"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>getPosY</b> ()</td></tr>
-<tr class="separator:a7da7c0569202cd980908718fb326f630 inherit pub_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55e892653daaa496ea7964962c839a03 inherit pub_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55e892653daaa496ea7964962c839a03"></a>
+<tr class="inherit_header pub_methods_class_gui_render_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_gui_render_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_gui_render_object.html">GuiRenderObject</a></td></tr>
+<tr class="memitem:a1b93bee01bc8c5f67949619d4a47a563 inherit pub_methods_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b93bee01bc8c5f67949619d4a47a563"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>getWidth</b> ()</td></tr>
-<tr class="separator:a55e892653daaa496ea7964962c839a03 inherit pub_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a074f39b6597dc2e645f172743acd6aae inherit pub_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a074f39b6597dc2e645f172743acd6aae"></a>
+<tr class="separator:a1b93bee01bc8c5f67949619d4a47a563 inherit pub_methods_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0e1623f11a5d9ecd967f9c23d2abe8e inherit pub_methods_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0e1623f11a5d9ecd967f9c23d2abe8e"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>getHeight</b> ()</td></tr>
-<tr class="separator:a074f39b6597dc2e645f172743acd6aae inherit pub_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89bbab50dc2f89aa97f7f5abeaabf9f6 inherit pub_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89bbab50dc2f89aa97f7f5abeaabf9f6"></a>
-TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>getForeColor</b> ()</td></tr>
-<tr class="separator:a89bbab50dc2f89aa97f7f5abeaabf9f6 inherit pub_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69dab2973050d8b86678dbcd4f758971 inherit pub_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a69dab2973050d8b86678dbcd4f758971"></a>
-TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>getBackColor</b> ()</td></tr>
-<tr class="separator:a69dab2973050d8b86678dbcd4f758971 inherit pub_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a534890c7137a710b246676efb42c858c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a534890c7137a710b246676efb42c858c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>render</b> (TCODConsole *con)</td></tr>
-<tr class="separator:a534890c7137a710b246676efb42c858c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_class_gui_element"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_gui_element')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_gui_element.html">GuiElement</a></td></tr>
-<tr class="memitem:a168df7a3e358dcccdd5a2849639c0bb4 inherit pro_methods_class_gui_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a168df7a3e358dcccdd5a2849639c0bb4"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GuiElement</b> (string id, int x, int y, int width, int height, TCODColor fore, TCODColor back, <a class="el" href="class_gui_container.html">GuiContainer</a> *parent=nullptr)</td></tr>
-<tr class="separator:a168df7a3e358dcccdd5a2849639c0bb4 inherit pro_methods_class_gui_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_class_element"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_element')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_element.html">Element</a></td></tr>
-<tr class="memitem:a40e8bb9198d7041ad1998daac007840c inherit pro_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40e8bb9198d7041ad1998daac007840c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosX</b> (int x)</td></tr>
-<tr class="separator:a40e8bb9198d7041ad1998daac007840c inherit pro_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a381a6eed084aacf75f915a1507a81ea3 inherit pro_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a381a6eed084aacf75f915a1507a81ea3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosY</b> (int y)</td></tr>
-<tr class="separator:a381a6eed084aacf75f915a1507a81ea3 inherit pro_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af638dfaf0d0e4a07a7222696d21f290a inherit pro_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af638dfaf0d0e4a07a7222696d21f290a"></a>
+<tr class="separator:aa0e1623f11a5d9ecd967f9c23d2abe8e inherit pub_methods_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa493cbdccd8fb655bf1955575e8947a7 inherit pub_methods_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa493cbdccd8fb655bf1955575e8947a7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setWidth</b> (int w)</td></tr>
-<tr class="separator:af638dfaf0d0e4a07a7222696d21f290a inherit pro_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed3faf9479bf4e992de9e78b90b958ba inherit pro_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed3faf9479bf4e992de9e78b90b958ba"></a>
+<tr class="separator:aa493cbdccd8fb655bf1955575e8947a7 inherit pub_methods_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dbb989746c12c49279564ce435b446f inherit pub_methods_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7dbb989746c12c49279564ce435b446f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setHeight</b> (int h)</td></tr>
-<tr class="separator:aed3faf9479bf4e992de9e78b90b958ba inherit pro_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0b7fb133fca264e1dbfcb18b8ca6e94 inherit pro_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0b7fb133fca264e1dbfcb18b8ca6e94"></a>
+<tr class="separator:a7dbb989746c12c49279564ce435b446f inherit pub_methods_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dde6729ac9fe4f94298e9a1255dcbac inherit pub_methods_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8dde6729ac9fe4f94298e9a1255dcbac"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isVisible</b> ()</td></tr>
+<tr class="separator:a8dde6729ac9fe4f94298e9a1255dcbac inherit pub_methods_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac24b290bde3db115ffc5464f8ee5486d inherit pub_methods_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac24b290bde3db115ffc5464f8ee5486d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setVisibility</b> (bool visible)</td></tr>
+<tr class="separator:ac24b290bde3db115ffc5464f8ee5486d inherit pub_methods_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_render_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_render_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_render_object.html">RenderObject</a></td></tr>
+<tr class="memitem:a14b3835292c3eb648d871bd69dff4040 inherit pub_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14b3835292c3eb648d871bd69dff4040"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getPosX</b> ()</td></tr>
+<tr class="separator:a14b3835292c3eb648d871bd69dff4040 inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4b206fe19882f43854115389a619338 inherit pub_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4b206fe19882f43854115389a619338"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getPosY</b> ()</td></tr>
+<tr class="separator:ab4b206fe19882f43854115389a619338 inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afea6d03d24cf407154f4cd548a5cc519 inherit pub_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afea6d03d24cf407154f4cd548a5cc519"></a>
+TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>getForeColor</b> ()</td></tr>
+<tr class="separator:afea6d03d24cf407154f4cd548a5cc519 inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14a60c8dad9d95b19365be19168f2559 inherit pub_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14a60c8dad9d95b19365be19168f2559"></a>
+TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>getBackColor</b> ()</td></tr>
+<tr class="separator:a14a60c8dad9d95b19365be19168f2559 inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63dfea89e36ba5d2d3ca176e6f0c7bcc inherit pub_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63dfea89e36ba5d2d3ca176e6f0c7bcc"></a>
+wchar_t&#160;</td><td class="memItemRight" valign="bottom"><b>getCharacter</b> ()</td></tr>
+<tr class="separator:a63dfea89e36ba5d2d3ca176e6f0c7bcc inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab825511a9a91db113c64619f7fe47813 inherit pub_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab825511a9a91db113c64619f7fe47813"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosX</b> (int x)</td></tr>
+<tr class="separator:ab825511a9a91db113c64619f7fe47813 inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3462c5e14a4eb4dd2b4acc2d2c8f3ad6 inherit pub_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3462c5e14a4eb4dd2b4acc2d2c8f3ad6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosY</b> (int y)</td></tr>
+<tr class="separator:a3462c5e14a4eb4dd2b4acc2d2c8f3ad6 inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a001dc54ea1125f99d3b41000d5c32dc7 inherit pub_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a001dc54ea1125f99d3b41000d5c32dc7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setForeColor</b> (TCODColor color)</td></tr>
-<tr class="separator:aa0b7fb133fca264e1dbfcb18b8ca6e94 inherit pro_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e19ff6103c6f0b191614cd9ee5b6483 inherit pro_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e19ff6103c6f0b191614cd9ee5b6483"></a>
+<tr class="separator:a001dc54ea1125f99d3b41000d5c32dc7 inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c84f262c3b4481d76d4df5455d7c65d inherit pub_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c84f262c3b4481d76d4df5455d7c65d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setBackColor</b> (TCODColor color)</td></tr>
-<tr class="separator:a7e19ff6103c6f0b191614cd9ee5b6483 inherit pro_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a174b9eee6c59bc680a0ba540f2b7d372 inherit pro_methods_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a174b9eee6c59bc680a0ba540f2b7d372"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Element</b> (string id, int x, int y, int width, int height, TCODColor fore, TCODColor back)</td></tr>
-<tr class="separator:a174b9eee6c59bc680a0ba540f2b7d372 inherit pro_methods_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a1c84f262c3b4481d76d4df5455d7c65d inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a99f0d7d1fff398662a01c1256474a0 inherit pub_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a99f0d7d1fff398662a01c1256474a0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setCharacter</b> (wchar_t ch)</td></tr>
+<tr class="separator:a9a99f0d7d1fff398662a01c1256474a0 inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_object.html">Object</a></td></tr>
+<tr class="memitem:a67bc9e45b170bf4881a1b1b0c58738d4 inherit pub_methods_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67bc9e45b170bf4881a1b1b0c58738d4"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>getId</b> ()</td></tr>
+<tr class="separator:a67bc9e45b170bf4881a1b1b0c58738d4 inherit pub_methods_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab52cf1fcdc2077a5eae177224c4a35f4 inherit pub_methods_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab52cf1fcdc2077a5eae177224c4a35f4"></a>
+virtual string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
+<tr class="separator:ab52cf1fcdc2077a5eae177224c4a35f4 inherit pub_methods_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1989c4d53cee952a2d9ee8e0e950bfd inherit pub_methods_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1989c4d53cee952a2d9ee8e0e950bfd"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Object</b> (string id)</td></tr>
+<tr class="separator:ae1989c4d53cee952a2d9ee8e0e950bfd inherit pub_methods_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -186,28 +194,51 @@ TCOD_alignment_t&#160;</td><td class="memItemRight" valign="bottom"><b>alignment
 <tr class="memitem:a341d6c958c34be13ef5cb8b9d34a100c inherit pro_attribs_class_gui_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a341d6c958c34be13ef5cb8b9d34a100c"></a>
 <a class="el" href="class_gui_container.html">GuiContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>parent</b></td></tr>
 <tr class="separator:a341d6c958c34be13ef5cb8b9d34a100c inherit pro_attribs_class_gui_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_class_element"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_element')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_element.html">Element</a></td></tr>
-<tr class="memitem:ac784587bcec8c38031db7ba9602ce7e5 inherit pro_attribs_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac784587bcec8c38031db7ba9602ce7e5"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
-<tr class="separator:ac784587bcec8c38031db7ba9602ce7e5 inherit pro_attribs_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52f2e1ffa18eaaa7634e603a3ed70bc6 inherit pro_attribs_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52f2e1ffa18eaaa7634e603a3ed70bc6"></a>
-TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>background_color</b></td></tr>
-<tr class="separator:a52f2e1ffa18eaaa7634e603a3ed70bc6 inherit pro_attribs_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4f5dfd63c47e2064b77841ce5e205d3 inherit pro_attribs_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4f5dfd63c47e2064b77841ce5e205d3"></a>
-TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>foreground_color</b></td></tr>
-<tr class="separator:ad4f5dfd63c47e2064b77841ce5e205d3 inherit pro_attribs_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1b3d5e3f9607d2b3a6e86794764793d inherit pro_attribs_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1b3d5e3f9607d2b3a6e86794764793d"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pos_x</b></td></tr>
-<tr class="separator:af1b3d5e3f9607d2b3a6e86794764793d inherit pro_attribs_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8056d8df4e7f35c95d370b3f0ec6d24 inherit pro_attribs_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8056d8df4e7f35c95d370b3f0ec6d24"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>pos_y</b></td></tr>
-<tr class="separator:ae8056d8df4e7f35c95d370b3f0ec6d24 inherit pro_attribs_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae34187587d4c18c52a2502fd712e1938 inherit pro_attribs_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae34187587d4c18c52a2502fd712e1938"></a>
+<tr class="inherit_header pro_attribs_class_gui_render_object"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_gui_render_object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_gui_render_object.html">GuiRenderObject</a></td></tr>
+<tr class="memitem:a0809ab1a36623bfbc8af47651b260aee inherit pro_attribs_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0809ab1a36623bfbc8af47651b260aee"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>width</b></td></tr>
-<tr class="separator:ae34187587d4c18c52a2502fd712e1938 inherit pro_attribs_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83c3447e889f8ef4f27eb630ba1c749f inherit pro_attribs_class_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83c3447e889f8ef4f27eb630ba1c749f"></a>
+<tr class="separator:a0809ab1a36623bfbc8af47651b260aee inherit pro_attribs_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a382927bcbea86db54cb08d21ddd384ad inherit pro_attribs_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a382927bcbea86db54cb08d21ddd384ad"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>height</b></td></tr>
-<tr class="separator:a83c3447e889f8ef4f27eb630ba1c749f inherit pro_attribs_class_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a382927bcbea86db54cb08d21ddd384ad inherit pro_attribs_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5d7c59e9d1bc445d9b75a03d911f637 inherit pro_attribs_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5d7c59e9d1bc445d9b75a03d911f637"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>visible</b> = true</td></tr>
+<tr class="separator:ae5d7c59e9d1bc445d9b75a03d911f637 inherit pro_attribs_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_render_object"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_render_object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_render_object.html">RenderObject</a></td></tr>
+<tr class="memitem:a90af3a730473acc67a659cd66e2bee07 inherit pro_attribs_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90af3a730473acc67a659cd66e2bee07"></a>
+TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>background_color</b></td></tr>
+<tr class="separator:a90af3a730473acc67a659cd66e2bee07 inherit pro_attribs_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15c215a2b51387c2d0e4aeab1beaab10 inherit pro_attribs_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15c215a2b51387c2d0e4aeab1beaab10"></a>
+TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>foreground_color</b></td></tr>
+<tr class="separator:a15c215a2b51387c2d0e4aeab1beaab10 inherit pro_attribs_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5121ad3bb7fd624002d0762e9a1c77e0 inherit pro_attribs_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5121ad3bb7fd624002d0762e9a1c77e0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>pos_x</b></td></tr>
+<tr class="separator:a5121ad3bb7fd624002d0762e9a1c77e0 inherit pro_attribs_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3be01afa54e0875b83fc5d872168f32f inherit pro_attribs_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3be01afa54e0875b83fc5d872168f32f"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>pos_y</b></td></tr>
+<tr class="separator:a3be01afa54e0875b83fc5d872168f32f inherit pro_attribs_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a451685f235431c643778935d4b118596 inherit pro_attribs_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a451685f235431c643778935d4b118596"></a>
+wchar_t&#160;</td><td class="memItemRight" valign="bottom"><b>ch</b> = 20</td></tr>
+<tr class="separator:a451685f235431c643778935d4b118596 inherit pro_attribs_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_object"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_object.html">Object</a></td></tr>
+<tr class="memitem:a5f7915e8bfc65929d42c2444e96e6cda inherit pro_attribs_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f7915e8bfc65929d42c2444e96e6cda"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
+<tr class="separator:a5f7915e8bfc65929d42c2444e96e6cda inherit pro_attribs_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_class_gui_element"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_gui_element')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_gui_element.html">GuiElement</a></td></tr>
+<tr class="memitem:a168df7a3e358dcccdd5a2849639c0bb4 inherit pro_methods_class_gui_element"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a168df7a3e358dcccdd5a2849639c0bb4"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>GuiElement</b> (string id, int x, int y, int width, int height, TCODColor fore, TCODColor back, <a class="el" href="class_gui_container.html">GuiContainer</a> *parent=nullptr)</td></tr>
+<tr class="separator:a168df7a3e358dcccdd5a2849639c0bb4 inherit pro_methods_class_gui_element"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_gui_render_object"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_gui_render_object')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_gui_render_object.html">GuiRenderObject</a></td></tr>
+<tr class="memitem:a9aa2a4ac50e710c0cd19226937992acd inherit pro_methods_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9aa2a4ac50e710c0cd19226937992acd"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>GuiRenderObject</b> (string id, int x, int y, int width, int height, TCODColor fore, TCODColor back)</td></tr>
+<tr class="separator:a9aa2a4ac50e710c0cd19226937992acd inherit pro_methods_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_class_render_object"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_render_object')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_render_object.html">RenderObject</a></td></tr>
+<tr class="memitem:a650e581fe27dc42cd05fa661750bcbca inherit pro_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a650e581fe27dc42cd05fa661750bcbca"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>RenderObject</b> (string id, int x, int y, TCODColor fore, TCODColor back, wchar_t ch=20)</td></tr>
+<tr class="separator:a650e581fe27dc42cd05fa661750bcbca inherit pro_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A simple multi-line text box. </p>
@@ -221,7 +252,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>height</b></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_gui_text_box.html">GuiTextBox</a></li>
-    <li class="footer">Generated on Mon Jun 9 2014 10:33:23 for Rogue M.D. by
+    <li class="footer">Generated on Sun Aug 10 2014 16:06:46 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

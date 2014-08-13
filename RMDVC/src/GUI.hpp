@@ -3,50 +3,23 @@
 
 #include "libtcod.hpp"
 #include "Object.hpp"
+#include "GUI_structs.hpp"
+#include "Body.hpp"
+
 #include <string>
+#include <vector>
+#include <memory>
+
+#include "Diagnostics.hpp"
 
 using std::string;
 
-const TCODColor gui_default_fore = TCODColor::white;
-const TCODColor gui_default_back = TCODColor::black;
 
-const TCOD_keycode_t list_up = TCODK_UP;
-const TCOD_keycode_t list_down = TCODK_DOWN;
-const TCOD_keycode_t list_select = TCODK_ENTER;
-
-class ColoredText
-{
-protected:
-	TCODColor foreground_color;
-	TCODColor background_color;
-
-	string text;
-
-public:
-	ColoredText(string text, 
-		TCODColor fore = gui_default_fore,
-		TCODColor back = gui_default_back)
-	{
-		this->text = text; 
-		foreground_color = fore;
-		background_color = back;
-	};
-	~ColoredText();
-
-	string getText(){ return text; }
-	TCODColor getForeColor() { return foreground_color; }
-	TCODColor getBackColor() { return background_color; }
-};
-
-struct GuiObjectLink
-{
-	Object* object;
-	ColoredText* text;
-
-	GuiObjectLink(Object* o, ColoredText* t){ object = o; text = t; };
-	~GuiObjectLink(){};
-};
-
+/** It includes width and height information as well as a switch to toggle rendering
+* on and off (bool visible).
+*
+* @ A class representing an object that may be rendered on screen as part of the GUI.
+*/
 class GuiRenderObject : public RenderObject
 {
 protected:
@@ -55,7 +28,7 @@ protected:
 
 	bool visible = true;
 
-	GuiRenderObject(string id, int x, int y, int width, int height, TCODColor fore, TCODColor back);
+	GuiRenderObject(int x, int y, int width, int height, TCODColor fore, TCODColor back);
 
 public:
 	int getWidth(){ return width; }
@@ -97,30 +70,38 @@ protected:
 	*/
 	TCODConsole* container_console;
 
-	bool drawBorder;
+	/** A dynamic GuiContainer is marked to be updated every turn by the Gui handling class.
+	* This should only be used for integral Gui parts such as health bars etc.
+	*/
+	bool dynamic; 
+
+	bool draw_border;
 	string title;
 
 public:
-	GuiContainer(string id, int x, int y, int width, int height, TCODColor fore, TCODColor back, bool drawBorder = false, string title = "");
+	GuiContainer(int x, int y, int width, int height, TCODColor fore, TCODColor back, bool dynamic = false, bool draw_border = false, string title = "");
 	~GuiContainer();
+
+	bool isDynamic() { return dynamic; };
+	void setDynamic(bool value) { dynamic = value; };
 
 	void addElement(GuiElement* element);
 	bool removeElement(string id);
 
+	void update(TCOD_key_t key);
+
 	/** This function calls the render() function of all GuiElements contained
 	* in the elements TCODList, after (if drawBorder == true) drawing its own frame and title.
-	* These functions draw on the container_console, which is then returned.
+	* These functions draw on the container_console, which is then blitted onto the given console.
 	*
-	* @brief Renders all 'child' GuiElements on the container_console.
-	* @returns The updated/redrawn container_console.
+	* @brief Renders all 'child' GuiElements on the given console.
 	*/
-	const TCODConsole* render();
+	void render(TCODConsole* con);
 };
 
-/** It provides parent handling functions, as well as an abstract render() function
-* which must be implemented by all children.
+/** It provides parent handling functions.
 *
-* @brief Base class for GuiElements.
+* @brief Base class for gui elements (controls).
 */
 class GuiElement : public GuiRenderObject
 {
@@ -147,8 +128,6 @@ protected:
 	string text;
 	TCOD_alignment_t alignment;
 
-	void render(TCODConsole* con);
-
 public:
 	GuiTextBox(string id, int x, int y, int width, int height, string text, TCODColor fore, TCODColor back, TCOD_alignment_t alignment = TCOD_LEFT);
 	~GuiTextBox();
@@ -159,8 +138,23 @@ public:
 	void setAlignment(TCOD_alignment_t alignment){ this->alignment = alignment; }
 	TCOD_alignment_t getAlignment(){ return alignment; }
 
+	void render(TCODConsole* con);
 };
 
+/** There may be multiple active elements in a GUI, but only one can be the currently
+* active one (the one "in focus"), the class implements methods for handling/checking activation.
+* Since all GUI elements reacting to input are for choosing/selecting something,
+* this class defines colors for the selected items, while the element is active and while
+* it is inactive. 
+*
+* It also implements a TCODList of GuiObjectLink structs representing the items that may
+* be selected and functions for adding items and tracking their number (item_count).
+*
+* Since this is the base class, removeItem(), update(), getSelected() and render() are abstract and
+* must be implemented by the derived class for the specific implementation.
+*
+* @brief Base class for active GUI elements, i.e. elements reacting to input.
+*/
 class ActiveGuiElement : public GuiElement
 {
 protected:
@@ -179,7 +173,9 @@ protected:
 	TCODList<GuiObjectLink*>* items;
 	int item_count = 0;
 
-	ActiveGuiElement(string id, int x, int y, int width, int height,
+	int max_item_display = 0;
+
+	ActiveGuiElement(string id, int x, int y, int width, int height, int max_item_display,
 		TCODColor fore, TCODColor back,
 		TCODColor sel_fore_act, TCODColor sel_back_act,
 		TCODColor sel_fore_inact, TCODColor sel_back_inact);
@@ -189,6 +185,7 @@ public:
 
 	bool isActive(){ return active; }
 	void makeActive(Gui* gui);
+	void makeInactive();
 
 	void setSelectionForeColorInactive(TCODColor color){ sel_fore_inactive = color; }
 	void setSelectionBackColorInactive(TCODColor color){ sel_back_inactive = color; }
@@ -200,14 +197,15 @@ public:
 	TCODColor getSelectionForeColorActive() { return sel_fore_active; }
 	TCODColor getSelectionBackColorActive() { return sel_back_active; }
 
-	void addItem(Object* o, string text, TCODColor fore = gui_default_fore, TCODColor back = gui_default_back);
-	void addItem(Object* o, ColoredText* text);
+	void addItem(std::string object_uuid, string text, TCODColor fore = gui_default_fore, TCODColor back = gui_default_back);
+	void addItem(std::string object_uuid, ColoredText* text);
+
+	void addItems(TCODList<GuiObjectLink*>* list);
 
 	/* This has to be virtual, because the removed Item might be part of the
 	current selection, which needs to be handled in order to avoid having
 	the selection pointer pointing at a destroyed element!*/
 	virtual bool removeItem(string text) = 0; 
-	
 
 	int getItemCount(){ return item_count; }
 	
@@ -215,19 +213,22 @@ public:
 
 	//There may be multiple Objects selected. Return the number
 	// of Objects and modify the parameter array within the function to 
-	// point at the Objects.
-	virtual int getSelected(Object* obj[]) = 0;
+	// return the UUIDs of the selected Objects.
+	virtual int getSelected(std::vector<std::string> obj_uuids) = 0;
 };
 
+/**
+* @brief A class representing a list of objects on the GUI, from which _one_ may be chosen.
+*/
 class GuiListChooser : public ActiveGuiElement
 {
 protected:
 	GuiObjectLink* selected = nullptr;
 	int selected_index = 0;
 
-	void render(TCODConsole* con);
 public:
 	GuiListChooser(string id, int x, int y, int width, int height,
+		int max_item_display,
 		TCODColor fore, TCODColor back,
 		TCODColor sel_fore_act, TCODColor sel_back_act,
 		TCODColor sel_fore_inact, TCODColor sel_back_inact);
@@ -236,38 +237,76 @@ public:
 	bool removeItem(string text);
 
 	void update(TCOD_key_t key);
-	int getSelected(Object* obj[]);
+	int getSelected(std::vector<std::string> obj_uuids);
+
+	void render(TCODConsole* con);
+};
+
+/** 
+* ###Mockup
+* ![Mockup of the BodyViewer](../img/mockup_bodyviewer.png "GuiBodyViewer Mockup")
+*
+* @brief A class representing a "body inspector", which can display a bodies composition and state.
+*/
+class GuiBodyViewer : public GuiContainer
+{
+protected:
+	Body* body;
+	GuiListChooser* bp_browser;
+	GuiTextBox* bp_info;
+	GuiListChooser* tissue_browser;
+
+	TCODList<GuiObjectLink*>* part_list;
+	TCODList<GuiObjectLink*>* tissue_list;
+
+public:
+	GuiBodyViewer(string id, int x, int y, int width, int height, TCODColor fore, TCODColor back, bool drawBorder = false, string title = "");
+	~GuiBodyViewer();
+
+	void render(TCODConsole* con);
+	//void update();
+
+	void setActiveBody(Body* b);
+	Body* getActiveBody() { return body; };
+	
 };
 
 /** It contains a render function, which will draw every registered GuiContainer
 * with all of its elements onto the given console.
 *
-* @brief A class which provides Gui handling to the Engine.
+* @brief A class which provides Gui handling functions to the Engine.
 */
 class Gui
 {
 private:
+	//The active one, and all marked as dynamic are updated every turn
 	TCODList<GuiContainer*>* containers;
-	TCODList<ActiveGuiElement*>* active_elements;
-	ActiveGuiElement* current_active = nullptr;
 
-	void makeActive(ActiveGuiElement* element);
+	GuiContainer* current_active = nullptr;
+
+	GuiContainer* getContainerFromUUID(string uuid);
+
+	const GuiContainer* getCurrentActiveContainer() { return current_active; }
+	void makeActive(GuiContainer* container);
 public:
 	Gui();
 	~Gui();
 
 	void render(TCODConsole* con);
+
+	/**@brief This function sends key input to the active container (window)
+	*/
 	void update(TCOD_key_t key);
 
 	void addContainer(GuiContainer* container);
-	bool removeContainer(string id);
+	bool removeContainer(string uuid);
+	bool makeActive(string uuid);
 
-	void registerActiveElement(ActiveGuiElement* element);
-	bool removeActiveElement(string id);
-
-	bool makeActive(string id);
-
-	const ActiveGuiElement* getCurrentActiveElement() { return current_active; }
+	/** This function is called when the engine switches out of the GameState::GUI state
+	* and closes all active elements (makes them invisible).
+	*/
+	void exitGUIState();
+	
 };
 
 #endif

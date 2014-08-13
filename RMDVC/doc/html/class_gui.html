@@ -68,6 +68,7 @@ $(document).ready(function(){initNavTree('class_gui.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_gui-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -75,33 +76,96 @@ $(document).ready(function(){initNavTree('class_gui.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>A class which provides <a class="el" href="class_gui.html" title="A class which provides Gui handling to the Engine. ">Gui</a> handling to the <a class="el" href="class_engine.html">Engine</a>.  
+<p>A class which provides <a class="el" href="class_gui.html" title="A class which provides Gui handling functions to the Engine. ">Gui</a> handling functions to the <a class="el" href="class_engine.html">Engine</a>.  
  <a href="class_gui.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_g_u_i_8hpp_source.html">GUI.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for Gui:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_gui__coll__graph.png" border="0" usemap="#_gui_coll__map" alt="Collaboration graph"/></div>
+<map name="_gui_coll__map" id="_gui_coll__map">
+<area shape="rect" id="node2" href="class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. " alt="" coords="5,501,131,528"/><area shape="rect" id="node3" href="class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="23,412,113,439"/><area shape="rect" id="node4" href="class_gui_render_object.html" title="GuiRenderObject" alt="" coords="7,247,129,273"/><area shape="rect" id="node8" href="class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="111,323,209,349"/><area shape="rect" id="node5" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="17,171,119,197"/><area shape="rect" id="node6" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="61,95,121,121"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa1bb691938ae98f202359ae31fdd62ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1bb691938ae98f202359ae31fdd62ff"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>render</b> (TCODConsole *con)</td></tr>
 <tr class="separator:aa1bb691938ae98f202359ae31fdd62ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa256af2c6e6a49de515e1bec29643ee6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa256af2c6e6a49de515e1bec29643ee6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui.html#aa256af2c6e6a49de515e1bec29643ee6">update</a> (TCOD_key_t key)</td></tr>
+<tr class="memdesc:aa256af2c6e6a49de515e1bec29643ee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sends key input to the active element. <br /></td></tr>
+<tr class="separator:aa256af2c6e6a49de515e1bec29643ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b5a6e47e56c17c9f31d8769040ac808"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b5a6e47e56c17c9f31d8769040ac808"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>addContainer</b> (<a class="el" href="class_gui_container.html">GuiContainer</a> *container)</td></tr>
 <tr class="separator:a7b5a6e47e56c17c9f31d8769040ac808"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d7ee2aa06f2d86652415d33cd937650"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d7ee2aa06f2d86652415d33cd937650"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>removeContainer</b> (string id)</td></tr>
 <tr class="separator:a9d7ee2aa06f2d86652415d33cd937650"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dd352989e497017e6cd503840c39342"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3dd352989e497017e6cd503840c39342"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>registerActiveElement</b> (<a class="el" href="class_active_gui_element.html">ActiveGuiElement</a> *element)</td></tr>
+<tr class="separator:a3dd352989e497017e6cd503840c39342"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13a07d58e8c69847871ada162b1b6376"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13a07d58e8c69847871ada162b1b6376"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>removeActiveElement</b> (string id)</td></tr>
+<tr class="separator:a13a07d58e8c69847871ada162b1b6376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4141c0276663a10d4e49ed3f0e27f147"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4141c0276663a10d4e49ed3f0e27f147"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>makeActive</b> (string id)</td></tr>
+<tr class="separator:a4141c0276663a10d4e49ed3f0e27f147"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65d86476f77ca4c7794dd5fa54d66269"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65d86476f77ca4c7794dd5fa54d66269"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>openPopup</b> (<a class="el" href="class_gui_container.html">GuiContainer</a> *container)</td></tr>
+<tr class="separator:a65d86476f77ca4c7794dd5fa54d66269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0b5ceb89a23066ec90a2b5285666b61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0b5ceb89a23066ec90a2b5285666b61"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>closePopup</b> ()</td></tr>
+<tr class="separator:ae0b5ceb89a23066ec90a2b5285666b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5b5f6a8cc9bb8fa2442dcd4138f5c4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui.html#aa5b5f6a8cc9bb8fa2442dcd4138f5c4b">exitGUIState</a> ()</td></tr>
+<tr class="separator:aa5b5f6a8cc9bb8fa2442dcd4138f5c4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b37cf2903030708ea49df957fc77c1e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3b37cf2903030708ea49df957fc77c1e"></a>
+const <a class="el" href="class_active_gui_element.html">ActiveGuiElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getCurrentActiveElement</b> ()</td></tr>
+<tr class="separator:a3b37cf2903030708ea49df957fc77c1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:aa7817f307296f99af1427bf31a8de374"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7817f307296f99af1427bf31a8de374"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>makeActive</b> (<a class="el" href="class_active_gui_element.html">ActiveGuiElement</a> *element)</td></tr>
+<tr class="separator:aa7817f307296f99af1427bf31a8de374"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a4887946d9cba2ad67b0228b271fcc663"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4887946d9cba2ad67b0228b271fcc663"></a>
 TCODList&lt; <a class="el" href="class_gui_container.html">GuiContainer</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>containers</b></td></tr>
 <tr class="separator:a4887946d9cba2ad67b0228b271fcc663"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f8e0a3a1867bf34f98f4a0501d0d808"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f8e0a3a1867bf34f98f4a0501d0d808"></a>
+TCODList&lt; <a class="el" href="class_active_gui_element.html">ActiveGuiElement</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>active_elements</b></td></tr>
+<tr class="separator:a0f8e0a3a1867bf34f98f4a0501d0d808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a303e940eae21672420a24a8f6ab4ed17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a303e940eae21672420a24a8f6ab4ed17"></a>
+<a class="el" href="class_active_gui_element.html">ActiveGuiElement</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>current_active</b> = nullptr</td></tr>
+<tr class="separator:a303e940eae21672420a24a8f6ab4ed17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0d685df952bc8d66c93125ada592cae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0d685df952bc8d66c93125ada592cae"></a>
+<a class="el" href="class_gui_container.html">GuiContainer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>popup_container</b> = nullptr</td></tr>
+<tr class="separator:af0d685df952bc8d66c93125ada592cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A class which provides <a class="el" href="class_gui.html" title="A class which provides Gui handling to the Engine. ">Gui</a> handling to the <a class="el" href="class_engine.html">Engine</a>. </p>
+<div class="textblock"><p>A class which provides <a class="el" href="class_gui.html" title="A class which provides Gui handling functions to the Engine. ">Gui</a> handling functions to the <a class="el" href="class_engine.html">Engine</a>. </p>
 <p>It contains a render function, which will draw every registered <a class="el" href="class_gui_container.html" title="A class that can hold several GuiElement children. ">GuiContainer</a> with all of its elements onto the given console. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aa5b5f6a8cc9bb8fa2442dcd4138f5c4b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Gui::exitGUIState </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is called when the engine switches out of the GameState::GUI state and closes all active elements (makes them invisible). </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="_g_u_i_8hpp_source.html">GUI.hpp</a></li>
 <li>src/GUI.cpp</li>
 </ul>
@@ -111,7 +175,7 @@ TCODList&lt; <a class="el" href="class_gui_container.html">GuiContainer</a> * &g
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_gui.html">Gui</a></li>
-    <li class="footer">Generated on Mon Jun 9 2014 10:33:23 for Rogue M.D. by
+    <li class="footer">Generated on Sun Aug 10 2014 16:06:46 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

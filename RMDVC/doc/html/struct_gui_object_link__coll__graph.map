@@ -1,0 +1,4 @@
+<map id="GuiObjectLink" name="GuiObjectLink">
+<area shape="rect" id="node2" href="$class_colored_text.html" title="A class encapsulating a string and background and foreground color information. " alt="" coords="5,95,96,121"/>
+<area shape="rect" id="node4" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="121,95,181,121"/>
+</map>

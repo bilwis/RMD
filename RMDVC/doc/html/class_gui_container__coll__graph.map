@@ -1,3 +1,5 @@
 <map id="GuiContainer" name="GuiContainer">
-<area shape="rect" id="node2" href="$class_element.html" title="Base class for GUI Elements and Containers. " alt="" coords="75,95,145,121"/>
+<area shape="rect" id="node2" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="60,247,181,273"/>
+<area shape="rect" id="node3" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="71,171,173,197"/>
+<area shape="rect" id="node4" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="68,95,128,121"/>
 </map>

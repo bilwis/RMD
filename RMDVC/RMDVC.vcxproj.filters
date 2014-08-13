@@ -425,6 +425,9 @@
     <ClCompile Include="src\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUIBodyViewer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Actor.hpp">
@@ -647,6 +650,9 @@
       <Filter>Include Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Object.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI_structs.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

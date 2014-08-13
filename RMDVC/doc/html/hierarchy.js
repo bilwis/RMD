@@ -2,18 +2,27 @@ var hierarchy =
 [
     [ "Actor", "class_actor.html", null ],
     [ "Body", "class_body.html", null ],
+    [ "ColoredText", "class_colored_text.html", null ],
     [ "Destructible", "class_destructible.html", null ],
-    [ "Element", "class_element.html", [
-      [ "GuiContainer", "class_gui_container.html", null ],
-      [ "GuiElement", "class_gui_element.html", [
-        [ "ActiveGuiElement", "class_active_gui_element.html", null ],
-        [ "GuiListBox", "class_gui_list_box.html", null ],
-        [ "GuiTextBox", "class_gui_text_box.html", null ]
-      ] ]
-    ] ],
     [ "Engine", "class_engine.html", null ],
     [ "Gui", "class_gui.html", null ],
+    [ "GuiObjectLink", "struct_gui_object_link.html", null ],
     [ "Map", "class_map.html", null ],
+    [ "Object", "class_object.html", [
+      [ "RenderObject", "class_render_object.html", [
+        [ "GuiRenderObject", "class_gui_render_object.html", [
+          [ "GuiContainer", "class_gui_container.html", [
+            [ "GuiBodyViewer", "class_gui_body_viewer.html", null ]
+          ] ],
+          [ "GuiElement", "class_gui_element.html", [
+            [ "ActiveGuiElement", "class_active_gui_element.html", [
+              [ "GuiListChooser", "class_gui_list_chooser.html", null ]
+            ] ],
+            [ "GuiTextBox", "class_gui_text_box.html", null ]
+          ] ]
+        ] ]
+      ] ]
+    ] ],
     [ "Part", "class_part.html", [
       [ "BodyPart", "class_body_part.html", null ],
       [ "Organ", "class_organ.html", null ]

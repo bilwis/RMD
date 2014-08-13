@@ -11,6 +11,7 @@
 #include "rapidxml.hpp"
 #include "libtcod.hpp"
 #include "Diagnostics.hpp"
+#include "GUI_structs.hpp"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -20,6 +21,7 @@
 #include <memory>
 #include <stdlib.h>
 #include <time.h>
+#include <vector>
 
 using std::string;
 
@@ -166,7 +168,7 @@ enum PartType{
  *
  * @brief This class is the abstract superclass for all parts that make up a body.
  */
-class Part{
+class Part: public Object{
 protected:
 	string id;
 	string name;
@@ -189,6 +191,8 @@ protected:
 	Part(string id, string name, float surface, PartType type);
 
 public:
+	string toString() { return name; }
+
 	/**Surface Area in RMD's body definition XML is not absolute.
 	 * It represents the percentage of the total surface of the BodyPart _one level
 	 * above_ that this Part occupies.
@@ -391,13 +395,24 @@ public:
  */
 class Body{
 private:
-	BodyPart *root;
+	BodyPart* root;
 
 	/**This map holds a list of all Parts (BodyParts and Organs) of a body, the key
 	 * being the internal id, and the value a pointer to the Part.
 	 */
-	std::map<std::string, Part*, strless> *part_map;
+	std::map<std::string, Part*, strless>* part_map;
 	typedef std::map<std::string, Part*, strless>::iterator part_map_iterator;
+
+	/**This list holds all Parts (BodyParts and Organs) of a body in a GuiObjectLink format.
+	* The Object pointer points to the part, the ColoredText is formatted to represent the "depth"
+	* of the part within the body structure:
+	*
+	*	ROOT
+	*		BP BELOW ROOT
+	*			BP
+	*		BP BELOW ROOT #2
+	*/
+	TCODList<GuiObjectLink*>* part_gui_list;
 
 	/**This function loads and parses a [body-definition XML](xml_help.html).
 	 * The library used for this is RapidXML.
@@ -452,6 +467,8 @@ private:
 	 */
 	void linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
 
+	void buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth);
+
 	void createSubgraphs(std::ofstream* stream, BodyPart* bp);
 	void createLinks(std::ofstream* stream, BodyPart* bp);
 
@@ -462,6 +479,11 @@ public:
 	 */
 	Body(const char *filename);
 	~Body();
+
+	BodyPart* getRootBP()
+	{
+		if (root != nullptr) { return root; }
+	};
 
 	/**This function removes the a Part of the Body, identified by the given internal id.
 	 * It also handles deregistering and destruction of the removed elements via their destructors.
@@ -474,6 +496,10 @@ public:
 	/**This function removes a random Part of the Body.
 	 */
 	void removeRandomPart();
+
+	/**This function returns the part_gui_list .
+	*/
+	TCODList<GuiObjectLink*>* getPartGUIList() { return part_gui_list; }
 
 	void printBodyMap(const char* filename, BodyPart* mroot);
 

@@ -66,6 +66,14 @@
 			<impairment>0.8</impairment>
 		</tissue>
 		<tissue>
+			<id>CARTILAGE</id>
+			<name>Cartilage</name>
+			<pain>0.3</pain>
+			<blood_flow>0.1</blood_flow>
+			<resistance>0.75</resistance>
+			<impairment>0.5</impairment>
+		</tissue>
+		<tissue>
 			<id>NERVE</id>
 			<name>Nerve</name>
 			<pain>0.7</pain>
@@ -96,6 +104,38 @@
 			<blood_flow>0.0</blood_flow>
 			<resistance>0.0</resistance>
 			<impairment>0.0</impairment>
+		</tissue>
+		<tissue>
+			<id>TRACHEA</id>
+			<name>Trachea</name>
+			<pain>0.35</pain>
+			<blood_flow>0.25</blood_flow>
+			<resistance>0.5</resistance>
+			<impairment>0.75</impairment>
+		</tissue>
+		<tissue>
+			<id>OESOPHAGUS</id>
+			<name>Oesophagus</name>
+			<pain>0.25</pain>
+			<blood_flow>0.4</blood_flow>
+			<resistance>0.2</resistance>
+			<impairment>0.5</impairment>
+		</tissue>
+		<tissue>
+			<id>CERV_SPINE</id>
+			<name>Cervical Spine</name>
+			<pain>0.1</pain>
+			<blood_flow>0.4</blood_flow>
+			<resistance>0.8</resistance>
+			<impairment>1.0</impairment>
+		</tissue>
+		<tissue>
+			<id>THYROIDEA</id>
+			<name>Thyroid Gland</name>
+			<pain>0.2</pain>
+			<blood_flow>0.3</blood_flow>
+			<resistance>0.2</resistance>
+			<impairment>0.2</impairment>
 		</tissue>
 	</tissues>
 	<body>
@@ -438,8 +478,22 @@
 					<name>Neck</name>
 					<surface>0.4</surface>
 					<connector>UPPER_TORSO</connector>
-					<organ_tissue symmetrical="true">
-						<tissue_def hit_prob="1.0">DEBUG</tissue_def>
+					<organ_tissue symmetrical="false">
+						<tissue_def hit_prob="1.0">SKIN</tissue_def>
+						<tissue_def hit_prob="0.25">FAT</tissue_def>
+						<tissue_def hit_prob="0.85">MUSCLE</tissue_def>
+						<tissue_def hit_prob="0.2" name="Cartilago thyreoides">CARTILAGE</tissue_def>
+						<tissue_def hit_prob="0.2">THYROIDEA</tissue_def>
+						<tissue_def hit_prob="0.15" name="Vena jugularis" custom_id="V_JUGULARIS">M_VEIN</tissue_def>
+						<tissue_def hit_prob="0.1" name="Arteria carotis communis" custom_id="A_CAROTIS_COMMUNIS">M_ARTERY</tissue_def>
+						<tissue_def hit_prob="0.1" name="Plexus brachialis" custom_id="N_PLEXUS_BRACHIALIS">M_NERVE</tissue_def>
+						<tissue_def hit_prob="0.03" name="Nervus phrenicus" custom_id="N_PHRENICUS">M_NERVE</tissue_def>
+						<tissue_def hit_prob="0.04" name="Nervus vagus" custom_id="N_VAGUS">M_NERVE</tissue_def>
+						<tissue_def hit_prob="0.4">TRACHEA</tissue_def>
+						<tissue_def hit_prob="0.35">OESOPHAGUS</tissue_def>
+						<tissue_def hit_prob="0.5">CERV_SPINE</tissue_def>
+						<tissue_def hit_prob="0.85">MUSCLE</tissue_def>
+						<tissue_def hit_prob="1.0">SKIN</tissue_def>						
 					</organ_tissue>
 				</organ>
 				

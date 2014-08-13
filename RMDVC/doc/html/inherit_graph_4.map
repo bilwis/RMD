@@ -1,8 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_element.html" title="Base class for GUI Elements and Containers. " alt="" coords="5,31,76,57"/>
-<area shape="rect" id="node2" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="124,5,221,32"/>
-<area shape="rect" id="node3" href="$class_gui_element.html" title="Base class for GuiElements. " alt="" coords="127,56,218,83"/>
-<area shape="rect" id="node4" href="$class_active_gui_element.html" title="ActiveGuiElement" alt="" coords="269,5,395,32"/>
-<area shape="rect" id="node5" href="$class_gui_list_box.html" title="GuiListBox" alt="" coords="289,56,375,83"/>
-<area shape="rect" id="node6" href="$class_gui_text_box.html" title="A simple multi&#45;line text box. " alt="" coords="287,107,377,133"/>
+<area shape="rect" id="node1" href="$class_destructible.html" title="Destructible" alt="" coords="5,5,96,32"/>
 </map>

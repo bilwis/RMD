@@ -36,8 +36,8 @@ Tissue::~Tissue()
 {
 }
 
-Part::Part(string id, string name, float surface, PartType type) :
-	surface(surface), type(type){
+Part::Part(string id, string name, float surface, PartType type) : Object()
+{
 
 	/* The XML parsing function works with pointers to strings only.
 	 * Every "id", "name" and any other string is only copied into memory ONCE, and that
@@ -48,8 +48,11 @@ Part::Part(string id, string name, float surface, PartType type) :
 	 * THE MEMORY to which the "parsing pointer" points and maintain a reference to it via their
 	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
 	 */
-	this->id = string(id);
 	this->name = string(name);
+	this->id = string(id);
+
+	this->surface = surface;
+	this->type = type;
 
 	super = NULL;
 }
@@ -181,6 +184,10 @@ Body::Body(const char *filename){
 		//go through all of the parsed data and make a list with pointers to every part of the Body
 		part_map = new std::map<std::string, Part*, strless>();
 		part_map = extractParts(root, part_map);
+
+		//create the formatted and linked part list for the GUI
+		part_gui_list = new TCODList<GuiObjectLink*>();
+		buildPartList(part_gui_list, root, 0);
 
 #ifdef _DEBUG
 		printBodyMap("body.gv", root);
@@ -689,14 +696,80 @@ bool Body::removePart(std::string part_id) {
 
 	//Part is a BodyPart: make list of all children, remove them
 	// and the part itself
+	//TODO
 
+	//Refresh GUI part list
+	part_gui_list->clear();
+	buildPartList(part_gui_list, root, 0);
 
+#ifdef _DEBUG
 	//Refresh part map
 	part_map->clear();
 	part_map = extractParts(root, part_map);
 
 	printBodyMap("body_mt.gv", root);
+#endif
+
 	return true;
+}
+
+void Body::buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth)
+{
+	//debug_print("Depth: %i, Part: %s \n", depth, p->getId());
+	if (p->getType() == PartType::TYPE_ORGAN)
+	{
+		//Append to end of list "gui_list_indent_char [times depth] ORGAN_NAME"
+		std::string str = "";
+
+		for (int i = 0; i <= depth; i++)
+		{
+			str.append(gui_list_indent_char);
+		}
+
+		str.append(p->getName());
+
+		list->push(
+				new GuiObjectLink(
+					p->getUUID(),
+					new ColoredText(str)
+				)
+			);
+
+		return;
+	}
+	if (p->getType() == PartType::TYPE_BODYPART)
+	{
+		//Append to end of list "gui_list_indent_char [times depth] BODYPART_NAME"
+		BodyPart *bp = (BodyPart*)p;
+		std::string str = "";
+
+		for (int i = 0; i <= depth; i++)
+		{
+			str.append(gui_list_indent_char);
+		}
+
+		str.append(bp->getName());
+
+		list->push(
+				new GuiObjectLink(
+					bp->getUUID(),
+					new ColoredText(str)
+				)
+			);
+
+		//Call this function on all children of the BodyPart
+		for (Part** it = bp->getChildList()->begin(); it != bp->getChildList()->end(); it++)
+		{
+			buildPartList(list, *it, depth + 1);
+		}
+
+		bp = nullptr;
+
+		return;
+	}
+
+	debug_error("ERROR: Tried to call recursive part list building function on invalid Part* (neither TYPE_BODYPART nor TYPE_ORGAN)!");
+	return;
 }
 
 void Body::printBodyMap(const char* filename, BodyPart* mroot) {

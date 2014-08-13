@@ -19,7 +19,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_actor_8hpp_source.html"
+"_actor_8hpp_source.html",
+"class_tissue.html#af38acffd09f9f6aa48bbcdd938964cc2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

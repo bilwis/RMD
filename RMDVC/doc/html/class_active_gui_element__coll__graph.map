@@ -1,5 +1,7 @@
 <map id="ActiveGuiElement" name="ActiveGuiElement">
-<area shape="rect" id="node2" href="$class_gui_element.html" title="Base class for GuiElements. " alt="" coords="25,260,115,287"/>
-<area shape="rect" id="node3" href="$class_element.html" title="Base class for GUI Elements and Containers. " alt="" coords="5,95,76,121"/>
-<area shape="rect" id="node5" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="76,171,173,197"/>
+<area shape="rect" id="node2" href="$class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="53,412,143,439"/>
+<area shape="rect" id="node3" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="5,247,127,273"/>
+<area shape="rect" id="node7" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="104,323,201,349"/>
+<area shape="rect" id="node4" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="15,171,117,197"/>
+<area shape="rect" id="node5" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="59,95,119,121"/>
 </map>

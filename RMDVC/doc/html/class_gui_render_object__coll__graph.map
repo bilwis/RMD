@@ -1,0 +1,4 @@
+<map id="GuiRenderObject" name="GuiRenderObject">
+<area shape="rect" id="node2" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="15,171,117,197"/>
+<area shape="rect" id="node3" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="36,95,96,121"/>
+</map>

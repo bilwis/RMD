@@ -10,5 +10,7 @@ var class_engine =
     [ "map", "class_engine.html#a371e914b9bf19dbb9c43c2f68213ec43", null ],
     [ "player", "class_engine.html#ad602ebe47e9c5fd26cfdf06ba9e6c942", null ],
     [ "sampleContainer", "class_engine.html#a5cc05918f067b17f0b56e4b93c39f1d5", null ],
-    [ "sampleTextBox", "class_engine.html#a5eaba669db9f8bacf5683246fe894e29", null ]
+    [ "sampleList", "class_engine.html#aaedeaff2505a3369c724bd123152381c", null ],
+    [ "sampleTextBox", "class_engine.html#a5eaba669db9f8bacf5683246fe894e29", null ],
+    [ "state", "class_engine.html#a5a9891e78d0929a3ccb1cb555691f221", null ]
 ];

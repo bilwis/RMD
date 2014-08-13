@@ -1,62 +1,66 @@
 #include "GUI.hpp"
 
-//Commentate
 
 Gui::Gui(){
 	containers = new TCODList<GuiContainer*>();
-	active_elements = new TCODList<ActiveGuiElement*>();
 };
 Gui::~Gui(){
 	containers->clearAndDelete();
 	delete containers;
 
-	active_elements->clearAndDelete();
-	delete active_elements;
-
 	delete current_active;
 };
+
+GuiContainer* Gui::getContainerFromUUID(string uuid)
+{
+	for (GuiContainer** it = containers->begin(); it != containers->end(); it++)
+	{
+		GuiContainer *container = *it;
+		if (container->getUUID() == uuid)
+		{
+			return container;
+		}
+	}
+	return nullptr;
+}
 
 void Gui::addContainer(GuiContainer* container){
 	containers->push(container);
 }
 
-void Gui::registerActiveElement(ActiveGuiElement* element)
+bool Gui::removeContainer(string uuid)
 {
-	active_elements->push(element);
+	GuiContainer* c = getContainerFromUUID(uuid);
+	if (c == nullptr) { return false; }
+
+	containers->removeFast(c);
+	return true;
 }
 
-//TODO: Add Remove Functions !
-
-void Gui::makeActive(ActiveGuiElement* element)
+void Gui::makeActive(GuiContainer* container)
 {
-	current_active = element;
-	element->makeActive(this);
+	current_active = container;
+	container->setVisibility(true);
+	//Container doesn't need to be notified that it is active,
+	// it's update() function is only called if it is, so no check is necessary.
 }
 
-bool Gui::makeActive(string id)
+bool Gui::makeActive(string uuid)
 {
-	for (ActiveGuiElement** it = active_elements->begin(); it != active_elements->end(); it++)
-	{
-		ActiveGuiElement *element = *it;
-		if (element->getId() == id)
-		{
-			makeActive(element);
-			return true;
-		}
-	}
-	return false;
+	GuiContainer* c = getContainerFromUUID(uuid);
+	if (c == nullptr) { return false; }
+
+	makeActive(c);
+	return true;
 }
 
 void Gui::update(TCOD_key_t key){
-	for (ActiveGuiElement** it = active_elements->begin(); it != active_elements->end(); it++)
+	for (GuiContainer** it = containers->begin(); it != containers->end(); it++)
 	{
-		ActiveGuiElement *element = *it;
-		if (element == current_active)
+		GuiContainer *container = *it;
+		if (container->isDynamic() || container == current_active)
 		{
-			element->update(key);
-		} else {
-			//TODO: Do you have to update all Active Elements that are not active?
-			element->update(key);
+			container->update(key);
 		}
 	}
 }
@@ -69,15 +73,18 @@ void Gui::render(TCODConsole* con){
 	{
 		GuiContainer *container = *it;
 		if (container->isVisible()){
-			TCODConsole::blit(container->render(), 0, 0, 0, 0, con,
-				container->getPosX(),
-				container->getPosY());
+			container->render(con);
 		}
 	}
 }
 
-GuiRenderObject::GuiRenderObject(string id, int x, int y, int width, int height, TCODColor fore, TCODColor back) :
-RenderObject(id, x, y, fore, back){
+void Gui::exitGUIState() {
+	current_active->setVisibility(false);
+	current_active = nullptr;
+}
+
+GuiRenderObject::GuiRenderObject(int x, int y, int width, int height, TCODColor fore, TCODColor back) :
+RenderObject(x, y, fore, back){
 	this->width = width;
 	this->height = height;
 }
@@ -88,19 +95,21 @@ GuiRenderObject::~GuiRenderObject()
 }
 
 GuiElement::GuiElement(string id, int x, int y, int width, int height, TCODColor fore, TCODColor back, GuiContainer* parent):
-GuiRenderObject(id, x, y, width, height, fore, back)
+GuiRenderObject(x, y, width, height, fore, back)
 {
 	this->parent = parent;
 }
 
 GuiElement::~GuiElement(){}
 
-GuiContainer::GuiContainer(string id, int x, int y, int width, int height,
-	TCODColor fore, TCODColor back, bool drawBorder, string title)
-	:GuiRenderObject(id, x, y, width, height, fore, back){
+GuiContainer::GuiContainer(int x, int y, int width, int height,
+	TCODColor fore, TCODColor back, bool dynamic, bool draw_border, string title)
+	:GuiRenderObject(x, y, width, height, fore, back)
+{
 	elements = new TCODList<GuiElement*>();
 	container_console = new TCODConsole(width, height);
-	this->drawBorder = drawBorder;
+	setDynamic(dynamic);
+	this->draw_border = draw_border;
 	this->title = string(title);
 }
 
@@ -117,9 +126,14 @@ void GuiContainer::addElement(GuiElement* element)
 	element->setParent(this);
 }
 
-const TCODConsole* GuiContainer::render()
+void GuiContainer::update(TCOD_key_t key)
 {
-	if (!visible) { return nullptr; }
+
+}
+
+void GuiContainer::render(TCODConsole* con)
+{
+	if (!visible) { return; }
 
 	//Set Defaults
 	container_console->setDefaultBackground(background_color);
@@ -128,7 +142,7 @@ const TCODConsole* GuiContainer::render()
 	container_console->setBackgroundFlag(TCOD_BKGND_SET);
 
 	//Draw Border, if requested
-	if (drawBorder){
+	if (draw_border){
 		if (!title.empty())
 		{
 			container_console->printFrame(0, 0, width, height, true,
@@ -149,7 +163,8 @@ const TCODConsole* GuiContainer::render()
 		GuiElement *element = *it;
 		element->render(container_console);
 	}
-	return container_console;
+	
+	TCODConsole::blit(container_console, 0, 0, 0, 0, con, pos_x, pos_y);
 }
 
 GuiTextBox::GuiTextBox(string id, int x, int y, int width, int height, string text, TCODColor fore, TCODColor back, TCOD_alignment_t alignment)
@@ -173,6 +188,7 @@ void GuiTextBox::render(TCODConsole* con){
 }
 
 ActiveGuiElement::ActiveGuiElement(string id, int x, int y, int width, int height,
+	int max_item_display,
 	TCODColor fore, TCODColor back,
 	TCODColor sel_fore_act, TCODColor sel_back_act,
 	TCODColor sel_fore_inact, TCODColor sel_back_inact):
@@ -183,6 +199,8 @@ ActiveGuiElement::ActiveGuiElement(string id, int x, int y, int width, int heigh
 	sel_fore_inactive = sel_fore_inact;
 	sel_back_inactive = sel_back_inact;
 
+	this->max_item_display = max_item_display;
+
 	items = new TCODList <GuiObjectLink*>();
 }
 
@@ -192,34 +210,42 @@ ActiveGuiElement::~ActiveGuiElement()
 	delete items;
 }
 
-void ActiveGuiElement::addItem(Object* o, string text, TCODColor fore, TCODColor back)
+void ActiveGuiElement::addItem(std::string object_uuid, string text, TCODColor fore, TCODColor back)
 {
 	ColoredText* t = new ColoredText(text, fore, back);
-	addItem(o, t);
+	addItem(object_uuid, t);
 }
 
-void ActiveGuiElement::addItem(Object* o, ColoredText* text)
+void ActiveGuiElement::addItem(std::string object_uuid, ColoredText* text)
 {
-	items->push(new GuiObjectLink(o, text));
+	items->push(new GuiObjectLink(object_uuid, text));
 	item_count++;
+	item_change = true;
+}
+
+void ActiveGuiElement::addItems(TCODList<GuiObjectLink*>* list)
+{
+	items->addAll(*list);
+	item_count += list->size();
 	item_change = true;
 }
 
 void ActiveGuiElement::makeActive(Gui* gui)
 {
-	if (gui->getCurrentActiveElement() == this){
-		active = true;
-		return;
-	}
-		
-	throw new std::exception("Tried to activate Element, but Gui does not list it as the active one!");
+	//TODO
+}
+
+void ActiveGuiElement::makeInactive()
+{
+	active = false;
 }
 
 GuiListChooser::GuiListChooser(string id, int x, int y, int width, int height,
+	int max_item_display,
 	TCODColor fore, TCODColor back,
 	TCODColor sel_fore_act, TCODColor sel_back_act,
 	TCODColor sel_fore_inact, TCODColor sel_back_inact) :
-	ActiveGuiElement(id, x, y, width, height,
+	ActiveGuiElement(id, x, y, width, height, max_item_display,
 	fore, back, sel_fore_act, sel_back_act, sel_fore_inact, sel_back_inact){}
 
 GuiListChooser::~GuiListChooser()
@@ -247,10 +273,11 @@ bool GuiListChooser::removeItem(string text)
 	return false;
 }
 
-int GuiListChooser::getSelected(Object* obj[])
+int GuiListChooser::getSelected(std::vector<std::string> obj_uuids)
 {
 	//Only one item!
-	obj = new Object*[]{selected->object};
+	obj_uuids.clear();
+	obj_uuids.push_back(selected->object_uuid);
 	return 1;
 }
 
@@ -314,6 +341,12 @@ void GuiListChooser::render(TCODConsole* con)
 	
 	for (GuiObjectLink** it = items->begin(); it != items->end(); it++)
 	{
+		if (index == max_item_display - 1)
+		{
+			con->printRect(pos_x, pos_y + index, width, 1, "...");
+			break;
+		}
+
 		GuiObjectLink *item = *it;
 
 		//GuiListChooser will use the Fore color of the Item,

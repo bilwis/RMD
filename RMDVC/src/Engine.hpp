@@ -10,12 +10,16 @@
 * as well as holding the loaded Actors, Map and providing
 * functions for GUI handling.
 */
+enum class GameState {GUI, GAME};
+
 class Engine {
 private:
 	/** During rendering, actors and the map are rendered on
 	* the gameConsole object, which is blitted onto the root Console.
 	*/
 	TCODConsole *gameConsole;
+
+	GameState state;
 
 public :
 
@@ -24,7 +28,7 @@ public :
     Map *map;
 
 	Gui *gui;
-	GuiContainer *sampleContainer;
+	GuiBodyViewer *sampleContainer;
 	GuiTextBox *sampleTextBox;
 	GuiListChooser *sampleList;
  

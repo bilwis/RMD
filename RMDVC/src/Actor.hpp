@@ -4,7 +4,7 @@
 #include "libtcod.hpp"
 #include "Destructible.hpp"
 
-class Actor {
+class Actor : public Object {
 public :
     int x,y; // position on map
     int ch; // ascii code
