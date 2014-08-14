@@ -8,12 +8,6 @@ digraph G {
 		L_ANKLE [label="Left Ankle"];
 		L_HINDFOOT [label="Left Hindfoot"];
 		L_MIDFOOT [label="Left Midfoot"];
-		L_FOREFOOT [label="Left Forefoot"];
-		L_HALLUX [label="Left Big Toe"];
-		L_SECOND_TOE [label="Left Second Toe"];
-		L_THIRD_TOE [label="Left Third Toe"];
-		L_FOURTH_TOE [label="Left Fourth Toe"];
-		L_FIFTH_TOE [label="Left Fifth Toe"];
 	 } 
 	subgraph cluster_L_LOWER_LEG {
 		label = "Left Lower Leg";
@@ -24,59 +18,6 @@ digraph G {
 		label = "Left Upper Leg";
 		L_HIP [label="Left Hip"];
 		L_THIGH [label="Left Thigh"];
-	 } 
-	 } 
-	subgraph cluster_R_LEG {
-		label = "Right Leg";
-	subgraph cluster_R_FOOT {
-		label = "Right Foot";
-		R_ANKLE [label="Right Ankle"];
-		R_HINDFOOT [label="Right Hindfoot"];
-	 } 
-	subgraph cluster_R_LOWER_LEG {
-		label = "Right Lower Leg";
-		R_KNEE [label="Right Knee"];
-		R_CALF [label="Right Calf"];
-	 } 
-	subgraph cluster_R_UPPER_LEG {
-		label = "Right Upper Leg";
-		R_HIP [label="Right Hip"];
-		R_THIGH [label="Right Thigh"];
-	 } 
-	 } 
-	subgraph cluster_HEAD {
-		label = "Head";
-		NECK [label="Neck"];
-		VISCEROCRANIUM [label="Face"];
-		NEUROCRANIUM [label="Skull"];
-	 } 
-	subgraph cluster_TORSO {
-		label = "Torso";
-		UPPER_TORSO [label="Upper Torso"];
-		ABDOMEN [label="Lower Torso"];
-		PELVIS [label="Pelvic Region"];
-	 } 
-	subgraph cluster_R_ARM {
-		label = "Right Arm";
-	subgraph cluster_R_HAND {
-		label = "Right Hand";
-		R_WRIST [label="Right Wrist"];
-		R_PALM [label="Right Palm"];
-		R_THUMB [label="Right Thumb"];
-		R_INDEX [label="Right Index Finger"];
-		R_MIDDLE [label="Right Middle Finger"];
-		R_RING [label="Right Ring Finger"];
-		R_LITTLE [label="Right Little Finger"];
-	 } 
-	subgraph cluster_R_LOWER_ARM {
-		label = "Right Lower Arm";
-		R_ELBOW [label="Right Elbow"];
-		R_LOWER_ARM_PROPER [label="Right Lower Arm Proper"];
-	 } 
-	subgraph cluster_R_UPPER_ARM {
-		label = "Right Upper Arm";
-		R_SHOULDER [label="Right Shoulder"];
-		R_UPPER_ARM_PROPER [label="Right Upper Arm Proper"];
 	 } 
 	 } 
 	subgraph cluster_L_ARM {
@@ -102,43 +43,40 @@ digraph G {
 		L_UPPER_ARM_PROPER [label="Left Upper Arm Proper"];
 	 } 
 	 } 
+	subgraph cluster_HEAD {
+		label = "Head";
+		NECK [label="Neck"];
+		VISCEROCRANIUM [label="Face"];
+		NEUROCRANIUM [label="Skull"];
+	 } 
+	subgraph cluster_TORSO {
+		label = "Torso";
+		UPPER_TORSO [label="Upper Torso"];
+		ABDOMEN [label="Lower Torso"];
+		PELVIS [label="Pelvic Region"];
+	 } 
+	subgraph cluster_R_ARM {
+		label = "Right Arm";
+	subgraph cluster_R_UPPER_ARM {
+		label = "Right Upper Arm";
+		R_SHOULDER [label="Right Shoulder"];
+		R_UPPER_ARM_PROPER [label="Right Upper Arm Proper"];
+	 } 
+	subgraph cluster_R_LOWER_ARM {
+		label = "Right Lower Arm";
+		R_ELBOW [label="Right Elbow"];
+		R_LOWER_ARM_PROPER [label="Right Lower Arm Proper"];
+	 } 
+	 } 
 	 } 
 
 L_CALF -> L_ANKLE;
 L_ANKLE -> L_HINDFOOT;
 L_HINDFOOT -> L_MIDFOOT;
-L_MIDFOOT -> L_FOREFOOT;
-L_FOREFOOT -> L_HALLUX;
-L_FOREFOOT -> L_SECOND_TOE;
-L_FOREFOOT -> L_THIRD_TOE;
-L_FOREFOOT -> L_FOURTH_TOE;
-L_FOREFOOT -> L_FIFTH_TOE;
 L_THIGH -> L_KNEE;
 L_KNEE -> L_CALF;
 PELVIS -> L_HIP;
 L_HIP -> L_THIGH;
-R_CALF -> R_ANKLE;
-R_ANKLE -> R_HINDFOOT;
-R_THIGH -> R_KNEE;
-R_KNEE -> R_CALF;
-PELVIS -> R_HIP;
-R_HIP -> R_THIGH;
-UPPER_TORSO -> NECK;
-NECK -> VISCEROCRANIUM;
-NECK -> NEUROCRANIUM;
-UPPER_TORSO -> ABDOMEN;
-ABDOMEN -> PELVIS;
-R_LOWER_ARM_PROPER -> R_WRIST;
-R_WRIST -> R_PALM;
-R_PALM -> R_THUMB;
-R_PALM -> R_INDEX;
-R_PALM -> R_MIDDLE;
-R_PALM -> R_RING;
-R_PALM -> R_LITTLE;
-R_UPPER_ARM_PROPER -> R_ELBOW;
-R_ELBOW -> R_LOWER_ARM_PROPER;
-UPPER_TORSO -> R_SHOULDER;
-R_SHOULDER -> R_UPPER_ARM_PROPER;
 L_LOWER_ARM_PROPER -> L_WRIST;
 L_WRIST -> L_PALM;
 L_PALM -> L_THUMB;
@@ -150,4 +88,13 @@ L_UPPER_ARM_PROPER -> L_ELBOW;
 L_ELBOW -> L_LOWER_ARM_PROPER;
 UPPER_TORSO -> L_SHOULDER;
 L_SHOULDER -> L_UPPER_ARM_PROPER;
+UPPER_TORSO -> NECK;
+NECK -> VISCEROCRANIUM;
+NECK -> NEUROCRANIUM;
+UPPER_TORSO -> ABDOMEN;
+ABDOMEN -> PELVIS;
+UPPER_TORSO -> R_SHOULDER;
+R_SHOULDER -> R_UPPER_ARM_PROPER;
+R_UPPER_ARM_PROPER -> R_ELBOW;
+R_ELBOW -> R_LOWER_ARM_PROPER;
 }

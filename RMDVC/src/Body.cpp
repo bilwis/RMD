@@ -71,19 +71,43 @@ BodyPart::BodyPart(string id, string name, float surface) :
 
 BodyPart::~BodyPart()
 {
-	children->clearAndDelete();
+	debug_print("BodyPart %s is kill.\n", this->id.c_str());
+
+	slated_for_destruction = true;
+
+	//Organ children can be removed by calling their destructor.
+	//NOTE: Organs delete themselves in a chain reaction!!! When an upstream root
+	// gets deleted, it will delete all downstream branches as well. Therefore,
+	// the BodyPart has to check after deleting every Organ wheter or not there are still
+	// any Organs left to delete.
+	while (child_count > 0)
+	{
+		debug_print("%s is killing a child: %s. Count left: %i.\n", this->getId().c_str(), children->peek()->getId().c_str(), child_count);
+		delete children->peek();
+	}
+
 	delete children;
+	
+	//Remove self from parents (super) child list.
+	if (super != nullptr)
+	{
+		BodyPart* sup = static_cast<BodyPart*>(super);
+		sup->removeChild(this->getUUID());
+		super = nullptr;
+	}
 }
 
 void BodyPart::addChild(Part *child){
 	children->insertBefore(child, 0);
 	child->setSuperPart(this);
+	child_count++;
 }
 
 void BodyPart::addChildren(Part **child_array, int count){
 	for (int i=0; i < count; i++){
 		children->push(child_array[i]);
 		child_array[i]->setSuperPart(this);
+		child_count++;
 	}
 }
 
@@ -92,12 +116,26 @@ TCODList<Part*>* BodyPart::getChildList()
 	return children;
 }
 
-bool BodyPart::removeChild(string id){
-	//Iterate though the list of children and remove it
+bool BodyPart::removeChild(string uuid){
+	
+	//Iterate though the list of children and remove the child with the matching UUID
 	for (Part** it = children->begin(); it != children->end(); it++)
 	{
 		Part *part = *it;
-		if (id.compare(part->getId()) == 0){
+		if (uuid.compare(part->getUUID()) == 0){
+
+			//If this is the last child,
+			// remove the child from the list and
+			// destroy the BodyPart entirely (if it is not slated for destruction already).
+			if (children->size() == 1)
+			{
+				child_count = 0;
+				children->remove(it);
+				if (!slated_for_destruction) { delete this; }
+				return true;
+			}
+
+			child_count--;
 			children->removeFast(it);
 			return true;
 		}
@@ -127,18 +165,24 @@ Organ::Organ(string id, string name, float surface,
 
 Organ::~Organ(){
 	//The organ destructor automatically removes it from the child
-	//list of it's BodyPart. It also calls the destructor on all of its
+	//list of it's BodyPart (if it is not slated for destruction itself).
+	//It also calls the destructor on all of its
 	//own children and calls the upstream root organ's removal function on itself.
 
 	debug_print("Organ %s is kill.\n", this->id.c_str());
-
 	
 	slated_for_destruction = true;
-	if (connector != nullptr && !connector->slated_for_destruction) { connector->removeConnectedOrgan(this); connector = nullptr; }
+	if (connector != nullptr && !connector->slated_for_destruction) 
+	{
+		connector->removeConnectedOrgan(this); 
+		connector->is_stump = true;
+		connector = nullptr; 
+	}
 	
 	BodyPart* bp = static_cast<BodyPart*>(super);
-	bp->removeChild(this->id);
-	int size = connected_organs->size();
+	bp->removeChild(this->getUUID());
+	
+
 	connected_organs->clearAndDelete();
 	delete connected_organs;
 
@@ -666,37 +710,6 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	return bp;
 }
 
-void Body::removeRandomPart() {
-	debug_print("Remove Random Part from Body:\n");
-
-	//choose one randomly from the list
-	Part* random_part = NULL;
-	srand(time(NULL));
-	int stopid = rand() % part_map->size();
-	debug_print("Random element chosen: Nr. %i\n", stopid);
-	int it_count = 0;
-
-	for(part_map_iterator iterator = part_map->begin(); iterator != part_map->end(); iterator++) {
-	    if (it_count == stopid)
-	    {
-	    	random_part = iterator->second;
-	    	break;
-	    }
-	    it_count++;
-	}
-
-	if (random_part == NULL)
-	{
-		debug_error("No element %i.\n", stopid);
-		debug_print("Remove Random Part from Body failed.\n");
-		return;
-	}
-
-	debug_print("Chose %s.\n", random_part->getId().c_str());
-
-	removePart(random_part->getUUID());
-	return;
-}
 
 void Body::makePartMap(BodyPart* bp, std::map<std::string, Part*, strless> *part_map)
 {
@@ -711,6 +724,7 @@ std::map<std::string, Part*, strless>* Body::extractParts(BodyPart* bp,
 		std::map<std::string, Part*, strless>* part_map) {
 
 	TCODList<Part*>* templ = bp->getChildList();
+
 	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
 
@@ -736,6 +750,7 @@ void Body::makeIdMap(std::map<std::string, Part*, strless>* part_map)
 
 bool Body::removePart(std::string part_uuid) {
 	Part* part = NULL;
+
 	try{
 		part = part_map->at(part_uuid);
 	} catch (int e) {
@@ -753,34 +768,79 @@ bool Body::removePart(std::string part_uuid) {
 		debug_print("done.\n");
 	}
 
-	//Part is a BodyPart: make list of all children, remove them
-	// and the part itself
-	//TODO
+	//Part is a BodyPart: remove it, destructor handles killing the children
+	if (part->getType() == TYPE_BODYPART){
+		debug_print("Part %s is type BODYPART, deleting...\n", part->getId().c_str());
+		BodyPart* bp = static_cast<BodyPart*>(part);
+		delete bp;
+		debug_print("done.\n");
+	}
+
+	//Refresh part map
+	makePartMap(root, part_map);
+	makeIdMap(part_map);
 
 	//Refresh GUI part list
 	part_gui_list->clear();
 	buildPartList(part_gui_list, root, 0);
 
 #ifdef _DEBUG
-	//Refresh part map
-	makePartMap(root, part_map);
-	makeIdMap(part_map);
-
 	printBodyMap("body_mt.gv", root);
 #endif
 
 	return true;
 }
 
+void Body::removeRandomPart() {
+	debug_print("Remove Random Part from Body:\n");
+
+	//choose one randomly from the list
+	Part* random_part = NULL;
+	srand(time(NULL));
+	int stopid = rand() % part_map->size();
+	debug_print("Random element chosen: Nr. %i\n", stopid);
+	int it_count = 0;
+
+	for (part_map_iterator iterator = part_map->begin(); iterator != part_map->end(); iterator++) {
+		if (it_count == stopid)
+		{
+			random_part = iterator->second;
+			break;
+		}
+		it_count++;
+	}
+
+	if (random_part == NULL)
+	{
+		debug_error("No element %i.\n", stopid);
+		debug_print("Remove Random Part from Body failed.\n");
+		return;
+	}
+
+	debug_print("Chose %s.\n", random_part->getId().c_str());
+	if (random_part->getId() == "ROOT") { return; }
+	removePart(random_part->getUUID());
+	return;
+}
+
+
 Part* Body::getPartByUUID(std::string uuid)
 {
-	if (part_map->count(uuid) == 0) { return nullptr; }
+	if (part_map->count(uuid) == 0) 
+	{ 
+		debug_error("No Part with UUID %s found! Why was the program searching for it?", uuid.c_str());
+		return nullptr; 
+	}
 	return part_map->at(uuid);
 }
 
 Part* Body::getPartByIID(std::string iid)
 {
-	if (iid_uuid_map->count(iid) == 0) { return nullptr; }
+	if (iid_uuid_map->count(iid) == 0)
+	{ 
+		debug_error("No Part with IID %s found! Why was the program searching for it?", iid.c_str());
+		return nullptr;
+	}
 	return getPartByUUID(iid_uuid_map->at(iid));
 }
 
@@ -839,7 +899,7 @@ void Body::buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth)
 		return;
 	}
 
-	debug_error("ERROR: Tried to call recursive part list building function on invalid Part* (neither TYPE_BODYPART nor TYPE_ORGAN)!");
+	debug_error("ERROR: Tried to call recursive part list building function on invalid Part* (neither TYPE_BODYPART nor TYPE_ORGAN)!\n");
 	return;
 }
 

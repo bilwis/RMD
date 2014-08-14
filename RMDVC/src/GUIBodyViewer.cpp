@@ -147,10 +147,22 @@ void GuiBodyViewer::update(TCOD_key_t key)
 				temp_info.append("\n  ");
 				temp_info.append(body->getPartByUUID(*it)->getName().c_str());
 			}
+
+			if (o->isStump()){
+				temp_info.append("\n\nOrgan is a stump.");
+			}
 		}
 		
 		bp_info->setText(temp_info);
 
+		//Handle "special" debug input
+#ifdef _DEBUG
+		if (key.vk == TCODK_DELETE){ 
+			body->removePart(uuid); 
+			activate(body);
+		}
+		
+#endif
 		//Cleanup
 		delete p_uuid;
 	}

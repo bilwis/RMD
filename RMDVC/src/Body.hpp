@@ -192,19 +192,20 @@ protected:
 	float surface;
 	PartType type;
 
-	/** This variable ensures that only the uppermost Organ to be destroyed calls 
-	* removeConnectedOrgan() on it's root. 
+	/** This variable ensures that only the uppermost Part to be destroyed calls 
+	* removeConnectedOrgan()/removeChild() on it's root/super BodyPart. 
 	  
 	 #### Why is this variable important?
 
-	 When an Organ is destroyed, it calls the destructor of all organs that are connected
-	 to it. It does so by calling the connected_organs clearAndDelete() function.
+	 When a Part is destroyed, it calls the destructor of all parts that are connected
+	 to it. It does so by calling the connected_organs/children clearAndDelete() function.
 	 
-	 Also, the Organ needs to unregister as a connected Organ from the Organ it is (was)
-	 connected to (the upstream root), so that the root does not have an "empty" UUID in
-	 its connected_organs register.
+	 Also, the Part needs to unregister as a connected Part from the Part it is (was)
+	 connected to (the upstream root Organ or super BodyPart), so that the root does not have an "empty" UUID in
+	 its connected_organs/children register.
 	 
-	 If the upstream root ist **also** about to be destroyed, however, the Organ **must not** unregister!
+	 If the upstream root / super BodyPart ist **also** about to be destroyed, however,
+	 the Part **must not** unregister!
 	 Not only does it not matter (nobody cares if a destroyed Organ had an empty UUID in
 	 its registers), but doing so would manipulate the connected_organs list; the very
 	 list from whose clearAndDelete() function this destructor was called! For all but
@@ -305,7 +306,7 @@ public:
 		return super;
 	}
 
-	~Part();
+	virtual ~Part();
 };
 
 /**This class represents the second-deepest level of the body definition, "above" the Tissue objects
@@ -329,6 +330,8 @@ private:
 
 	Organ *connector; //The upstream root
 	TCODList<Organ*> *connected_organs; //The downstream branches
+
+	bool is_stump = false; //When Organs downstream are removed, the Organ is marked as stump
 
 public:
 	/**Creates a new instance of the organ class.
@@ -384,6 +387,8 @@ public:
 
 	void removeConnectedOrgan(Organ *connectee);
 
+	bool isStump() { return is_stump; }
+
 	/**Whether or not this is the root element, which is the only organ
 	 * without a connector.
 	 *
@@ -407,6 +412,7 @@ public:
 class BodyPart: public Part{
 private:
 	TCODList<Part*> *children;
+	int child_count = 0;
 
 public:
 	/**@brief Adds a Part to the BodyPart's list of children.
@@ -425,11 +431,13 @@ public:
 	 */
 	TCODList<Part*>* getChildList();
 
-	/**@brief Removes a child object from the body part.
-	 * @param id The internal id of the object to remove.
+	/**@brief Removes a child object from the body part. If the child to be
+	 * destroyed is the last one, this function will destroy the BodyPart itself.
+	 *
+	 * @param uuid The UUID of the object to remove.
 	 * @return Whether the removal has succeeded.
 	 */
-	bool removeChild(string id);
+	bool removeChild(string uuid);
 
 	/**Creates a new instance of the BodyPart class. See Part() constructor.
 	 *
@@ -559,6 +567,8 @@ private:
 	*/
 	void buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth=0);
 
+	void cullEmptyBodyParts();
+
 	void createSubgraphs(std::ofstream* stream, BodyPart* bp);
 	void createLinks(std::ofstream* stream, BodyPart* bp);
 
@@ -578,10 +588,10 @@ public:
 	/**This function removes the a Part of the Body, identified by the given internal id.
 	 * It also handles deregistering and destruction of the removed elements via their destructors.
 	 *
-	 * @param part_id The internal id of the Part to remove.
+	 * @param part_id The UUID of the Part to remove.
 	 * @returns True if the operation was succesful, False otherwise.
 	 */
-	bool removePart(std::string part_id);
+	bool removePart(std::string part_uuid);
 
 	/**This function removes a random Part of the Body.
 	 */
