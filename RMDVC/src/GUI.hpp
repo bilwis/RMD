@@ -88,15 +88,25 @@ public:
 	void addElement(GuiElement* element);
 	bool removeElement(string id);
 
-	void update(TCOD_key_t key);
+	virtual void update(TCOD_key_t key);
+
+	/** This function renders only the GuiContainers own graphic elements (such as the border).
+	* It does not call the render() function of it's children to allow for custom rendering
+	* (such as with ActiveElements).
+	* Note that this function should be called before calling the child render function(s), otherwise
+	* it will overwrite the output on the console.
+	*
+	* @brief Renders only the GuiContainers own graphic elements onto the given console.
+	*/
+	void renderSelf(TCODConsole* con);
 
 	/** This function calls the render() function of all GuiElements contained
-	* in the elements TCODList, after (if drawBorder == true) drawing its own frame and title.
+	* in the elements TCODList, after calling renderSelf() .
 	* These functions draw on the container_console, which is then blitted onto the given console.
 	*
 	* @brief Renders all 'child' GuiElements on the given console.
 	*/
-	void render(TCODConsole* con);
+	virtual void render(TCODConsole* con);
 };
 
 /** It provides parent handling functions.
@@ -184,8 +194,8 @@ public:
 	~ActiveGuiElement();
 
 	bool isActive(){ return active; }
-	void makeActive(Gui* gui);
-	void makeInactive();
+	virtual void makeActive();
+	virtual void makeInactive();
 
 	void setSelectionForeColorInactive(TCODColor color){ sel_fore_inactive = color; }
 	void setSelectionBackColorInactive(TCODColor color){ sel_back_inactive = color; }
@@ -214,7 +224,13 @@ public:
 	//There may be multiple Objects selected. Return the number
 	// of Objects and modify the parameter array within the function to 
 	// return the UUIDs of the selected Objects.
-	virtual int getSelected(std::vector<std::string> obj_uuids) = 0;
+	virtual int getSelected(std::vector<std::string>* obj_uuids) = 0;
+
+	virtual void reset(){
+		items->clearAndDelete();
+		item_count = 0;
+		item_change = true;
+	};
 };
 
 /**
@@ -237,7 +253,14 @@ public:
 	bool removeItem(string text);
 
 	void update(TCOD_key_t key);
-	int getSelected(std::vector<std::string> obj_uuids);
+	int getSelected(std::vector<std::string>* obj_uuids);
+	void reset(){ 
+		selected = nullptr;
+		selected_index = 0;
+		items->clearAndDelete(); 
+		item_count = 0; 
+		item_change = true; 
+	}
 
 	void render(TCODConsole* con);
 };
@@ -259,14 +282,17 @@ protected:
 	TCODList<GuiObjectLink*>* part_list;
 	TCODList<GuiObjectLink*>* tissue_list;
 
+	ActiveGuiElement* active_element;
+
+	void setActiveBody(Body* b);
 public:
 	GuiBodyViewer(string id, int x, int y, int width, int height, TCODColor fore, TCODColor back, bool drawBorder = false, string title = "");
 	~GuiBodyViewer();
 
+	void activate(Body* b);
 	void render(TCODConsole* con);
-	//void update();
+	void update(TCOD_key_t key);
 
-	void setActiveBody(Body* b);
 	Body* getActiveBody() { return body; };
 	
 };

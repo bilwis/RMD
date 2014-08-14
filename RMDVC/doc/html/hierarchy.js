@@ -1,6 +1,5 @@
 var hierarchy =
 [
-    [ "Actor", "class_actor.html", null ],
     [ "Body", "class_body.html", null ],
     [ "ColoredText", "class_colored_text.html", null ],
     [ "Destructible", "class_destructible.html", null ],
@@ -9,6 +8,11 @@ var hierarchy =
     [ "GuiObjectLink", "struct_gui_object_link.html", null ],
     [ "Map", "class_map.html", null ],
     [ "Object", "class_object.html", [
+      [ "Actor", "class_actor.html", null ],
+      [ "Part", "class_part.html", [
+        [ "BodyPart", "class_body_part.html", null ],
+        [ "Organ", "class_organ.html", null ]
+      ] ],
       [ "RenderObject", "class_render_object.html", [
         [ "GuiRenderObject", "class_gui_render_object.html", [
           [ "GuiContainer", "class_gui_container.html", [
@@ -22,10 +26,6 @@ var hierarchy =
           ] ]
         ] ]
       ] ]
-    ] ],
-    [ "Part", "class_part.html", [
-      [ "BodyPart", "class_body_part.html", null ],
-      [ "Organ", "class_organ.html", null ]
     ] ],
     [ "runtime_error", null, [
       [ "bdef_parse_error", "classbdef__parse__error.html", null ]

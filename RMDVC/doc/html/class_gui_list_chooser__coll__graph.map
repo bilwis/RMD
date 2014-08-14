@@ -1,10 +1,10 @@
 <map id="GuiListChooser" name="GuiListChooser">
-<area shape="rect" id="node2" href="$class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. " alt="" coords="87,501,213,528"/>
-<area shape="rect" id="node3" href="$class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="95,425,186,452"/>
-<area shape="rect" id="node4" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="67,260,188,287"/>
-<area shape="rect" id="node8" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="5,336,103,363"/>
-<area shape="rect" id="node5" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="77,184,178,211"/>
-<area shape="rect" id="node6" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="105,95,165,121"/>
-<area shape="rect" id="node9" href="$struct_gui_object_link.html" title="A struct encapsulating a pointer to an object and a pointer to an associated ColoredText. " alt="" coords="202,184,306,211"/>
-<area shape="rect" id="node10" href="$class_colored_text.html" title="A class encapsulating a string and background and foreground color information. " alt="" coords="198,95,289,121"/>
+<area shape="rect" id="node2" href="$class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. " alt="" coords="223,501,348,528"/>
+<area shape="rect" id="node3" href="$class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="243,425,333,452"/>
+<area shape="rect" id="node4" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="283,247,405,273"/>
+<area shape="rect" id="node8" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="239,336,337,363"/>
+<area shape="rect" id="node5" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="293,171,395,197"/>
+<area shape="rect" id="node6" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="314,95,374,121"/>
+<area shape="rect" id="node10" href="$struct_gui_object_link.html" title="A struct encapsulating an Objects UUID and a pointer to an associated ColoredText. " alt="" coords="92,425,196,452"/>
+<area shape="rect" id="node11" href="$class_colored_text.html" title="A class encapsulating a string and background and foreground color information. " alt="" coords="5,336,96,363"/>
 </map>

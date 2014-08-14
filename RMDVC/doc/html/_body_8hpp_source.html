@@ -80,252 +80,303 @@ $(document).ready(function(){initNavTree('_body_8hpp_source.html','');});
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;rapidxml.hpp&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;libtcod.hpp&quot;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;Diagnostics.hpp&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;exception&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">using</span> std::string;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;GUI_structs.hpp&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;exception&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classstrless.html">   28</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstrless.html">strless</a> {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">bool</span> operator() (<span class="keyword">const</span> <span class="keywordtype">string</span> &amp; first, <span class="keyword">const</span> <span class="keywordtype">string</span> &amp; second)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">return</span> first.compare(second) &lt; 0;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    }</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;};</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_tissue.html">   42</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_tissue.html">Tissue</a>{</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">string</span> id;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">string</span> name;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">float</span> pain;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">float</span> blood_flow;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">float</span> resistance;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">float</span> impairment;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="class_tissue.html#a5939172e4f7e2bf8e7775ba267ca3f51">   57</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_tissue.html#a5939172e4f7e2bf8e7775ba267ca3f51">getBloodFlow</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordflow">return</span> blood_flow;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    }</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_tissue.html#ac0d898de319ae2ff55818eb065941d17">   66</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_tissue.html#ac0d898de319ae2ff55818eb065941d17">getName</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> name;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="class_tissue.html#ae31f68d5b1a408d6b864feabe16d7faf">   80</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_tissue.html#ae31f68d5b1a408d6b864feabe16d7faf">getId</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">return</span> id;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="class_tissue.html#a83a2c13d052905bbc5f94247508313df">   89</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_tissue.html#a83a2c13d052905bbc5f94247508313df">getPain</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordflow">return</span> pain;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="class_tissue.html#af38acffd09f9f6aa48bbcdd938964cc2">   98</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_tissue.html#af38acffd09f9f6aa48bbcdd938964cc2">getResistance</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span> resistance;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="class_tissue.html#a3e98fea8bc7ef877200d7d0eadb887f6">  106</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_tissue.html#a3e98fea8bc7ef877200d7d0eadb887f6">getImpairment</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">return</span> impairment;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <a class="code" href="class_tissue.html#a9050e8e0b3df39f8e6c24d6709aaa822">Tissue</a>(<span class="keywordtype">string</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> name, <span class="keywordtype">float</span> pain,</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            <span class="keywordtype">float</span> blood_flow, <span class="keywordtype">float</span> resistance, <span class="keywordtype">float</span> impairment);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    ~<a class="code" href="class_tissue.html">Tissue</a>();</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;};</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00150"></a><span class="lineno"><a class="line" href="structtissue__def.html">  150</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structtissue__def.html">tissue_def</a>{</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <a class="code" href="class_tissue.html">Tissue</a> *tissue;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordtype">float</span> hit_prob;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordtype">string</span> name;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordtype">string</span> custom_id;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;};</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keyword">enum</span> PartType{</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    TYPE_BODYPART = 0,</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    TYPE_ORGAN = 1</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;};</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
-<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="class_part.html">  169</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_part.html">Part</a>{</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordtype">string</span> id;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordtype">string</span> name;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordtype">float</span> surface;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    PartType type;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">using</span> std::string;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classstrless.html">   30</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstrless.html">strless</a> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">bool</span> operator() (<span class="keyword">const</span> <span class="keywordtype">string</span> &amp; first, <span class="keyword">const</span> <span class="keywordtype">string</span> &amp; second)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">return</span> first.compare(second) &lt; 0;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;};</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="class_tissue.html">   44</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_tissue.html">Tissue</a>{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">string</span> id;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">string</span> name;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">float</span> pain;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">float</span> blood_flow;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">float</span> resistance;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">float</span> impairment;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="class_tissue.html#a5939172e4f7e2bf8e7775ba267ca3f51">   59</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_tissue.html#a5939172e4f7e2bf8e7775ba267ca3f51">getBloodFlow</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordflow">return</span> blood_flow;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="class_tissue.html#ac0d898de319ae2ff55818eb065941d17">   68</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_tissue.html#ac0d898de319ae2ff55818eb065941d17">getName</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">return</span> name;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="class_tissue.html#ae31f68d5b1a408d6b864feabe16d7faf">   82</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_tissue.html#ae31f68d5b1a408d6b864feabe16d7faf">getId</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">return</span> id;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="class_tissue.html#a83a2c13d052905bbc5f94247508313df">   91</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_tissue.html#a83a2c13d052905bbc5f94247508313df">getPain</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordflow">return</span> pain;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="class_tissue.html#af38acffd09f9f6aa48bbcdd938964cc2">  100</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_tissue.html#af38acffd09f9f6aa48bbcdd938964cc2">getResistance</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordflow">return</span> resistance;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="class_tissue.html#a3e98fea8bc7ef877200d7d0eadb887f6">  108</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_tissue.html#a3e98fea8bc7ef877200d7d0eadb887f6">getImpairment</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">return</span> impairment;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <a class="code" href="class_tissue.html#a9050e8e0b3df39f8e6c24d6709aaa822">Tissue</a>(<span class="keywordtype">string</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> name, <span class="keywordtype">float</span> pain,</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            <span class="keywordtype">float</span> blood_flow, <span class="keywordtype">float</span> resistance, <span class="keywordtype">float</span> impairment);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    ~<a class="code" href="class_tissue.html">Tissue</a>();</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;};</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="structtissue__def.html">  152</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structtissue__def.html">tissue_def</a>{</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <a class="code" href="class_tissue.html">Tissue</a> *tissue;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordtype">float</span> hit_prob;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="keywordtype">string</span> name;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordtype">string</span> custom_id;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;};</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="keyword">enum</span> PartType{</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    TYPE_BODYPART = 0,</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    TYPE_ORGAN = 1</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;};</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="keyword">extern</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* part_type_strings[];</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
+<div class="line"><a name="l00173"></a><span class="lineno"><a class="line" href="class_part.html">  173</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_part.html">Part</a>: <span class="keyword">public</span> <a class="code" href="class_object.html">Object</a>{</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
-<div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="class_part.html#a55803895d25d6b0830e998441716a7ba">  179</a></span>&#160;    <a class="code" href="class_part.html">Part</a>* <a class="code" href="class_part.html#a55803895d25d6b0830e998441716a7ba">super</a>;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <a class="code" href="class_part.html#ab5cf8adfbc0a2f0dc625593aa176902f">Part</a>(<span class="keywordtype">string</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> name, <span class="keywordtype">float</span> surface, PartType type);</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00216"></a><span class="lineno"><a class="line" href="class_part.html#a777d1ddea5bb3401f2ac3eb175dcc2f7">  216</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_part.html#a777d1ddea5bb3401f2ac3eb175dcc2f7">getSurface</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        <span class="keywordflow">return</span> surface;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    }</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
-<div class="line"><a name="l00225"></a><span class="lineno"><a class="line" href="class_part.html#aaf1cb85b0c9ca64e430cc0b086ddd462">  225</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_part.html#aaf1cb85b0c9ca64e430cc0b086ddd462">getName</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <span class="keywordflow">return</span> name;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    }</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;</div>
-<div class="line"><a name="l00238"></a><span class="lineno"><a class="line" href="class_part.html#aa277f1166a99517c92f3c7b5d798ab1a">  238</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_part.html#aa277f1166a99517c92f3c7b5d798ab1a">getId</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        <span class="keywordflow">return</span> id;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    }</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
-<div class="line"><a name="l00247"></a><span class="lineno"><a class="line" href="class_part.html#aa57344b8df727fe5b05e43f9619a3546">  247</a></span>&#160;    PartType <a class="code" href="class_part.html#aa57344b8df727fe5b05e43f9619a3546">getType</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <span class="keywordflow">return</span> type;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    }</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
-<div class="line"><a name="l00254"></a><span class="lineno"><a class="line" href="class_part.html#a5db86a8adc27862a7814ad781bae9c9c">  254</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_part.html#a5db86a8adc27862a7814ad781bae9c9c">setSuperPart</a>(<a class="code" href="class_part.html">Part</a>* bp) {</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <a class="code" href="class_part.html#a55803895d25d6b0830e998441716a7ba">super</a> = bp;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    }</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;</div>
-<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="class_part.html#a41f09aaec6ea2609544606d83858bcac">  262</a></span>&#160;    <a class="code" href="class_part.html">Part</a>* <a class="code" href="class_part.html#a41f09aaec6ea2609544606d83858bcac">getSuperPart</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_part.html#a55803895d25d6b0830e998441716a7ba">super</a>;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    }</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    ~<a class="code" href="class_part.html">Part</a>();</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;};</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;</div>
-<div class="line"><a name="l00279"></a><span class="lineno"><a class="line" href="class_organ.html">  279</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_organ.html">Organ</a>: <span class="keyword">public</span> <a class="code" href="class_part.html">Part</a>{</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <a class="code" href="structtissue__def.html">tissue_def</a> *tissues;</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="keywordtype">int</span> tissue_count;</div>
+<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="class_part.html#ae1538e7080bd799f51e31f500abebedf">  189</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_part.html#ae1538e7080bd799f51e31f500abebedf">id</a>;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">string</span> name;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordtype">float</span> surface;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    PartType type;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
+<div class="line"><a name="l00214"></a><span class="lineno"><a class="line" href="class_part.html#ae41359371dfcb2c02ee05e219ec61ecd">  214</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_part.html#ae41359371dfcb2c02ee05e219ec61ecd">slated_for_destruction</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
+<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="class_part.html#a55803895d25d6b0830e998441716a7ba">  219</a></span>&#160;    <a class="code" href="class_part.html">Part</a>* <a class="code" href="class_part.html#a55803895d25d6b0830e998441716a7ba">super</a>;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <a class="code" href="class_part.html#ab5cf8adfbc0a2f0dc625593aa176902f">Part</a>(<span class="keywordtype">string</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> name, <span class="keywordtype">float</span> surface, PartType type);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="keywordtype">string</span> toString() { <span class="keywordflow">return</span> name; }</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
+<div class="line"><a name="l00258"></a><span class="lineno"><a class="line" href="class_part.html#a777d1ddea5bb3401f2ac3eb175dcc2f7">  258</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_part.html#a777d1ddea5bb3401f2ac3eb175dcc2f7">getSurface</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <span class="keywordflow">return</span> surface;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    }</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;</div>
+<div class="line"><a name="l00267"></a><span class="lineno"><a class="line" href="class_part.html#aaf1cb85b0c9ca64e430cc0b086ddd462">  267</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_part.html#aaf1cb85b0c9ca64e430cc0b086ddd462">getName</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keywordflow">return</span> name;</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    }</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;</div>
+<div class="line"><a name="l00280"></a><span class="lineno"><a class="line" href="class_part.html#aa277f1166a99517c92f3c7b5d798ab1a">  280</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_part.html#aa277f1166a99517c92f3c7b5d798ab1a">getId</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_part.html#ae1538e7080bd799f51e31f500abebedf">id</a>;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    }</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keywordtype">string</span> connector_id;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keywordtype">bool</span> root; <span class="comment">//Is it root?</span></div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <a class="code" href="class_organ.html">Organ</a> *connector; <span class="comment">//The upstream root</span></div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    TCODList&lt;Organ*&gt; *connected_organs; <span class="comment">//The downstream branches</span></div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    <a class="code" href="class_organ.html#ae9606d136843749884c5d2d220f383d0">Organ</a>(<span class="keywordtype">string</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> name, <span class="keywordtype">float</span> surface,</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;            <a class="code" href="structtissue__def.html">tissue_def</a> *tissues, <span class="keywordtype">int</span> tissue_count, <span class="keyword">const</span> <span class="keywordtype">char</span> *connector_id,</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;            <span class="keywordtype">bool</span> is_root=<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00289"></a><span class="lineno"><a class="line" href="class_part.html#aa57344b8df727fe5b05e43f9619a3546">  289</a></span>&#160;    PartType <a class="code" href="class_part.html#aa57344b8df727fe5b05e43f9619a3546">getType</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keywordflow">return</span> type;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    }</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
+<div class="line"><a name="l00296"></a><span class="lineno"><a class="line" href="class_part.html#a5db86a8adc27862a7814ad781bae9c9c">  296</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_part.html#a5db86a8adc27862a7814ad781bae9c9c">setSuperPart</a>(<a class="code" href="class_part.html">Part</a>* bp) {</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        <a class="code" href="class_part.html#a55803895d25d6b0830e998441716a7ba">super</a> = bp;</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;    }</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
+<div class="line"><a name="l00304"></a><span class="lineno"><a class="line" href="class_part.html#a41f09aaec6ea2609544606d83858bcac">  304</a></span>&#160;    <a class="code" href="class_part.html">Part</a>* <a class="code" href="class_part.html#a41f09aaec6ea2609544606d83858bcac">getSuperPart</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="class_part.html#a55803895d25d6b0830e998441716a7ba">super</a>;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    }</div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <a class="code" href="class_organ.html#a857bf37ad3a89244b6067c32d7192a4d">~Organ</a>();</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_organ.html#a70976723830b44b0cdb217e49668db8f">linkToConnector</a>(std::map&lt;std::string, Organ*, strless&gt; *organ_map);</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordtype">string</span> getConnectorId();</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_organ.html#a48880acd5e95342739bfb0aef3d39d81">addConnectedOrgan</a>(<a class="code" href="class_organ.html">Organ</a> *connectee);</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;</div>
-<div class="line"><a name="l00334"></a><span class="lineno"><a class="line" href="class_organ.html#aee59c88dbd768bdfdfbedeb75f04588b">  334</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_organ.html#aee59c88dbd768bdfdfbedeb75f04588b">isRoot</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        <span class="keywordflow">return</span> root;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    }</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;};</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;</div>
-<div class="line"><a name="l00349"></a><span class="lineno"><a class="line" href="class_body_part.html">  349</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_body_part.html">BodyPart</a>: <span class="keyword">public</span> <a class="code" href="class_part.html">Part</a>{</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    TCODList&lt;Part*&gt; *children;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body_part.html#af2b24baa4004c818283765f6a916192d">addChild</a>(<a class="code" href="class_part.html">Part</a> *child);</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body_part.html#a2053d62daa315d311f41ea3221ad3167">addChildren</a>(<a class="code" href="class_part.html">Part</a> **child_array, <span class="keywordtype">int</span> count);</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    TCODList&lt;Part*&gt;* <a class="code" href="class_body_part.html#ad3d882b5e2bfb52cdfd314adb74463ff">getChildList</a>();</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_body_part.html#ad50968c0112ee4aaf8e6f79b5fbd9567">removeChild</a>(<span class="keywordtype">string</span> <span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <a class="code" href="class_body_part.html#ae01ab64de85b601096898791df08196e">BodyPart</a>(<span class="keywordtype">string</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> name, <span class="keywordtype">float</span> surface);</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    ~<a class="code" href="class_body_part.html">BodyPart</a>();</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;};</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;</div>
-<div class="line"><a name="l00392"></a><span class="lineno"><a class="line" href="class_body.html">  392</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_body.html">Body</a>{</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <a class="code" href="class_body_part.html">BodyPart</a> *root;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;</div>
-<div class="line"><a name="l00399"></a><span class="lineno"><a class="line" href="class_body.html#afacb3ab35180131711c651abe554c6a8">  399</a></span>&#160;    std::map&lt;std::string, Part*, strless&gt; *<a class="code" href="class_body.html#afacb3ab35180131711c651abe554c6a8">part_map</a>;</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keyword">typedef</span> std::map&lt;std::string, Part*, strless&gt;::iterator part_map_iterator;</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <a class="code" href="class_body_part.html">BodyPart</a>* <a class="code" href="class_body.html#aedb5191f583df1a6b20163fa70a7f401">loadBody</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    ~<a class="code" href="class_part.html">Part</a>();</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;};</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;</div>
+<div class="line"><a name="l00321"></a><span class="lineno"><a class="line" href="class_organ.html">  321</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_organ.html">Organ</a>: <span class="keyword">public</span> <a class="code" href="class_part.html">Part</a>{</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <a class="code" href="structtissue__def.html">tissue_def</a> *tissues;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    <span class="keywordtype">int</span> tissue_count;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keywordtype">string</span> connector_id;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;    <span class="keywordtype">bool</span> root; <span class="comment">//Is it root?</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <a class="code" href="class_organ.html">Organ</a> *connector; <span class="comment">//The upstream root</span></div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    TCODList&lt;Organ*&gt; *connected_organs; <span class="comment">//The downstream branches</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <a class="code" href="class_organ.html#ae9606d136843749884c5d2d220f383d0">Organ</a>(<span class="keywordtype">string</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> name, <span class="keywordtype">float</span> surface,</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;            <a class="code" href="structtissue__def.html">tissue_def</a> *tissues, <span class="keywordtype">int</span> tissue_count, <span class="keyword">const</span> <span class="keywordtype">char</span> *connector_id,</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;            <span class="keywordtype">bool</span> is_root=<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <a class="code" href="class_organ.html#a857bf37ad3a89244b6067c32d7192a4d">~Organ</a>();</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_organ.html#a70976723830b44b0cdb217e49668db8f">linkToConnector</a>(std::map&lt;std::string, Organ*, strless&gt; *organ_map);</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_organ.html#a9b3d4e9bbea58e59a0f40ee3b1bee5a4">getConnectorUUID</a>();</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_organ.html#af9dbba54820ce05e123e6bb0788df7e1">getConnectorId</a>();</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_organ.html#a5f1d4a3490dcb515e39b7d27f5ef3ecd">getConnectedOrganUUIDs</a>(std::vector&lt;string&gt;* vector);</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_organ.html#a48880acd5e95342739bfb0aef3d39d81">addConnectedOrgan</a>(<a class="code" href="class_organ.html">Organ</a> *connectee);</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    <span class="keywordtype">void</span> removeConnectedOrgan(<a class="code" href="class_organ.html">Organ</a> *connectee);</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;</div>
+<div class="line"><a name="l00392"></a><span class="lineno"><a class="line" href="class_organ.html#aee59c88dbd768bdfdfbedeb75f04588b">  392</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_organ.html#aee59c88dbd768bdfdfbedeb75f04588b">isRoot</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;        <span class="keywordflow">return</span> root;</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    }</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;};</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;</div>
+<div class="line"><a name="l00407"></a><span class="lineno"><a class="line" href="class_body_part.html">  407</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_body_part.html">BodyPart</a>: <span class="keyword">public</span> <a class="code" href="class_part.html">Part</a>{</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    TCODList&lt;Part*&gt; *children;</div>
 <div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    <a class="code" href="class_body_part.html">BodyPart</a>* <a class="code" href="class_body.html#a1233e2282089ebd9f21fc1dbd88d6d71">enter</a>(rapidxml::xml_node&lt;&gt; *node, std::map&lt;std::string, Tissue*,strless&gt; *tissue_map);</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    std::map&lt;std::string, Organ*, strless&gt;* <a class="code" href="class_body.html#a1e0f8c2e28fe88ba15b0d5fcc58f2a3f">extractOrgans</a>(<a class="code" href="class_body_part.html">BodyPart</a>* bp, std::map&lt;std::string, Organ*, strless&gt; *organ_map);</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;    std::map&lt;std::string, Part*, strless&gt;* <a class="code" href="class_body.html#a3ea2e5282fedf030ee4c04366081e3bf">extractParts</a>(<a class="code" href="class_body_part.html">BodyPart</a>* bp, std::map&lt;std::string, Part*, strless&gt; *<a class="code" href="class_body.html#afacb3ab35180131711c651abe554c6a8">part_map</a>);</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body.html#a807ddd24bd4e057d17eb6de4f42f985f">linkOrgans</a>(<a class="code" href="class_body_part.html">BodyPart</a>* bp, std::map&lt;std::string, Organ*, strless&gt; *organ_map);</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    <span class="keywordtype">void</span> createSubgraphs(std::ofstream* stream, <a class="code" href="class_body_part.html">BodyPart</a>* bp);</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    <span class="keywordtype">void</span> createLinks(std::ofstream* stream, <a class="code" href="class_body_part.html">BodyPart</a>* bp);</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;    <a class="code" href="class_body.html#a2cda9c6f52963f15e85822bc2cbd4a1a">Body</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename);</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    ~<a class="code" href="class_body.html">Body</a>();</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_body.html#a1d6d4b0a1791314ba5af74da4c665da0">removePart</a>(std::string part_id);</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body.html#aef5d3db270848d3de8530a59353312a4">removeRandomPart</a>();</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;    <span class="keywordtype">void</span> printBodyMap(<span class="keyword">const</span> <span class="keywordtype">char</span>* filename, <a class="code" href="class_body_part.html">BodyPart</a>* mroot);</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;};</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;</div>
-<div class="line"><a name="l00484"></a><span class="lineno"><a class="line" href="classbdef__parse__error.html">  484</a></span>&#160;<span class="keyword">class </span><a class="code" href="classbdef__parse__error.html">bdef_parse_error</a>:<span class="keyword">public</span> std::runtime_error</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;{</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    <a class="code" href="classbdef__parse__error.html">bdef_parse_error</a>(<span class="keyword">const</span> std::string&amp; msg, rapidxml::xml_node&lt;&gt;* node);</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;};</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BODY_HPP_ */</span><span class="preprocessor"></span></div>
-<div class="ttc" id="class_tissue_html_ac0d898de319ae2ff55818eb065941d17"><div class="ttname"><a href="class_tissue.html#ac0d898de319ae2ff55818eb065941d17">Tissue::getName</a></div><div class="ttdeci">string getName() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:66</div></div>
-<div class="ttc" id="structtissue__def_html"><div class="ttname"><a href="structtissue__def.html">tissue_def</a></div><div class="ttdoc">This struct represents the link between an organ and its tissues. </div><div class="ttdef"><b>Definition:</b> Body.hpp:150</div></div>
-<div class="ttc" id="class_tissue_html_a5939172e4f7e2bf8e7775ba267ca3f51"><div class="ttname"><a href="class_tissue.html#a5939172e4f7e2bf8e7775ba267ca3f51">Tissue::getBloodFlow</a></div><div class="ttdeci">float getBloodFlow() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:57</div></div>
-<div class="ttc" id="class_part_html_a777d1ddea5bb3401f2ac3eb175dcc2f7"><div class="ttname"><a href="class_part.html#a777d1ddea5bb3401f2ac3eb175dcc2f7">Part::getSurface</a></div><div class="ttdeci">float getSurface() const </div><div class="ttdoc">Returns the relative surface area. </div><div class="ttdef"><b>Definition:</b> Body.hpp:216</div></div>
-<div class="ttc" id="class_body_part_html_af2b24baa4004c818283765f6a916192d"><div class="ttname"><a href="class_body_part.html#af2b24baa4004c818283765f6a916192d">BodyPart::addChild</a></div><div class="ttdeci">void addChild(Part *child)</div><div class="ttdoc">Adds a Part to the BodyPart&#39;s list of children. </div><div class="ttdef"><b>Definition:</b> Body.cpp:73</div></div>
-<div class="ttc" id="class_organ_html"><div class="ttname"><a href="class_organ.html">Organ</a></div><div class="ttdoc">The &#39;leaves&#39; of the Body tree. </div><div class="ttdef"><b>Definition:</b> Body.hpp:279</div></div>
-<div class="ttc" id="class_body_part_html_ad3d882b5e2bfb52cdfd314adb74463ff"><div class="ttname"><a href="class_body_part.html#ad3d882b5e2bfb52cdfd314adb74463ff">BodyPart::getChildList</a></div><div class="ttdeci">TCODList&lt; Part * &gt; * getChildList()</div><div class="ttdoc">Returns a list of all the children of this BodyPart. </div><div class="ttdef"><b>Definition:</b> Body.cpp:85</div></div>
-<div class="ttc" id="class_body_html_a3ea2e5282fedf030ee4c04366081e3bf"><div class="ttname"><a href="class_body.html#a3ea2e5282fedf030ee4c04366081e3bf">Body::extractParts</a></div><div class="ttdeci">std::map&lt; std::string, Part *, strless &gt; * extractParts(BodyPart *bp, std::map&lt; std::string, Part *, strless &gt; *part_map)</div><div class="ttdef"><b>Definition:</b> Body.cpp:653</div></div>
-<div class="ttc" id="class_organ_html_aee59c88dbd768bdfdfbedeb75f04588b"><div class="ttname"><a href="class_organ.html#aee59c88dbd768bdfdfbedeb75f04588b">Organ::isRoot</a></div><div class="ttdeci">bool isRoot() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:334</div></div>
-<div class="ttc" id="class_body_part_html_a2053d62daa315d311f41ea3221ad3167"><div class="ttname"><a href="class_body_part.html#a2053d62daa315d311f41ea3221ad3167">BodyPart::addChildren</a></div><div class="ttdeci">void addChildren(Part **child_array, int count)</div><div class="ttdoc">Adds several Parts to the BodyPart&#39;s list of children. </div><div class="ttdef"><b>Definition:</b> Body.cpp:78</div></div>
-<div class="ttc" id="class_organ_html_a48880acd5e95342739bfb0aef3d39d81"><div class="ttname"><a href="class_organ.html#a48880acd5e95342739bfb0aef3d39d81">Organ::addConnectedOrgan</a></div><div class="ttdeci">void addConnectedOrgan(Organ *connectee)</div><div class="ttdoc">Called by the branch organs to register with their root. </div><div class="ttdef"><b>Definition:</b> Body.cpp:161</div></div>
-<div class="ttc" id="class_part_html_ab5cf8adfbc0a2f0dc625593aa176902f"><div class="ttname"><a href="class_part.html#ab5cf8adfbc0a2f0dc625593aa176902f">Part::Part</a></div><div class="ttdeci">Part(string id, string name, float surface, PartType type)</div><div class="ttdef"><b>Definition:</b> Body.cpp:39</div></div>
-<div class="ttc" id="class_part_html_aa57344b8df727fe5b05e43f9619a3546"><div class="ttname"><a href="class_part.html#aa57344b8df727fe5b05e43f9619a3546">Part::getType</a></div><div class="ttdeci">PartType getType() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:247</div></div>
-<div class="ttc" id="class_body_html"><div class="ttname"><a href="class_body.html">Body</a></div><div class="ttdoc">The code representation of a body of an Actor. </div><div class="ttdef"><b>Definition:</b> Body.hpp:392</div></div>
-<div class="ttc" id="class_body_html_aef5d3db270848d3de8530a59353312a4"><div class="ttname"><a href="class_body.html#aef5d3db270848d3de8530a59353312a4">Body::removeRandomPart</a></div><div class="ttdeci">void removeRandomPart()</div><div class="ttdef"><b>Definition:</b> Body.cpp:621</div></div>
-<div class="ttc" id="class_body_part_html_ad50968c0112ee4aaf8e6f79b5fbd9567"><div class="ttname"><a href="class_body_part.html#ad50968c0112ee4aaf8e6f79b5fbd9567">BodyPart::removeChild</a></div><div class="ttdeci">bool removeChild(string id)</div><div class="ttdoc">Removes a child object from the body part. </div><div class="ttdef"><b>Definition:</b> Body.cpp:90</div></div>
-<div class="ttc" id="class_body_html_aedb5191f583df1a6b20163fa70a7f401"><div class="ttname"><a href="class_body.html#aedb5191f583df1a6b20163fa70a7f401">Body::loadBody</a></div><div class="ttdeci">BodyPart * loadBody(const char *filename)</div><div class="ttdef"><b>Definition:</b> Body.cpp:204</div></div>
-<div class="ttc" id="class_organ_html_ae9606d136843749884c5d2d220f383d0"><div class="ttname"><a href="class_organ.html#ae9606d136843749884c5d2d220f383d0">Organ::Organ</a></div><div class="ttdeci">Organ(string id, string name, float surface, tissue_def *tissues, int tissue_count, const char *connector_id, bool is_root=false)</div><div class="ttdef"><b>Definition:</b> Body.cpp:104</div></div>
-<div class="ttc" id="class_part_html_a41f09aaec6ea2609544606d83858bcac"><div class="ttname"><a href="class_part.html#a41f09aaec6ea2609544606d83858bcac">Part::getSuperPart</a></div><div class="ttdeci">Part * getSuperPart() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:262</div></div>
-<div class="ttc" id="classbdef__parse__error_html"><div class="ttname"><a href="classbdef__parse__error.html">bdef_parse_error</a></div><div class="ttdef"><b>Definition:</b> Body.hpp:484</div></div>
-<div class="ttc" id="class_tissue_html_af38acffd09f9f6aa48bbcdd938964cc2"><div class="ttname"><a href="class_tissue.html#af38acffd09f9f6aa48bbcdd938964cc2">Tissue::getResistance</a></div><div class="ttdeci">float getResistance() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:98</div></div>
-<div class="ttc" id="class_part_html_a5db86a8adc27862a7814ad781bae9c9c"><div class="ttname"><a href="class_part.html#a5db86a8adc27862a7814ad781bae9c9c">Part::setSuperPart</a></div><div class="ttdeci">void setSuperPart(Part *bp)</div><div class="ttdef"><b>Definition:</b> Body.hpp:254</div></div>
-<div class="ttc" id="class_tissue_html"><div class="ttname"><a href="class_tissue.html">Tissue</a></div><div class="ttdoc">Holds the definition of a tissue, such as skin or bone. </div><div class="ttdef"><b>Definition:</b> Body.hpp:42</div></div>
-<div class="ttc" id="class_body_html_afacb3ab35180131711c651abe554c6a8"><div class="ttname"><a href="class_body.html#afacb3ab35180131711c651abe554c6a8">Body::part_map</a></div><div class="ttdeci">std::map&lt; std::string, Part *, strless &gt; * part_map</div><div class="ttdef"><b>Definition:</b> Body.hpp:399</div></div>
-<div class="ttc" id="class_body_html_a1d6d4b0a1791314ba5af74da4c665da0"><div class="ttname"><a href="class_body.html#a1d6d4b0a1791314ba5af74da4c665da0">Body::removePart</a></div><div class="ttdeci">bool removePart(std::string part_id)</div><div class="ttdef"><b>Definition:</b> Body.cpp:671</div></div>
-<div class="ttc" id="class_body_html_a1233e2282089ebd9f21fc1dbd88d6d71"><div class="ttname"><a href="class_body.html#a1233e2282089ebd9f21fc1dbd88d6d71">Body::enter</a></div><div class="ttdeci">BodyPart * enter(rapidxml::xml_node&lt;&gt; *node, std::map&lt; std::string, Tissue *, strless &gt; *tissue_map)</div><div class="ttdef"><b>Definition:</b> Body.cpp:346</div></div>
-<div class="ttc" id="class_tissue_html_ae31f68d5b1a408d6b864feabe16d7faf"><div class="ttname"><a href="class_tissue.html#ae31f68d5b1a408d6b864feabe16d7faf">Tissue::getId</a></div><div class="ttdeci">string getId() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:80</div></div>
-<div class="ttc" id="class_part_html_aaf1cb85b0c9ca64e430cc0b086ddd462"><div class="ttname"><a href="class_part.html#aaf1cb85b0c9ca64e430cc0b086ddd462">Part::getName</a></div><div class="ttdeci">string getName() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:225</div></div>
-<div class="ttc" id="class_part_html_aa277f1166a99517c92f3c7b5d798ab1a"><div class="ttname"><a href="class_part.html#aa277f1166a99517c92f3c7b5d798ab1a">Part::getId</a></div><div class="ttdeci">string getId() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:238</div></div>
-<div class="ttc" id="class_part_html"><div class="ttname"><a href="class_part.html">Part</a></div><div class="ttdoc">This class is the abstract superclass for all parts that make up a body. </div><div class="ttdef"><b>Definition:</b> Body.hpp:169</div></div>
-<div class="ttc" id="class_tissue_html_a83a2c13d052905bbc5f94247508313df"><div class="ttname"><a href="class_tissue.html#a83a2c13d052905bbc5f94247508313df">Tissue::getPain</a></div><div class="ttdeci">float getPain() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:89</div></div>
-<div class="ttc" id="class_organ_html_a70976723830b44b0cdb217e49668db8f"><div class="ttname"><a href="class_organ.html#a70976723830b44b0cdb217e49668db8f">Organ::linkToConnector</a></div><div class="ttdeci">void linkToConnector(std::map&lt; std::string, Organ *, strless &gt; *organ_map)</div><div class="ttdoc">Links this organ to its local root. </div><div class="ttdef"><b>Definition:</b> Body.cpp:137</div></div>
-<div class="ttc" id="class_body_part_html"><div class="ttname"><a href="class_body_part.html">BodyPart</a></div><div class="ttdoc">The code representation of a part of the body (such as &#39;Left Arm&#39;). </div><div class="ttdef"><b>Definition:</b> Body.hpp:349</div></div>
-<div class="ttc" id="class_body_html_a807ddd24bd4e057d17eb6de4f42f985f"><div class="ttname"><a href="class_body.html#a807ddd24bd4e057d17eb6de4f42f985f">Body::linkOrgans</a></div><div class="ttdeci">void linkOrgans(BodyPart *bp, std::map&lt; std::string, Organ *, strless &gt; *organ_map)</div><div class="ttdef"><b>Definition:</b> Body.cpp:329</div></div>
-<div class="ttc" id="classstrless_html"><div class="ttname"><a href="classstrless.html">strless</a></div><div class="ttdef"><b>Definition:</b> Body.hpp:28</div></div>
-<div class="ttc" id="class_tissue_html_a9050e8e0b3df39f8e6c24d6709aaa822"><div class="ttname"><a href="class_tissue.html#a9050e8e0b3df39f8e6c24d6709aaa822">Tissue::Tissue</a></div><div class="ttdeci">Tissue(string id, string name, float pain, float blood_flow, float resistance, float impairment)</div><div class="ttdoc">Creates a new tissue definition. </div><div class="ttdef"><b>Definition:</b> Body.cpp:15</div></div>
-<div class="ttc" id="class_body_part_html_ae01ab64de85b601096898791df08196e"><div class="ttname"><a href="class_body_part.html#ae01ab64de85b601096898791df08196e">BodyPart::BodyPart</a></div><div class="ttdeci">BodyPart(string id, string name, float surface)</div><div class="ttdef"><b>Definition:</b> Body.cpp:61</div></div>
-<div class="ttc" id="class_body_html_a2cda9c6f52963f15e85822bc2cbd4a1a"><div class="ttname"><a href="class_body.html#a2cda9c6f52963f15e85822bc2cbd4a1a">Body::Body</a></div><div class="ttdeci">Body(const char *filename)</div><div class="ttdef"><b>Definition:</b> Body.cpp:165</div></div>
-<div class="ttc" id="class_body_html_a1e0f8c2e28fe88ba15b0d5fcc58f2a3f"><div class="ttname"><a href="class_body.html#a1e0f8c2e28fe88ba15b0d5fcc58f2a3f">Body::extractOrgans</a></div><div class="ttdeci">std::map&lt; std::string, Organ *, strless &gt; * extractOrgans(BodyPart *bp, std::map&lt; std::string, Organ *, strless &gt; *organ_map)</div><div class="ttdef"><b>Definition:</b> Body.cpp:310</div></div>
-<div class="ttc" id="class_organ_html_a857bf37ad3a89244b6067c32d7192a4d"><div class="ttname"><a href="class_organ.html#a857bf37ad3a89244b6067c32d7192a4d">Organ::~Organ</a></div><div class="ttdeci">~Organ()</div><div class="ttdef"><b>Definition:</b> Body.cpp:123</div></div>
-<div class="ttc" id="class_part_html_a55803895d25d6b0830e998441716a7ba"><div class="ttname"><a href="class_part.html#a55803895d25d6b0830e998441716a7ba">Part::super</a></div><div class="ttdeci">Part * super</div><div class="ttdef"><b>Definition:</b> Body.hpp:179</div></div>
-<div class="ttc" id="class_tissue_html_a3e98fea8bc7ef877200d7d0eadb887f6"><div class="ttname"><a href="class_tissue.html#a3e98fea8bc7ef877200d7d0eadb887f6">Tissue::getImpairment</a></div><div class="ttdeci">float getImpairment() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:106</div></div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body_part.html#af2b24baa4004c818283765f6a916192d">addChild</a>(<a class="code" href="class_part.html">Part</a> *child);</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body_part.html#a2053d62daa315d311f41ea3221ad3167">addChildren</a>(<a class="code" href="class_part.html">Part</a> **child_array, <span class="keywordtype">int</span> count);</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    TCODList&lt;Part*&gt;* <a class="code" href="class_body_part.html#ad3d882b5e2bfb52cdfd314adb74463ff">getChildList</a>();</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_body_part.html#ad50968c0112ee4aaf8e6f79b5fbd9567">removeChild</a>(<span class="keywordtype">string</span> <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;    <a class="code" href="class_body_part.html#ae01ab64de85b601096898791df08196e">BodyPart</a>(<span class="keywordtype">string</span> <span class="keywordtype">id</span>, <span class="keywordtype">string</span> name, <span class="keywordtype">float</span> surface);</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    ~<a class="code" href="class_body_part.html">BodyPart</a>();</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;};</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;</div>
+<div class="line"><a name="l00450"></a><span class="lineno"><a class="line" href="class_body.html">  450</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_body.html">Body</a>{</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    <a class="code" href="class_body_part.html">BodyPart</a>* root;</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;    <span class="keyword">const</span> TCODColor part_gui_list_color_bodypart = TCODColor::azure;</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    <span class="keyword">const</span> TCODColor part_gui_list_color_organ = TCODColor::darkRed;</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;</div>
+<div class="line"><a name="l00460"></a><span class="lineno"><a class="line" href="class_body.html#afacb3ab35180131711c651abe554c6a8">  460</a></span>&#160;    std::map&lt;std::string, Part*, strless&gt;* <a class="code" href="class_body.html#afacb3ab35180131711c651abe554c6a8">part_map</a>;</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    <span class="keyword">typedef</span> std::map&lt;std::string, Part*, strless&gt;::iterator part_map_iterator;</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;</div>
+<div class="line"><a name="l00470"></a><span class="lineno"><a class="line" href="class_body.html#a3852b219150ea17df1fbae330b57f6eb">  470</a></span>&#160;    std::map&lt;std::string, std::string&gt;* <a class="code" href="class_body.html#a3852b219150ea17df1fbae330b57f6eb">iid_uuid_map</a>;</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;</div>
+<div class="line"><a name="l00481"></a><span class="lineno"><a class="line" href="class_body.html#abcd26e875cd258651e727d57718103f7">  481</a></span>&#160;    TCODList&lt;GuiObjectLink*&gt;* <a class="code" href="class_body.html#abcd26e875cd258651e727d57718103f7">part_gui_list</a>;</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    <a class="code" href="class_body_part.html">BodyPart</a>* <a class="code" href="class_body.html#aedb5191f583df1a6b20163fa70a7f401">loadBody</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename);</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;    <a class="code" href="class_body_part.html">BodyPart</a>* <a class="code" href="class_body.html#a1233e2282089ebd9f21fc1dbd88d6d71">enter</a>(rapidxml::xml_node&lt;&gt; *node, std::map&lt;std::string, Tissue*,strless&gt; *tissue_map);</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;    std::map&lt;std::string, Organ*, strless&gt;* <a class="code" href="class_body.html#a1e0f8c2e28fe88ba15b0d5fcc58f2a3f">extractOrgans</a>(<a class="code" href="class_body_part.html">BodyPart</a>* bp, std::map&lt;std::string, Organ*, strless&gt; *organ_map);</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;    std::map&lt;std::string, Part*, strless&gt;* <a class="code" href="class_body.html#a3ea2e5282fedf030ee4c04366081e3bf">extractParts</a>(<a class="code" href="class_body_part.html">BodyPart</a>* bp, std::map&lt;std::string, Part*, strless&gt; *<a class="code" href="class_body.html#afacb3ab35180131711c651abe554c6a8">part_map</a>);</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body.html#a807ddd24bd4e057d17eb6de4f42f985f">linkOrgans</a>(<a class="code" href="class_body_part.html">BodyPart</a>* bp, std::map&lt;std::string, Organ*, strless&gt; *organ_map);</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body.html#a7b6ecc5f7b33f902414d918c2791f63e">makeIdMap</a>(std::map&lt;std::string, Part*, strless&gt;* <a class="code" href="class_body.html#afacb3ab35180131711c651abe554c6a8">part_map</a>);</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body.html#a9eddf1fec4c9c7b9496cee870f12fa41">makePartMap</a>(<a class="code" href="class_body_part.html">BodyPart</a>* bp, std::map&lt;std::string, Part*, strless&gt; *<a class="code" href="class_body.html#afacb3ab35180131711c651abe554c6a8">part_map</a>);</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body.html#a20d195fecb15e50a76d67ba0836c9e39">buildPartList</a>(TCODList&lt;GuiObjectLink*&gt;* list, <a class="code" href="class_part.html">Part</a>* p, <span class="keywordtype">int</span> depth=0);</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;    <span class="keywordtype">void</span> createSubgraphs(std::ofstream* stream, <a class="code" href="class_body_part.html">BodyPart</a>* bp);</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;    <span class="keywordtype">void</span> createLinks(std::ofstream* stream, <a class="code" href="class_body_part.html">BodyPart</a>* bp);</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;    <a class="code" href="class_body.html#a2cda9c6f52963f15e85822bc2cbd4a1a">Body</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename);</div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;    ~<a class="code" href="class_body.html">Body</a>();</div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;</div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;    <a class="code" href="class_body_part.html">BodyPart</a>* getRootBP()</div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;    {</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;        <span class="keywordflow">if</span> (root != <span class="keyword">nullptr</span>) { <span class="keywordflow">return</span> root; }</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;    };</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;</div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_body.html#a1d6d4b0a1791314ba5af74da4c665da0">removePart</a>(std::string part_id);</div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_body.html#aef5d3db270848d3de8530a59353312a4">removeRandomPart</a>();</div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;</div>
+<div class="line"><a name="l00592"></a><span class="lineno"><a class="line" href="class_body.html#afb01fc8c2674f9c71de749c0f8a11cf9">  592</a></span>&#160;    TCODList&lt;GuiObjectLink*&gt;* <a class="code" href="class_body.html#afb01fc8c2674f9c71de749c0f8a11cf9">getPartGUIList</a>() { <span class="keywordflow">return</span> <a class="code" href="class_body.html#abcd26e875cd258651e727d57718103f7">part_gui_list</a>; }</div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;    <a class="code" href="class_part.html">Part</a>* getPartByUUID(std::string uuid);</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;    <a class="code" href="class_part.html">Part</a>* getPartByIID(std::string iid);</div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;</div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;    <span class="keywordtype">void</span> printBodyMap(<span class="keyword">const</span> <span class="keywordtype">char</span>* filename, <a class="code" href="class_body_part.html">BodyPart</a>* mroot);</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;</div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;};</div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;</div>
+<div class="line"><a name="l00603"></a><span class="lineno"><a class="line" href="classbdef__parse__error.html">  603</a></span>&#160;<span class="keyword">class </span><a class="code" href="classbdef__parse__error.html">bdef_parse_error</a>:<span class="keyword">public</span> std::runtime_error</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;{</div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;    <a class="code" href="classbdef__parse__error.html">bdef_parse_error</a>(<span class="keyword">const</span> std::string&amp; msg, rapidxml::xml_node&lt;&gt;* node);</div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;};</div>
+<div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;</div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* BODY_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="ttc" id="class_tissue_html_ac0d898de319ae2ff55818eb065941d17"><div class="ttname"><a href="class_tissue.html#ac0d898de319ae2ff55818eb065941d17">Tissue::getName</a></div><div class="ttdeci">string getName() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:68</div></div>
+<div class="ttc" id="structtissue__def_html"><div class="ttname"><a href="structtissue__def.html">tissue_def</a></div><div class="ttdoc">This struct represents the link between an organ and its tissues. </div><div class="ttdef"><b>Definition:</b> Body.hpp:152</div></div>
+<div class="ttc" id="class_tissue_html_a5939172e4f7e2bf8e7775ba267ca3f51"><div class="ttname"><a href="class_tissue.html#a5939172e4f7e2bf8e7775ba267ca3f51">Tissue::getBloodFlow</a></div><div class="ttdeci">float getBloodFlow() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:59</div></div>
+<div class="ttc" id="class_organ_html_af9dbba54820ce05e123e6bb0788df7e1"><div class="ttname"><a href="class_organ.html#af9dbba54820ce05e123e6bb0788df7e1">Organ::getConnectorId</a></div><div class="ttdeci">string getConnectorId()</div><div class="ttdoc">Returns the internal ID of the upstream root organ. </div><div class="ttdef"><b>Definition:</b> Body.cpp:172</div></div>
+<div class="ttc" id="class_part_html_a777d1ddea5bb3401f2ac3eb175dcc2f7"><div class="ttname"><a href="class_part.html#a777d1ddea5bb3401f2ac3eb175dcc2f7">Part::getSurface</a></div><div class="ttdeci">float getSurface() const </div><div class="ttdoc">Returns the relative surface area. </div><div class="ttdef"><b>Definition:</b> Body.hpp:258</div></div>
+<div class="ttc" id="class_body_part_html_af2b24baa4004c818283765f6a916192d"><div class="ttname"><a href="class_body_part.html#af2b24baa4004c818283765f6a916192d">BodyPart::addChild</a></div><div class="ttdeci">void addChild(Part *child)</div><div class="ttdoc">Adds a Part to the BodyPart&#39;s list of children. </div><div class="ttdef"><b>Definition:</b> Body.cpp:78</div></div>
+<div class="ttc" id="class_part_html_ae1538e7080bd799f51e31f500abebedf"><div class="ttname"><a href="class_part.html#ae1538e7080bd799f51e31f500abebedf">Part::id</a></div><div class="ttdeci">string id</div><div class="ttdef"><b>Definition:</b> Body.hpp:189</div></div>
+<div class="ttc" id="class_organ_html"><div class="ttname"><a href="class_organ.html">Organ</a></div><div class="ttdoc">The &#39;leaves&#39; of the Body tree. </div><div class="ttdef"><b>Definition:</b> Body.hpp:321</div></div>
+<div class="ttc" id="class_body_part_html_ad3d882b5e2bfb52cdfd314adb74463ff"><div class="ttname"><a href="class_body_part.html#ad3d882b5e2bfb52cdfd314adb74463ff">BodyPart::getChildList</a></div><div class="ttdeci">TCODList&lt; Part * &gt; * getChildList()</div><div class="ttdoc">Returns a list of all the children of this BodyPart. </div><div class="ttdef"><b>Definition:</b> Body.cpp:90</div></div>
+<div class="ttc" id="class_body_html_a3ea2e5282fedf030ee4c04366081e3bf"><div class="ttname"><a href="class_body.html#a3ea2e5282fedf030ee4c04366081e3bf">Body::extractParts</a></div><div class="ttdeci">std::map&lt; std::string, Part *, strless &gt; * extractParts(BodyPart *bp, std::map&lt; std::string, Part *, strless &gt; *part_map)</div><div class="ttdef"><b>Definition:</b> Body.cpp:710</div></div>
+<div class="ttc" id="class_organ_html_a5f1d4a3490dcb515e39b7d27f5ef3ecd"><div class="ttname"><a href="class_organ.html#a5f1d4a3490dcb515e39b7d27f5ef3ecd">Organ::getConnectedOrganUUIDs</a></div><div class="ttdeci">void getConnectedOrganUUIDs(std::vector&lt; string &gt; *vector)</div><div class="ttdoc">Modifies the given vector to contain a list of the UUIDs of the downstream branches. </div><div class="ttdef"><b>Definition:</b> Body.cpp:177</div></div>
+<div class="ttc" id="class_organ_html_aee59c88dbd768bdfdfbedeb75f04588b"><div class="ttname"><a href="class_organ.html#aee59c88dbd768bdfdfbedeb75f04588b">Organ::isRoot</a></div><div class="ttdeci">bool isRoot() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:392</div></div>
+<div class="ttc" id="class_body_part_html_a2053d62daa315d311f41ea3221ad3167"><div class="ttname"><a href="class_body_part.html#a2053d62daa315d311f41ea3221ad3167">BodyPart::addChildren</a></div><div class="ttdeci">void addChildren(Part **child_array, int count)</div><div class="ttdoc">Adds several Parts to the BodyPart&#39;s list of children. </div><div class="ttdef"><b>Definition:</b> Body.cpp:83</div></div>
+<div class="ttc" id="class_organ_html_a48880acd5e95342739bfb0aef3d39d81"><div class="ttname"><a href="class_organ.html#a48880acd5e95342739bfb0aef3d39d81">Organ::addConnectedOrgan</a></div><div class="ttdeci">void addConnectedOrgan(Organ *connectee)</div><div class="ttdoc">Called by the branch organs to register with their root. </div><div class="ttdef"><b>Definition:</b> Body.cpp:188</div></div>
+<div class="ttc" id="class_organ_html_a9b3d4e9bbea58e59a0f40ee3b1bee5a4"><div class="ttname"><a href="class_organ.html#a9b3d4e9bbea58e59a0f40ee3b1bee5a4">Organ::getConnectorUUID</a></div><div class="ttdeci">string getConnectorUUID()</div><div class="ttdoc">Returns the UUID of the upstream root organ. </div><div class="ttdef"><b>Definition:</b> Body.cpp:167</div></div>
+<div class="ttc" id="class_part_html_ab5cf8adfbc0a2f0dc625593aa176902f"><div class="ttname"><a href="class_part.html#ab5cf8adfbc0a2f0dc625593aa176902f">Part::Part</a></div><div class="ttdeci">Part(string id, string name, float surface, PartType type)</div><div class="ttdef"><b>Definition:</b> Body.cpp:41</div></div>
+<div class="ttc" id="class_part_html_aa57344b8df727fe5b05e43f9619a3546"><div class="ttname"><a href="class_part.html#aa57344b8df727fe5b05e43f9619a3546">Part::getType</a></div><div class="ttdeci">PartType getType() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:289</div></div>
+<div class="ttc" id="class_body_html"><div class="ttname"><a href="class_body.html">Body</a></div><div class="ttdoc">The code representation of a body of an Actor. </div><div class="ttdef"><b>Definition:</b> Body.hpp:450</div></div>
+<div class="ttc" id="class_body_html_aef5d3db270848d3de8530a59353312a4"><div class="ttname"><a href="class_body.html#aef5d3db270848d3de8530a59353312a4">Body::removeRandomPart</a></div><div class="ttdeci">void removeRandomPart()</div><div class="ttdef"><b>Definition:</b> Body.cpp:669</div></div>
+<div class="ttc" id="class_body_part_html_ad50968c0112ee4aaf8e6f79b5fbd9567"><div class="ttname"><a href="class_body_part.html#ad50968c0112ee4aaf8e6f79b5fbd9567">BodyPart::removeChild</a></div><div class="ttdeci">bool removeChild(string id)</div><div class="ttdoc">Removes a child object from the body part. </div><div class="ttdef"><b>Definition:</b> Body.cpp:95</div></div>
+<div class="ttc" id="class_body_html_aedb5191f583df1a6b20163fa70a7f401"><div class="ttname"><a href="class_body.html#aedb5191f583df1a6b20163fa70a7f401">Body::loadBody</a></div><div class="ttdeci">BodyPart * loadBody(const char *filename)</div><div class="ttdef"><b>Definition:</b> Body.cpp:252</div></div>
+<div class="ttc" id="class_organ_html_ae9606d136843749884c5d2d220f383d0"><div class="ttname"><a href="class_organ.html#ae9606d136843749884c5d2d220f383d0">Organ::Organ</a></div><div class="ttdeci">Organ(string id, string name, float surface, tissue_def *tissues, int tissue_count, const char *connector_id, bool is_root=false)</div><div class="ttdef"><b>Definition:</b> Body.cpp:109</div></div>
+<div class="ttc" id="class_part_html_a41f09aaec6ea2609544606d83858bcac"><div class="ttname"><a href="class_part.html#a41f09aaec6ea2609544606d83858bcac">Part::getSuperPart</a></div><div class="ttdeci">Part * getSuperPart() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:304</div></div>
+<div class="ttc" id="classbdef__parse__error_html"><div class="ttname"><a href="classbdef__parse__error.html">bdef_parse_error</a></div><div class="ttdef"><b>Definition:</b> Body.hpp:603</div></div>
+<div class="ttc" id="class_tissue_html_af38acffd09f9f6aa48bbcdd938964cc2"><div class="ttname"><a href="class_tissue.html#af38acffd09f9f6aa48bbcdd938964cc2">Tissue::getResistance</a></div><div class="ttdeci">float getResistance() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:100</div></div>
+<div class="ttc" id="class_body_html_afb01fc8c2674f9c71de749c0f8a11cf9"><div class="ttname"><a href="class_body.html#afb01fc8c2674f9c71de749c0f8a11cf9">Body::getPartGUIList</a></div><div class="ttdeci">TCODList&lt; GuiObjectLink * &gt; * getPartGUIList()</div><div class="ttdef"><b>Definition:</b> Body.hpp:592</div></div>
+<div class="ttc" id="class_part_html_a5db86a8adc27862a7814ad781bae9c9c"><div class="ttname"><a href="class_part.html#a5db86a8adc27862a7814ad781bae9c9c">Part::setSuperPart</a></div><div class="ttdeci">void setSuperPart(Part *bp)</div><div class="ttdef"><b>Definition:</b> Body.hpp:296</div></div>
+<div class="ttc" id="class_tissue_html"><div class="ttname"><a href="class_tissue.html">Tissue</a></div><div class="ttdoc">Holds the definition of a tissue, such as skin or bone. </div><div class="ttdef"><b>Definition:</b> Body.hpp:44</div></div>
+<div class="ttc" id="class_body_html_afacb3ab35180131711c651abe554c6a8"><div class="ttname"><a href="class_body.html#afacb3ab35180131711c651abe554c6a8">Body::part_map</a></div><div class="ttdeci">std::map&lt; std::string, Part *, strless &gt; * part_map</div><div class="ttdef"><b>Definition:</b> Body.hpp:460</div></div>
+<div class="ttc" id="class_body_html_a1d6d4b0a1791314ba5af74da4c665da0"><div class="ttname"><a href="class_body.html#a1d6d4b0a1791314ba5af74da4c665da0">Body::removePart</a></div><div class="ttdeci">bool removePart(std::string part_id)</div><div class="ttdef"><b>Definition:</b> Body.cpp:737</div></div>
+<div class="ttc" id="class_body_html_a1233e2282089ebd9f21fc1dbd88d6d71"><div class="ttname"><a href="class_body.html#a1233e2282089ebd9f21fc1dbd88d6d71">Body::enter</a></div><div class="ttdeci">BodyPart * enter(rapidxml::xml_node&lt;&gt; *node, std::map&lt; std::string, Tissue *, strless &gt; *tissue_map)</div><div class="ttdef"><b>Definition:</b> Body.cpp:394</div></div>
+<div class="ttc" id="class_tissue_html_ae31f68d5b1a408d6b864feabe16d7faf"><div class="ttname"><a href="class_tissue.html#ae31f68d5b1a408d6b864feabe16d7faf">Tissue::getId</a></div><div class="ttdeci">string getId() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:82</div></div>
+<div class="ttc" id="class_part_html_aaf1cb85b0c9ca64e430cc0b086ddd462"><div class="ttname"><a href="class_part.html#aaf1cb85b0c9ca64e430cc0b086ddd462">Part::getName</a></div><div class="ttdeci">string getName() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:267</div></div>
+<div class="ttc" id="class_part_html_aa277f1166a99517c92f3c7b5d798ab1a"><div class="ttname"><a href="class_part.html#aa277f1166a99517c92f3c7b5d798ab1a">Part::getId</a></div><div class="ttdeci">string getId() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:280</div></div>
+<div class="ttc" id="class_part_html"><div class="ttname"><a href="class_part.html">Part</a></div><div class="ttdoc">This class is the abstract superclass for all parts that make up a body. </div><div class="ttdef"><b>Definition:</b> Body.hpp:173</div></div>
+<div class="ttc" id="class_body_html_a9eddf1fec4c9c7b9496cee870f12fa41"><div class="ttname"><a href="class_body.html#a9eddf1fec4c9c7b9496cee870f12fa41">Body::makePartMap</a></div><div class="ttdeci">void makePartMap(BodyPart *bp, std::map&lt; std::string, Part *, strless &gt; *part_map)</div><div class="ttdef"><b>Definition:</b> Body.cpp:701</div></div>
+<div class="ttc" id="class_tissue_html_a83a2c13d052905bbc5f94247508313df"><div class="ttname"><a href="class_tissue.html#a83a2c13d052905bbc5f94247508313df">Tissue::getPain</a></div><div class="ttdeci">float getPain() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:91</div></div>
+<div class="ttc" id="class_organ_html_a70976723830b44b0cdb217e49668db8f"><div class="ttname"><a href="class_organ.html#a70976723830b44b0cdb217e49668db8f">Organ::linkToConnector</a></div><div class="ttdeci">void linkToConnector(std::map&lt; std::string, Organ *, strless &gt; *organ_map)</div><div class="ttdoc">Links this organ to its local root. </div><div class="ttdef"><b>Definition:</b> Body.cpp:148</div></div>
+<div class="ttc" id="class_part_html_ae41359371dfcb2c02ee05e219ec61ecd"><div class="ttname"><a href="class_part.html#ae41359371dfcb2c02ee05e219ec61ecd">Part::slated_for_destruction</a></div><div class="ttdeci">bool slated_for_destruction</div><div class="ttdef"><b>Definition:</b> Body.hpp:214</div></div>
+<div class="ttc" id="class_body_part_html"><div class="ttname"><a href="class_body_part.html">BodyPart</a></div><div class="ttdoc">The code representation of a part of the body (such as &#39;Left Arm&#39;). </div><div class="ttdef"><b>Definition:</b> Body.hpp:407</div></div>
+<div class="ttc" id="class_body_html_a3852b219150ea17df1fbae330b57f6eb"><div class="ttname"><a href="class_body.html#a3852b219150ea17df1fbae330b57f6eb">Body::iid_uuid_map</a></div><div class="ttdeci">std::map&lt; std::string, std::string &gt; * iid_uuid_map</div><div class="ttdef"><b>Definition:</b> Body.hpp:470</div></div>
+<div class="ttc" id="class_body_html_abcd26e875cd258651e727d57718103f7"><div class="ttname"><a href="class_body.html#abcd26e875cd258651e727d57718103f7">Body::part_gui_list</a></div><div class="ttdeci">TCODList&lt; GuiObjectLink * &gt; * part_gui_list</div><div class="ttdef"><b>Definition:</b> Body.hpp:481</div></div>
+<div class="ttc" id="class_body_html_a807ddd24bd4e057d17eb6de4f42f985f"><div class="ttname"><a href="class_body.html#a807ddd24bd4e057d17eb6de4f42f985f">Body::linkOrgans</a></div><div class="ttdeci">void linkOrgans(BodyPart *bp, std::map&lt; std::string, Organ *, strless &gt; *organ_map)</div><div class="ttdef"><b>Definition:</b> Body.cpp:377</div></div>
+<div class="ttc" id="classstrless_html"><div class="ttname"><a href="classstrless.html">strless</a></div><div class="ttdef"><b>Definition:</b> Body.hpp:30</div></div>
+<div class="ttc" id="class_body_html_a7b6ecc5f7b33f902414d918c2791f63e"><div class="ttname"><a href="class_body.html#a7b6ecc5f7b33f902414d918c2791f63e">Body::makeIdMap</a></div><div class="ttdeci">void makeIdMap(std::map&lt; std::string, Part *, strless &gt; *part_map)</div><div class="ttdef"><b>Definition:</b> Body.cpp:728</div></div>
+<div class="ttc" id="class_object_html"><div class="ttname"><a href="class_object.html">Object</a></div><div class="ttdoc">The base class for all objects in the game. </div><div class="ttdef"><b>Definition:</b> Object.hpp:17</div></div>
+<div class="ttc" id="class_tissue_html_a9050e8e0b3df39f8e6c24d6709aaa822"><div class="ttname"><a href="class_tissue.html#a9050e8e0b3df39f8e6c24d6709aaa822">Tissue::Tissue</a></div><div class="ttdeci">Tissue(string id, string name, float pain, float blood_flow, float resistance, float impairment)</div><div class="ttdoc">Creates a new tissue definition. </div><div class="ttdef"><b>Definition:</b> Body.cpp:17</div></div>
+<div class="ttc" id="class_body_part_html_ae01ab64de85b601096898791df08196e"><div class="ttname"><a href="class_body_part.html#ae01ab64de85b601096898791df08196e">BodyPart::BodyPart</a></div><div class="ttdeci">BodyPart(string id, string name, float surface)</div><div class="ttdef"><b>Definition:</b> Body.cpp:66</div></div>
+<div class="ttc" id="class_body_html_a2cda9c6f52963f15e85822bc2cbd4a1a"><div class="ttname"><a href="class_body.html#a2cda9c6f52963f15e85822bc2cbd4a1a">Body::Body</a></div><div class="ttdeci">Body(const char *filename)</div><div class="ttdef"><b>Definition:</b> Body.cpp:203</div></div>
+<div class="ttc" id="class_body_html_a20d195fecb15e50a76d67ba0836c9e39"><div class="ttname"><a href="class_body.html#a20d195fecb15e50a76d67ba0836c9e39">Body::buildPartList</a></div><div class="ttdeci">void buildPartList(TCODList&lt; GuiObjectLink * &gt; *list, Part *p, int depth=0)</div><div class="ttdef"><b>Definition:</b> Body.cpp:787</div></div>
+<div class="ttc" id="class_body_html_a1e0f8c2e28fe88ba15b0d5fcc58f2a3f"><div class="ttname"><a href="class_body.html#a1e0f8c2e28fe88ba15b0d5fcc58f2a3f">Body::extractOrgans</a></div><div class="ttdeci">std::map&lt; std::string, Organ *, strless &gt; * extractOrgans(BodyPart *bp, std::map&lt; std::string, Organ *, strless &gt; *organ_map)</div><div class="ttdef"><b>Definition:</b> Body.cpp:358</div></div>
+<div class="ttc" id="class_organ_html_a857bf37ad3a89244b6067c32d7192a4d"><div class="ttname"><a href="class_organ.html#a857bf37ad3a89244b6067c32d7192a4d">Organ::~Organ</a></div><div class="ttdeci">~Organ()</div><div class="ttdef"><b>Definition:</b> Body.cpp:128</div></div>
+<div class="ttc" id="class_part_html_a55803895d25d6b0830e998441716a7ba"><div class="ttname"><a href="class_part.html#a55803895d25d6b0830e998441716a7ba">Part::super</a></div><div class="ttdeci">Part * super</div><div class="ttdef"><b>Definition:</b> Body.hpp:219</div></div>
+<div class="ttc" id="class_tissue_html_a3e98fea8bc7ef877200d7d0eadb887f6"><div class="ttname"><a href="class_tissue.html#a3e98fea8bc7ef877200d7d0eadb887f6">Tissue::getImpairment</a></div><div class="ttdeci">float getImpairment() const </div><div class="ttdef"><b>Definition:</b> Body.hpp:108</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>Body.hpp</b></li>
-    <li class="footer">Generated on Sun Aug 10 2014 16:06:46 for Rogue M.D. by
+    <li class="footer">Generated on Thu Aug 14 2014 14:13:23 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

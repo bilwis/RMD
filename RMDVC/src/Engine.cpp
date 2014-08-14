@@ -1,8 +1,6 @@
 #include "Engine.hpp"
 #include <stdio.h>
 
-
-
 Engine::Engine() {
     TCODConsole::initRoot(120,80,"libtcod C++ tutorial",false);
 	gameConsole = new TCODConsole(120, 70);
@@ -18,14 +16,14 @@ Engine::Engine() {
 
 	gui = new Gui();
 	
-	/*
-	sampleContainer = new GuiBodyViewer("sampleBV", 3, 3, 80, 40,
+	
+	guiBodyViewer = new GuiBodyViewer("BodyViewer", 3, 3, 80, 40,
 		TCODColor::white, TCODColor::black, true, "BodyViewer");
 
-	sampleContainer->setActiveBody(player->destructible->body);
+	guiBodyViewer->setVisibility(false);
 
-	gui->addContainer(sampleContainer);
-	*/
+	gui->addContainer(guiBodyViewer);
+	
 
 	/*
 	sampleContainer = new GuiContainer("sampleContainer", 10, 10, 40, 20,
@@ -70,6 +68,9 @@ void Engine::update() {
 	TCOD_key_t key;
 	TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS, &key, NULL);
 
+	//No key pressed = nothing to do!
+	if (key.vk == TCODK_NONE) { return; }
+
 	if (state == GameState::GUI) {
 		//On Escape, exit the GUI state
 		// tell the Gui object to inactivate all ActiveGuiElements
@@ -109,12 +110,12 @@ void Engine::update() {
         		switch (key.c) {
         			case 'k':
         				player->destructible->body->removeRandomPart();
-						sampleTextBox->setText("OH GOD, WHY!?");
+						//sampleTextBox->setText("OH GOD, WHY!?");
         			break;
 					case 'l':
 						state = GameState::GUI;
-						sampleContainer->setVisibility(!sampleContainer->isVisible());
-						gui->makeActive("sampleList");
+						guiBodyViewer->activate(player->destructible->body);
+						gui->makeActive(guiBodyViewer->getUUID());
         		}
         		break;
 			default:break;

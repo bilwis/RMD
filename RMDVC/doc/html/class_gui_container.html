@@ -91,21 +91,33 @@ Collaboration diagram for GuiContainer:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_gui_container__coll__graph.png" border="0" usemap="#_gui_container_coll__map" alt="Collaboration graph"/></div>
 <map name="_gui_container_coll__map" id="_gui_container_coll__map">
-<area shape="rect" id="node2" href="class_gui_render_object.html" title="GuiRenderObject" alt="" coords="60,247,181,273"/><area shape="rect" id="node3" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="71,171,173,197"/><area shape="rect" id="node4" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="68,95,128,121"/></map>
+<area shape="rect" id="node2" href="class_gui_render_object.html" title="GuiRenderObject" alt="" coords="5,247,127,273"/><area shape="rect" id="node3" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="15,171,117,197"/><area shape="rect" id="node4" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="36,95,96,121"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1cc5f121f224919555474e5fe54cb4da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cc5f121f224919555474e5fe54cb4da"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GuiContainer</b> (string id, int x, int y, int width, int height, TCODColor fore, TCODColor back, bool drawBorder=false, string title=&quot;&quot;)</td></tr>
-<tr class="separator:a1cc5f121f224919555474e5fe54cb4da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0429c62a2655e24d4c439327db19642d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0429c62a2655e24d4c439327db19642d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>GuiContainer</b> (int x, int y, int width, int height, TCODColor fore, TCODColor back, bool <a class="el" href="class_gui_container.html#a730f2031999829fa7a30f642554776da">dynamic</a>=false, bool draw_border=false, string title=&quot;&quot;)</td></tr>
+<tr class="separator:a0429c62a2655e24d4c439327db19642d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8edebce97b9203a2f55eabc47f140c93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8edebce97b9203a2f55eabc47f140c93"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isDynamic</b> ()</td></tr>
+<tr class="separator:a8edebce97b9203a2f55eabc47f140c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba70cf48dbd64bdcd9a455da931728ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba70cf48dbd64bdcd9a455da931728ff"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setDynamic</b> (bool value)</td></tr>
+<tr class="separator:aba70cf48dbd64bdcd9a455da931728ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb4c5c5d8df351e20ab290b35c0aa3f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb4c5c5d8df351e20ab290b35c0aa3f6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>addElement</b> (<a class="el" href="class_gui_element.html">GuiElement</a> *element)</td></tr>
 <tr class="separator:adb4c5c5d8df351e20ab290b35c0aa3f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d744f1e181b4b6f7f5544da3ee901e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d744f1e181b4b6f7f5544da3ee901e1"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>removeElement</b> (string id)</td></tr>
 <tr class="separator:a2d744f1e181b4b6f7f5544da3ee901e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adff211e462ef642435509c894d2390ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_container.html#adff211e462ef642435509c894d2390ba">render</a> (TCODConsole *con)</td></tr>
+<tr class="memitem:a99061241146d0917f5c1115f568c101b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99061241146d0917f5c1115f568c101b"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (TCOD_key_t key)</td></tr>
+<tr class="separator:a99061241146d0917f5c1115f568c101b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c06e639b2f395cceea46bbc0f47f52a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_container.html#a9c06e639b2f395cceea46bbc0f47f52a">renderSelf</a> (TCODConsole *con)</td></tr>
+<tr class="memdesc:a9c06e639b2f395cceea46bbc0f47f52a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renders only the GuiContainers own graphic elements onto the given console.  <a href="#a9c06e639b2f395cceea46bbc0f47f52a">More...</a><br /></td></tr>
+<tr class="separator:a9c06e639b2f395cceea46bbc0f47f52a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adff211e462ef642435509c894d2390ba"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_container.html#adff211e462ef642435509c894d2390ba">render</a> (TCODConsole *con)</td></tr>
 <tr class="memdesc:adff211e462ef642435509c894d2390ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renders all 'child' GuiElements on the given console.  <a href="#adff211e462ef642435509c894d2390ba">More...</a><br /></td></tr>
 <tr class="separator:adff211e462ef642435509c894d2390ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_gui_render_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_gui_render_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_gui_render_object.html">GuiRenderObject</a></td></tr>
@@ -159,15 +171,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setBackColor</b> (TCO
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setCharacter</b> (wchar_t ch)</td></tr>
 <tr class="separator:a9a99f0d7d1fff398662a01c1256474a0 inherit pub_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_object.html">Object</a></td></tr>
-<tr class="memitem:a67bc9e45b170bf4881a1b1b0c58738d4 inherit pub_methods_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67bc9e45b170bf4881a1b1b0c58738d4"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>getId</b> ()</td></tr>
-<tr class="separator:a67bc9e45b170bf4881a1b1b0c58738d4 inherit pub_methods_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a867c339f032a7f639e0bdb426bb6a297 inherit pub_methods_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a867c339f032a7f639e0bdb426bb6a297"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>getUUID</b> ()</td></tr>
+<tr class="separator:a867c339f032a7f639e0bdb426bb6a297 inherit pub_methods_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab52cf1fcdc2077a5eae177224c4a35f4 inherit pub_methods_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab52cf1fcdc2077a5eae177224c4a35f4"></a>
 virtual string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td></tr>
 <tr class="separator:ab52cf1fcdc2077a5eae177224c4a35f4 inherit pub_methods_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1989c4d53cee952a2d9ee8e0e950bfd inherit pub_methods_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1989c4d53cee952a2d9ee8e0e950bfd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Object</b> (string id)</td></tr>
-<tr class="separator:ae1989c4d53cee952a2d9ee8e0e950bfd inherit pub_methods_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -176,9 +185,11 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a7197f4269e9ca514223a2b48483bfc08"><td class="memItemLeft" align="right" valign="top">TCODConsole *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_container.html#a7197f4269e9ca514223a2b48483bfc08">container_console</a></td></tr>
 <tr class="memdesc:a7197f4269e9ca514223a2b48483bfc08"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="class_gui_container.html" title="A class that can hold several GuiElement children. ">GuiContainer</a>'s TCODConsole.  <a href="#a7197f4269e9ca514223a2b48483bfc08">More...</a><br /></td></tr>
 <tr class="separator:a7197f4269e9ca514223a2b48483bfc08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6424fd6b29d1cb3b18c47fd4eba10f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6424fd6b29d1cb3b18c47fd4eba10f0"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>drawBorder</b></td></tr>
-<tr class="separator:ac6424fd6b29d1cb3b18c47fd4eba10f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a730f2031999829fa7a30f642554776da"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_container.html#a730f2031999829fa7a30f642554776da">dynamic</a></td></tr>
+<tr class="separator:a730f2031999829fa7a30f642554776da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88396a12a00253010a07be8a613f0fc3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a88396a12a00253010a07be8a613f0fc3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>draw_border</b></td></tr>
+<tr class="separator:a88396a12a00253010a07be8a613f0fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a52a46201b7ed625a8207eeb4394e73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a52a46201b7ed625a8207eeb4394e73"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>title</b></td></tr>
 <tr class="separator:a3a52a46201b7ed625a8207eeb4394e73"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,20 +220,20 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pos_y</b></td></tr>
 wchar_t&#160;</td><td class="memItemRight" valign="bottom"><b>ch</b> = 20</td></tr>
 <tr class="separator:a451685f235431c643778935d4b118596 inherit pro_attribs_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_object"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_object.html">Object</a></td></tr>
-<tr class="memitem:a5f7915e8bfc65929d42c2444e96e6cda inherit pro_attribs_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f7915e8bfc65929d42c2444e96e6cda"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
-<tr class="separator:a5f7915e8bfc65929d42c2444e96e6cda inherit pro_attribs_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65a486a9bc5fece2182bc1cd76071662 inherit pro_attribs_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65a486a9bc5fece2182bc1cd76071662"></a>
+uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
+<tr class="separator:a65a486a9bc5fece2182bc1cd76071662 inherit pro_attribs_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_class_gui_render_object"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_gui_render_object')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_gui_render_object.html">GuiRenderObject</a></td></tr>
-<tr class="memitem:a9aa2a4ac50e710c0cd19226937992acd inherit pro_methods_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9aa2a4ac50e710c0cd19226937992acd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GuiRenderObject</b> (string id, int x, int y, int width, int height, TCODColor fore, TCODColor back)</td></tr>
-<tr class="separator:a9aa2a4ac50e710c0cd19226937992acd inherit pro_methods_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f6aced21f4a8bda63c1fec70c02674c inherit pro_methods_class_gui_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f6aced21f4a8bda63c1fec70c02674c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>GuiRenderObject</b> (int x, int y, int width, int height, TCODColor fore, TCODColor back)</td></tr>
+<tr class="separator:a4f6aced21f4a8bda63c1fec70c02674c inherit pro_methods_class_gui_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_render_object"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_render_object')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_render_object.html">RenderObject</a></td></tr>
-<tr class="memitem:a650e581fe27dc42cd05fa661750bcbca inherit pro_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a650e581fe27dc42cd05fa661750bcbca"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>RenderObject</b> (string id, int x, int y, TCODColor fore, TCODColor back, wchar_t ch=20)</td></tr>
-<tr class="separator:a650e581fe27dc42cd05fa661750bcbca inherit pro_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2849ed12fd3823fe2bc4b611469ed2e0 inherit pro_methods_class_render_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2849ed12fd3823fe2bc4b611469ed2e0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>RenderObject</b> (int x, int y, TCODColor fore, TCODColor back, wchar_t ch=20)</td></tr>
+<tr class="separator:a2849ed12fd3823fe2bc4b611469ed2e0 inherit pro_methods_class_render_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class that can hold several <a class="el" href="class_gui_element.html" title="Base class for gui elements (controls). ">GuiElement</a> children. </p>
@@ -251,9 +262,30 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Renders all 'child' GuiElements on the given console. </p>
-<p>This function calls the <a class="el" href="class_gui_container.html#adff211e462ef642435509c894d2390ba" title="Renders all &#39;child&#39; GuiElements on the given console. ">render()</a> function of all GuiElements contained in the elements TCODList, after (if drawBorder == true) drawing its own frame and title. These functions draw on the container_console, which is then blitted onto the given console. </p>
+<p>This function calls the <a class="el" href="class_gui_container.html#adff211e462ef642435509c894d2390ba" title="Renders all &#39;child&#39; GuiElements on the given console. ">render()</a> function of all GuiElements contained in the elements TCODList, after calling <a class="el" href="class_gui_container.html#a9c06e639b2f395cceea46bbc0f47f52a" title="Renders only the GuiContainers own graphic elements onto the given console. ">renderSelf()</a> . These functions draw on the container_console, which is then blitted onto the given console. </p>
 
 <p>Implements <a class="el" href="class_render_object.html">RenderObject</a>.</p>
+
+<p>Reimplemented in <a class="el" href="class_gui_body_viewer.html#a16762ce77ce01ffacf8f3312dc639324">GuiBodyViewer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9c06e639b2f395cceea46bbc0f47f52a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GuiContainer::renderSelf </td>
+          <td>(</td>
+          <td class="paramtype">TCODConsole *&#160;</td>
+          <td class="paramname"><em>con</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Renders only the GuiContainers own graphic elements onto the given console. </p>
+<p>This function renders only the GuiContainers own graphic elements (such as the border). It does not call the <a class="el" href="class_gui_container.html#adff211e462ef642435509c894d2390ba" title="Renders all &#39;child&#39; GuiElements on the given console. ">render()</a> function of it's children to allow for custom rendering (such as with ActiveElements). Note that this function should be called before calling the child render function(s), otherwise it will overwrite the output on the console. </p>
 
 </div>
 </div>
@@ -278,6 +310,27 @@ Additional Inherited Members</h2></td></tr>
 
 <p>The <a class="el" href="class_gui_container.html" title="A class that can hold several GuiElement children. ">GuiContainer</a>'s TCODConsole. </p>
 <p>Every <a class="el" href="class_gui_container.html" title="A class that can hold several GuiElement children. ">GuiContainer</a> declares it's own TCODConsole, on which it renders its <a class="el" href="class_gui_element.html" title="Base class for gui elements (controls). ">GuiElement</a> children. The Console is then passed to the instance of the <a class="el" href="class_gui.html" title="A class which provides Gui handling functions to the Engine. ">Gui</a> class handling the overall <a class="el" href="class_gui.html" title="A class which provides Gui handling functions to the Engine. ">Gui</a> rendering, which blits it onto the root console. </p>
+
+</div>
+</div>
+<a class="anchor" id="a730f2031999829fa7a30f642554776da"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GuiContainer::dynamic</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>A dynamic <a class="el" href="class_gui_container.html" title="A class that can hold several GuiElement children. ">GuiContainer</a> is marked to be updated every turn by the <a class="el" href="class_gui.html" title="A class which provides Gui handling functions to the Engine. ">Gui</a> handling class. This should only be used for integral <a class="el" href="class_gui.html" title="A class which provides Gui handling functions to the Engine. ">Gui</a> parts such as health bars etc. </p>
 
 </div>
 </div>
@@ -312,7 +365,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_gui_container.html">GuiContainer</a></li>
-    <li class="footer">Generated on Sun Aug 10 2014 16:06:46 for Rogue M.D. by
+    <li class="footer">Generated on Thu Aug 14 2014 14:13:23 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

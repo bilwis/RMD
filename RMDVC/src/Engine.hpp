@@ -28,7 +28,7 @@ public :
     Map *map;
 
 	Gui *gui;
-	GuiBodyViewer *sampleContainer;
+	GuiBodyViewer *guiBodyViewer;
 	GuiTextBox *sampleTextBox;
 	GuiListChooser *sampleList;
  

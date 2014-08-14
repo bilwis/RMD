@@ -11,8 +11,9 @@ digraph G {
 		L_FOREFOOT [label="Left Forefoot"];
 		L_HALLUX [label="Left Big Toe"];
 		L_SECOND_TOE [label="Left Second Toe"];
-		L_FIFTH_TOE [label="Left Fifth Toe"];
+		L_THIRD_TOE [label="Left Third Toe"];
 		L_FOURTH_TOE [label="Left Fourth Toe"];
+		L_FIFTH_TOE [label="Left Fifth Toe"];
 	 } 
 	subgraph cluster_L_LOWER_LEG {
 		label = "Left Lower Leg";
@@ -31,13 +32,6 @@ digraph G {
 		label = "Right Foot";
 		R_ANKLE [label="Right Ankle"];
 		R_HINDFOOT [label="Right Hindfoot"];
-		R_MIDFOOT [label="Right Midfoot"];
-		R_FOREFOOT [label="Right Forefoot"];
-		R_HALLUX [label="Right Big Toe"];
-		R_SECOND_TOE [label="Right Second Toe"];
-		R_THIRD_TOE [label="Right Third Toe"];
-		R_FOURTH_TOE [label="Right Fourth Toe"];
-		R_FIFTH_TOE [label="Right Fifth Toe"];
 	 } 
 	subgraph cluster_R_LOWER_LEG {
 		label = "Right Lower Leg";
@@ -116,21 +110,15 @@ L_HINDFOOT -> L_MIDFOOT;
 L_MIDFOOT -> L_FOREFOOT;
 L_FOREFOOT -> L_HALLUX;
 L_FOREFOOT -> L_SECOND_TOE;
-L_FOREFOOT -> L_FIFTH_TOE;
+L_FOREFOOT -> L_THIRD_TOE;
 L_FOREFOOT -> L_FOURTH_TOE;
+L_FOREFOOT -> L_FIFTH_TOE;
 L_THIGH -> L_KNEE;
 L_KNEE -> L_CALF;
 PELVIS -> L_HIP;
 L_HIP -> L_THIGH;
 R_CALF -> R_ANKLE;
 R_ANKLE -> R_HINDFOOT;
-R_HINDFOOT -> R_MIDFOOT;
-R_MIDFOOT -> R_FOREFOOT;
-R_FOREFOOT -> R_HALLUX;
-R_FOREFOOT -> R_SECOND_TOE;
-R_FOREFOOT -> R_THIRD_TOE;
-R_FOREFOOT -> R_FOURTH_TOE;
-R_FOREFOOT -> R_FIFTH_TOE;
 R_THIGH -> R_KNEE;
 R_KNEE -> R_CALF;
 PELVIS -> R_HIP;

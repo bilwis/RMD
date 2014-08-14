@@ -1,6 +1,6 @@
 var class_render_object =
 [
-    [ "RenderObject", "class_render_object.html#a650e581fe27dc42cd05fa661750bcbca", null ],
+    [ "RenderObject", "class_render_object.html#a2849ed12fd3823fe2bc4b611469ed2e0", null ],
     [ "~RenderObject", "class_render_object.html#aac7c52e3e892530e0ca7165a2aab3a00", null ],
     [ "getBackColor", "class_render_object.html#a14a60c8dad9d95b19365be19168f2559", null ],
     [ "getCharacter", "class_render_object.html#a63dfea89e36ba5d2d3ca176e6f0c7bcc", null ],

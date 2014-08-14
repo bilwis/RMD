@@ -1,11 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="5,31,65,57"/>
-<area shape="rect" id="node2" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="113,31,215,57"/>
-<area shape="rect" id="node3" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="263,31,384,57"/>
-<area shape="rect" id="node4" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="432,5,529,32"/>
-<area shape="rect" id="node6" href="$class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="435,56,526,83"/>
-<area shape="rect" id="node5" href="$class_gui_body_viewer.html" title="A class representing a &quot;body inspector&quot;, which can display a bodies composition and state..." alt="" coords="585,5,695,32"/>
-<area shape="rect" id="node7" href="$class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. " alt="" coords="577,56,703,83"/>
-<area shape="rect" id="node9" href="$class_gui_text_box.html" title="A simple multi&#45;line text box. " alt="" coords="595,107,685,133"/>
-<area shape="rect" id="node8" href="$class_gui_list_chooser.html" title="A class representing a list of objects on the GUI, from which one may be chosen. " alt="" coords="751,56,861,83"/>
+<area shape="rect" id="node1" href="$classstrless.html" title="strless" alt="" coords="5,5,67,32"/>
 </map>

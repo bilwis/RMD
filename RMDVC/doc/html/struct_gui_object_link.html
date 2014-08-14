@@ -75,39 +75,38 @@ $(document).ready(function(){initNavTree('struct_gui_object_link.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>A struct encapsulating a pointer to an object and a pointer to an associated <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a>.  
+<p>A struct encapsulating an Objects UUID and a pointer to an associated <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a>.  
  <a href="struct_gui_object_link.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_g_u_i_8hpp_source.html">GUI.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_g_u_i__structs_8hpp_source.html">GUI_structs.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for GuiObjectLink:</div>
 <div class="dyncontent">
 <div class="center"><img src="struct_gui_object_link__coll__graph.png" border="0" usemap="#_gui_object_link_coll__map" alt="Collaboration graph"/></div>
 <map name="_gui_object_link_coll__map" id="_gui_object_link_coll__map">
-<area shape="rect" id="node2" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. " alt="" coords="5,95,96,121"/><area shape="rect" id="node4" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="121,95,181,121"/></map>
+<area shape="rect" id="node3" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. " alt="" coords="131,95,221,121"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0072b47631f9d6ccb60d0014d46b60b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0072b47631f9d6ccb60d0014d46b60b7"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GuiObjectLink</b> (<a class="el" href="class_object.html">Object</a> *o, <a class="el" href="class_colored_text.html">ColoredText</a> *t)</td></tr>
-<tr class="separator:a0072b47631f9d6ccb60d0014d46b60b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad5ceeb242d6cab4d043244956dabbe3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad5ceeb242d6cab4d043244956dabbe3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>GuiObjectLink</b> (std::string uuid, <a class="el" href="class_colored_text.html">ColoredText</a> *t)</td></tr>
+<tr class="separator:aad5ceeb242d6cab4d043244956dabbe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a5a411e17616c27036f0005113a366acb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a411e17616c27036f0005113a366acb"></a>
-<a class="el" href="class_object.html">Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>object</b></td></tr>
-<tr class="separator:a5a411e17616c27036f0005113a366acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb945c5deac7ede6d440b2578c3bcfbd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb945c5deac7ede6d440b2578c3bcfbd"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>object_uuid</b></td></tr>
+<tr class="separator:acb945c5deac7ede6d440b2578c3bcfbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaed04c3dcba036ee46f7dc608cb019cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaed04c3dcba036ee46f7dc608cb019cf"></a>
 <a class="el" href="class_colored_text.html">ColoredText</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>text</b></td></tr>
 <tr class="separator:aaed04c3dcba036ee46f7dc608cb019cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A struct encapsulating a pointer to an object and a pointer to an associated <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a>. </p>
-<p>This struct is for use with <a class="el" href="class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. ">ActiveGuiElement</a> instances which present some form of list of objects. It provides a convenient way of linking (for example) game entities to thier associated list entry.</p>
-<p>Example: Player inventory is presented in a list of <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a> items, but underlying functions have direct access to the item in the inventory via the <a class="el" href="struct_gui_object_link.html" title="A struct encapsulating a pointer to an object and a pointer to an associated ColoredText. ">GuiObjectLink</a> object pointer. </p>
+<div class="textblock"><p>A struct encapsulating an Objects UUID and a pointer to an associated <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a>. </p>
+<p>This struct is for use with <a class="el" href="class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. ">ActiveGuiElement</a> instances which present some form of list of objects. It provides a convenient way of linking (for example) game entities to thier associated list entry by associating their UUID with a <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a>. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/<a class="el" href="_g_u_i_8hpp_source.html">GUI.hpp</a></li>
+<li>src/<a class="el" href="_g_u_i__structs_8hpp_source.html">GUI_structs.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -115,7 +114,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="struct_gui_object_link.html">GuiObjectLink</a></li>
-    <li class="footer">Generated on Sun Aug 10 2014 16:06:46 for Rogue M.D. by
+    <li class="footer">Generated on Thu Aug 14 2014 14:13:23 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

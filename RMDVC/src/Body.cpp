@@ -7,6 +7,8 @@
 
 #include "Body.hpp"
 
+const char* part_type_strings[] = { "BodyPart", "Organ" };
+
 bdef_parse_error::bdef_parse_error(const std::string& msg, rapidxml::xml_node<>* node):
 	std::runtime_error("\aError while parsing body definition XML:\n" + msg + " on node " + node->name() + " with value " + node->value() + "\n")
 {
@@ -126,15 +128,21 @@ Organ::Organ(string id, string name, float surface,
 Organ::~Organ(){
 	//The organ destructor automatically removes it from the child
 	//list of it's BodyPart. It also calls the destructor on all of its
-	//own children.
+	//own children and calls the upstream root organ's removal function on itself.
 
 	debug_print("Organ %s is kill.\n", this->id.c_str());
 
+	
+	slated_for_destruction = true;
+	if (connector != nullptr && !connector->slated_for_destruction) { connector->removeConnectedOrgan(this); connector = nullptr; }
+	
 	BodyPart* bp = static_cast<BodyPart*>(super);
 	bp->removeChild(this->id);
+	int size = connected_organs->size();
 	connected_organs->clearAndDelete();
 	delete connected_organs;
 
+	
 }
 
 void Organ::linkToConnector(std::map<std::string, Organ*, strless> *organ_map){
@@ -156,13 +164,40 @@ void Organ::linkToConnector(std::map<std::string, Organ*, strless> *organ_map){
 	debug_print("LINKED %s to connector %s\n", id.c_str(), pos->first.c_str());
 }
 
+string Organ::getConnectorUUID() {
+	if (connector == NULL) { return ""; }
+	return connector->getUUID();
+}
+
 string Organ::getConnectorId() {
 	if (connector == NULL) { return ""; }
 	return connector->getId();
 }
 
-void Organ::addConnectedOrgan(Organ *connectee){
+void Organ::getConnectedOrganUUIDs(std::vector<string>* vector)
+{
+	vector->clear();
+
+	for (Organ** it = connected_organs->begin(); it != connected_organs->end(); it++)
+	{
+		Organ *o = *it;
+		vector->push_back(o->getUUID());
+	}
+}
+
+void Organ::addConnectedOrgan(Organ* connectee){
 	connected_organs->insertBefore(connectee, 0);
+}
+
+void Organ::removeConnectedOrgan(Organ* connectee) {
+	if (!connected_organs->contains(connectee))
+	{
+		debug_error("ERROR: Tried to remove Organ %s from root Organ %s, but it is not registered!",
+			connectee->getId().c_str(),
+			getId().c_str());
+		return;
+	}
+	connected_organs->remove(connectee);
 }
 
 Body::Body(const char *filename){
@@ -183,7 +218,11 @@ Body::Body(const char *filename){
 
 		//go through all of the parsed data and make a list with pointers to every part of the Body
 		part_map = new std::map<std::string, Part*, strless>();
-		part_map = extractParts(root, part_map);
+		makePartMap(root, part_map);
+
+		//go through the part map and create the iID<->UUID linked map
+		iid_uuid_map = new std::map<std::string, std::string>();
+		makeIdMap(part_map);
 
 		//create the formatted and linked part list for the GUI
 		part_gui_list = new TCODList<GuiObjectLink*>();
@@ -205,7 +244,9 @@ Body::Body(const char *filename){
 }
 
 Body::~Body(){
-
+	delete part_map;
+	delete iid_uuid_map;
+	delete part_gui_list;
 }
 
 BodyPart* Body::loadBody(const char *filename){
@@ -653,8 +694,17 @@ void Body::removeRandomPart() {
 
 	debug_print("Chose %s.\n", random_part->getId().c_str());
 
-	removePart(random_part->getId());
+	removePart(random_part->getUUID());
 	return;
+}
+
+void Body::makePartMap(BodyPart* bp, std::map<std::string, Part*, strless> *part_map)
+{
+	part_map->clear();
+	//Because the extractParts function works recursively, it doesn't add the very first element
+	// (in this case, the root) to the part_map. It has to be inserted seperately.
+	part_map->insert(std::pair<std::string, Part*>(std::string(root->getUUID()), root));
+	part_map = extractParts(root, part_map);
 }
 
 std::map<std::string, Part*, strless>* Body::extractParts(BodyPart* bp,
@@ -664,7 +714,7 @@ std::map<std::string, Part*, strless>* Body::extractParts(BodyPart* bp,
 	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
 
-		part_map->insert(std::pair<std::string, Part*>(std::string(p->getId()), p));
+		part_map->insert(std::pair<std::string, Part*>(std::string(p->getUUID()), p));
 		debug_print("Added to part_map: %s \n", p->getId().c_str());
 
 		if(p->getType() == TYPE_BODYPART){
@@ -675,12 +725,21 @@ std::map<std::string, Part*, strless>* Body::extractParts(BodyPart* bp,
 	return part_map;
 }
 
-bool Body::removePart(std::string part_id) {
+void Body::makeIdMap(std::map<std::string, Part*, strless>* part_map)
+{
+	iid_uuid_map->clear();
+
+	for (part_map_iterator iterator = part_map->begin(); iterator != part_map->end(); iterator++) {
+		iid_uuid_map->insert(std::pair<std::string, std::string>(iterator->second->getId(), iterator->first));
+	}
+}
+
+bool Body::removePart(std::string part_uuid) {
 	Part* part = NULL;
 	try{
-		part = part_map->at(part_id);
+		part = part_map->at(part_uuid);
 	} catch (int e) {
-		debug_error("Part %s does not exist.\n", part_id.c_str());
+		debug_error("Part %s does not exist.\n", part_uuid.c_str());
 		return false;
 	}
 
@@ -704,13 +763,25 @@ bool Body::removePart(std::string part_id) {
 
 #ifdef _DEBUG
 	//Refresh part map
-	part_map->clear();
-	part_map = extractParts(root, part_map);
+	makePartMap(root, part_map);
+	makeIdMap(part_map);
 
 	printBodyMap("body_mt.gv", root);
 #endif
 
 	return true;
+}
+
+Part* Body::getPartByUUID(std::string uuid)
+{
+	if (part_map->count(uuid) == 0) { return nullptr; }
+	return part_map->at(uuid);
+}
+
+Part* Body::getPartByIID(std::string iid)
+{
+	if (iid_uuid_map->count(iid) == 0) { return nullptr; }
+	return getPartByUUID(iid_uuid_map->at(iid));
 }
 
 void Body::buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth)
@@ -731,7 +802,7 @@ void Body::buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth)
 		list->push(
 				new GuiObjectLink(
 					p->getUUID(),
-					new ColoredText(str)
+					new ColoredText(str, part_gui_list_color_organ)
 				)
 			);
 
@@ -753,7 +824,7 @@ void Body::buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth)
 		list->push(
 				new GuiObjectLink(
 					bp->getUUID(),
-					new ColoredText(str)
+					new ColoredText(str, part_gui_list_color_bodypart)
 				)
 			);
 

@@ -8,8 +8,10 @@ var class_part =
     [ "getSurface", "class_part.html#a777d1ddea5bb3401f2ac3eb175dcc2f7", null ],
     [ "getType", "class_part.html#aa57344b8df727fe5b05e43f9619a3546", null ],
     [ "setSuperPart", "class_part.html#a5db86a8adc27862a7814ad781bae9c9c", null ],
+    [ "toString", "class_part.html#a5ebc703df3a0391d4258b85653a259af", null ],
     [ "id", "class_part.html#ae1538e7080bd799f51e31f500abebedf", null ],
     [ "name", "class_part.html#a2e8faa9bf7fbdc5624bf3739fa5452c5", null ],
+    [ "slated_for_destruction", "class_part.html#ae41359371dfcb2c02ee05e219ec61ecd", null ],
     [ "super", "class_part.html#a55803895d25d6b0830e998441716a7ba", null ],
     [ "surface", "class_part.html#a10a12935fbeb14434bbb4f8f869ab199", null ],
     [ "type", "class_part.html#ad584b7c2addbe85ff79c7b00578f2640", null ]

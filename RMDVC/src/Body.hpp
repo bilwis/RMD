@@ -162,18 +162,56 @@ enum PartType{
 	TYPE_ORGAN = 1
 };
 
+extern const char* part_type_strings[];
+
 /**BodyPart and Organ are derived from this class. In itself it holds
- * the Name, the ID and the relative surface of a part as well as a pointer
+ * the Name, the internal ID and the relative surface of a part as well as a pointer
  * to the node of the organ tree that it is a child of.
  *
  * @brief This class is the abstract superclass for all parts that make up a body.
  */
 class Part: public Object{
 protected:
+
+	/** This _internal ID_ is different from the UUID that this and every other instance of
+	* a class that derives from Object posesses. It is used to refer to _specific parts_ of the
+	* Body object that is created during runtime by parsing the body-definition XML.
+	*
+	* Example (internal ID is "LEFT_HAND"):
+	*     if (part_hit.getId() == "LEFT_HAND"){
+	*      print("Your hand is hit and you drop your weapon!");
+	*     }
+	*
+	* The same sort of reference can neither be made by name, because several parts may share a name;
+	* nor by UUID, because it is generated during runtime and different every time the body-definition XML
+	* is parsed into a Body object.
+	*/
 	string id;
+	
 	string name;
 	float surface;
 	PartType type;
+
+	/** This variable ensures that only the uppermost Organ to be destroyed calls 
+	* removeConnectedOrgan() on it's root. 
+	  
+	 #### Why is this variable important?
+
+	 When an Organ is destroyed, it calls the destructor of all organs that are connected
+	 to it. It does so by calling the connected_organs clearAndDelete() function.
+	 
+	 Also, the Organ needs to unregister as a connected Organ from the Organ it is (was)
+	 connected to (the upstream root), so that the root does not have an "empty" UUID in
+	 its connected_organs register.
+	 
+	 If the upstream root ist **also** about to be destroyed, however, the Organ **must not** unregister!
+	 Not only does it not matter (nobody cares if a destroyed Organ had an empty UUID in
+	 its registers), but doing so would manipulate the connected_organs list; the very
+	 list from whose clearAndDelete() function this destructor was called! For all but
+	 the very last element in the list, this would cause undefined behaviour by manipulating
+	 the list and causing a call to a nonexistant destructor in unmapped memory.
+	*/
+	bool slated_for_destruction = false;
 
 	/**This is a pointer to the node of the organ tree that this Part is a child of.
 	 * It is NULL for the root element, and a pointer to a BodyPart for all others.
@@ -321,7 +359,21 @@ public:
 	 */
 	void linkToConnector(std::map<std::string, Organ*, strless> *organ_map);
 
+	/**
+	* @brief Returns the UUID of the upstream root organ.
+	*/
+	string getConnectorUUID();
+
+	/**
+	* @brief Returns the internal ID of the upstream root organ.
+	*/
 	string getConnectorId();
+
+	/**
+	* @brief Modifies the given vector to contain a list of the UUIDs of the downstream branches.
+	* @param vector The vector to be modified.
+	*/
+	void getConnectedOrganUUIDs(std::vector<string>* vector);
 
 	/**If this organ is removed/destroyed, all branches are also removed.
 	 *
@@ -329,6 +381,8 @@ public:
 	 * @param connectee The branch connecting to this organ.
 	 */
 	void addConnectedOrgan(Organ *connectee);
+
+	void removeConnectedOrgan(Organ *connectee);
 
 	/**Whether or not this is the root element, which is the only organ
 	 * without a connector.
@@ -397,14 +451,26 @@ class Body{
 private:
 	BodyPart* root;
 
+	const TCODColor part_gui_list_color_bodypart = TCODColor::azure;
+	const TCODColor part_gui_list_color_organ = TCODColor::darkRed;
+
 	/**This map holds a list of all Parts (BodyParts and Organs) of a body, the key
-	 * being the internal id, and the value a pointer to the Part.
+	 * being the UUID, and the value a pointer to the Part.
 	 */
 	std::map<std::string, Part*, strless>* part_map;
 	typedef std::map<std::string, Part*, strless>::iterator part_map_iterator;
 
+	/**This map holds a list of all UUID's and all internal id's of all Parts (BodyParts and Organs)
+	* of a body. The key is the internal id, the value the UUID. 
+	*
+	* Because the parts are internally stored in the part_map map, whose values are pointers to
+	* the part objects and whose keys are the UUIDs of the parts, this map is needed to access
+	* parts by their internal id as defined the body-definition XML.
+	*/
+	std::map<std::string, std::string>* iid_uuid_map;
+
 	/**This list holds all Parts (BodyParts and Organs) of a body in a GuiObjectLink format.
-	* The Object pointer points to the part, the ColoredText is formatted to represent the "depth"
+	* The UUID stored is that of the part, the ColoredText is formatted to represent the "depth"
 	* of the part within the body structure:
 	*
 	*	ROOT
@@ -451,7 +517,7 @@ private:
 	std::map<std::string, Organ*, strless>* extractOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
 
 	/**This function recusively iterates through all BodyParts and Organs that lie downstream of the given BodyPart
-	 * and compiles a map of pointers to them, keyed by their internal ids.
+	 * and compiles a map of pointers to them, keyed by their UUIDs.
 	 *
 	 * @param bp The BodyPart to extract the parts from.
 	 * @param part_map The Part map to modify.
@@ -467,7 +533,31 @@ private:
 	 */
 	void linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
 
-	void buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth);
+	/**This function iterates through the given Part map and creates a map whose keys are the internal
+	* id's and whose values are the UUID (the iid_uuid_map !) and refreshes iid_uuid_map.
+	*
+	* @param part_map The Part map to parse.
+	*/
+	void makeIdMap(std::map<std::string, Part*, strless>* part_map);
+
+	/**This function compiles a map of pointers to all BodyParts and Organs that lie downstream of the given BodyPart
+	 * AND the given BodyPart, keyed by their UUIDs; by calling extractParts() recursively.
+	 *
+	 * @param bp The BodyPart to extract the parts from.
+	 * @param part_map The Part map to modify.
+	 */
+	void makePartMap(BodyPart* bp, std::map<std::string, Part*, strless> *part_map);
+
+	/**This function recursively builds a list of GuiObjectLink for all Parts of the Body - 
+	* it links the UUID of the Part to a ColoredText containing the name of the Part. 
+	* The text is colored corresponding to part_gui_list_color_bodypart or part_gui_list_color_organ.
+	* 
+	* @param list The TCODList to modify.
+	* @param p The Part to start from.
+	* @param depth This should be 0 on first call and is increased by the recursive calling of this function
+	*  to correcly indent the texts.
+	*/
+	void buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth=0);
 
 	void createSubgraphs(std::ofstream* stream, BodyPart* bp);
 	void createLinks(std::ofstream* stream, BodyPart* bp);
@@ -500,6 +590,9 @@ public:
 	/**This function returns the part_gui_list .
 	*/
 	TCODList<GuiObjectLink*>* getPartGUIList() { return part_gui_list; }
+
+	Part* getPartByUUID(std::string uuid);
+	Part* getPartByIID(std::string iid);
 
 	void printBodyMap(const char* filename, BodyPart* mroot);
 

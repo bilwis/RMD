@@ -131,7 +131,7 @@ void GuiContainer::update(TCOD_key_t key)
 
 }
 
-void GuiContainer::render(TCODConsole* con)
+void GuiContainer::renderSelf(TCODConsole* con)
 {
 	if (!visible) { return; }
 
@@ -147,7 +147,8 @@ void GuiContainer::render(TCODConsole* con)
 		{
 			container_console->printFrame(0, 0, width, height, true,
 				TCOD_BKGND_SET, title.c_str());
-		} else {
+		}
+		else {
 			container_console->printFrame(0, 0, width, height, true,
 				TCOD_BKGND_SET);
 		}
@@ -155,6 +156,16 @@ void GuiContainer::render(TCODConsole* con)
 	else {
 		container_console->rect(0, 0, width, height, true);
 	}
+
+	TCODConsole::blit(container_console, 0, 0, 0, 0, con, pos_x, pos_y);
+}
+
+void GuiContainer::render(TCODConsole* con)
+{
+	if (!visible) { return; }
+
+	//Render the GuiContainer's own graphic elements and set the colors
+	renderSelf(con);
 
 	//Iterate through GuiElements, render them to container_console
 	//TODO: If necessary, implement z-ordering.
@@ -213,26 +224,28 @@ ActiveGuiElement::~ActiveGuiElement()
 void ActiveGuiElement::addItem(std::string object_uuid, string text, TCODColor fore, TCODColor back)
 {
 	ColoredText* t = new ColoredText(text, fore, back);
-	addItem(object_uuid, t);
-}
-
-void ActiveGuiElement::addItem(std::string object_uuid, ColoredText* text)
-{
-	items->push(new GuiObjectLink(object_uuid, text));
+	items->push(new GuiObjectLink(object_uuid, t));
 	item_count++;
 	item_change = true;
 }
 
-void ActiveGuiElement::addItems(TCODList<GuiObjectLink*>* list)
+void ActiveGuiElement::addItem(std::string object_uuid, ColoredText* text)
 {
-	items->addAll(*list);
-	item_count += list->size();
-	item_change = true;
+	addItem(object_uuid, text->getText(), text->getForeColor(), text->getBackColor());
 }
 
-void ActiveGuiElement::makeActive(Gui* gui)
+void ActiveGuiElement::addItems(TCODList<GuiObjectLink*>* list)
 {
-	//TODO
+	for (GuiObjectLink** it = list->begin(); it != list->end(); it++)
+	{
+		GuiObjectLink* link = *it;
+		addItem(link->object_uuid, link->text);
+	}
+}
+
+void ActiveGuiElement::makeActive()
+{
+	active = true;
 }
 
 void ActiveGuiElement::makeInactive()
@@ -273,13 +286,14 @@ bool GuiListChooser::removeItem(string text)
 	return false;
 }
 
-int GuiListChooser::getSelected(std::vector<std::string> obj_uuids)
+int GuiListChooser::getSelected(std::vector<std::string>* obj_uuids)
 {
 	//Only one item!
-	obj_uuids.clear();
-	obj_uuids.push_back(selected->object_uuid);
+	obj_uuids->clear();
+	obj_uuids->push_back(selected->object_uuid);
 	return 1;
 }
+
 
 void GuiListChooser::update(TCOD_key_t key)
 {
@@ -332,7 +346,26 @@ void GuiListChooser::render(TCODConsole* con)
 {
 	if (!visible) { return; }
 
+	//NOTE: whenever max_item_display is used for "positioning", it needs to be reduced
+	// by 1, because it starts at "1", whereas the index of the first element is "0"!!
+
 	int index = 0;
+	int first_item = 0; //First item shown by default is the first item in the list
+	int last_item = max_item_display - 1;	//Last item shown is either the last one in the list
+										// (if item_count < max_item_display)
+										// or the the last fitting on screen.
+
+	//If there are more items than can be displayed, the last item is replaced by "..."
+	if (item_count > max_item_display) { last_item = max_item_display - 2; }
+
+	//If the selected item is "normally" not shown on screen because it is too far
+	// down the list, the list is scrolled to have it as it's last element, and the
+	// first is changed accordingly.
+	if (selected_index >= max_item_display - 2) 
+	{
+		first_item = (selected_index - (max_item_display-2));
+		last_item = selected_index;
+	}
 
 	con->setDefaultBackground(background_color);
 	con->setDefaultForeground(foreground_color);
@@ -341,32 +374,42 @@ void GuiListChooser::render(TCODConsole* con)
 	
 	for (GuiObjectLink** it = items->begin(); it != items->end(); it++)
 	{
-		if (index == max_item_display - 1)
+		//If there are more items than can be displayed, the last item is replaced by "..."
+		if (index == last_item + 1 && item_count > max_item_display)
 		{
-			con->printRect(pos_x, pos_y + index, width, 1, "...");
+			con->setDefaultBackground(gui_default_back);
+			con->setDefaultForeground(gui_default_fore);
+			con->printRect(pos_x, pos_y + (index - first_item), width, 1, "...");
 			break;
 		}
 
-		GuiObjectLink *item = *it;
-
-		//GuiListChooser will use the Fore color of the Item,
-		// but overwrite it's Back color with it's own back_inactive
-		// (or, on selection, the back_active color)
-		con->setDefaultForeground(item->text->getForeColor());
-
-		if (item == selected)
+		//Render only the items between first_item and last_item
+		if (index >= first_item && index <= last_item)
 		{
-			if (active) {
-				con->setDefaultBackground(sel_back_active);
-			} else {
-				con->setDefaultBackground(sel_back_inactive); 
+			GuiObjectLink *item = *it;
+
+			//GuiListChooser will use the Fore color of the Item,
+			// but overwrite it's Back color with it's own back_inactive
+			// (or, on selection, the back_active color)
+			con->setDefaultForeground(item->text->getForeColor());
+
+			if (item == selected)
+			{
+				if (active) {
+					con->setDefaultBackground(sel_back_active);
+				}
+				else {
+					con->setDefaultBackground(sel_back_inactive);
+				}
+
+			}
+			else {
+				con->setDefaultBackground(background_color);
 			}
 
-		} else {
-			con->setDefaultBackground(background_color);
+			con->printRect(pos_x, pos_y + (index-first_item), width, 1, item->text->getText().c_str());
 		}
 
-		con->printRect(pos_x, pos_y + index, width, 1, item->text->getText().c_str());
 		index++;
 	}
 

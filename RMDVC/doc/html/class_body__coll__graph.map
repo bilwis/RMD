@@ -1,4 +1,5 @@
 <map id="Body" name="Body">
-<area shape="rect" id="node2" href="$class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). " alt="" coords="5,185,81,212"/>
-<area shape="rect" id="node3" href="$class_part.html" title="This class is the abstract superclass for all parts that make up a body. " alt="" coords="20,109,67,136"/>
+<area shape="rect" id="node2" href="$class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). " alt="" coords="56,275,132,301"/>
+<area shape="rect" id="node3" href="$class_part.html" title="This class is the abstract superclass for all parts that make up a body. " alt="" coords="71,199,117,225"/>
+<area shape="rect" id="node4" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="5,95,65,121"/>
 </map>
