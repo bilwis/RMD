@@ -66,7 +66,7 @@ Part::~Part()
 BodyPart::BodyPart(string id, string name, float surface) :
 		Part(id, name, surface, TYPE_BODYPART){
 
-	children = new TCODList<Part*>();
+	children = new std::vector<Part*>();
 }
 
 BodyPart::~BodyPart()
@@ -82,8 +82,8 @@ BodyPart::~BodyPart()
 	// any Organs left to delete.
 	while (child_count > 0)
 	{
-		debug_print("%s is killing a child: %s. Count left: %i.\n", this->getId().c_str(), children->peek()->getId().c_str(), child_count);
-		delete children->peek();
+		debug_print("%s is killing a child: %s. Count left: %i.\n", this->getId().c_str(), children->back()->getId().c_str(), child_count);
+		delete children->back();
 	}
 
 	delete children;
@@ -98,20 +98,20 @@ BodyPart::~BodyPart()
 }
 
 void BodyPart::addChild(Part *child){
-	children->insertBefore(child, 0);
 	child->setSuperPart(this);
+	children->push_back(child);
 	child_count++;
 }
 
 void BodyPart::addChildren(Part **child_array, int count){
 	for (int i=0; i < count; i++){
-		children->push(child_array[i]);
+		children->push_back(child_array[i]);
 		child_array[i]->setSuperPart(this);
 		child_count++;
 	}
 }
 
-TCODList<Part*>* BodyPart::getChildList()
+std::vector<Part*>* BodyPart::getChildList()
 {
 	return children;
 }
@@ -119,7 +119,7 @@ TCODList<Part*>* BodyPart::getChildList()
 bool BodyPart::removeChild(string uuid){
 	
 	//Iterate though the list of children and remove the child with the matching UUID
-	for (Part** it = children->begin(); it != children->end(); it++)
+	for (std::vector<Part*>::iterator it = children->begin(); it != children->end(); it++)
 	{
 		Part *part = *it;
 		if (uuid.compare(part->getUUID()) == 0){
@@ -130,13 +130,13 @@ bool BodyPart::removeChild(string uuid){
 			if (children->size() == 1)
 			{
 				child_count = 0;
-				children->remove(it);
+				children->erase(it);
 				if (!slated_for_destruction) { delete this; }
 				return true;
 			}
 
 			child_count--;
-			children->removeFast(it);
+			children->erase(it);
 			return true;
 		}
 	}
@@ -160,7 +160,7 @@ Organ::Organ(string id, string name, float surface,
 	 */
 
 	this->connector_id = string(connector_id);
-	connected_organs = new TCODList<Organ*>();
+	connected_organs = new std::map<string, Organ*>();
 }
 
 Organ::~Organ(){
@@ -174,16 +174,19 @@ Organ::~Organ(){
 	slated_for_destruction = true;
 	if (connector != nullptr && !connector->slated_for_destruction) 
 	{
-		connector->removeConnectedOrgan(this); 
+		connector->removeConnectedOrgan(getUUID()); 
 		connector->is_stump = true;
 		connector = nullptr; 
 	}
 	
 	BodyPart* bp = static_cast<BodyPart*>(super);
 	bp->removeChild(this->getUUID());
-	
 
-	connected_organs->clearAndDelete();
+	//destroy all elements as well
+	for (std::map<string, Organ*>::iterator it = connected_organs->begin(); it != connected_organs->end(); it++)
+	{
+		delete it->second;
+	}
 	delete connected_organs;
 
 	
@@ -222,26 +225,27 @@ void Organ::getConnectedOrganUUIDs(std::vector<string>* vector)
 {
 	vector->clear();
 
-	for (Organ** it = connected_organs->begin(); it != connected_organs->end(); it++)
+	for (std::map<string, Organ*>::iterator it = connected_organs->begin(); it != connected_organs->end(); it++)
 	{
-		Organ *o = *it;
-		vector->push_back(o->getUUID());
+		vector->push_back(it->first);
 	}
 }
 
 void Organ::addConnectedOrgan(Organ* connectee){
-	connected_organs->insertBefore(connectee, 0);
+	connected_organs->insert(std::pair<string, Organ*>(connectee->getUUID(), connectee));
 }
 
-void Organ::removeConnectedOrgan(Organ* connectee) {
-	if (!connected_organs->contains(connectee))
+void Organ::removeConnectedOrgan(string uuid) {
+
+	std::map<string, Organ*>::iterator it = connected_organs->find(uuid);
+	if (it == connected_organs->end())
 	{
-		debug_error("ERROR: Tried to remove Organ %s from root Organ %s, but it is not registered!",
-			connectee->getId().c_str(),
+		debug_error("ERROR: Tried to remove Organ with UUID %s from root Organ %s, but it is not registered!",
+			uuid.c_str(),
 			getId().c_str());
 		return;
 	}
-	connected_organs->remove(connectee);
+	connected_organs->erase(it);
 }
 
 Body::Body(const char *filename){
@@ -269,7 +273,7 @@ Body::Body(const char *filename){
 		makeIdMap(part_map);
 
 		//create the formatted and linked part list for the GUI
-		part_gui_list = new TCODList<GuiObjectLink*>();
+		part_gui_list = new std::vector<GuiObjectLink*>();
 		buildPartList(part_gui_list, root, 0);
 
 #ifdef _DEBUG
@@ -404,8 +408,8 @@ std::map<std::string, Organ*, strless>* Body::extractOrgans(BodyPart* bp,
 	//Iterate through the children of the given BodyPart, if it is an Organ,
 	//add it to the organ_map; if it is a BodyPart, recursively call this function on it.
 
-	TCODList<Part*>* templ = bp->getChildList();
-	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+	std::vector<Part*>* templ = bp->getChildList();
+	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
 
 		if(p->getType() == TYPE_BODYPART){
@@ -423,8 +427,8 @@ void Body::linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *orga
 	//call its linkToConnector function with the organ_map parameter;
 	//if it is a BodyPart, recursively call this function on it.
 
-	TCODList<Part*>* templ = bp->getChildList();
-	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+	std::vector<Part*>* templ = bp->getChildList();
+	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
 
 		if(p->getType() == TYPE_BODYPART){
@@ -693,11 +697,11 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 
 	//DEBUG: Print BodyPart Parts
 #ifdef _DEBUG
-	TCODList<Part*>* templ = bp->getChildList();
+	std::vector<Part*>* templ = bp->getChildList();
 
 	debug_print("\n\t Parts:");
 
-	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
 
 		debug_print("\n\t\t Part Name: %s", p->getName().c_str());
@@ -723,9 +727,9 @@ void Body::makePartMap(BodyPart* bp, std::map<std::string, Part*, strless> *part
 std::map<std::string, Part*, strless>* Body::extractParts(BodyPart* bp,
 		std::map<std::string, Part*, strless>* part_map) {
 
-	TCODList<Part*>* templ = bp->getChildList();
+	std::vector<Part*>* templ = bp->getChildList();
 
-	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
 
 		part_map->insert(std::pair<std::string, Part*>(std::string(p->getUUID()), p));
@@ -828,7 +832,7 @@ Part* Body::getPartByUUID(std::string uuid)
 {
 	if (part_map->count(uuid) == 0) 
 	{ 
-		debug_error("No Part with UUID %s found! Why was the program searching for it?", uuid.c_str());
+		debug_error("ERROR: No Part with UUID %s found!\n", uuid.c_str());
 		return nullptr; 
 	}
 	return part_map->at(uuid);
@@ -838,13 +842,13 @@ Part* Body::getPartByIID(std::string iid)
 {
 	if (iid_uuid_map->count(iid) == 0)
 	{ 
-		debug_error("No Part with IID %s found! Why was the program searching for it?", iid.c_str());
+		debug_error("ERROR: No Part with IID %s found!", iid.c_str());
 		return nullptr;
 	}
 	return getPartByUUID(iid_uuid_map->at(iid));
 }
 
-void Body::buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth)
+void Body::buildPartList(std::vector<GuiObjectLink*>* list, Part* p, int depth)
 {
 	//debug_print("Depth: %i, Part: %s \n", depth, p->getId());
 	if (p->getType() == PartType::TYPE_ORGAN)
@@ -859,7 +863,7 @@ void Body::buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth)
 
 		str.append(p->getName());
 
-		list->push(
+		list->push_back(
 				new GuiObjectLink(
 					p->getUUID(),
 					new ColoredText(str, part_gui_list_color_organ)
@@ -881,7 +885,7 @@ void Body::buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth)
 
 		str.append(bp->getName());
 
-		list->push(
+		list->push_back(
 				new GuiObjectLink(
 					bp->getUUID(),
 					new ColoredText(str, part_gui_list_color_bodypart)
@@ -889,7 +893,7 @@ void Body::buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth)
 			);
 
 		//Call this function on all children of the BodyPart
-		for (Part** it = bp->getChildList()->begin(); it != bp->getChildList()->end(); it++)
+		for (std::vector<Part*>::iterator it = bp->getChildList()->begin(); it != bp->getChildList()->end(); it++)
 		{
 			buildPartList(list, *it, depth + 1);
 		}
@@ -931,8 +935,8 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 
 	*stream << "\t\t" << "label = \"" << bp->getName() << "\";\n";
 
-	TCODList<Part*>* templ = bp->getChildList();
-	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+	std::vector<Part*>* templ = bp->getChildList();
+	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
 
 		if(p->getType() == TYPE_BODYPART){
@@ -949,8 +953,8 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 }
 
 void Body::createLinks(std::ofstream* stream, BodyPart* bp) {
-	TCODList<Part*>* templ = bp->getChildList();
-	for (Part** iterator = templ->begin(); iterator != templ->end(); iterator++){
+	std::vector<Part*>* templ = bp->getChildList();
+	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
 		Part* p = *iterator;
 
 		if(p->getType() == TYPE_BODYPART){

@@ -329,7 +329,7 @@ private:
 	bool root; //Is it root?
 
 	Organ *connector; //The upstream root
-	TCODList<Organ*> *connected_organs; //The downstream branches
+	std::map<string, Organ*> *connected_organs; //The downstream branches
 
 	bool is_stump = false; //When Organs downstream are removed, the Organ is marked as stump
 
@@ -385,7 +385,7 @@ public:
 	 */
 	void addConnectedOrgan(Organ *connectee);
 
-	void removeConnectedOrgan(Organ *connectee);
+	void removeConnectedOrgan(string uuid);
 
 	bool isStump() { return is_stump; }
 
@@ -404,14 +404,14 @@ public:
  * or more Organ objects. _It cannot hold both BodyPart and Organ children, because Organs represent the
  * 'leaves' of the body tree. (No branches grow from leaves, right?)_
  *
- * Instances of this class contain a TCODList of Part objects, which are the Organs or BodyParts
+ * Instances of this class contain a vector of Part objects, which are the Organs or BodyParts
  * connected to this one.
  *
  *@brief The code representation of a part of the body (such as 'Left Arm').
  */
 class BodyPart: public Part{
 private:
-	TCODList<Part*> *children;
+	std::vector<Part*> *children;
 	int child_count = 0;
 
 public:
@@ -429,7 +429,7 @@ public:
 	/**@brief Returns a list of all the children of this BodyPart.
 	 * @return A pointer to the children list.
 	 */
-	TCODList<Part*>* getChildList();
+	std::vector<Part*>* getChildList();
 
 	/**@brief Removes a child object from the body part. If the child to be
 	 * destroyed is the last one, this function will destroy the BodyPart itself.
@@ -486,7 +486,7 @@ private:
 	*			BP
 	*		BP BELOW ROOT #2
 	*/
-	TCODList<GuiObjectLink*>* part_gui_list;
+	std::vector<GuiObjectLink*>* part_gui_list;
 
 	/**This function loads and parses a [body-definition XML](xml_help.html).
 	 * The library used for this is RapidXML.
@@ -560,12 +560,12 @@ private:
 	* it links the UUID of the Part to a ColoredText containing the name of the Part. 
 	* The text is colored corresponding to part_gui_list_color_bodypart or part_gui_list_color_organ.
 	* 
-	* @param list The TCODList to modify.
+	* @param list The vector to modify.
 	* @param p The Part to start from.
 	* @param depth This should be 0 on first call and is increased by the recursive calling of this function
 	*  to correcly indent the texts.
 	*/
-	void buildPartList(TCODList<GuiObjectLink*>* list, Part* p, int depth=0);
+	void buildPartList(std::vector<GuiObjectLink*>* list, Part* p, int depth=0);
 
 	void cullEmptyBodyParts();
 
@@ -599,7 +599,7 @@ public:
 
 	/**This function returns the part_gui_list .
 	*/
-	TCODList<GuiObjectLink*>* getPartGUIList() { return part_gui_list; }
+	std::vector<GuiObjectLink*>* getPartGUIList() { return part_gui_list; }
 
 	Part* getPartByUUID(std::string uuid);
 	Part* getPartByIID(std::string iid);

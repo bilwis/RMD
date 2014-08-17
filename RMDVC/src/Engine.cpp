@@ -10,8 +10,10 @@ Engine::Engine() {
     player->destructible = new Destructible(100);
     player->destructible->body = new Body("Body.xml");
 
-    actors.push(player);
-    actors.push(new Actor(60,13,'@',TCODColor::yellow));
+	actors = new std::vector<Actor*>();
+
+    actors->push_back(player);
+    actors->push_back(new Actor(60,13,'@',TCODColor::yellow));
     map = new Map(120,70);
 
 	gui = new Gui();
@@ -60,7 +62,8 @@ void createBasicUI(Gui gui)
 }
 
 Engine::~Engine() {
-    actors.clearAndDelete();
+    actors->erase(actors->begin(), actors->end());
+	delete actors;
     delete map;
 }
 
@@ -139,9 +142,9 @@ void Engine::render() {
 	// draw the map
 	map->render(gameConsole);
 	// draw the actors
-	for (Actor **iterator=actors.begin();
-	    iterator != actors.end(); iterator++) {
-	    (*iterator)->render(gameConsole);
+	for (std::vector<Actor*>::iterator it = actors->begin();
+	    it != actors->end(); it++) {
+	    (*it)->render(gameConsole);
 	}
 
 	TCODConsole::blit(gameConsole, 0, 0, 0, 0, TCODConsole::root, 0, 0);

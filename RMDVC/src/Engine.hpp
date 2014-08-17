@@ -23,14 +23,14 @@ private:
 
 public :
 
-    TCODList<Actor *> actors;
-    Actor *player;
-    Map *map;
+    std::vector<Actor*>* actors;
+    Actor* player;
+    Map* map;
 
-	Gui *gui;
-	GuiBodyViewer *guiBodyViewer;
-	GuiTextBox *sampleTextBox;
-	GuiListChooser *sampleList;
+	Gui* gui;
+	GuiBodyViewer* guiBodyViewer;
+	GuiTextBox* sampleTextBox;
+	GuiListChooser* sampleList;
  
     Engine();
     ~Engine();

@@ -1,59 +1,13 @@
 digraph G {
 	subgraph cluster_ROOT {
 		label = "Body";
-	subgraph cluster_L_LEG {
-		label = "Left Leg";
-	subgraph cluster_L_FOOT {
-		label = "Left Foot";
-		L_ANKLE [label="Left Ankle"];
-		L_HINDFOOT [label="Left Hindfoot"];
-		L_MIDFOOT [label="Left Midfoot"];
-	 } 
-	subgraph cluster_L_LOWER_LEG {
-		label = "Left Lower Leg";
-		L_KNEE [label="Left Knee"];
-		L_CALF [label="Left Calf"];
-	 } 
-	subgraph cluster_L_UPPER_LEG {
-		label = "Left Upper Leg";
-		L_HIP [label="Left Hip"];
-		L_THIGH [label="Left Thigh"];
-	 } 
-	 } 
 	subgraph cluster_L_ARM {
 		label = "Left Arm";
-	subgraph cluster_L_HAND {
-		label = "Left Hand";
-		L_WRIST [label="Left Wrist"];
-		L_PALM [label="Left Palm"];
-		L_THUMB [label="Left Thumb"];
-		L_INDEX [label="Left Index Finger"];
-		L_MIDDLE [label="Left Middle Finger"];
-		L_RING [label="Left Ring Finger"];
-		L_LITTLE [label="Left Little Finger"];
-	 } 
-	subgraph cluster_L_LOWER_ARM {
-		label = "Left Lower Arm";
-		L_ELBOW [label="Left Elbow"];
-		L_LOWER_ARM_PROPER [label="Left Lower Arm Proper"];
-	 } 
 	subgraph cluster_L_UPPER_ARM {
 		label = "Left Upper Arm";
 		L_SHOULDER [label="Left Shoulder"];
 		L_UPPER_ARM_PROPER [label="Left Upper Arm Proper"];
 	 } 
-	 } 
-	subgraph cluster_HEAD {
-		label = "Head";
-		NECK [label="Neck"];
-		VISCEROCRANIUM [label="Face"];
-		NEUROCRANIUM [label="Skull"];
-	 } 
-	subgraph cluster_TORSO {
-		label = "Torso";
-		UPPER_TORSO [label="Upper Torso"];
-		ABDOMEN [label="Lower Torso"];
-		PELVIS [label="Pelvic Region"];
 	 } 
 	subgraph cluster_R_ARM {
 		label = "Right Arm";
@@ -67,34 +21,111 @@ digraph G {
 		R_ELBOW [label="Right Elbow"];
 		R_LOWER_ARM_PROPER [label="Right Lower Arm Proper"];
 	 } 
+	subgraph cluster_R_HAND {
+		label = "Right Hand";
+		R_WRIST [label="Right Wrist"];
+	 } 
+	 } 
+	subgraph cluster_TORSO {
+		label = "Torso";
+		UPPER_TORSO [label="Upper Torso"];
+		ABDOMEN [label="Lower Torso"];
+		PELVIS [label="Pelvic Region"];
+	 } 
+	subgraph cluster_HEAD {
+		label = "Head";
+		NECK [label="Neck"];
+		VISCEROCRANIUM [label="Face"];
+		NEUROCRANIUM [label="Skull"];
+	 } 
+	subgraph cluster_R_LEG {
+		label = "Right Leg";
+	subgraph cluster_R_UPPER_LEG {
+		label = "Right Upper Leg";
+		R_HIP [label="Right Hip"];
+		R_THIGH [label="Right Thigh"];
+	 } 
+	subgraph cluster_R_LOWER_LEG {
+		label = "Right Lower Leg";
+		R_KNEE [label="Right Knee"];
+		R_CALF [label="Right Calf"];
+	 } 
+	subgraph cluster_R_FOOT {
+		label = "Right Foot";
+		R_ANKLE [label="Right Ankle"];
+		R_HINDFOOT [label="Right Hindfoot"];
+		R_MIDFOOT [label="Right Midfoot"];
+		R_FOREFOOT [label="Right Forefoot"];
+		R_HALLUX [label="Right Big Toe"];
+		R_SECOND_TOE [label="Right Second Toe"];
+		R_THIRD_TOE [label="Right Third Toe"];
+		R_FOURTH_TOE [label="Right Fourth Toe"];
+		R_FIFTH_TOE [label="Right Fifth Toe"];
+	 } 
+	 } 
+	subgraph cluster_L_LEG {
+		label = "Left Leg";
+	subgraph cluster_L_UPPER_LEG {
+		label = "Left Upper Leg";
+		L_HIP [label="Left Hip"];
+		L_THIGH [label="Left Thigh"];
+	 } 
+	subgraph cluster_L_LOWER_LEG {
+		label = "Left Lower Leg";
+		L_KNEE [label="Left Knee"];
+		L_CALF [label="Left Calf"];
+	 } 
+	subgraph cluster_L_FOOT {
+		label = "Left Foot";
+		L_ANKLE [label="Left Ankle"];
+		L_HINDFOOT [label="Left Hindfoot"];
+		L_MIDFOOT [label="Left Midfoot"];
+		L_FOREFOOT [label="Left Forefoot"];
+		L_HALLUX [label="Left Big Toe"];
+		L_SECOND_TOE [label="Left Second Toe"];
+		L_THIRD_TOE [label="Left Third Toe"];
+		L_FOURTH_TOE [label="Left Fourth Toe"];
+		L_FIFTH_TOE [label="Left Fifth Toe"];
+	 } 
 	 } 
 	 } 
 
-L_CALF -> L_ANKLE;
-L_ANKLE -> L_HINDFOOT;
-L_HINDFOOT -> L_MIDFOOT;
-L_THIGH -> L_KNEE;
-L_KNEE -> L_CALF;
-PELVIS -> L_HIP;
-L_HIP -> L_THIGH;
-L_LOWER_ARM_PROPER -> L_WRIST;
-L_WRIST -> L_PALM;
-L_PALM -> L_THUMB;
-L_PALM -> L_INDEX;
-L_PALM -> L_MIDDLE;
-L_PALM -> L_RING;
-L_PALM -> L_LITTLE;
-L_UPPER_ARM_PROPER -> L_ELBOW;
-L_ELBOW -> L_LOWER_ARM_PROPER;
 UPPER_TORSO -> L_SHOULDER;
 L_SHOULDER -> L_UPPER_ARM_PROPER;
-UPPER_TORSO -> NECK;
-NECK -> VISCEROCRANIUM;
-NECK -> NEUROCRANIUM;
-UPPER_TORSO -> ABDOMEN;
-ABDOMEN -> PELVIS;
 UPPER_TORSO -> R_SHOULDER;
 R_SHOULDER -> R_UPPER_ARM_PROPER;
 R_UPPER_ARM_PROPER -> R_ELBOW;
 R_ELBOW -> R_LOWER_ARM_PROPER;
+R_LOWER_ARM_PROPER -> R_WRIST;
+UPPER_TORSO -> ABDOMEN;
+ABDOMEN -> PELVIS;
+UPPER_TORSO -> NECK;
+NECK -> VISCEROCRANIUM;
+NECK -> NEUROCRANIUM;
+PELVIS -> R_HIP;
+R_HIP -> R_THIGH;
+R_THIGH -> R_KNEE;
+R_KNEE -> R_CALF;
+R_CALF -> R_ANKLE;
+R_ANKLE -> R_HINDFOOT;
+R_HINDFOOT -> R_MIDFOOT;
+R_MIDFOOT -> R_FOREFOOT;
+R_FOREFOOT -> R_HALLUX;
+R_FOREFOOT -> R_SECOND_TOE;
+R_FOREFOOT -> R_THIRD_TOE;
+R_FOREFOOT -> R_FOURTH_TOE;
+R_FOREFOOT -> R_FIFTH_TOE;
+PELVIS -> L_HIP;
+L_HIP -> L_THIGH;
+L_THIGH -> L_KNEE;
+L_KNEE -> L_CALF;
+L_CALF -> L_ANKLE;
+L_ANKLE -> L_HINDFOOT;
+L_HINDFOOT -> L_MIDFOOT;
+L_MIDFOOT -> L_FOREFOOT;
+L_FOREFOOT -> L_HALLUX;
+L_FOREFOOT -> L_SECOND_TOE;
+L_FOREFOOT -> L_THIRD_TOE;
+L_FOREFOOT -> L_FOURTH_TOE;
+L_FOREFOOT -> L_FIFTH_TOE;
 }

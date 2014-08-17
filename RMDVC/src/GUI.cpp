@@ -2,10 +2,11 @@
 
 
 Gui::Gui(){
-	containers = new TCODList<GuiContainer*>();
+	containers = new std::map<string, GuiContainer*>();
 };
 Gui::~Gui(){
-	containers->clearAndDelete();
+
+	containers->erase(containers->begin(), containers->end());
 	delete containers;
 
 	delete current_active;
@@ -13,27 +14,21 @@ Gui::~Gui(){
 
 GuiContainer* Gui::getContainerFromUUID(string uuid)
 {
-	for (GuiContainer** it = containers->begin(); it != containers->end(); it++)
-	{
-		GuiContainer *container = *it;
-		if (container->getUUID() == uuid)
-		{
-			return container;
-		}
-	}
-	return nullptr;
+	std::map<string, GuiContainer*>::iterator it = containers->find(uuid);
+	if (it == containers->end()) { return nullptr; }
+	return containers->at(uuid);
 }
 
 void Gui::addContainer(GuiContainer* container){
-	containers->push(container);
+	containers->insert(std::pair<string, GuiContainer*>(container->getUUID(), container));
 }
 
 bool Gui::removeContainer(string uuid)
 {
-	GuiContainer* c = getContainerFromUUID(uuid);
-	if (c == nullptr) { return false; }
+	std::map<string, GuiContainer*>::iterator it = containers->find(uuid);
+	if (it == containers->end()) { return false; }
+	containers->erase(it);
 
-	containers->removeFast(c);
 	return true;
 }
 
@@ -55,9 +50,9 @@ bool Gui::makeActive(string uuid)
 }
 
 void Gui::update(TCOD_key_t key){
-	for (GuiContainer** it = containers->begin(); it != containers->end(); it++)
+	for (std::map<string, GuiContainer*>::iterator it = containers->begin(); it != containers->end(); it++)
 	{
-		GuiContainer *container = *it;
+		GuiContainer *container = it->second;
 		if (container->isDynamic() || container == current_active)
 		{
 			container->update(key);
@@ -69,9 +64,9 @@ void Gui::render(TCODConsole* con){
 	//Iterate through all GuiContainers, call their render function
 	// and blit the result on the given console at the coordinates that 
 	// the GuiContainer is set to.
-	for (GuiContainer** it = containers->begin(); it != containers->end(); it++)
+	for (std::map<string, GuiContainer*>::iterator it = containers->begin(); it != containers->end(); it++)
 	{
-		GuiContainer *container = *it;
+		GuiContainer *container = it->second;
 		if (container->isVisible()){
 			container->render(con);
 		}
@@ -106,7 +101,7 @@ GuiContainer::GuiContainer(int x, int y, int width, int height,
 	TCODColor fore, TCODColor back, bool dynamic, bool draw_border, string title)
 	:GuiRenderObject(x, y, width, height, fore, back)
 {
-	elements = new TCODList<GuiElement*>();
+	elements = new std::vector<GuiElement*>();
 	container_console = new TCODConsole(width, height);
 	setDynamic(dynamic);
 	this->draw_border = draw_border;
@@ -115,14 +110,14 @@ GuiContainer::GuiContainer(int x, int y, int width, int height,
 
 GuiContainer::~GuiContainer()
 {
-	elements->clearAndDelete();
+	elements->erase(elements->begin(), elements->end());
 	delete elements;
 	delete container_console;
 }
 
 void GuiContainer::addElement(GuiElement* element)
 {
-	elements->push(element);
+	elements->push_back(element);
 	element->setParent(this);
 }
 
@@ -169,7 +164,7 @@ void GuiContainer::render(TCODConsole* con)
 
 	//Iterate through GuiElements, render them to container_console
 	//TODO: If necessary, implement z-ordering.
-	for (GuiElement** it = elements->begin(); it != elements->end(); it++)
+	for (std::vector<GuiElement*>::iterator it = elements->begin(); it != elements->end(); it++)
 	{
 		GuiElement *element = *it;
 		element->render(container_console);
@@ -212,19 +207,19 @@ ActiveGuiElement::ActiveGuiElement(string id, int x, int y, int width, int heigh
 
 	this->max_item_display = max_item_display;
 
-	items = new TCODList <GuiObjectLink*>();
+	items = new std::vector<GuiObjectLink*>();
 }
 
 ActiveGuiElement::~ActiveGuiElement()
 {
-	items->clearAndDelete();
+	items->erase(items->begin(), items->end());
 	delete items;
 }
 
 void ActiveGuiElement::addItem(std::string object_uuid, string text, TCODColor fore, TCODColor back)
 {
 	ColoredText* t = new ColoredText(text, fore, back);
-	items->push(new GuiObjectLink(object_uuid, t));
+	items->push_back(new GuiObjectLink(object_uuid, t));
 	item_count++;
 	item_change = true;
 }
@@ -234,9 +229,9 @@ void ActiveGuiElement::addItem(std::string object_uuid, ColoredText* text)
 	addItem(object_uuid, text->getText(), text->getForeColor(), text->getBackColor());
 }
 
-void ActiveGuiElement::addItems(TCODList<GuiObjectLink*>* list)
+void ActiveGuiElement::addItems(std::vector<GuiObjectLink*>* list)
 {
-	for (GuiObjectLink** it = list->begin(); it != list->end(); it++)
+	for (std::vector<GuiObjectLink*>::iterator it = list->begin(); it != list->end(); it++)
 	{
 		GuiObjectLink* link = *it;
 		addItem(link->object_uuid, link->text);
@@ -268,13 +263,13 @@ GuiListChooser::~GuiListChooser()
 
 bool GuiListChooser::removeItem(string text)
 {
-	for (GuiObjectLink** it = items->begin(); it != items->end(); it++)
+	for (std::vector<GuiObjectLink*>::iterator it = items->begin(); it != items->end(); it++)
 	{
 		GuiObjectLink *item = *it;
 		if (item == selected){ selected = nullptr; }
 		if (text.compare(item->text->getText())){
 
-			items->remove(item);
+			items->erase(it);
 			delete item;
 
 			item_count--;
@@ -298,13 +293,13 @@ int GuiListChooser::getSelected(std::vector<std::string>* obj_uuids)
 void GuiListChooser::update(TCOD_key_t key)
 {
 	//If list is empty, return
-	if (item_count <= 0 || items->isEmpty()) { return; }
+	if (item_count <= 0 || items->size() == 0) { return; }
 	
 	//If item list changed, update selected_index to point at selected item
 	if (item_change && selected != nullptr){
 		for (int i = 0; i < item_count; i++)
 		{
-			if (selected == items->get(i)){
+			if (selected == items->at(i)){
 				selected_index = i;
 				break;
 			}
@@ -335,7 +330,7 @@ void GuiListChooser::update(TCOD_key_t key)
 		}
 	}
 	//Refresh selected pointer to point at newly selected object
-	selected = items->get(selected_index);
+	selected = items->at(selected_index);
 
 	//selected pointer and selected_index are "synchronized" now
 	item_change = false;
@@ -372,7 +367,7 @@ void GuiListChooser::render(TCODConsole* con)
 
 	con->rect(pos_x, pos_y, width, height, true);
 	
-	for (GuiObjectLink** it = items->begin(); it != items->end(); it++)
+	for (std::vector<GuiObjectLink*>::iterator it = items->begin(); it != items->end(); it++)
 	{
 		//If there are more items than can be displayed, the last item is replaced by "..."
 		if (index == last_item + 1 && item_count > max_item_display)

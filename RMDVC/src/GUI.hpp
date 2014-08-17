@@ -56,11 +56,11 @@ class Gui;
 class GuiContainer :public GuiRenderObject
 {
 protected:
-	/** The TCODList holding pointers to the 'child' elements.
+	/** The vector holding pointers to the 'child' elements.
 	* Note: _Nesting GuiContainers (i.e. having a GuiContainer element
 	* be a child of a GuiContainer) is not supported_
 	*/
-	TCODList<GuiElement*>* elements;
+	std::vector<GuiElement*>* elements;
 	/** Every GuiContainer declares it's own TCODConsole, on which it
 	* renders its GuiElement children. The Console is then passed to the instance
 	* of the Gui class handling the overall Gui rendering, which blits it
@@ -101,7 +101,7 @@ public:
 	void renderSelf(TCODConsole* con);
 
 	/** This function calls the render() function of all GuiElements contained
-	* in the elements TCODList, after calling renderSelf() .
+	* in the elements vector, after calling renderSelf() .
 	* These functions draw on the container_console, which is then blitted onto the given console.
 	*
 	* @brief Renders all 'child' GuiElements on the given console.
@@ -157,7 +157,7 @@ public:
 * this class defines colors for the selected items, while the element is active and while
 * it is inactive. 
 *
-* It also implements a TCODList of GuiObjectLink structs representing the items that may
+* It also implements a vector of GuiObjectLink structs representing the items that may
 * be selected and functions for adding items and tracking their number (item_count).
 *
 * Since this is the base class, removeItem(), update(), getSelected() and render() are abstract and
@@ -180,7 +180,7 @@ protected:
 	TCODColor sel_fore_inactive;
 	TCODColor sel_back_inactive;
 
-	TCODList<GuiObjectLink*>* items;
+	std::vector<GuiObjectLink*>* items;
 	int item_count = 0;
 
 	int max_item_display = 0;
@@ -210,7 +210,7 @@ public:
 	void addItem(std::string object_uuid, string text, TCODColor fore = gui_default_fore, TCODColor back = gui_default_back);
 	void addItem(std::string object_uuid, ColoredText* text);
 
-	void addItems(TCODList<GuiObjectLink*>* list);
+	void addItems(std::vector<GuiObjectLink*>* list);
 
 	/* This has to be virtual, because the removed Item might be part of the
 	current selection, which needs to be handled in order to avoid having
@@ -227,7 +227,8 @@ public:
 	virtual int getSelected(std::vector<std::string>* obj_uuids) = 0;
 
 	virtual void reset(){
-		items->clearAndDelete();
+		//items->clearAndDelete();
+		items->erase(items->begin(), items->end());
 		item_count = 0;
 		item_change = true;
 	};
@@ -257,7 +258,7 @@ public:
 	void reset(){ 
 		selected = nullptr;
 		selected_index = 0;
-		items->clearAndDelete(); 
+		items->erase(items->begin(), items->end());
 		item_count = 0; 
 		item_change = true; 
 	}
@@ -279,8 +280,8 @@ protected:
 	GuiTextBox* bp_info;
 	GuiListChooser* tissue_browser;
 
-	TCODList<GuiObjectLink*>* part_list;
-	TCODList<GuiObjectLink*>* tissue_list;
+	std::vector<GuiObjectLink*>* part_list;
+	std::vector<GuiObjectLink*>* tissue_list;
 
 	ActiveGuiElement* active_element;
 
@@ -306,7 +307,7 @@ class Gui
 {
 private:
 	//The active one, and all marked as dynamic are updated every turn
-	TCODList<GuiContainer*>* containers;
+	std::map<string, GuiContainer*>* containers;
 
 	GuiContainer* current_active = nullptr;
 
