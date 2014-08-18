@@ -151,7 +151,7 @@ public:
  */
 struct tissue_def{
 public:
-	Tissue *tissue;
+	std::shared_ptr<Tissue> tissue;
 	float hit_prob;
 	string name;
 	string custom_id;
@@ -217,7 +217,7 @@ protected:
 	/**This is a pointer to the node of the organ tree that this Part is a child of.
 	 * It is NULL for the root element, and a pointer to a BodyPart for all others.
 	 */
-	Part* super;
+	std::shared_ptr<BodyPart> super;
 
 	/**This function is only called by Part's child classes BodyPart and Organ to
 	 * assign the base variables.
@@ -294,7 +294,7 @@ public:
 	/**Sets the given Part (BodyPart) as the node that this Part is a child of.
 	 *
 	 */
-	void setSuperPart(Part* bp) {
+	void setSuperPart(std::shared_ptr<Part> bp) {
 		super = bp;
 	}
 
@@ -302,7 +302,7 @@ public:
 	 *
 	 * @return A pointer to a Part, or BodyPart.
 	 */
-	Part* getSuperPart() const {
+	std::shared_ptr<Part> getSuperPart() const {
 		return super;
 	}
 
@@ -411,25 +411,27 @@ public:
  */
 class BodyPart: public Part{
 private:
-	std::vector<Part*> *children;
+	std::vector<std::shared_ptr<Part>>* children;
 	int child_count = 0;
 
 public:
 	/**@brief Adds a Part to the BodyPart's list of children.
-	 * @param child A pointer to the Part object to add.
+	 * @param child A shared pointer to the Part object to add.
+	 * @param body The body this BodyPart and the child are part of. This reference
+	 *  is necessary to ensure the childs super reference is set to a shared_ptr of this bodypart.
 	 */
-	void addChild(Part *child);
+	void addChild(std::shared_ptr<Part> child, Body* b);
 
 	/**@brief Adds several Parts to the BodyPart's list of children.
 	 * @param child_array A pointer to the pointer pointing to the first of the Part objects to add.
 	 * @param count The count of objects to add.
 	 */
-	void addChildren(Part **child_array, int count);
+	void addChildren(std::shared_ptr<Part> *child_array, int count);
 
 	/**@brief Returns a list of all the children of this BodyPart.
 	 * @return A pointer to the children list.
 	 */
-	std::vector<Part*>* getChildList();
+	std::vector<std::shared_ptr<Part>>* getChildList();
 
 	/**@brief Removes a child object from the body part. If the child to be
 	 * destroyed is the last one, this function will destroy the BodyPart itself.
@@ -457,16 +459,17 @@ public:
  */
 class Body{
 private:
-	BodyPart* root;
+	std::shared_ptr<BodyPart> root;
 
 	const TCODColor part_gui_list_color_bodypart = TCODColor::azure;
 	const TCODColor part_gui_list_color_organ = TCODColor::darkRed;
 
+	std::map<std::string, std::shared_ptr<Tissue>>* tissue_map;
+
 	/**This map holds a list of all Parts (BodyParts and Organs) of a body, the key
 	 * being the UUID, and the value a pointer to the Part.
 	 */
-	std::map<std::string, Part*, strless>* part_map;
-	typedef std::map<std::string, Part*, strless>::iterator part_map_iterator;
+	std::map<std::string, std::shared_ptr<Part>>* part_map;
 
 	/**This map holds a list of all UUID's and all internal id's of all Parts (BodyParts and Organs)
 	* of a body. The key is the internal id, the value the UUID. 
@@ -510,10 +513,9 @@ private:
 	 * The tissue map is needed for organ creation. Please refer to the [body-definition XML help](xml_help.html)
 	 * or the source code for more.
 	 * @param node The '<body_part>' XML node to parse.
-	 * @param tissue_map A map of the 'default' tissues, sorted by their internal id.
 	 * @return The BodyPart that is defined by node.
 	 */
-	BodyPart* enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,strless> *tissue_map);
+	BodyPart* enter(rapidxml::xml_node<> *node);
 
 	/**This function is first called on the root BodyPart by the Body constructor and recursively on all its children.
 	 * It extracts all Organs and maps them by their internal id's.
@@ -531,7 +533,7 @@ private:
 	 * @param part_map The Part map to modify.
 	 * @return The modified Part map.
 	 */
-	std::map<std::string, Part*, strless>* extractParts(BodyPart* bp, std::map<std::string, Part*, strless> *part_map);
+	std::map<std::string, std::shared_ptr<Part>>* extractParts(BodyPart* bp, std::map<std::string, std::shared_ptr<Part>>* part_map);
 
 	/**This function recursively iterates through bodyparts until it reaches the Organ "leaves" and calls the
 	 * Organ.linkToConnector(organ_map) function on them.
@@ -546,7 +548,7 @@ private:
 	*
 	* @param part_map The Part map to parse.
 	*/
-	void makeIdMap(std::map<std::string, Part*, strless>* part_map);
+	void makeIdMap(std::map<std::string, std::shared_ptr<Part>>* part_map);
 
 	/**This function compiles a map of pointers to all BodyParts and Organs that lie downstream of the given BodyPart
 	 * AND the given BodyPart, keyed by their UUIDs; by calling extractParts() recursively.
@@ -554,7 +556,7 @@ private:
 	 * @param bp The BodyPart to extract the parts from.
 	 * @param part_map The Part map to modify.
 	 */
-	void makePartMap(BodyPart* bp, std::map<std::string, Part*, strless> *part_map);
+	void makePartMap(BodyPart* bp, std::map<std::string, std::shared_ptr<Part>>* part_map);
 
 	/**This function recursively builds a list of GuiObjectLink for all Parts of the Body - 
 	* it links the UUID of the Part to a ColoredText containing the name of the Part. 
@@ -580,7 +582,7 @@ public:
 	Body(const char *filename);
 	~Body();
 
-	BodyPart* getRootBP()
+	std::shared_ptr<BodyPart> getRootBP()
 	{
 		if (root != nullptr) { return root; }
 	};

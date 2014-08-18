@@ -66,7 +66,7 @@ Part::~Part()
 BodyPart::BodyPart(string id, string name, float surface) :
 		Part(id, name, surface, TYPE_BODYPART){
 
-	children = new std::vector<Part*>();
+	children = new std::vector<std::shared_ptr<Part>>();
 }
 
 BodyPart::~BodyPart()
@@ -91,14 +91,12 @@ BodyPart::~BodyPart()
 	//Remove self from parents (super) child list.
 	if (super != nullptr)
 	{
-		BodyPart* sup = static_cast<BodyPart*>(super);
-		sup->removeChild(this->getUUID());
-		super = nullptr;
+		super->removeChild(this->getUUID());
 	}
 }
 
-void BodyPart::addChild(Part *child){
-	child->setSuperPart(this);
+void BodyPart::addChild(std::shared_ptr<Part> child, Body* b){
+	child->setSuperPart(b->getPartByUUID(getUUID()));
 	children->push_back(child);
 	child_count++;
 }
@@ -249,6 +247,7 @@ void Organ::removeConnectedOrgan(string uuid) {
 }
 
 Body::Body(const char *filename){
+	tissue_map = new std::map<std::string, std::shared_ptr<Tissue>>();
 	root = loadBody(filename);
 	if (root != NULL)
 	{
@@ -331,9 +330,7 @@ BodyPart* Body::loadBody(const char *filename){
 
 	//###TISSUE DATA###
 
-	//Temporary tissue map, list & variables
-	std::map<std::string, Tissue*, strless> tissue_map;
-
+	//Temporary variables
 	char *id = NULL, *name = NULL;
 	float pain = -1.0f, blood_flow = -1.0f, resistance = -1.0f, impairment = -1.0f; //Initialize with illegal values
 
@@ -366,8 +363,9 @@ BodyPart* Body::loadBody(const char *filename){
 		debug_print("Read Tissue:\n\tID: %s \n\tName: %s \n\tBlood Flow: %f \n\tResistance: %f \n\tImpairment: %f\n",
 				id, name, blood_flow, resistance, impairment);
 
-		//Create a new Tissue and store the pointer to it in the tissue map
-		tissue_map.insert(std::pair<std::string, Tissue*>(std::string(id), new Tissue(id, name, pain, blood_flow, resistance, impairment)));
+		//Create a new Tissue and store the shared pointer to it in the tissue map
+		std::shared_ptr<Tissue> t_tissue(new Tissue(id, name, pain, blood_flow, resistance, impairment));
+		tissue_map->insert(std::pair<std::string, std::shared_ptr<Tissue>>(std::string(id), t_tissue));
 	}
 
 	//###BODYPART DATA###
@@ -381,7 +379,7 @@ BodyPart* Body::loadBody(const char *filename){
 	xml_node<> *body = doc.first_node()->first_node("body");
 
 	//recursively load the data
-	temproot = enter(body->first_node(), &tissue_map);
+	temproot = enter(body->first_node());
 
 	//Destroy the XML data in memory
 	delete[] buffer;
@@ -391,12 +389,11 @@ BodyPart* Body::loadBody(const char *filename){
 	return temproot;
 
 	} catch (std::exception& e) {
-		std::cerr << "ERROR: " << e.what() << "\n";
+		debug_error("ERROR: %s \n", e.what());
 		return NULL;
 	}
 	catch (bdef_parse_error& pe) {
-		std::cerr << "ERROR: " << pe.what() << "\n";
-		
+		debug_error("ERROR: %s \n", pe.what());
 		return NULL;
 	}
 
@@ -439,7 +436,7 @@ void Body::linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *orga
 	}
 }
 
-BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*, strless> *tissue_map) {
+BodyPart* Body::enter(rapidxml::xml_node<> *node) {
 	using namespace rapidxml;
 
 	int organ_count, bodyparts, it;
@@ -447,14 +444,14 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	xml_node<> **organ_node_list;
 
 	BodyPart *bp;
-	char *id = NULL, *name = NULL, *_name = NULL;
+	char *id = nullptr, *name = nullptr, *_name = nullptr;
 	float surface = 0.0f;
 
 	//Make a count of the body_part nodes in this node and parse all standard
 	// nodes for the bodypart of this node
 	temp = node->first_node();
 	bodyparts = 0;
-	while(temp != NULL){
+	while (temp != nullptr){
 		_name = temp->name();
 
 		if (!strcmp(_name, "body_part")) { bodyparts++; }
@@ -468,13 +465,13 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	}
 
 	//if any of the mandatory vars for bodyparts are NULL, ERROR!
-	if (id == NULL || name == NULL){
+	if (id == nullptr || name == nullptr){
 		throw new bdef_parse_error("Not all mandatory BodyPart variables defined!", node);
 	}
 
 	//make the bodypart, reset temporary variables for reuse with the organs
 	bp = new BodyPart((string)id, (string)name, surface);
-	id = NULL; name = NULL;
+	id = nullptr; name = nullptr;
 
 	//DEBUG: Print new BodyPart
 	debug_print("New BodyPart created: \n\tID: %s \n\tName: %s \n\tSurface: %f\n",
@@ -488,7 +485,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 		xml_attribute<> *attr;
 		xml_node<> *tdef_node;
 
-		char *connector = NULL;
+		char *connector = nullptr;
 		bool symmetrical = false;
 
 		it = 0;
@@ -497,7 +494,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 		char *tdef_id, *tdef_custom_id, *tdef_name;
 		float tdef_hit_prob;
 
-		tissue_def *tdefs = NULL;
+		tissue_def *tdefs = nullptr;
 		int tdef_count = 0, tdef_it = 0;
 
 
@@ -506,7 +503,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 
 		//scan for organ nodes in the given node
 		organ_count = 0;
-		while(temp != NULL){
+		while (temp != nullptr){
 			if (!strcmp(temp->name(),"organ")) { organ_count++; }
 			temp = temp->next_sibling();
 		}
@@ -521,7 +518,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 		organ_node_list = new xml_node<>*[organ_count];
 		temp = node->first_node();
 
-		while(temp != NULL){
+		while (temp != nullptr){
 			_name = temp->name();
 
 			if (!strcmp(_name,"organ")) {
@@ -541,7 +538,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 			temp = organ_node_list[i]->first_node();
 
 			//Iterate through all nodes within the organ node
-			while(temp != NULL){
+			while (temp != nullptr){
 				_name = temp->name();
 
 				//Parse standard tags
@@ -554,17 +551,17 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 				// and add to the organs
 				if (!strcmp(_name,"organ_tissue")) {
 					attr = temp->first_attribute();
-					if (attr != NULL && !strcmp(attr->name(), "symmetrical")){
+					if (attr != nullptr && !strcmp(attr->name(), "symmetrical")){
 						symmetrical = true;
 					}
 
-					attr = NULL;
+					attr = nullptr;
 
 					//Get the count of tissue defs
 					tdef_count = 0;
 					tdef_node = temp->first_node();
 
-					while (tdef_node != NULL)
+					while (tdef_node != nullptr)
 					{
 						//If any other node than tissue_def, ERROR!
 						if (strcmp(tdef_node->name(), "tissue_def")) {
@@ -583,17 +580,17 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 					// each tissue_def child and store it in tdefs[] array
 					tdef_it = 0;
 					tdef_node = temp->first_node();
-					while (tdef_node != NULL){
+					while (tdef_node != nullptr){
 						//The value of a tissue_def node is the id of the tissue (e.g. M_ARTERY)
 						tdef_id = tdef_node->value();
 
 						tdef_hit_prob = 0;
-						tdef_name = NULL;
-						tdef_custom_id = NULL;
+						tdef_name = nullptr;
+						tdef_custom_id = nullptr;
 
 						//Get the other parameters
 						attr = tdef_node->first_attribute();
-						while (attr != NULL){
+						while (attr != nullptr){
 
 							if (!strcmp(attr->name(), "hit_prob")){ tdef_hit_prob = atof(attr->value()); }
 							if (!strcmp(attr->name(), "name")) { tdef_name = attr->value(); }
@@ -606,12 +603,12 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 
 
 						//Store the parameters in the tissue definition
-						if (tdef_custom_id != NULL) {
+						if (tdef_custom_id != nullptr) {
 							tdefs[tdef_it].custom_id = string(tdef_custom_id);
 						}
 						else { tdefs[tdef_it].custom_id = ""; }
 
-						if (tdef_name != NULL) {
+						if (tdef_name != nullptr) {
 							tdefs[tdef_it].name = string(tdef_name);
 						}
 						else { tdefs[tdef_it].name = ""; }
@@ -626,7 +623,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 
 						std::string key = tdef_id;
 
-						std::map<std::string, Tissue*>::const_iterator pos
+						std::map<std::string, std::shared_ptr<Tissue>>::const_iterator pos
 							= tissue_map->find(key);
 
 						if (pos == tissue_map->end()){ throw bdef_parse_error("Tissue not found!", tdef_node); }
@@ -641,7 +638,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 
 			//Check whether all necessary data for organ creation has been read
 			// if not, ERROR!
-			if (id == NULL || name == NULL || connector == NULL || tdefs == NULL){
+			if (id == nullptr || name == nullptr || connector == nullptr || tdefs == nullptr){
 				throw bdef_parse_error("Not all necessary data for organ creation found.", organ_node_list[i]);
 			}
 
@@ -684,11 +681,11 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 		temp = node->first_node();
 
 		it = 0;
-		while(temp != NULL){
+		while (temp != nullptr){
 			_name = temp->name();
 
 			if (!strcmp(_name, "body_part")) {
-				bp->addChild(enter(temp, tissue_map));
+				bp->addChild(enter(temp));
 			}
 
 			temp = temp->next_sibling();

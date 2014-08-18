@@ -150,6 +150,7 @@ void GuiBodyViewer::update(TCOD_key_t key)
 			if (o->isStump()){
 				temp_info.append("\n\nOrgan is a stump.");
 			}
+
 		}
 		
 		bp_info->setText(temp_info);
