@@ -214,10 +214,10 @@ protected:
 	*/
 	bool slated_for_destruction = false;
 
-	/**This is a pointer to the node of the organ tree that this Part is a child of.
-	 * It is NULL for the root element, and a pointer to a BodyPart for all others.
+	/**This is the UUID of the node of the organ tree that this Part is a child of.
+	 * It is NULL for the root element.
 	 */
-	std::shared_ptr<BodyPart> super;
+	string super;
 
 	/**This function is only called by Part's child classes BodyPart and Organ to
 	 * assign the base variables.
@@ -294,17 +294,21 @@ public:
 	/**Sets the given Part (BodyPart) as the node that this Part is a child of.
 	 *
 	 */
-	void setSuperPart(std::shared_ptr<Part> bp) {
-		super = bp;
+	void setSuperPart(string bp_uuid) {
+		super = bp_uuid;
 	}
 
-	/**Returns the node that this Part is a child of.
+	/**Returns the UUID of the node that this Part is a child of.
 	 *
-	 * @return A pointer to a Part, or BodyPart.
+	 * @return The UUID of a BodyPart, or an Organ.
 	 */
-	std::shared_ptr<Part> getSuperPart() const {
+	std::string getSuperPartUUID() const {
 		return super;
 	}
+
+	virtual void testFunction() {
+		return;
+	};
 
 	virtual ~Part();
 };
@@ -325,13 +329,19 @@ private:
 	int tissue_count;
 
 	string connector_id;
+	string connector_uuid; //The upstream root
 
 	bool root; //Is it root?
 
-	Organ *connector; //The upstream root
-	std::map<string, Organ*> *connected_organs; //The downstream branches
+	std::map<string, std::shared_ptr<Organ>> *connected_organs; //The downstream branches
 
 	bool is_stump = false; //When Organs downstream are removed, the Organ is marked as stump
+
+	/**
+	* @brief Links this organ to its local root.
+	* @param connector_uuid The UUID of the connector.
+	*/
+	void linkToConnector(string connector_uuid);
 
 public:
 	/**Creates a new instance of the organ class.
@@ -356,21 +366,18 @@ public:
 	~Organ();
 
 	/**
-	 * @brief Links this organ to its local root.
-	 * @param organ_map A map which links the internal id strings to the
-	 * organ pointers.
-	 */
-	void linkToConnector(std::map<std::string, Organ*, strless> *organ_map);
-
-	/**
 	* @brief Returns the UUID of the upstream root organ.
 	*/
-	string getConnectorUUID();
+	string getConnectorUUID(){
+		return connector_uuid;
+	};
 
 	/**
 	* @brief Returns the internal ID of the upstream root organ.
 	*/
-	string getConnectorId();
+	string getConnectorId(){
+		return connector_id;
+	};
 
 	/**
 	* @brief Modifies the given vector to contain a list of the UUIDs of the downstream branches.
@@ -383,8 +390,7 @@ public:
 	 * @brief Called by the branch organs to register with their root.
 	 * @param connectee The branch connecting to this organ.
 	 */
-	void addConnectedOrgan(Organ *connectee);
-
+	void addConnectedOrgan(std::shared_ptr<Organ> connectee);
 	void removeConnectedOrgan(string uuid);
 
 	bool isStump() { return is_stump; }
@@ -420,7 +426,7 @@ public:
 	 * @param body The body this BodyPart and the child are part of. This reference
 	 *  is necessary to ensure the childs super reference is set to a shared_ptr of this bodypart.
 	 */
-	void addChild(std::shared_ptr<Part> child, Body* b);
+	void addChild(std::shared_ptr<Part> child);
 
 	/**@brief Adds several Parts to the BodyPart's list of children.
 	 * @param child_array A pointer to the pointer pointing to the first of the Part objects to add.
@@ -496,9 +502,9 @@ private:
 	 * __The file must be null-terminated!__
 	 *
 	 * @param filename The _null-terminated_ file to load.
-	 * @return Returns the loaded Body as a BodyPart with all children.
+	 * @return Returns the UUID of the root bodypart.
 	 */
-	BodyPart* loadBody(const char *filename);
+	string loadBody(const char *filename);
 
 	/**This is the function that is recursively called on all nodes of the body
 	 * definition XML. The node it is pointed at _must_ be a '<body_part>' node.
@@ -513,50 +519,14 @@ private:
 	 * The tissue map is needed for organ creation. Please refer to the [body-definition XML help](xml_help.html)
 	 * or the source code for more.
 	 * @param node The '<body_part>' XML node to parse.
-	 * @return The BodyPart that is defined by node.
+	 * @return The UUID of the BodyPart that is defined by node.
 	 */
-	BodyPart* enter(rapidxml::xml_node<> *node);
-
-	/**This function is first called on the root BodyPart by the Body constructor and recursively on all its children.
-	 * It extracts all Organs and maps them by their internal id's.
-	 *
-	 * @param bp The BodyPart to extract the organs from.
-	 * @param organ_map The Organ map to modify.
-	 * @return The modified Organ map.
-	 */
-	std::map<std::string, Organ*, strless>* extractOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
-
-	/**This function recusively iterates through all BodyParts and Organs that lie downstream of the given BodyPart
-	 * and compiles a map of pointers to them, keyed by their UUIDs.
-	 *
-	 * @param bp The BodyPart to extract the parts from.
-	 * @param part_map The Part map to modify.
-	 * @return The modified Part map.
-	 */
-	std::map<std::string, std::shared_ptr<Part>>* extractParts(BodyPart* bp, std::map<std::string, std::shared_ptr<Part>>* part_map);
-
-	/**This function recursively iterates through bodyparts until it reaches the Organ "leaves" and calls the
-	 * Organ.linkToConnector(organ_map) function on them.
-	 *
-	 * @param bp The BodyPart to "scan" for organs.
-	 * @param organ_map A map which links the internal id strings of the organs to pointers to their instance.
-	 */
-	void linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map);
+	string enter(rapidxml::xml_node<> *node, std::map<string, string>* child_map, std::map<string, string>* organ_link_map);
 
 	/**This function iterates through the given Part map and creates a map whose keys are the internal
 	* id's and whose values are the UUID (the iid_uuid_map !) and refreshes iid_uuid_map.
-	*
-	* @param part_map The Part map to parse.
 	*/
-	void makeIdMap(std::map<std::string, std::shared_ptr<Part>>* part_map);
-
-	/**This function compiles a map of pointers to all BodyParts and Organs that lie downstream of the given BodyPart
-	 * AND the given BodyPart, keyed by their UUIDs; by calling extractParts() recursively.
-	 *
-	 * @param bp The BodyPart to extract the parts from.
-	 * @param part_map The Part map to modify.
-	 */
-	void makePartMap(BodyPart* bp, std::map<std::string, std::shared_ptr<Part>>* part_map);
+	void makeIdMap();
 
 	/**This function recursively builds a list of GuiObjectLink for all Parts of the Body - 
 	* it links the UUID of the Part to a ColoredText containing the name of the Part. 
@@ -569,8 +539,8 @@ private:
 	*/
 	void buildPartList(std::vector<GuiObjectLink*>* list, Part* p, int depth=0);
 
-	void cullEmptyBodyParts();
-
+	void refreshLists();
+	
 	void createSubgraphs(std::ofstream* stream, BodyPart* bp);
 	void createLinks(std::ofstream* stream, BodyPart* bp);
 
@@ -603,8 +573,8 @@ public:
 	*/
 	std::vector<GuiObjectLink*>* getPartGUIList() { return part_gui_list; }
 
-	Part* getPartByUUID(std::string uuid);
-	Part* getPartByIID(std::string iid);
+	std::shared_ptr<Part> getPartByUUID(std::string uuid);
+	std::shared_ptr<Part> getPartByIID(std::string iid);
 
 	void printBodyMap(const char* filename, BodyPart* mroot);
 

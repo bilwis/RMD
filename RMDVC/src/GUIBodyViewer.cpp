@@ -95,7 +95,7 @@ void GuiBodyViewer::update(TCOD_key_t key)
 
 		std::string uuid = p_uuid->at(0);
 
-		Part* p = body->getPartByUUID(uuid);
+		Part* p = body->getPartByUUID(uuid).get();
 		if (p == nullptr) 
 		{ 
 			debug_error("ERROR: No Part could be resolved from UUID %s.", uuid.c_str());
@@ -123,7 +123,7 @@ void GuiBodyViewer::update(TCOD_key_t key)
 			
 			Organ* o = (Organ*)p;
 			temp_info.append("\n\nBodyPart: ");
-			temp_info.append(o->getSuperPart()->getName().c_str());
+			temp_info.append(body->getPartByUUID(o->getSuperPartUUID())->getName().c_str());
 			temp_info.append("\nSurface Area: ");
 			temp_info.append(std::to_string((int)(o->getSurface() * 100)));
 			
