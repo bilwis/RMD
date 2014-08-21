@@ -137,8 +137,7 @@ void GuiBodyViewer::update(TCOD_key_t key)
 			temp_info.append("\nConnected Organs:");
 
 			//Add Connectees (derive from UUID list returned by o->getConnectedOrganUUIDs())
-			std::vector<std::string>* temp = new std::vector<std::string>();
-			o->getConnectedOrganUUIDs(temp);
+			std::vector<std::string>* temp = o->getConnectedOrgansRW();
 
 			for (std::vector<std::string>::iterator it = temp->begin(); it != temp->end(); it++)
 			{

@@ -68,6 +68,7 @@ $(document).ready(function(){initNavTree('class_organ.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_organ-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -91,18 +92,15 @@ Collaboration diagram for Organ:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_organ__coll__graph.png" border="0" usemap="#_organ_coll__map" alt="Collaboration graph"/></div>
 <map name="_organ_coll__map" id="_organ_coll__map">
-<area shape="rect" id="node2" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. " alt="" coords="91,201,137,228"/><area shape="rect" id="node3" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="5,111,65,137"/><area shape="rect" id="node6" href="structtissue__def.html" title="This struct represents the link between an organ and its tissues. " alt="" coords="241,201,323,228"/><area shape="rect" id="node7" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. " alt="" coords="281,111,341,137"/></map>
+<area shape="rect" id="node2" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. " alt="" coords="109,215,156,241"/><area shape="rect" id="node3" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="5,95,65,121"/><area shape="rect" id="node7" href="structtissue__def.html" title="This struct represents the link between an organ and its tissues. " alt="" coords="199,215,280,241"/><area shape="rect" id="node6" href="class_body.html" title="The code representation of a body of an Actor. " alt="" coords="89,95,141,121"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae9606d136843749884c5d2d220f383d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#ae9606d136843749884c5d2d220f383d0">Organ</a> (string <a class="el" href="class_part.html#ae1538e7080bd799f51e31f500abebedf">id</a>, string name, float surface, <a class="el" href="structtissue__def.html">tissue_def</a> *tissues, int tissue_count, const char *connector_id, bool is_root=false)</td></tr>
-<tr class="separator:ae9606d136843749884c5d2d220f383d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbd80dad7bd18d8dbbe5fe30556146ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#abbd80dad7bd18d8dbbe5fe30556146ce">Organ</a> (string <a class="el" href="class_part.html#ae1538e7080bd799f51e31f500abebedf">id</a>, string name, float surface, <a class="el" href="class_body.html">Body</a> *b, <a class="el" href="structtissue__def.html">tissue_def</a> *tissues, int tissue_count, const char *connector_id, bool is_root=false)</td></tr>
+<tr class="separator:abbd80dad7bd18d8dbbe5fe30556146ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a857bf37ad3a89244b6067c32d7192a4d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#a857bf37ad3a89244b6067c32d7192a4d">~Organ</a> ()</td></tr>
 <tr class="separator:a857bf37ad3a89244b6067c32d7192a4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70976723830b44b0cdb217e49668db8f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#a70976723830b44b0cdb217e49668db8f">linkToConnector</a> (std::map&lt; std::string, <a class="el" href="class_organ.html">Organ</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *organ_map)</td></tr>
-<tr class="memdesc:a70976723830b44b0cdb217e49668db8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Links this organ to its local root.  <a href="#a70976723830b44b0cdb217e49668db8f">More...</a><br /></td></tr>
-<tr class="separator:a70976723830b44b0cdb217e49668db8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b3d4e9bbea58e59a0f40ee3b1bee5a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b3d4e9bbea58e59a0f40ee3b1bee5a4"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#a9b3d4e9bbea58e59a0f40ee3b1bee5a4">getConnectorUUID</a> ()</td></tr>
 <tr class="memdesc:a9b3d4e9bbea58e59a0f40ee3b1bee5a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the UUID of the upstream root organ. <br /></td></tr>
@@ -111,15 +109,23 @@ string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#af9dbba54820ce05e123e6bb0788df7e1">getConnectorId</a> ()</td></tr>
 <tr class="memdesc:af9dbba54820ce05e123e6bb0788df7e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the internal ID of the upstream root organ. <br /></td></tr>
 <tr class="separator:af9dbba54820ce05e123e6bb0788df7e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f1d4a3490dcb515e39b7d27f5ef3ecd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#a5f1d4a3490dcb515e39b7d27f5ef3ecd">getConnectedOrganUUIDs</a> (std::vector&lt; string &gt; *vector)</td></tr>
-<tr class="memdesc:a5f1d4a3490dcb515e39b7d27f5ef3ecd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the given vector to contain a list of the UUIDs of the downstream branches.  <a href="#a5f1d4a3490dcb515e39b7d27f5ef3ecd">More...</a><br /></td></tr>
-<tr class="separator:a5f1d4a3490dcb515e39b7d27f5ef3ecd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48880acd5e95342739bfb0aef3d39d81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#a48880acd5e95342739bfb0aef3d39d81">addConnectedOrgan</a> (<a class="el" href="class_organ.html">Organ</a> *connectee)</td></tr>
-<tr class="memdesc:a48880acd5e95342739bfb0aef3d39d81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the branch organs to register with their root.  <a href="#a48880acd5e95342739bfb0aef3d39d81">More...</a><br /></td></tr>
-<tr class="separator:a48880acd5e95342739bfb0aef3d39d81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45c696b96cc2aa22f5b08299de6dc7fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45c696b96cc2aa22f5b08299de6dc7fe"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>removeConnectedOrgan</b> (<a class="el" href="class_organ.html">Organ</a> *connectee)</td></tr>
-<tr class="separator:a45c696b96cc2aa22f5b08299de6dc7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d54f98def67400edeb835e105b9704d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d54f98def67400edeb835e105b9704d"></a>
+std::vector&lt; string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#a0d54f98def67400edeb835e105b9704d">getConnectedOrgans</a> ()</td></tr>
+<tr class="memdesc:a0d54f98def67400edeb835e105b9704d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a new vector containing all connected organs. <br /></td></tr>
+<tr class="separator:a0d54f98def67400edeb835e105b9704d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2160a70c31357145ac6e7eccb89f8e96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2160a70c31357145ac6e7eccb89f8e96"></a>
+std::vector&lt; string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#a2160a70c31357145ac6e7eccb89f8e96">getConnectedOrgansRW</a> ()</td></tr>
+<tr class="memdesc:a2160a70c31357145ac6e7eccb89f8e96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the connected_organs vector;. <br /></td></tr>
+<tr class="separator:a2160a70c31357145ac6e7eccb89f8e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63fb5eab77e623f47d1e15e76380ee6b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#a63fb5eab77e623f47d1e15e76380ee6b">addConnectedOrgan</a> (string connectee_uuid)</td></tr>
+<tr class="memdesc:a63fb5eab77e623f47d1e15e76380ee6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by the branch organs to register with their root.  <a href="#a63fb5eab77e623f47d1e15e76380ee6b">More...</a><br /></td></tr>
+<tr class="separator:a63fb5eab77e623f47d1e15e76380ee6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a022e4f85b20c8944e5d9bd95ca4877e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a022e4f85b20c8944e5d9bd95ca4877e0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>removeConnectedOrgan</b> (string uuid)</td></tr>
+<tr class="separator:a022e4f85b20c8944e5d9bd95ca4877e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9349af9f3470bd121a66672749324aba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9349af9f3470bd121a66672749324aba"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isStump</b> ()</td></tr>
+<tr class="separator:a9349af9f3470bd121a66672749324aba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee59c88dbd768bdfdfbedeb75f04588b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#aee59c88dbd768bdfdfbedeb75f04588b">isRoot</a> () const </td></tr>
 <tr class="separator:aee59c88dbd768bdfdfbedeb75f04588b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_part"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_part')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_part.html">Part</a></td></tr>
@@ -135,14 +141,23 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()</td
 <tr class="separator:aa277f1166a99517c92f3c7b5d798ab1a inherit pub_methods_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa57344b8df727fe5b05e43f9619a3546 inherit pub_methods_class_part"><td class="memItemLeft" align="right" valign="top">PartType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#aa57344b8df727fe5b05e43f9619a3546">getType</a> () const </td></tr>
 <tr class="separator:aa57344b8df727fe5b05e43f9619a3546 inherit pub_methods_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5db86a8adc27862a7814ad781bae9c9c inherit pub_methods_class_part"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#a5db86a8adc27862a7814ad781bae9c9c">setSuperPart</a> (<a class="el" href="class_part.html">Part</a> *bp)</td></tr>
-<tr class="separator:a5db86a8adc27862a7814ad781bae9c9c inherit pub_methods_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41f09aaec6ea2609544606d83858bcac inherit pub_methods_class_part"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_part.html">Part</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#a41f09aaec6ea2609544606d83858bcac">getSuperPart</a> () const </td></tr>
-<tr class="separator:a41f09aaec6ea2609544606d83858bcac inherit pub_methods_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43b03d95f469901867e117d51d96da61 inherit pub_methods_class_part"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#a43b03d95f469901867e117d51d96da61">setSuperPart</a> (string bp_uuid)</td></tr>
+<tr class="separator:a43b03d95f469901867e117d51d96da61 inherit pub_methods_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa867634538a1416b9f8f9d1319ced59f inherit pub_methods_class_part"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#aa867634538a1416b9f8f9d1319ced59f">getSuperPartUUID</a> () const </td></tr>
+<tr class="separator:aa867634538a1416b9f8f9d1319ced59f inherit pub_methods_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac913609d669ca09a5a4f010bee2809ea inherit pub_methods_class_part"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac913609d669ca09a5a4f010bee2809ea"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>testFunction</b> ()</td></tr>
+<tr class="separator:ac913609d669ca09a5a4f010bee2809ea inherit pub_methods_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_object.html">Object</a></td></tr>
 <tr class="memitem:a867c339f032a7f639e0bdb426bb6a297 inherit pub_methods_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a867c339f032a7f639e0bdb426bb6a297"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>getUUID</b> ()</td></tr>
 <tr class="separator:a867c339f032a7f639e0bdb426bb6a297 inherit pub_methods_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:af43d8e049323eb542a569f5a396d19de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_organ.html#af43d8e049323eb542a569f5a396d19de">linkToConnector</a> (string connector_uuid)</td></tr>
+<tr class="memdesc:af43d8e049323eb542a569f5a396d19de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Links this organ to its local root.  <a href="#af43d8e049323eb542a569f5a396d19de">More...</a><br /></td></tr>
+<tr class="separator:af43d8e049323eb542a569f5a396d19de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -155,24 +170,29 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>tissue_count</b></td><
 <tr class="memitem:a6ca85383a7d986408ce3e8e12197a455"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ca85383a7d986408ce3e8e12197a455"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>connector_id</b></td></tr>
 <tr class="separator:a6ca85383a7d986408ce3e8e12197a455"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18bfe2e2c0ccffee06a79576a461817c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18bfe2e2c0ccffee06a79576a461817c"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>connector_uuid</b></td></tr>
+<tr class="separator:a18bfe2e2c0ccffee06a79576a461817c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79feb3acd04b0218543f48302f98fb0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79feb3acd04b0218543f48302f98fb0f"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>root</b></td></tr>
 <tr class="separator:a79feb3acd04b0218543f48302f98fb0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d27a49fc41e50b458c62c16500e0605"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d27a49fc41e50b458c62c16500e0605"></a>
-<a class="el" href="class_organ.html">Organ</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>connector</b></td></tr>
-<tr class="separator:a1d27a49fc41e50b458c62c16500e0605"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf9531d4dfac8e9a6f4377bb14985bbb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf9531d4dfac8e9a6f4377bb14985bbb"></a>
-TCODList&lt; <a class="el" href="class_organ.html">Organ</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>connected_organs</b></td></tr>
-<tr class="separator:abf9531d4dfac8e9a6f4377bb14985bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaedf8bc52e05860f0ede78f71c5f5558"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaedf8bc52e05860f0ede78f71c5f5558"></a>
+std::vector&lt; string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>connected_organs</b></td></tr>
+<tr class="separator:aaedf8bc52e05860f0ede78f71c5f5558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2969f3e255f9655f226e98b9ab5c3e5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2969f3e255f9655f226e98b9ab5c3e5c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_stump</b> = false</td></tr>
+<tr class="separator:a2969f3e255f9655f226e98b9ab5c3e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_class_part"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_part')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_part.html">Part</a></td></tr>
-<tr class="memitem:ab5cf8adfbc0a2f0dc625593aa176902f inherit pro_methods_class_part"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#ab5cf8adfbc0a2f0dc625593aa176902f">Part</a> (string <a class="el" href="class_part.html#ae1538e7080bd799f51e31f500abebedf">id</a>, string name, float surface, PartType type)</td></tr>
-<tr class="separator:ab5cf8adfbc0a2f0dc625593aa176902f inherit pro_methods_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94d0c9a44c329c2df52e0efd005d66d7 inherit pro_methods_class_part"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#a94d0c9a44c329c2df52e0efd005d66d7">Part</a> (string <a class="el" href="class_part.html#ae1538e7080bd799f51e31f500abebedf">id</a>, string name, float surface, PartType type, <a class="el" href="class_body.html">Body</a> *b)</td></tr>
+<tr class="separator:a94d0c9a44c329c2df52e0efd005d66d7 inherit pro_methods_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_part"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_part')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_part.html">Part</a></td></tr>
 <tr class="memitem:ae1538e7080bd799f51e31f500abebedf inherit pro_attribs_class_part"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#ae1538e7080bd799f51e31f500abebedf">id</a></td></tr>
 <tr class="separator:ae1538e7080bd799f51e31f500abebedf inherit pro_attribs_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c6af14c64736cf1c8d9075734b7aa8f inherit pro_attribs_class_part"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_body.html">Body</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#a0c6af14c64736cf1c8d9075734b7aa8f">body</a></td></tr>
+<tr class="separator:a0c6af14c64736cf1c8d9075734b7aa8f inherit pro_attribs_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e8faa9bf7fbdc5624bf3739fa5452c5 inherit pro_attribs_class_part"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e8faa9bf7fbdc5624bf3739fa5452c5"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>name</b></td></tr>
 <tr class="separator:a2e8faa9bf7fbdc5624bf3739fa5452c5 inherit pro_attribs_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,10 +202,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>surface</b></td></tr
 <tr class="memitem:ad584b7c2addbe85ff79c7b00578f2640 inherit pro_attribs_class_part"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad584b7c2addbe85ff79c7b00578f2640"></a>
 PartType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
 <tr class="separator:ad584b7c2addbe85ff79c7b00578f2640 inherit pro_attribs_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae41359371dfcb2c02ee05e219ec61ecd inherit pro_attribs_class_part"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#ae41359371dfcb2c02ee05e219ec61ecd">slated_for_destruction</a> = false</td></tr>
-<tr class="separator:ae41359371dfcb2c02ee05e219ec61ecd inherit pro_attribs_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55803895d25d6b0830e998441716a7ba inherit pro_attribs_class_part"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_part.html">Part</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#a55803895d25d6b0830e998441716a7ba">super</a></td></tr>
-<tr class="separator:a55803895d25d6b0830e998441716a7ba inherit pro_attribs_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9120911ef04dcaf24d916e67151ea658 inherit pro_attribs_class_part"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_part.html#a9120911ef04dcaf24d916e67151ea658">super</a></td></tr>
+<tr class="separator:a9120911ef04dcaf24d916e67151ea658 inherit pro_attribs_class_part"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_object"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_object.html">Object</a></td></tr>
 <tr class="memitem:a65a486a9bc5fece2182bc1cd76071662 inherit pro_attribs_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65a486a9bc5fece2182bc1cd76071662"></a>
 uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
@@ -195,7 +213,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <div class="textblock"><p>The 'leaves' of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> tree. </p>
 <p>This class represents the second-deepest level of the body definition, "above" the <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> objects and "below" the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> objects. <em>This definition of '<a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a>' is very much different from the common meaning of '<a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a>', as in internal organs such as the stomach or liver.</em> Instances of this class contain an array of tissue definitions, a reference to the organ to which this one is connected (upstream root) and a list of references to the organs which are connected to this one (downstream branches). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ae9606d136843749884c5d2d220f383d0"></a>
+<a class="anchor" id="abbd80dad7bd18d8dbbe5fe30556146ce"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -216,6 +234,12 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
           <td></td>
           <td class="paramtype">float&#160;</td>
           <td class="paramname"><em>surface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_body.html">Body</a> *&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -254,6 +278,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
     <tr><td class="paramname">id</td><td>The organ's unique internal identifier. </td></tr>
     <tr><td class="paramname">name</td><td>The name of the organ. </td></tr>
     <tr><td class="paramname">surface</td><td>The relative surface area of the organ, see <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>. </td></tr>
+    <tr><td class="paramname">b</td><td>The body this <a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a> is part of. </td></tr>
     <tr><td class="paramname">tissues</td><td>A pointer to the first element of the <a class="el" href="structtissue__def.html" title="This struct represents the link between an organ and its tissues. ">tissue_def</a> array. </td></tr>
     <tr><td class="paramname">tissue_count</td><td>The number of elements in the array pointed at by tissues. </td></tr>
     <tr><td class="paramname">connector_id</td><td>The internal id of the connector organ, later used when the organ map is available. See linkToConnector(std::map&lt;std::string, Organ*&gt; *organ_map). </td></tr>
@@ -281,15 +306,15 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a48880acd5e95342739bfb0aef3d39d81"></a>
+<a class="anchor" id="a63fb5eab77e623f47d1e15e76380ee6b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Organ::addConnectedOrgan </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_organ.html">Organ</a> *&#160;</td>
-          <td class="paramname"><em>connectee</em></td><td>)</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>connectee_uuid</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -300,30 +325,6 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">connectee</td><td>The branch connecting to this organ. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a5f1d4a3490dcb515e39b7d27f5ef3ecd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Organ::getConnectedOrganUUIDs </td>
-          <td>(</td>
-          <td class="paramtype">std::vector&lt; string &gt; *&#160;</td>
-          <td class="paramname"><em>vector</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Modifies the given vector to contain a list of the UUIDs of the downstream branches. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">vector</td><td>The vector to be modified. </td></tr>
   </table>
   </dd>
 </dl>
@@ -355,24 +356,32 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a70976723830b44b0cdb217e49668db8f"></a>
+<a class="anchor" id="af43d8e049323eb542a569f5a396d19de"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void Organ::linkToConnector </td>
           <td>(</td>
-          <td class="paramtype">std::map&lt; std::string, <a class="el" href="class_organ.html">Organ</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *&#160;</td>
-          <td class="paramname"><em>organ_map</em></td><td>)</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>connector_uuid</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Links this organ to its local root. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">organ_map</td><td>A map which links the internal id strings to the organ pointers. </td></tr>
+    <tr><td class="paramname">connector_uuid</td><td>The UUID of the connector. </td></tr>
   </table>
   </dd>
 </dl>
@@ -389,7 +398,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_organ.html">Organ</a></li>
-    <li class="footer">Generated on Thu Aug 14 2014 14:13:23 for Rogue M.D. by
+    <li class="footer">Generated on Thu Aug 21 2014 14:11:35 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

@@ -68,7 +68,6 @@ $(document).ready(function(){initNavTree('class_body.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pri-types">Private Types</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_body-members.html">List of all members</a>  </div>
@@ -81,64 +80,41 @@ $(document).ready(function(){initNavTree('class_body.html','');});
  <a href="class_body.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_body_8hpp_source.html">Body.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for Body:</div>
-<div class="dyncontent">
-<div class="center"><img src="class_body__coll__graph.png" border="0" usemap="#_body_coll__map" alt="Collaboration graph"/></div>
-<map name="_body_coll__map" id="_body_coll__map">
-<area shape="rect" id="node2" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). " alt="" coords="56,275,132,301"/><area shape="rect" id="node3" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. " alt="" coords="71,199,117,225"/><area shape="rect" id="node4" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="5,95,65,121"/></map>
-<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2cda9c6f52963f15e85822bc2cbd4a1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a2cda9c6f52963f15e85822bc2cbd4a1a">Body</a> (const char *filename)</td></tr>
 <tr class="separator:a2cda9c6f52963f15e85822bc2cbd4a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc9c031f0582bec3a85420442d813aa1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc9c031f0582bec3a85420442d813aa1"></a>
-<a class="el" href="class_body_part.html">BodyPart</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getRootBP</b> ()</td></tr>
-<tr class="separator:adc9c031f0582bec3a85420442d813aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d6d4b0a1791314ba5af74da4c665da0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a1d6d4b0a1791314ba5af74da4c665da0">removePart</a> (std::string part_id)</td></tr>
-<tr class="separator:a1d6d4b0a1791314ba5af74da4c665da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab21101075be3644cfddb7a139507e38d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_body_part.html">BodyPart</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#ab21101075be3644cfddb7a139507e38d">getRootBP</a> ()</td></tr>
+<tr class="separator:ab21101075be3644cfddb7a139507e38d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3be17fc9289ffdccddb6339239b21fec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a3be17fc9289ffdccddb6339239b21fec">removePart</a> (std::string part_uuid)</td></tr>
+<tr class="separator:a3be17fc9289ffdccddb6339239b21fec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef5d3db270848d3de8530a59353312a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#aef5d3db270848d3de8530a59353312a4">removeRandomPart</a> ()</td></tr>
 <tr class="separator:aef5d3db270848d3de8530a59353312a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb01fc8c2674f9c71de749c0f8a11cf9"><td class="memItemLeft" align="right" valign="top">TCODList&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#afb01fc8c2674f9c71de749c0f8a11cf9">getPartGUIList</a> ()</td></tr>
-<tr class="separator:afb01fc8c2674f9c71de749c0f8a11cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8da203ee432ec65b8ee16b7b8fcbdc49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8da203ee432ec65b8ee16b7b8fcbdc49"></a>
-<a class="el" href="class_part.html">Part</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getPartByUUID</b> (std::string uuid)</td></tr>
-<tr class="separator:a8da203ee432ec65b8ee16b7b8fcbdc49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1fe60c57185eab7c3261db52fafc343"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1fe60c57185eab7c3261db52fafc343"></a>
-<a class="el" href="class_part.html">Part</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getPartByIID</b> (std::string iid)</td></tr>
-<tr class="separator:ac1fe60c57185eab7c3261db52fafc343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23661e884436cbea6bc2d936eaf660a3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a23661e884436cbea6bc2d936eaf660a3">getPartGUIList</a> ()</td></tr>
+<tr class="separator:a23661e884436cbea6bc2d936eaf660a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e86b799a725cb8100fb8a583fec59ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e86b799a725cb8100fb8a583fec59ed"></a>
+std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getPartByUUID</b> (std::string uuid)</td></tr>
+<tr class="separator:a7e86b799a725cb8100fb8a583fec59ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85f5689bbf2ec664a3aeddaf96a3fbf8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85f5689bbf2ec664a3aeddaf96a3fbf8"></a>
+std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getPartByIID</b> (std::string iid)</td></tr>
+<tr class="separator:a85f5689bbf2ec664a3aeddaf96a3fbf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5438ad07de06d89c85714a5888fea492"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5438ad07de06d89c85714a5888fea492"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>printBodyMap</b> (const char *filename, <a class="el" href="class_body_part.html">BodyPart</a> *mroot)</td></tr>
 <tr class="separator:a5438ad07de06d89c85714a5888fea492"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
-Private Types</h2></td></tr>
-<tr class="memitem:aca00b4b3ac835570a8ba92c96ecf36de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca00b4b3ac835570a8ba92c96ecf36de"></a>
-typedef std::map&lt; std::string, <br class="typebreak" />
-<a class="el" href="class_part.html">Part</a> *, <a class="el" href="classstrless.html">strless</a> &gt;::iterator&#160;</td><td class="memItemRight" valign="bottom"><b>part_map_iterator</b></td></tr>
-<tr class="separator:aca00b4b3ac835570a8ba92c96ecf36de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:aedb5191f583df1a6b20163fa70a7f401"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_body_part.html">BodyPart</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#aedb5191f583df1a6b20163fa70a7f401">loadBody</a> (const char *filename)</td></tr>
-<tr class="separator:aedb5191f583df1a6b20163fa70a7f401"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1233e2282089ebd9f21fc1dbd88d6d71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_body_part.html">BodyPart</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a1233e2282089ebd9f21fc1dbd88d6d71">enter</a> (rapidxml::xml_node&lt;&gt; *node, std::map&lt; std::string, <a class="el" href="class_tissue.html">Tissue</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *tissue_map)</td></tr>
-<tr class="separator:a1233e2282089ebd9f21fc1dbd88d6d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e0f8c2e28fe88ba15b0d5fcc58f2a3f"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <a class="el" href="class_organ.html">Organ</a> <br class="typebreak" />
-*, <a class="el" href="classstrless.html">strless</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a1e0f8c2e28fe88ba15b0d5fcc58f2a3f">extractOrgans</a> (<a class="el" href="class_body_part.html">BodyPart</a> *bp, std::map&lt; std::string, <a class="el" href="class_organ.html">Organ</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *organ_map)</td></tr>
-<tr class="separator:a1e0f8c2e28fe88ba15b0d5fcc58f2a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ea2e5282fedf030ee4c04366081e3bf"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <a class="el" href="class_part.html">Part</a> <br class="typebreak" />
-*, <a class="el" href="classstrless.html">strless</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a3ea2e5282fedf030ee4c04366081e3bf">extractParts</a> (<a class="el" href="class_body_part.html">BodyPart</a> *bp, std::map&lt; std::string, <a class="el" href="class_part.html">Part</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *<a class="el" href="class_body.html#afacb3ab35180131711c651abe554c6a8">part_map</a>)</td></tr>
-<tr class="separator:a3ea2e5282fedf030ee4c04366081e3bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a807ddd24bd4e057d17eb6de4f42f985f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a807ddd24bd4e057d17eb6de4f42f985f">linkOrgans</a> (<a class="el" href="class_body_part.html">BodyPart</a> *bp, std::map&lt; std::string, <a class="el" href="class_organ.html">Organ</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *organ_map)</td></tr>
-<tr class="separator:a807ddd24bd4e057d17eb6de4f42f985f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b6ecc5f7b33f902414d918c2791f63e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a7b6ecc5f7b33f902414d918c2791f63e">makeIdMap</a> (std::map&lt; std::string, <a class="el" href="class_part.html">Part</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *<a class="el" href="class_body.html#afacb3ab35180131711c651abe554c6a8">part_map</a>)</td></tr>
-<tr class="separator:a7b6ecc5f7b33f902414d918c2791f63e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9eddf1fec4c9c7b9496cee870f12fa41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a9eddf1fec4c9c7b9496cee870f12fa41">makePartMap</a> (<a class="el" href="class_body_part.html">BodyPart</a> *bp, std::map&lt; std::string, <a class="el" href="class_part.html">Part</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *<a class="el" href="class_body.html#afacb3ab35180131711c651abe554c6a8">part_map</a>)</td></tr>
-<tr class="separator:a9eddf1fec4c9c7b9496cee870f12fa41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20d195fecb15e50a76d67ba0836c9e39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a20d195fecb15e50a76d67ba0836c9e39">buildPartList</a> (TCODList&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *list, <a class="el" href="class_part.html">Part</a> *p, int depth=0)</td></tr>
-<tr class="separator:a20d195fecb15e50a76d67ba0836c9e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a112d5b13dcd38ba6fde06fa090982e6c"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a112d5b13dcd38ba6fde06fa090982e6c">loadBody</a> (const char *filename)</td></tr>
+<tr class="separator:a112d5b13dcd38ba6fde06fa090982e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1cdc62215a8995b8982e6d183bf30ef"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#ac1cdc62215a8995b8982e6d183bf30ef">enter</a> (rapidxml::xml_node&lt;&gt; *node, std::map&lt; string, string &gt; *child_map, std::map&lt; string, string &gt; *organ_link_map)</td></tr>
+<tr class="separator:ac1cdc62215a8995b8982e6d183bf30ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf7e4a9b37a5f58f2495ff695b8dbbee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#aaf7e4a9b37a5f58f2495ff695b8dbbee">makeIdMap</a> ()</td></tr>
+<tr class="separator:aaf7e4a9b37a5f58f2495ff695b8dbbee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add724ec6251171cfa88b859bfbc7f443"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#add724ec6251171cfa88b859bfbc7f443">buildPartList</a> (std::vector&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *list, <a class="el" href="class_part.html">Part</a> *p, int depth=0)</td></tr>
+<tr class="separator:add724ec6251171cfa88b859bfbc7f443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd4280f807d5e0b631c7eed089b083f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#afd4280f807d5e0b631c7eed089b083f2">refreshLists</a> ()</td></tr>
+<tr class="separator:afd4280f807d5e0b631c7eed089b083f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7e42bc5508c816b64a9f5b056190fc3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7e42bc5508c816b64a9f5b056190fc3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>createSubgraphs</b> (std::ofstream *stream, <a class="el" href="class_body_part.html">BodyPart</a> *bp)</td></tr>
 <tr class="separator:aa7e42bc5508c816b64a9f5b056190fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,27 +124,29 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>createLinks</b> (std:
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a5be5f0b2859b5c43bf308d3f22b5c130"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5be5f0b2859b5c43bf308d3f22b5c130"></a>
-<a class="el" href="class_body_part.html">BodyPart</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>root</b></td></tr>
-<tr class="separator:a5be5f0b2859b5c43bf308d3f22b5c130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f242b4c8c56e867d8334e97a83964f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_body_part.html">BodyPart</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a72f242b4c8c56e867d8334e97a83964f">root</a></td></tr>
+<tr class="separator:a72f242b4c8c56e867d8334e97a83964f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad806f0628dd0df5b30af09c4f57e1d74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad806f0628dd0df5b30af09c4f57e1d74"></a>
 const TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>part_gui_list_color_bodypart</b> = TCODColor::azure</td></tr>
 <tr class="separator:ad806f0628dd0df5b30af09c4f57e1d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ac5a0ac81de32aba186cb005b215fad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ac5a0ac81de32aba186cb005b215fad"></a>
 const TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>part_gui_list_color_organ</b> = TCODColor::darkRed</td></tr>
 <tr class="separator:a1ac5a0ac81de32aba186cb005b215fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afacb3ab35180131711c651abe554c6a8"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <a class="el" href="class_part.html">Part</a> <br class="typebreak" />
-*, <a class="el" href="classstrless.html">strless</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#afacb3ab35180131711c651abe554c6a8">part_map</a></td></tr>
-<tr class="separator:afacb3ab35180131711c651abe554c6a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ef745a08b7ed1b27c0868118ab7186b"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <br class="typebreak" />
+std::shared_ptr&lt; <a class="el" href="class_tissue.html">Tissue</a> &gt; &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a6ef745a08b7ed1b27c0868118ab7186b">tissue_map</a></td></tr>
+<tr class="separator:a6ef745a08b7ed1b27c0868118ab7186b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addad18cf4358df4a6f9c3ff3024b5eb5"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <br class="typebreak" />
+std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt; &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#addad18cf4358df4a6f9c3ff3024b5eb5">part_map</a></td></tr>
+<tr class="separator:addad18cf4358df4a6f9c3ff3024b5eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3852b219150ea17df1fbae330b57f6eb"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <br class="typebreak" />
 std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a3852b219150ea17df1fbae330b57f6eb">iid_uuid_map</a></td></tr>
 <tr class="separator:a3852b219150ea17df1fbae330b57f6eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcd26e875cd258651e727d57718103f7"><td class="memItemLeft" align="right" valign="top">TCODList&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#abcd26e875cd258651e727d57718103f7">part_gui_list</a></td></tr>
-<tr class="separator:abcd26e875cd258651e727d57718103f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fd1c39d8d1ccf241da4a0f9ac2199bf"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a4fd1c39d8d1ccf241da4a0f9ac2199bf">part_gui_list</a></td></tr>
+<tr class="separator:a4fd1c39d8d1ccf241da4a0f9ac2199bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The code representation of a body of an <a class="el" href="class_actor.html">Actor</a>. </p>
-<p>This class represents the uppermost level of the body definition. It holds a single <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> which is the root part. It also contains functions related to damage handling, loading and saving of body definitions. </p>
+<p>This class represents the uppermost level of the body definition. It holds several maps that are necessary for code handling of <a class="el" href="class_actor.html">Actor</a> bodies, the two most important being the part_map and the tissue_map, which hold shared pointers to every <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> and <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> element that the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> is "composed" of. The shared pointers are shared with the Parts themselves (e.g., the child vector of the BodyParts holds some of the shared pointers (namely those pointing to it's children)). This means that the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> instance is effectively "managing" the Parts and Tissues that it is composed of. It also contains functions related to damage handling, loading and saving of body definitions. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a2cda9c6f52963f15e85822bc2cbd4a1a"></a>
 <div class="memitem">
@@ -193,7 +171,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a20d195fecb15e50a76d67ba0836c9e39"></a>
+<a class="anchor" id="add724ec6251171cfa88b859bfbc7f443"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -203,7 +181,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
         <tr>
           <td class="memname">void Body::buildPartList </td>
           <td>(</td>
-          <td class="paramtype">TCODList&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *&#160;</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *&#160;</td>
           <td class="paramname"><em>list</em>, </td>
         </tr>
         <tr>
@@ -233,7 +211,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <p>This function recursively builds a list of <a class="el" href="struct_gui_object_link.html" title="A struct encapsulating an Objects UUID and a pointer to an associated ColoredText. ">GuiObjectLink</a> for all Parts of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> - it links the UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to a <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a> containing the name of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>. The text is colored corresponding to part_gui_list_color_bodypart or part_gui_list_color_organ.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">list</td><td>The TCODList to modify. </td></tr>
+    <tr><td class="paramname">list</td><td>The vector to modify. </td></tr>
     <tr><td class="paramname">p</td><td>The <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to start from. </td></tr>
     <tr><td class="paramname">depth</td><td>This should be 0 on first call and is increased by the recursive calling of this function to correcly indent the texts. </td></tr>
   </table>
@@ -242,7 +220,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
-<a class="anchor" id="a1233e2282089ebd9f21fc1dbd88d6d71"></a>
+<a class="anchor" id="ac1cdc62215a8995b8982e6d183bf30ef"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -250,7 +228,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_body_part.html">BodyPart</a> * Body::enter </td>
+          <td class="memname">string Body::enter </td>
           <td>(</td>
           <td class="paramtype">rapidxml::xml_node&lt;&gt; *&#160;</td>
           <td class="paramname"><em>node</em>, </td>
@@ -258,8 +236,14 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::map&lt; std::string, <a class="el" href="class_tissue.html">Tissue</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *&#160;</td>
-          <td class="paramname"><em>tissue_map</em>&#160;</td>
+          <td class="paramtype">std::map&lt; string, string &gt; *&#160;</td>
+          <td class="paramname"><em>child_map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::map&lt; string, string &gt; *&#160;</td>
+          <td class="paramname"><em>organ_link_map</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -273,21 +257,22 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This is the function that is recursively called on all nodes of the body definition XML. The node it is pointed at <em>must</em> be a '&lt;body_part&gt;' node. The function will always create and return the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> that is defined in that node.</p>
-<p>If the node contains organ definitions, the function creates the <a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a> objects, adds them to the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> and returns it.</p>
+<p>This is the function that is recursively called on all nodes of the body definition XML. The node it is pointed at <em>must</em> be a '&lt;body_part&gt;' node. The function will create the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> that is defined in that node and return its UUID.</p>
+<p>If the node contains organ definitions, the function creates the <a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a> objects, and adds an "link note" into a temporary map, which is used in the <a class="el" href="class_body.html#a112d5b13dcd38ba6fde06fa090982e6c">loadBody()</a> function to link the newly created Parts together.</p>
 <p>If the node contains further '&lt;body_part&gt;' nodes, the function calls itself on all of them.</p>
-<p>The tissue map is needed for organ creation. Please refer to the <a href="xml_help.html">body-definition XML help</a> or the source code for more. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Please refer to the <a href="xml_help.html">body-definition XML help</a> or the source code for more information on the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> XML Parsing. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">node</td><td>The '&lt;body_part&gt;' XML node to parse. </td></tr>
-    <tr><td class="paramname">tissue_map</td><td>A map of the 'default' tissues, sorted by their internal id. </td></tr>
+    <tr><td class="paramname">child_map</td><td>A map of Parts to be linked as parent &lt;-&gt; child, the child UUID being the key and the parent UUID being the value. </td></tr>
+    <tr><td class="paramname">organ_map</td><td>A map of Organs to be linked as connector &lt;-&gt; connectee, the connectee UUID being the key and the connector UUID being the value. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> that is defined by node. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The UUID of the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> that is defined by node. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a1e0f8c2e28fe88ba15b0d5fcc58f2a3f"></a>
+<a class="anchor" id="a23661e884436cbea6bc2d936eaf660a3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -295,93 +280,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt; std::string, <a class="el" href="class_organ.html">Organ</a> *, <a class="el" href="classstrless.html">strless</a> &gt; * Body::extractOrgans </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_body_part.html">BodyPart</a> *&#160;</td>
-          <td class="paramname"><em>bp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::map&lt; std::string, <a class="el" href="class_organ.html">Organ</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *&#160;</td>
-          <td class="paramname"><em>organ_map</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function is first called on the root <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> by the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> constructor and recursively on all its children. It extracts all Organs and maps them by their internal id's.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">bp</td><td>The <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> to extract the organs from. </td></tr>
-    <tr><td class="paramname">organ_map</td><td>The <a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a> map to modify. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The modified <a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a> map. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a3ea2e5282fedf030ee4c04366081e3bf"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::map&lt; std::string, <a class="el" href="class_part.html">Part</a> *, <a class="el" href="classstrless.html">strless</a> &gt; * Body::extractParts </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_body_part.html">BodyPart</a> *&#160;</td>
-          <td class="paramname"><em>bp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::map&lt; std::string, <a class="el" href="class_part.html">Part</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *&#160;</td>
-          <td class="paramname"><em>part_map</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function recusively iterates through all BodyParts and Organs that lie downstream of the given <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> and compiles a map of pointers to them, keyed by their UUIDs.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">bp</td><td>The <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> to extract the parts from. </td></tr>
-    <tr><td class="paramname">part_map</td><td>The <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> map to modify. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The modified <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> map. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="afb01fc8c2674f9c71de749c0f8a11cf9"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">TCODList&lt;<a class="el" href="struct_gui_object_link.html">GuiObjectLink</a>*&gt;* Body::getPartGUIList </td>
+          <td class="memname">std::vector&lt;<a class="el" href="struct_gui_object_link.html">GuiObjectLink</a>*&gt;* Body::getPartGUIList </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -397,7 +296,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
-<a class="anchor" id="a807ddd24bd4e057d17eb6de4f42f985f"></a>
+<a class="anchor" id="ab21101075be3644cfddb7a139507e38d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -405,41 +304,23 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Body::linkOrgans </td>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_body_part.html">BodyPart</a>&gt; Body::getRootBP </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_body_part.html">BodyPart</a> *&#160;</td>
-          <td class="paramname"><em>bp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">std::map&lt; std::string, <a class="el" href="class_organ.html">Organ</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *&#160;</td>
-          <td class="paramname"><em>organ_map</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function recursively iterates through bodyparts until it reaches the <a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a> "leaves" and calls the Organ.linkToConnector(organ_map) function on them.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">bp</td><td>The <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> to "scan" for organs. </td></tr>
-    <tr><td class="paramname">organ_map</td><td>A map which links the internal id strings of the organs to pointers to their instance. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>This function returns a shared pointer to the root <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="aedb5191f583df1a6b20163fa70a7f401"></a>
+<a class="anchor" id="a112d5b13dcd38ba6fde06fa090982e6c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -447,7 +328,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_body_part.html">BodyPart</a> * Body::loadBody </td>
+          <td class="memname">string Body::loadBody </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>filename</em></td><td>)</td>
@@ -467,11 +348,11 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns the loaded <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> as a <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> with all children. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the UUID of the root bodypart. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a7b6ecc5f7b33f902414d918c2791f63e"></a>
+<a class="anchor" id="aaf7e4a9b37a5f58f2495ff695b8dbbee"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -481,8 +362,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
         <tr>
           <td class="memname">void Body::makeIdMap </td>
           <td>(</td>
-          <td class="paramtype">std::map&lt; std::string, <a class="el" href="class_part.html">Part</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *&#160;</td>
-          <td class="paramname"><em>part_map</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -492,17 +372,11 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function iterates through the given <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> map and creates a map whose keys are the internal id's and whose values are the UUID (the iid_uuid_map !) and refreshes iid_uuid_map.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">part_map</td><td>The <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> map to parse. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>This function iterates through the given <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> map and creates a map whose keys are the internal id's and whose values are the UUID (the iid_uuid_map !) and refreshes iid_uuid_map. </p>
 
 </div>
 </div>
-<a class="anchor" id="a9eddf1fec4c9c7b9496cee870f12fa41"></a>
+<a class="anchor" id="afd4280f807d5e0b631c7eed089b083f2"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -510,21 +384,10 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Body::makePartMap </td>
+          <td class="memname">void Body::refreshLists </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_body_part.html">BodyPart</a> *&#160;</td>
-          <td class="paramname"><em>bp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">std::map&lt; std::string, <a class="el" href="class_part.html">Part</a> *, <a class="el" href="classstrless.html">strless</a> &gt; *&#160;</td>
-          <td class="paramname"><em>part_map</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -533,18 +396,11 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function compiles a map of pointers to all BodyParts and Organs that lie downstream of the given <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> AND the given <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a>, keyed by their UUIDs; by calling <a class="el" href="class_body.html#a3ea2e5282fedf030ee4c04366081e3bf">extractParts()</a> recursively.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">bp</td><td>The <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> to extract the parts from. </td></tr>
-    <tr><td class="paramname">part_map</td><td>The <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> map to modify. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>This function calls <a class="el" href="class_body.html#aaf7e4a9b37a5f58f2495ff695b8dbbee">makeIdMap()</a> and buildPartList(...) to refresh the iid_uuid_map and the part_gui_list to match the part_map. </p>
 
 </div>
 </div>
-<a class="anchor" id="a1d6d4b0a1791314ba5af74da4c665da0"></a>
+<a class="anchor" id="a3be17fc9289ffdccddb6339239b21fec"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -552,7 +408,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
           <td class="memname">bool Body::removePart </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>part_id</em></td><td>)</td>
+          <td class="paramname"><em>part_uuid</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -560,7 +416,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <p>This function removes the a <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a>, identified by the given internal id. It also handles deregistering and destruction of the removed elements via their destructors.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">part_id</td><td>The internal id of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to remove. </td></tr>
+    <tr><td class="paramname">part_id</td><td>The UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to remove. </td></tr>
   </table>
   </dd>
 </dl>
@@ -607,7 +463,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
-<a class="anchor" id="abcd26e875cd258651e727d57718103f7"></a>
+<a class="anchor" id="a4fd1c39d8d1ccf241da4a0f9ac2199bf"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -615,7 +471,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">TCODList&lt;<a class="el" href="struct_gui_object_link.html">GuiObjectLink</a>*&gt;* Body::part_gui_list</td>
+          <td class="memname">std::vector&lt;<a class="el" href="struct_gui_object_link.html">GuiObjectLink</a>*&gt;* Body::part_gui_list</td>
         </tr>
       </table>
   </td>
@@ -624,12 +480,11 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This list holds all Parts (BodyParts and Organs) of a body in a <a class="el" href="struct_gui_object_link.html" title="A struct encapsulating an Objects UUID and a pointer to an associated ColoredText. ">GuiObjectLink</a> format. The UUID stored is that of the part, the <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a> is formatted to represent the "depth" of the part within the body structure:</p>
-<p>ROOT BP BELOW ROOT BP BP BELOW ROOT #2 </p>
+<p>This list holds all Parts (BodyParts and Organs) of a body in a <a class="el" href="struct_gui_object_link.html" title="A struct encapsulating an Objects UUID and a pointer to an associated ColoredText. ">GuiObjectLink</a> format. The UUID stored is that of the part, the <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a> is formatted to represent the "depth" of the part within the body structure. (See <a class="el" href="class_gui_body_viewer.html" title="A class representing a &quot;body inspector&quot;, which can display a bodies composition and state...">GuiBodyViewer</a> class for "usage") </p>
 
 </div>
 </div>
-<a class="anchor" id="afacb3ab35180131711c651abe554c6a8"></a>
+<a class="anchor" id="addad18cf4358df4a6f9c3ff3024b5eb5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -637,7 +492,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;std::string, <a class="el" href="class_part.html">Part</a>*, <a class="el" href="classstrless.html">strless</a>&gt;* Body::part_map</td>
+          <td class="memname">std::map&lt;std::string, std::shared_ptr&lt;<a class="el" href="class_part.html">Part</a>&gt; &gt;* Body::part_map</td>
         </tr>
       </table>
   </td>
@@ -646,7 +501,49 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This map holds a list of all Parts (BodyParts and Organs) of a body, the key being the UUID, and the value a pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>. </p>
+<p>This map holds a list of all Parts (BodyParts and Organs) of a body, the key being the UUID, and the value a shared pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a72f242b4c8c56e867d8334e97a83964f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_body_part.html">BodyPart</a>&gt; Body::root</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This shared pointer points to the root <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> of the stored <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a>. It can be used for recursive iteration through the child lists of the "attached" bodyparts, for example. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6ef745a08b7ed1b27c0868118ab7186b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt;std::string, std::shared_ptr&lt;<a class="el" href="class_tissue.html">Tissue</a>&gt; &gt;* Body::tissue_map</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This map holds a list of all <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> elements that are defined in the <a href="xml_help.html">body-definition XML</a> that was used to create this <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> instance. The key is the UUID, the value a shared pointer to the <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> instance. This shared pointer is shared, for example, by the Organs in the part_map, who hold a list of shared pointers to the <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> elements that they are "composed" of. </p>
 
 </div>
 </div>
@@ -660,7 +557,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_body.html">Body</a></li>
-    <li class="footer">Generated on Thu Aug 14 2014 14:13:23 for Rogue M.D. by
+    <li class="footer">Generated on Thu Aug 21 2014 14:11:35 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

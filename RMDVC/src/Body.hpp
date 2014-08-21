@@ -164,6 +164,8 @@ enum PartType{
 
 extern const char* part_type_strings[];
 
+class Body;
+
 /**BodyPart and Organ are derived from this class. In itself it holds
  * the Name, the internal ID and the relative surface of a part as well as a pointer
  * to the node of the organ tree that it is a child of.
@@ -171,6 +173,7 @@ extern const char* part_type_strings[];
  * @brief This class is the abstract superclass for all parts that make up a body.
  */
 class Part: public Object{
+
 protected:
 
 	/** This _internal ID_ is different from the UUID that this and every other instance of
@@ -187,32 +190,15 @@ protected:
 	* is parsed into a Body object.
 	*/
 	string id;
+
+	/** A pointer to the Body instance this Part is... well, a part of.
+	*
+	*/
+	Body* body;
 	
 	string name;
 	float surface;
 	PartType type;
-
-	/** This variable ensures that only the uppermost Part to be destroyed calls 
-	* removeConnectedOrgan()/removeChild() on it's root/super BodyPart. 
-	  
-	 #### Why is this variable important?
-
-	 When a Part is destroyed, it calls the destructor of all parts that are connected
-	 to it. It does so by calling the connected_organs/children clearAndDelete() function.
-	 
-	 Also, the Part needs to unregister as a connected Part from the Part it is (was)
-	 connected to (the upstream root Organ or super BodyPart), so that the root does not have an "empty" UUID in
-	 its connected_organs/children register.
-	 
-	 If the upstream root / super BodyPart ist **also** about to be destroyed, however,
-	 the Part **must not** unregister!
-	 Not only does it not matter (nobody cares if a destroyed Organ had an empty UUID in
-	 its registers), but doing so would manipulate the connected_organs list; the very
-	 list from whose clearAndDelete() function this destructor was called! For all but
-	 the very last element in the list, this would cause undefined behaviour by manipulating
-	 the list and causing a call to a nonexistant destructor in unmapped memory.
-	*/
-	bool slated_for_destruction = false;
 
 	/**This is the UUID of the node of the organ tree that this Part is a child of.
 	 * It is NULL for the root element.
@@ -226,8 +212,9 @@ protected:
 	 * @param name The name of the part.
 	 * @param surface The surface area of the part. See getSurface().
 	 * @param type The type of part, i.e. Organ or BodyPart. See PartType enum.
+	 * @param b The body this Part is part of.
 	 */
-	Part(string id, string name, float surface, PartType type);
+	Part(string id, string name, float surface, PartType type, Body* b);
 
 public:
 	string toString() { return name; }
@@ -333,7 +320,7 @@ private:
 
 	bool root; //Is it root?
 
-	std::map<string, std::shared_ptr<Organ>> *connected_organs; //The downstream branches
+	std::vector<string>* connected_organs; //The downstream branches
 
 	bool is_stump = false; //When Organs downstream are removed, the Organ is marked as stump
 
@@ -349,6 +336,7 @@ public:
 	 * @param id The organ's unique internal identifier.
 	 * @param name The name of the organ.
 	 * @param surface The relative surface area of the organ, see Part.
+	 * @param b The body this Organ is part of.
 	 * @param tissues A pointer to the first element of the tissue_def array.
 	 * @param tissue_count The number of elements in the array pointed at by tissues.
 	 * @param connector_id The internal id of the connector organ, later used when the organ map
@@ -356,7 +344,7 @@ public:
 	 * @param is_root Whether or not this is the root element, which is the only organ
 	 * without a connector.
 	 */
-	Organ(string id, string name, float surface,
+	Organ(string id, string name, float surface, Body* b,
 			tissue_def *tissues, int tissue_count, const char *connector_id,
 			bool is_root=false);
 
@@ -380,17 +368,21 @@ public:
 	};
 
 	/**
-	* @brief Modifies the given vector to contain a list of the UUIDs of the downstream branches.
-	* @param vector The vector to be modified.
+	* @brief Returns a new vector containing all connected organs.
 	*/
-	void getConnectedOrganUUIDs(std::vector<string>* vector);
+	std::vector<string>* getConnectedOrgans();
+
+	/**
+	* @brief Returns the pointer to the connected_organs vector;
+	*/
+	std::vector<string>* getConnectedOrgansRW() { return connected_organs; }
 
 	/**If this organ is removed/destroyed, all branches are also removed.
 	 *
 	 * @brief Called by the branch organs to register with their root.
 	 * @param connectee The branch connecting to this organ.
 	 */
-	void addConnectedOrgan(std::shared_ptr<Organ> connectee);
+	void addConnectedOrgan(string connectee_uuid);
 	void removeConnectedOrgan(string uuid);
 
 	bool isStump() { return is_stump; }
@@ -417,8 +409,7 @@ public:
  */
 class BodyPart: public Part{
 private:
-	std::vector<std::shared_ptr<Part>>* children;
-	int child_count = 0;
+	std::vector<string>* children;
 
 public:
 	/**@brief Adds a Part to the BodyPart's list of children.
@@ -426,18 +417,22 @@ public:
 	 * @param body The body this BodyPart and the child are part of. This reference
 	 *  is necessary to ensure the childs super reference is set to a shared_ptr of this bodypart.
 	 */
-	void addChild(std::shared_ptr<Part> child);
+	void addChild(string child_uuid);
 
 	/**@brief Adds several Parts to the BodyPart's list of children.
 	 * @param child_array A pointer to the pointer pointing to the first of the Part objects to add.
 	 * @param count The count of objects to add.
 	 */
-	void addChildren(std::shared_ptr<Part> *child_array, int count);
+	void addChildren(std::vector<string>* child_uuid_vector);
 
-	/**@brief Returns a list of all the children of this BodyPart.
-	 * @return A pointer to the children list.
+	/**@brief Returns a pointer to a new vector containing all the UUIDs 
+	 * of the children of this BodyPart.
 	 */
-	std::vector<std::shared_ptr<Part>>* getChildList();
+	std::vector<string>* getChildList();
+
+	/**@brief Returns the pointer to the children vector.
+	*/
+	std::vector<string>* getChildListRW() { return children; }
 
 	/**@brief Removes a child object from the body part. If the child to be
 	 * destroyed is the last one, this function will destroy the BodyPart itself.
@@ -452,28 +447,42 @@ public:
 	 * @param id The internal part identifier.
 	 * @param name The name of the part.
 	 * @param surface The surface area of the part. See getSurface().
+	 * @param b The body this BodyPart is part of.
 	 */
-	BodyPart(string id, string name, float surface);
+	BodyPart(string id, string name, float surface, Body* b);
 	~BodyPart();
 };
 
-/**This class represents the uppermost level of the body definition. It holds a single BodyPart
- * which is the root part. It also contains functions related to damage handling, loading and
+/**This class represents the uppermost level of the body definition. It holds several maps that
+ * are necessary for code handling of Actor bodies, the two most important being the
+ * part_map and the tissue_map, which hold shared pointers to every Part and Tissue element that
+ * the Body is "composed" of. The shared pointers are shared with the Parts themselves (e.g., the 
+ * child vector of the BodyParts holds some of the shared pointers (namely those pointing to it's children)).
+ * This means that the Body instance is effectively "managing" the Parts and Tissues that it is
+ * composed of. It also contains functions related to damage handling, loading and
  * saving of body definitions.
  *
  * @brief The code representation of a body of an Actor.
  */
 class Body{
 private:
+	/**This shared pointer points to the root BodyPart of the stored Body. It can be used
+	* for recursive iteration through the child lists of the "attached" bodyparts, for example.
+	*/
 	std::shared_ptr<BodyPart> root;
 
 	const TCODColor part_gui_list_color_bodypart = TCODColor::azure;
 	const TCODColor part_gui_list_color_organ = TCODColor::darkRed;
 
+	/**This map holds a list of all Tissue elements that are defined in the [body-definition XML](xml_help.html)
+	* that was used to create this Body instance. The key is the UUID, the value a shared pointer
+	* to the Tissue instance. This shared pointer is shared, for example, by the Organs in the part_map,
+	* who hold a list of shared pointers to the Tissue elements that they are "composed" of.
+	*/
 	std::map<std::string, std::shared_ptr<Tissue>>* tissue_map;
 
 	/**This map holds a list of all Parts (BodyParts and Organs) of a body, the key
-	 * being the UUID, and the value a pointer to the Part.
+	 * being the UUID, and the value a shared pointer to the Part.
 	 */
 	std::map<std::string, std::shared_ptr<Part>>* part_map;
 
@@ -488,12 +497,7 @@ private:
 
 	/**This list holds all Parts (BodyParts and Organs) of a body in a GuiObjectLink format.
 	* The UUID stored is that of the part, the ColoredText is formatted to represent the "depth"
-	* of the part within the body structure:
-	*
-	*	ROOT
-	*		BP BELOW ROOT
-	*			BP
-	*		BP BELOW ROOT #2
+	* of the part within the body structure. (See GuiBodyViewer class for "usage")
 	*/
 	std::vector<GuiObjectLink*>* part_gui_list;
 
@@ -508,17 +512,22 @@ private:
 
 	/**This is the function that is recursively called on all nodes of the body
 	 * definition XML. The node it is pointed at _must_ be a '<body_part>' node.
-	 * The function will always create and return the BodyPart that is defined in that node.
+	 * The function will create the BodyPart that is defined in that node and return its UUID.
 	 *
 	 * If the node contains organ definitions, the function creates the Organ objects,
-	 * adds them to the BodyPart and returns it.
+	 * and adds an "link note" into a temporary map, which is used in the loadBody() function to
+	 * link the newly created Parts together.
 	 *
 	 * If the node contains further '<body_part>' nodes, the function calls itself on all
 	 * of them.
 	 *
-	 * The tissue map is needed for organ creation. Please refer to the [body-definition XML help](xml_help.html)
-	 * or the source code for more.
+	 * Please refer to the [body-definition XML help](xml_help.html)
+	 * or the source code for more information on the Body XML Parsing.
 	 * @param node The '<body_part>' XML node to parse.
+	 * @param child_map A map of Parts to be linked as parent <-> child, the child UUID being the key
+	 *  and the parent UUID being the value.
+	 * @param organ_map A map of Organs to be linked as connector <-> connectee, the connectee UUID being the key
+	 *  and the connector UUID being the value.
 	 * @return The UUID of the BodyPart that is defined by node.
 	 */
 	string enter(rapidxml::xml_node<> *node, std::map<string, string>* child_map, std::map<string, string>* organ_link_map);
@@ -539,6 +548,9 @@ private:
 	*/
 	void buildPartList(std::vector<GuiObjectLink*>* list, Part* p, int depth=0);
 
+	/**This function calls makeIdMap() and buildPartList(...) to refresh the iid_uuid_map and
+	* the part_gui_list to match the part_map.
+	*/
 	void refreshLists();
 	
 	void createSubgraphs(std::ofstream* stream, BodyPart* bp);
@@ -552,6 +564,8 @@ public:
 	Body(const char *filename);
 	~Body();
 
+	/**This function returns a shared pointer to the root BodyPart.
+	*/
 	std::shared_ptr<BodyPart> getRootBP()
 	{
 		if (root != nullptr) { return root; }

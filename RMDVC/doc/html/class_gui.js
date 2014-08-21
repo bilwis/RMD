@@ -11,6 +11,6 @@ var class_gui =
     [ "removeContainer", "class_gui.html#a5bf468fbb0ae1273e1318eaf13382096", null ],
     [ "render", "class_gui.html#aa1bb691938ae98f202359ae31fdd62ff", null ],
     [ "update", "class_gui.html#aa256af2c6e6a49de515e1bec29643ee6", null ],
-    [ "containers", "class_gui.html#a4887946d9cba2ad67b0228b271fcc663", null ],
+    [ "containers", "class_gui.html#a266f5a712b22cd4141abdec2b1f2acbe", null ],
     [ "current_active", "class_gui.html#aa498cd44cae5b6002c661906d6f67cbc", null ]
 ];

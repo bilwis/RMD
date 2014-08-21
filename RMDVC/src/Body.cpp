@@ -38,7 +38,7 @@ Tissue::~Tissue()
 {
 }
 
-Part::Part(string id, string name, float surface, PartType type) : Object()
+Part::Part(string id, string name, float surface, PartType type, Body* b) : Object()
 {
 
 	/* The XML parsing function works with pointers to strings only.
@@ -56,6 +56,8 @@ Part::Part(string id, string name, float surface, PartType type) : Object()
 	this->surface = surface;
 	this->type = type;
 
+	this->body = b;
+
 	super = "";
 }
 
@@ -63,18 +65,17 @@ Part::~Part()
 {
 }
 
-BodyPart::BodyPart(string id, string name, float surface) :
-		Part(id, name, surface, TYPE_BODYPART){
+BodyPart::BodyPart(string id, string name, float surface, Body* b) :
+		Part(id, name, surface, TYPE_BODYPART, b){
 
-	children = new std::vector<std::shared_ptr<Part>>();
+	children = new std::vector<string>();
 }
 
 BodyPart::~BodyPart()
 {
 	debug_print("BodyPart %s is kill.\n", this->id.c_str());
 
-	slated_for_destruction = true;
-
+	
 	//TODO: Removal!
 
 	delete children;
@@ -86,32 +87,31 @@ BodyPart::~BodyPart()
 	}*/
 }
 
-void BodyPart::addChild(std::shared_ptr<Part> child){
-	child->setSuperPart(getUUID());
-	children->push_back(child);
-	child_count++;
+void BodyPart::addChild(string child_uuid){
+	body->getPartByUUID(child_uuid)->setSuperPart(getUUID());
+	children->push_back(child_uuid);
 }
 
-void BodyPart::addChildren(std::shared_ptr<Part> *child_array, int count){
-	for (int i=0; i < count; i++){
-		children->push_back(child_array[i]);
-		child_array[i]->setSuperPart(getUUID());
-		child_count++;
+void BodyPart::addChildren(std::vector<string>* child_uuid_vector){
+	for (std::vector<string>::iterator it = child_uuid_vector->begin();
+		it != child_uuid_vector->end(); it++){
+		children->push_back(*it);
+		body->getPartByUUID(*it)->setSuperPart(getUUID());
 	}
 }
 
-std::vector<std::shared_ptr<Part>>* BodyPart::getChildList()
+std::vector<string>* BodyPart::getChildList()
 {
-	return children;
+	return new std::vector<string>(children->begin(), children->end());
 }
 
 bool BodyPart::removeChild(string uuid){
 	
 	//Iterate though the list of children and remove the child with the matching UUID
-	for (std::vector<std::shared_ptr<Part>>::iterator it = children->begin(); it != children->end(); it++)
+	for (std::vector<string>::iterator it = children->begin(); it != children->end(); it++)
 	{
 		
-		if (uuid.compare(it->get()->getUUID()) == 0){
+		if (uuid.compare(*it) == 0){
 
 			//TODO: Removal!
 
@@ -136,9 +136,9 @@ bool BodyPart::removeChild(string uuid){
 	return false;
 }
 
-Organ::Organ(string id, string name, float surface,
+Organ::Organ(string id, string name, float surface, Body* b,
 		tissue_def *tissues, int tissue_count, const char *connector_id, bool is_root):
-		Part(id, name, surface, TYPE_ORGAN), tissues(tissues), tissue_count(tissue_count),
+		Part(id, name, surface, TYPE_ORGAN, b), tissues(tissues), tissue_count(tissue_count),
 		root(is_root){
 
 	/* The XML parsing function works with pointers to strings only.
@@ -159,15 +159,10 @@ Organ::Organ(string id, string name, float surface,
 		this->connector_id = string(connector_id);
 	}
 	
-	connected_organs = new std::map<string, std::shared_ptr<Organ>>();
+	connected_organs = new std::vector<string>();
 }
 
 Organ::~Organ(){
-	//The organ destructor automatically removes it from the child
-	//list of it's BodyPart (if it is not slated for destruction itself).
-	//It also calls the destructor on all of its
-	//own children and calls the upstream root organ's removal function on itself.
-
 	debug_print("Organ %s is kill.\n", this->id.c_str());
 	
 	//TODO:REMOVAL!
@@ -187,8 +182,9 @@ Organ::~Organ(){
 	for (std::map<string, Organ*>::iterator it = connected_organs->begin(); it != connected_organs->end(); it++)
 	{
 		delete it->second;
-	}
-	delete connected_organs;*/
+	}*/
+
+	delete connected_organs;
 
 	
 }
@@ -200,23 +196,19 @@ void Organ::linkToConnector(string connector_uuid){
 
 
 
-void Organ::getConnectedOrganUUIDs(std::vector<string>* vector)
+std::vector<string>* Organ::getConnectedOrgans()
 {
-	vector->clear();
-
-	for (std::map<string, std::shared_ptr<Organ>>::iterator it = connected_organs->begin(); it != connected_organs->end(); it++)
-	{
-		vector->push_back(it->first);
-	}
+	return new std::vector<string>(connected_organs->begin(), connected_organs->end());
 }
 
-void Organ::addConnectedOrgan(std::shared_ptr<Organ> connectee){
-	connected_organs->insert(std::pair<string, std::shared_ptr<Organ>>(connectee->getUUID(), connectee));
-	connectee->linkToConnector(getUUID());
+void Organ::addConnectedOrgan(string connectee_uuid){
+	connected_organs->push_back(connectee_uuid);
+	std::dynamic_pointer_cast<Organ>(body->getPartByUUID(connectee_uuid))->linkToConnector(getUUID());
 }
 
 void Organ::removeConnectedOrgan(string uuid) {
 
+	/*
 	std::map<string, std::shared_ptr<Organ>>::iterator it = connected_organs->find(uuid);
 	if (it == connected_organs->end())
 	{
@@ -226,6 +218,8 @@ void Organ::removeConnectedOrgan(string uuid) {
 		return;
 	}
 	connected_organs->erase(it);
+	*/
+	//TODO: Removal
 }
 
 Body::Body(const char *filename){
@@ -365,7 +359,7 @@ string Body::loadBody(const char *filename){
 			return nullptr;
 		}
 
-		parent->addChild(getPartByUUID(ch_it->first));
+		parent->addChild(ch_it->first);
 	}
 
 	for (std::map<string, string>::iterator or_it = organ_link_map->begin();
@@ -390,7 +384,7 @@ string Body::loadBody(const char *filename){
 				or_it->second.c_str());
 			return nullptr;
 		}
-		connector->addConnectedOrgan(std::dynamic_pointer_cast<Organ>(getPartByUUID(or_it->first)));
+		connector->addConnectedOrgan(or_it->first);
 	}
 
 	//Successfully parsed the body definition file!
@@ -442,13 +436,13 @@ string Body::enter(rapidxml::xml_node<> *node, std::map<string, string>* child_m
 	}
 
 	//make the bodypart, make the pointer to it shared and store it in the part_map
-	BodyPart* bp = new BodyPart((string)id, (string)name, surface);
+	BodyPart* bp = new BodyPart((string)id, (string)name, surface, this);
 
-	std::shared_ptr<Part> p (static_cast<Part*>(bp));
+	std::shared_ptr<BodyPart> p (bp);
 
 	part_map->insert(
 		std::pair<std::string, std::shared_ptr<Part>>(
-		bp->getUUID(), p));
+		bp->getUUID(), std::static_pointer_cast<Part>(p)));
 
 	//reset temporary variables for reuse with the organs
 	id = nullptr; name = nullptr;
@@ -632,7 +626,7 @@ string Body::enter(rapidxml::xml_node<> *node, std::map<string, string>* child_m
 			}
 
 			//Create the organ
-			organs[i] = new Organ(string(id), string(name), surface, tdefs, tdef_count, connector, !strcmp(connector, "_ROOT"));
+			organs[i] = new Organ(string(id), string(name), surface, this, tdefs, tdef_count, connector, !strcmp(connector, "_ROOT"));
 
 			//DEBUG: Print Organ
 #ifdef _DEBUG
@@ -763,9 +757,9 @@ void Body::buildPartList(std::vector<GuiObjectLink*>* list, Part* p, int depth)
 			);
 
 		//Call this function on all children of the BodyPart
-		for (std::vector<std::shared_ptr<Part>>::iterator it = bp->getChildList()->begin(); it != bp->getChildList()->end(); it++)
+		for (std::vector<string>::iterator it = bp->getChildListRW()->begin(); it != bp->getChildListRW()->end(); it++)
 		{
-			buildPartList(list, it->get(), depth + 1);
+			buildPartList(list, getPartByUUID(*it).get(), depth + 1);
 		}
 
 		bp = nullptr;
@@ -786,15 +780,14 @@ void Body::refreshLists()
 bool Body::removePart(std::string part_uuid) {
 	//TODO: REMOVAL
 
-	/*Part* part = NULL;
-
-	try{
-		part = part_map->at(part_uuid);
-	} catch (int e) {
-		debug_error("Part %s does not exist.\n", part_uuid.c_str());
+	std::shared_ptr<Part> part = getPartByUUID(part_uuid);
+	if (part == nullptr)
+	{
 		return false;
 	}
 
+
+	/*
 	//Remove the chosen part and all downstream elements
 
 	//Part is an Organ: remove it, destructor handles killing the children
@@ -913,8 +906,8 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 
 	*stream << "\t\t" << "label = \"" << bp->getName() << "\";\n";
 
-	for (std::vector<std::shared_ptr<Part>>::iterator iterator = bp->getChildList()->begin(); iterator != bp->getChildList()->end(); iterator++){
-		Part* p = iterator->get();
+	for (std::vector<string>::iterator iterator = bp->getChildListRW()->begin(); iterator != bp->getChildListRW()->end(); iterator++){
+		Part* p = getPartByUUID(*iterator).get();
 
 		if(p->getType() == TYPE_BODYPART){
 			createSubgraphs(stream, static_cast<BodyPart*>(p));
@@ -930,8 +923,8 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 }
 
 void Body::createLinks(std::ofstream* stream, BodyPart* bp) {
-	for (std::vector<std::shared_ptr<Part>>::iterator iterator = bp->getChildList()->begin(); iterator != bp->getChildList()->end(); iterator++){
-		Part* p = iterator->get();
+	for (std::vector<string>::iterator iterator = bp->getChildListRW()->begin(); iterator != bp->getChildListRW()->end(); iterator++){
+		Part* p = getPartByUUID(*iterator).get();
 
 		if(p->getType() == TYPE_BODYPART){
 			createLinks(stream, static_cast<BodyPart*>(p));
