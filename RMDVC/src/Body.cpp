@@ -751,6 +751,11 @@ void Body::removePart(std::string part_uuid) {
 	std::vector<string>* rem_list = new std::vector<string>();
 
 	makeDownstreamPartList(part_uuid, rem_list);
+	for (auto it = rem_list->begin(); it != rem_list->end(); it++)
+	{
+		debug_print("UUID %s is Part %s \n", getPartByUUID(*it)->getUUID().c_str(), getPartByUUID(*it)->getId().c_str());
+	}
+
 	BodyPart* super = static_cast<BodyPart*>(getPartByUUID(part->getSuperPartUUID()).get());
 
 	//If Part is an Organ, remove it from its connector
@@ -759,6 +764,7 @@ void Body::removePart(std::string part_uuid) {
 		Organ* connector = static_cast<Organ*>(getPartByUUID(o->getConnectorUUID()).get());
 		connector->removeConnectedOrgan(part_uuid);
 	}
+
 	std::vector<string>* temp_super_child_list = super->getChildList();
 	for (std::vector<string>::iterator it = temp_super_child_list->begin(); it != temp_super_child_list->end(); it++)
 	{
