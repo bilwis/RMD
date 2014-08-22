@@ -9,8 +9,8 @@ GuiBodyViewer::GuiBodyViewer(string id, int x, int y,
 	//the BP info TextBox and the Tissue Browser ListChooser
 
 	//Create ObjectLink lists
-	part_list = new std::vector<GuiObjectLink*>();
-	tissue_list = new std::vector<GuiObjectLink*>();
+	//part_list = new std::vector<GuiObjectLink*>();
+	//tissue_list = new std::vector<GuiObjectLink*>();
 
 	//Declare GUI Parts
 	//TODO: Make GuiListChooser scrollable, set active element!
@@ -45,8 +45,10 @@ GuiBodyViewer::~GuiBodyViewer()
 {
 	//Destroy ObjectLink lists
 	//TODO: Remove GuiObjectLink elements?
-	delete part_list;
-	delete tissue_list;
+	//delete part_list;
+	//delete tissue_list;
+	part_list = nullptr;
+	tissue_list = nullptr;
 
 	//Destroy GUI Parts
 	delete bp_browser;

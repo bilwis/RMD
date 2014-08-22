@@ -75,16 +75,7 @@ BodyPart::~BodyPart()
 {
 	debug_print("BodyPart %s is kill.\n", this->id.c_str());
 
-	
-	//TODO: Removal!
-
 	delete children;
-	
-	//Remove self from parents (super) child list.
-	/*if (super != nullptr)
-	{
-		super->removeChild(this->getUUID());
-	}*/
 }
 
 void BodyPart::addChild(string child_uuid){
@@ -112,24 +103,16 @@ bool BodyPart::removeChild(string uuid){
 	{
 		
 		if (uuid.compare(*it) == 0){
+			children->erase(it);
 
-			//TODO: Removal!
-
-			//If this is the last child,
-			// remove the child from the list and
-			// destroy the BodyPart entirely (if it is not slated for destruction already).
-			/*
-			if (children->size() == 1)
+			//If the BodyPart is now empty, it removes itself
+			if (children->size() == 0)
 			{
-				child_count = 0;
-				children->erase(it);
-				if (!slated_for_destruction) { delete this; }
-				return true;
+				body->removePart(getUUID());
 			}
 
-			child_count--;
-			children->erase(it);
-			return true;*/
+			//Dont continue iterating, vector has been changed!
+			break;
 		}
 	}
 
@@ -164,37 +147,14 @@ Organ::Organ(string id, string name, float surface, Body* b,
 
 Organ::~Organ(){
 	debug_print("Organ %s is kill.\n", this->id.c_str());
-	
-	//TODO:REMOVAL!
-	/*
-	slated_for_destruction = true;
-	if (connector != nullptr && !connector->slated_for_destruction) 
-	{
-		connector->removeConnectedOrgan(getUUID()); 
-		connector->is_stump = true;
-		connector = nullptr; 
-	}
-	
-	BodyPart* bp = static_cast<BodyPart*>(super);
-	bp->removeChild(this->getUUID());
-
-	//destroy all elements as well
-	for (std::map<string, Organ*>::iterator it = connected_organs->begin(); it != connected_organs->end(); it++)
-	{
-		delete it->second;
-	}*/
 
 	delete connected_organs;
-
-	
 }
 
 void Organ::linkToConnector(string connector_uuid){
 	this->connector_uuid = connector_uuid;
-	debug_print("LINKED %s to connector %s\n", getUUID(), connector_uuid);
+	debug_print("LINKED %s to connector %s\n", getUUID().c_str(), connector_uuid);
 }
-
-
 
 std::vector<string>* Organ::getConnectedOrgans()
 {
@@ -207,19 +167,17 @@ void Organ::addConnectedOrgan(string connectee_uuid){
 }
 
 void Organ::removeConnectedOrgan(string uuid) {
-
-	/*
-	std::map<string, std::shared_ptr<Organ>>::iterator it = connected_organs->find(uuid);
-	if (it == connected_organs->end())
+	//This function just removes the UUID! It doesn't deregister the Organ from the Body!!!
+	for (std::vector<string>::iterator it = connected_organs->begin(); it != connected_organs->end(); it++)
 	{
-		debug_error("ERROR: Tried to remove Organ with UUID %s from root Organ %s, but it is not registered!",
-			uuid.c_str(),
-			getId().c_str());
-		return;
+		if (uuid.compare(*it) == 0)
+		{
+			connected_organs->erase(it);
+			is_stump = true;
+			//Dont continue iterating, vector has been changed!
+			break;
+		}
 	}
-	connected_organs->erase(it);
-	*/
-	//TODO: Removal
 }
 
 Body::Body(const char *filename){
@@ -759,7 +717,9 @@ void Body::buildPartList(std::vector<GuiObjectLink*>* list, Part* p, int depth)
 		//Call this function on all children of the BodyPart
 		for (std::vector<string>::iterator it = bp->getChildListRW()->begin(); it != bp->getChildListRW()->end(); it++)
 		{
-			buildPartList(list, getPartByUUID(*it).get(), depth + 1);
+			std::shared_ptr<Part> part = getPartByUUID(*it);
+			if (part == nullptr) { continue; }
+			buildPartList(list, part.get(), depth + 1);
 		}
 
 		bp = nullptr;
@@ -774,52 +734,112 @@ void Body::buildPartList(std::vector<GuiObjectLink*>* list, Part* p, int depth)
 void Body::refreshLists()
 {
 	makeIdMap();
+	part_gui_list->clear();
 	buildPartList(part_gui_list, root.get());
 }
 
-bool Body::removePart(std::string part_uuid) {
-	//TODO: REMOVAL
+void Body::removePart(std::string part_uuid) {
 
 	std::shared_ptr<Part> part = getPartByUUID(part_uuid);
 	if (part == nullptr)
 	{
-		return false;
+		return;
 	}
 
+	debug_print("Removing Part %s...\n", part->getId().c_str());
 
-	/*
-	//Remove the chosen part and all downstream elements
+	std::vector<string>* rem_list = new std::vector<string>();
 
-	//Part is an Organ: remove it, destructor handles killing the children
+	makeDownstreamPartList(part_uuid, rem_list);
+
+	//If Part is an Organ, remove it from its connector
 	if (part->getType() == TYPE_ORGAN){
-		debug_print("Part %s is type ORGAN, deleting...\n", part->getId().c_str());
-		Organ* o = static_cast<Organ*>(part);
-		delete o;
-		debug_print("done.\n");
+		Organ* o = static_cast<Organ*>(part.get());
+		Organ* connector = static_cast<Organ*>(getPartByUUID(o->getConnectorUUID()).get());
+		connector->removeConnectedOrgan(part_uuid);
 	}
 
-	//Part is a BodyPart: remove it, destructor handles killing the children
-	if (part->getType() == TYPE_BODYPART){
-		debug_print("Part %s is type BODYPART, deleting...\n", part->getId().c_str());
-		BodyPart* bp = static_cast<BodyPart*>(part);
-		delete bp;
-		debug_print("done.\n");
+	BodyPart* super = static_cast<BodyPart*>(getPartByUUID(part->getSuperPartUUID()).get());
+
+	if (part->getType() == TYPE_BODYPART)
+	{
+		for (auto it = super->getChildListRW()->begin(); it != super->getChildListRW()->end(); it++)
+		{
+			if (getPartByUUID(*it)->getType() == TYPE_ORGAN)
+			{
+				Organ *o = static_cast<Organ*>(getPartByUUID(*it).get());
+				for (auto it_o = o->getConnectedOrgansRW()->begin(); it_o != o->getConnectedOrgansRW()->end(); it_o++)
+				{
+					for (auto it_rl = rem_list->begin(); it_rl != rem_list->end(); it_rl++)
+					{
+						if (it_o->compare(*it_rl) == 0)
+						{
+							o->removeConnectedOrgan(*it_o);
+						}
+					}
+				}
+			}
+		}
 	}
 
-	//Refresh part map
-	makePartMap(root, part_map);
-	makeIdMap(part_map);
+	//Remove the chosen part from its super Part.
+	super->removeChild(part_uuid);
 
-	//Refresh GUI part list
-	part_gui_list->clear();
-	buildPartList(part_gui_list, root, 0);
+	//Unregister the Part
+	unregisterParts(rem_list);
+
+	//Clear the part variable. This should cause the last use of the shared pointer
+	// to the part to be freed, therefore destroying the part.
+	//The destructor of the derived class should unregister all its children from the part_map,
+	// therefore causing their destruction as well.
+	part.reset();
+
+	refreshLists();
 
 #ifdef _DEBUG
-	printBodyMap("body_mt.gv", root);
+	printBodyMap("body_mt.gv", root.get());
 #endif
 
-	return true;*/
-	return false;
+	debug_print("done.\n");
+}
+
+void Body::makeDownstreamPartList(string part_uuid, std::vector<string>* child_list)
+{
+	std::shared_ptr<Part> part = getPartByUUID(part_uuid);
+	if (part == nullptr)
+	{
+		return;
+	}
+
+	//Part is an Organ: Add all connected organs to the list
+	if (part->getType() == TYPE_ORGAN){
+		Organ* o = static_cast<Organ*>(part.get());
+		child_list->insert(child_list->end(), o->getConnectedOrgansRW()->begin(), o->getConnectedOrgansRW()->end());
+	}
+
+	//Part is a BodyPart: Add all children to the list and call this function on them
+	if (part->getType() == TYPE_BODYPART)
+	{
+		BodyPart* bp = static_cast<BodyPart*>(part.get());
+		for (auto it = bp->getChildListRW()->begin(); it != bp->getChildListRW()->end(); it++)
+		{
+			child_list->push_back(*it);
+			makeDownstreamPartList(*it, child_list);
+		}
+	}
+}
+
+void Body::removeParts(std::vector<string>* part_uuids)
+{
+	//Copy into new vector, because given vector gets changed by removePart function
+	std::vector<string>* rem_list = new std::vector<string>(part_uuids->begin(), part_uuids->end());
+
+	for (std::vector<string>::iterator it = rem_list->begin(); it != rem_list->end(); it++)
+	{
+		removePart(*it);
+	}
+
+	delete rem_list;
 }
 
 void Body::removeRandomPart() {
@@ -856,6 +876,26 @@ void Body::removeRandomPart() {
 	*/
 }
 
+void Body::unregisterPart(string uuid)
+{
+	auto it = part_map->find(uuid);
+
+	if (it == part_map->end())
+	{
+		debug_error("ERROR: No Part with UUID %s could be found for unregister!\n", uuid.c_str());
+		return;
+	}
+	
+	part_map->erase(it);
+}
+
+void Body::unregisterParts(std::vector<string>* uuids)
+{
+	for (auto it = uuids->begin(); it != uuids->end(); it++)
+	{
+		unregisterPart(*it);
+	}
+}
 
 std::shared_ptr<Part> Body::getPartByUUID(std::string uuid)
 {
@@ -907,13 +947,14 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 	*stream << "\t\t" << "label = \"" << bp->getName() << "\";\n";
 
 	for (std::vector<string>::iterator iterator = bp->getChildListRW()->begin(); iterator != bp->getChildListRW()->end(); iterator++){
-		Part* p = getPartByUUID(*iterator).get();
+		std::shared_ptr<Part> part = getPartByUUID(*iterator);
+		if (part == nullptr) { continue; }
 
-		if(p->getType() == TYPE_BODYPART){
-			createSubgraphs(stream, static_cast<BodyPart*>(p));
+		if(part->getType() == TYPE_BODYPART){
+			createSubgraphs(stream, static_cast<BodyPart*>(part.get()));
 
-		} else if (p->getType() == TYPE_ORGAN) {
-			Organ* o = static_cast<Organ*>(p);
+		} else if (part->getType() == TYPE_ORGAN) {
+			Organ* o = static_cast<Organ*>(part.get());
 			*stream << "\t\t" << o->getId() << " [label=\"" << o->getName() << "\"];" << "\n";
 
 		}
@@ -924,12 +965,13 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 
 void Body::createLinks(std::ofstream* stream, BodyPart* bp) {
 	for (std::vector<string>::iterator iterator = bp->getChildListRW()->begin(); iterator != bp->getChildListRW()->end(); iterator++){
-		Part* p = getPartByUUID(*iterator).get();
+		std::shared_ptr<Part> part = getPartByUUID(*iterator);
+		if (part == nullptr) { continue; }
 
-		if(p->getType() == TYPE_BODYPART){
-			createLinks(stream, static_cast<BodyPart*>(p));
-		} else if (p->getType() == TYPE_ORGAN) {
-			Organ* o = static_cast<Organ*>(p);
+		if(part->getType() == TYPE_BODYPART){
+			createLinks(stream, static_cast<BodyPart*>(part.get()));
+		} else if (part->getType() == TYPE_ORGAN) {
+			Organ* o = static_cast<Organ*>(part.get());
 			if (!o->getConnectorId().empty()) {
 				*stream << o->getConnectorId() << " -> " << o->getId() << ";\n";
 			}

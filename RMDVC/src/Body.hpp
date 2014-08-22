@@ -287,7 +287,7 @@ public:
 
 	/**Returns the UUID of the node that this Part is a child of.
 	 *
-	 * @return The UUID of a BodyPart, or an Organ.
+	 * @return The UUID of a BodyPart.
 	 */
 	std::string getSuperPartUUID() const {
 		return super;
@@ -402,7 +402,7 @@ public:
  * or more Organ objects. _It cannot hold both BodyPart and Organ children, because Organs represent the
  * 'leaves' of the body tree. (No branches grow from leaves, right?)_
  *
- * Instances of this class contain a vector of Part objects, which are the Organs or BodyParts
+ * Instances of this class contain a vector of the UUIDs of Part objects, which are the Organs or BodyParts
  * connected to this one.
  *
  *@brief The code representation of a part of the body (such as 'Left Arm').
@@ -552,6 +552,8 @@ private:
 	* the part_gui_list to match the part_map.
 	*/
 	void refreshLists();
+
+	void makeDownstreamPartList(std::string part_uuid, std::vector<string>* child_list);
 	
 	void createSubgraphs(std::ofstream* stream, BodyPart* bp);
 	void createLinks(std::ofstream* stream, BodyPart* bp);
@@ -575,13 +577,16 @@ public:
 	 * It also handles deregistering and destruction of the removed elements via their destructors.
 	 *
 	 * @param part_id The UUID of the Part to remove.
-	 * @returns True if the operation was succesful, False otherwise.
 	 */
-	bool removePart(std::string part_uuid);
+	void removePart(std::string part_uuid);
+	void removeParts(std::vector<string>* part_uuids);
 
 	/**This function removes a random Part of the Body.
 	 */
 	void removeRandomPart();
+
+	void unregisterPart(string uuid);
+	void unregisterParts(std::vector<string>* uuids);
 
 	/**This function returns the part_gui_list .
 	*/
