@@ -153,7 +153,7 @@ Organ::~Organ(){
 
 void Organ::linkToConnector(string connector_uuid){
 	this->connector_uuid = connector_uuid;
-	debug_print("LINKED %s to connector %s\n", getUUID().c_str(), connector_uuid);
+	debug_print("LINKED %s to connector %s\n", getUUID().c_str(), connector_uuid.c_str());
 }
 
 std::vector<string>* Organ::getConnectedOrgans()
@@ -751,6 +751,7 @@ void Body::removePart(std::string part_uuid) {
 	std::vector<string>* rem_list = new std::vector<string>();
 
 	makeDownstreamPartList(part_uuid, rem_list);
+	BodyPart* super = static_cast<BodyPart*>(getPartByUUID(part->getSuperPartUUID()).get());
 
 	//If Part is an Organ, remove it from its connector
 	if (part->getType() == TYPE_ORGAN){
@@ -758,29 +759,39 @@ void Body::removePart(std::string part_uuid) {
 		Organ* connector = static_cast<Organ*>(getPartByUUID(o->getConnectorUUID()).get());
 		connector->removeConnectedOrgan(part_uuid);
 	}
-
-	BodyPart* super = static_cast<BodyPart*>(getPartByUUID(part->getSuperPartUUID()).get());
-
-	if (part->getType() == TYPE_BODYPART)
+	std::vector<string>* temp_super_child_list = super->getChildList();
+	for (std::vector<string>::iterator it = temp_super_child_list->begin(); it != temp_super_child_list->end(); it++)
 	{
-		for (auto it = super->getChildListRW()->begin(); it != super->getChildListRW()->end(); it++)
+		//Check if any of the IDs in the kill list are in the child list of the super-part as well 
+		// (this is the case for organs and their connectees) and remove them.
+		for (auto it_rl = rem_list->begin(); it_rl != rem_list->end(); it_rl++)
 		{
-			if (getPartByUUID(*it)->getType() == TYPE_ORGAN)
+			if (it->compare(*it_rl) == 0)
 			{
-				Organ *o = static_cast<Organ*>(getPartByUUID(*it).get());
-				for (auto it_o = o->getConnectedOrgansRW()->begin(); it_o != o->getConnectedOrgansRW()->end(); it_o++)
+				super->removeChild(*it);
+			}
+		}
+
+		// Also check wether any of the IDs in the kill list are in the connectedOrgans list of any
+		// of the organs of the super-part.
+		if (getPartByUUID(*it)->getType() == TYPE_ORGAN)
+		{
+			Organ *o = static_cast<Organ*>(getPartByUUID(*it).get());
+			std::vector<string>* temp_connected_list = o->getConnectedOrgans();
+
+			for (auto it_o = temp_connected_list->begin(); it_o != temp_connected_list->end(); it_o++)
+			{
+				for (auto it_rl = rem_list->begin(); it_rl != rem_list->end(); it_rl++)
 				{
-					for (auto it_rl = rem_list->begin(); it_rl != rem_list->end(); it_rl++)
+					if (it_o->compare(*it_rl) == 0)
 					{
-						if (it_o->compare(*it_rl) == 0)
-						{
-							o->removeConnectedOrgan(*it_o);
-						}
+						o->removeConnectedOrgan(*it_o);
 					}
 				}
 			}
 		}
 	}
+
 
 	//Remove the chosen part from its super Part.
 	super->removeChild(part_uuid);
@@ -814,7 +825,11 @@ void Body::makeDownstreamPartList(string part_uuid, std::vector<string>* child_l
 	//Part is an Organ: Add all connected organs to the list
 	if (part->getType() == TYPE_ORGAN){
 		Organ* o = static_cast<Organ*>(part.get());
-		child_list->insert(child_list->end(), o->getConnectedOrgansRW()->begin(), o->getConnectedOrgansRW()->end());
+		for (auto it = o->getConnectedOrgansRW()->begin(); it != o->getConnectedOrgansRW()->end(); it++)
+		{
+			child_list->push_back(*it);
+			makeDownstreamPartList(*it, child_list);
+		}
 	}
 
 	//Part is a BodyPart: Add all children to the list and call this function on them
