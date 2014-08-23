@@ -553,6 +553,26 @@ private:
 	*/
 	void refreshLists();
 
+	/**This function removes an element from the part_map, identified by the given UUID.
+	* Due to the nature of the part_map (storing shared_pointers accessible by the UUID of the
+	* Part they point at), removal of the element will cause the destruction of the shared_pointer
+	* (because it should not be referenced anywhere else) and therefore, the Part it points at.
+	*
+	* @param uuid The UUID of the Part to unregister.
+	*/
+	void unregisterPart(string uuid);
+	void unregisterParts(std::vector<string>* uuids);
+
+	/**This function iterates recursively through all Parts downstream of the given Part
+	* and adds - for Organs - all connected_organs, - for BodyParts - all children to the
+	* given vector. The first call to this function should therefore modify the vector to 
+	* contain all children of all parts downstream of the given Part, identified by the given UUID.
+	* Note that this function will not check for duplicates.
+	* 
+	* @param part_uuid The UUID of the Part to list the children and children's children of.
+	* @param child_list A vector, which will be modified by this function to contain all children
+	*  and children's children (...) of the given Part.
+	*/
 	void makeDownstreamPartList(std::string part_uuid, std::vector<string>* child_list);
 	
 	void createSubgraphs(std::ofstream* stream, BodyPart* bp);
@@ -567,32 +587,49 @@ public:
 	~Body();
 
 	/**This function returns a shared pointer to the root BodyPart.
+	* @return A shared pointer pointing at the root BodyPart.
 	*/
 	std::shared_ptr<BodyPart> getRootBP()
 	{
 		if (root != nullptr) { return root; }
 	};
 
-	/**This function removes the a Part of the Body, identified by the given internal id.
-	 * It also handles deregistering and destruction of the removed elements via their destructors.
+	/**This function removes the a Part of the Body, identified by the given UUID.
+	 * It also handles removal of all Parts downstream of that Part and removal of 
+	 * now-empty Parts upstream of it.
 	 *
-	 * @param part_id The UUID of the Part to remove.
+	 * @param part_uuid The UUID of the Part to remove.
 	 */
 	void removePart(std::string part_uuid);
+
+	/**This function removes several parts one after another. For that purpose, it
+	 * calls removePart() on all elements of the given vector of UUIDs.
+	 *
+	 * @param part_uuids A vector of UUIDs to remove.
+	 */
 	void removeParts(std::vector<string>* part_uuids);
 
 	/**This function removes a random Part of the Body.
 	 */
 	void removeRandomPart();
 
-	void unregisterPart(string uuid);
-	void unregisterParts(std::vector<string>* uuids);
-
-	/**This function returns the part_gui_list .
+	/**This function returns the part_gui_list.
 	*/
 	std::vector<GuiObjectLink*>* getPartGUIList() { return part_gui_list; }
 
+	/**This function returns a shared pointer to the Part identified by the given UUID,
+	* or a nullptr if the Part could not be found.
+	*
+	* @param uuid The UUID of the Part to get.
+	* @return A shared pointer to the Part, or a nullptr.
+	*/
 	std::shared_ptr<Part> getPartByUUID(std::string uuid);
+	/**This function returns a shared pointer to the Part identified by the given IID,
+	* or a nullptr if the Part could not be found.
+	*
+	* @param uuid The IID of the Part to get.
+	* @return A shared pointer to the Part, or a nullptr.
+	*/
 	std::shared_ptr<Part> getPartByIID(std::string iid);
 
 	void printBodyMap(const char* filename, BodyPart* mroot);

@@ -108,7 +108,8 @@ bool BodyPart::removeChild(string uuid){
 			//If the BodyPart is now empty, it removes itself
 			if (children->size() == 0)
 			{
-				body->removePart(getUUID());
+				return true;
+				//body->removePart(getUUID(), false);
 			}
 
 			//Dont continue iterating, vector has been changed!
@@ -739,78 +740,96 @@ void Body::refreshLists()
 }
 
 void Body::removePart(std::string part_uuid) {
-
+	//Get shared pointer of the Part to be removed
 	std::shared_ptr<Part> part = getPartByUUID(part_uuid);
-	if (part == nullptr)
+	
+	//TODO: Handle removal of root BP or root Organ
+	if (part == nullptr || part->getId() == "ROOT" || part->getId() == "UPPER_TORSO")
 	{
 		return;
 	}
 
 	debug_print("Removing Part %s...\n", part->getId().c_str());
 
+	//Create a list of all parts to be removed 
 	std::vector<string>* rem_list = new std::vector<string>();
 
+	//Add the part given to the function...
+	rem_list->push_back(part_uuid);
+	//...and everything that lies downstream of it (Organs and Bodyparts)
 	makeDownstreamPartList(part_uuid, rem_list);
+
+	//Remove duplicates from the list
+	std::sort(rem_list->begin(), rem_list->end());
+	rem_list->erase(std::unique(rem_list->begin(), rem_list->end()), rem_list->end());
+
+#ifdef _DEBUG
 	for (auto it = rem_list->begin(); it != rem_list->end(); it++)
 	{
 		debug_print("UUID %s is Part %s \n", getPartByUUID(*it)->getUUID().c_str(), getPartByUUID(*it)->getId().c_str());
 	}
+#endif
 
-	BodyPart* super = static_cast<BodyPart*>(getPartByUUID(part->getSuperPartUUID()).get());
+	//Make a temporary list, in which UUIDs of empty bodyparts are stored.
+	// Its contents are later added to the rem_list
+	std::vector<string>* bp_rem = new std::vector<string>();
 
-	//If Part is an Organ, remove it from its connector
-	if (part->getType() == TYPE_ORGAN){
-		Organ* o = static_cast<Organ*>(part.get());
-		Organ* connector = static_cast<Organ*>(getPartByUUID(o->getConnectorUUID()).get());
-		connector->removeConnectedOrgan(part_uuid);
-	}
-
-	std::vector<string>* temp_super_child_list = super->getChildList();
-	for (std::vector<string>::iterator it = temp_super_child_list->begin(); it != temp_super_child_list->end(); it++)
+	//Iterate over all parts to be removed...
+	for (auto it_rl = rem_list->begin(); it_rl != rem_list->end(); it_rl++)
 	{
-		//Check if any of the IDs in the kill list are in the child list of the super-part as well 
-		// (this is the case for organs and their connectees) and remove them.
-		for (auto it_rl = rem_list->begin(); it_rl != rem_list->end(); it_rl++)
+		//...if the part is an Organ, remove it from its connectors connected_organs list
+		if (getPartByUUID(*it_rl)->getType() == TYPE_ORGAN)
 		{
-			if (it->compare(*it_rl) == 0)
-			{
-				super->removeChild(*it);
-			}
+			Organ *o = static_cast<Organ*>(getPartByUUID(*it_rl).get());
+			Organ *con = static_cast<Organ*>(getPartByUUID(o->getConnectorUUID()).get());
+
+			con->removeConnectedOrgan(*it_rl);
 		}
 
-		// Also check wether any of the IDs in the kill list are in the connectedOrgans list of any
-		// of the organs of the super-part.
-		if (getPartByUUID(*it)->getType() == TYPE_ORGAN)
+		//..for all parts: remove from super part child list.
+		// If the super part is found to be empty (removeChild() returns true), add it
+		// to the temporary bp_rem list. 
+		BodyPart* super = static_cast<BodyPart*>(getPartByUUID(getPartByUUID(*it_rl)->getSuperPartUUID()).get());
+		BodyPart* old_super;
+		if (super->removeChild(*it_rl))
 		{
-			Organ *o = static_cast<Organ*>(getPartByUUID(*it).get());
-			std::vector<string>* temp_connected_list = o->getConnectedOrgans();
+			debug_print("BodyPart %s is empty, add to unregister\n", super->getId().c_str());
+			bp_rem->push_back(super->getUUID());
+			bool done = false;
 
-			for (auto it_o = temp_connected_list->begin(); it_o != temp_connected_list->end(); it_o++)
+			//For every BodyPart that is to be deleted as empty, remove it from its own
+			// super BodyPart and check wheter it needs to be removed as well!
+			while (!done)
 			{
-				for (auto it_rl = rem_list->begin(); it_rl != rem_list->end(); it_rl++)
+				old_super = super;
+				super = static_cast<BodyPart*>(getPartByUUID(super->getSuperPartUUID()).get());
+				if (super->removeChild(old_super->getUUID()))
 				{
-					if (it_o->compare(*it_rl) == 0)
-					{
-						o->removeConnectedOrgan(*it_o);
-					}
+					debug_print("BodyPart %s is empty, add to unregister\n", super->getId().c_str());
+					bp_rem->push_back(super->getUUID());
+				}
+				else {
+					done = true;
 				}
 			}
 		}
 	}
 
+	//Merge the temporary removal list into the rem_list
+	rem_list->insert(rem_list->end(), bp_rem->begin(), bp_rem->end());
 
-	//Remove the chosen part from its super Part.
-	super->removeChild(part_uuid);
+	//Remove duplicates again
+	std::sort(rem_list->begin(), rem_list->end());
+	rem_list->erase(std::unique(rem_list->begin(), rem_list->end()), rem_list->end());
 
-	//Unregister the Part
+	//Unregister the Parts, causing the shared pointers to destroy their references and themselves.
 	unregisterParts(rem_list);
 
 	//Clear the part variable. This should cause the last use of the shared pointer
 	// to the part to be freed, therefore destroying the part.
-	//The destructor of the derived class should unregister all its children from the part_map,
-	// therefore causing their destruction as well.
 	part.reset();
-
+	
+	//Refresh all lists and maps
 	refreshLists();
 
 #ifdef _DEBUG
@@ -818,6 +837,7 @@ void Body::removePart(std::string part_uuid) {
 #endif
 
 	debug_print("done.\n");
+	
 }
 
 void Body::makeDownstreamPartList(string part_uuid, std::vector<string>* child_list)

@@ -87,17 +87,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2cda9c6f52963f15e85822bc2cbd4a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab21101075be3644cfddb7a139507e38d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_body_part.html">BodyPart</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#ab21101075be3644cfddb7a139507e38d">getRootBP</a> ()</td></tr>
 <tr class="separator:ab21101075be3644cfddb7a139507e38d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3be17fc9289ffdccddb6339239b21fec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a3be17fc9289ffdccddb6339239b21fec">removePart</a> (std::string part_uuid)</td></tr>
-<tr class="separator:a3be17fc9289ffdccddb6339239b21fec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18b5d3bd75fe06d7801db97b8ae7d283"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a18b5d3bd75fe06d7801db97b8ae7d283">removePart</a> (std::string part_uuid)</td></tr>
+<tr class="separator:a18b5d3bd75fe06d7801db97b8ae7d283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ef433b1d7299f8111b2d69cf00843ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a7ef433b1d7299f8111b2d69cf00843ab">removeParts</a> (std::vector&lt; string &gt; *part_uuids)</td></tr>
+<tr class="separator:a7ef433b1d7299f8111b2d69cf00843ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef5d3db270848d3de8530a59353312a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#aef5d3db270848d3de8530a59353312a4">removeRandomPart</a> ()</td></tr>
 <tr class="separator:aef5d3db270848d3de8530a59353312a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23661e884436cbea6bc2d936eaf660a3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a23661e884436cbea6bc2d936eaf660a3">getPartGUIList</a> ()</td></tr>
 <tr class="separator:a23661e884436cbea6bc2d936eaf660a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e86b799a725cb8100fb8a583fec59ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e86b799a725cb8100fb8a583fec59ed"></a>
-std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getPartByUUID</b> (std::string uuid)</td></tr>
+<tr class="memitem:a7e86b799a725cb8100fb8a583fec59ed"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a7e86b799a725cb8100fb8a583fec59ed">getPartByUUID</a> (std::string uuid)</td></tr>
 <tr class="separator:a7e86b799a725cb8100fb8a583fec59ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85f5689bbf2ec664a3aeddaf96a3fbf8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85f5689bbf2ec664a3aeddaf96a3fbf8"></a>
-std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getPartByIID</b> (std::string iid)</td></tr>
+<tr class="memitem:a85f5689bbf2ec664a3aeddaf96a3fbf8"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a85f5689bbf2ec664a3aeddaf96a3fbf8">getPartByIID</a> (std::string iid)</td></tr>
 <tr class="separator:a85f5689bbf2ec664a3aeddaf96a3fbf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5438ad07de06d89c85714a5888fea492"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5438ad07de06d89c85714a5888fea492"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>printBodyMap</b> (const char *filename, <a class="el" href="class_body_part.html">BodyPart</a> *mroot)</td></tr>
@@ -115,6 +115,13 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:add724ec6251171cfa88b859bfbc7f443"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd4280f807d5e0b631c7eed089b083f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#afd4280f807d5e0b631c7eed089b083f2">refreshLists</a> ()</td></tr>
 <tr class="separator:afd4280f807d5e0b631c7eed089b083f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8221e0307acce06fb6aea863769f1d1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a8221e0307acce06fb6aea863769f1d1b">unregisterPart</a> (string uuid)</td></tr>
+<tr class="separator:a8221e0307acce06fb6aea863769f1d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addbf9e884cf95d851f7dfb77972ce515"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="addbf9e884cf95d851f7dfb77972ce515"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>unregisterParts</b> (std::vector&lt; string &gt; *uuids)</td></tr>
+<tr class="separator:addbf9e884cf95d851f7dfb77972ce515"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acba1ea49309153166e26dbcaf1e9b3af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#acba1ea49309153166e26dbcaf1e9b3af">makeDownstreamPartList</a> (std::string part_uuid, std::vector&lt; string &gt; *child_list)</td></tr>
+<tr class="separator:acba1ea49309153166e26dbcaf1e9b3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7e42bc5508c816b64a9f5b056190fc3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7e42bc5508c816b64a9f5b056190fc3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>createSubgraphs</b> (std::ofstream *stream, <a class="el" href="class_body_part.html">BodyPart</a> *bp)</td></tr>
 <tr class="separator:aa7e42bc5508c816b64a9f5b056190fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -272,6 +279,54 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
+<a class="anchor" id="a85f5689bbf2ec664a3aeddaf96a3fbf8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt; Body::getPartByIID </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>iid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function returns a shared pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> identified by the given IID, or a nullptr if the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> could not be found.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uuid</td><td>The IID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to get. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>, or a nullptr. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7e86b799a725cb8100fb8a583fec59ed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt; Body::getPartByUUID </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>uuid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function returns a shared pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> identified by the given UUID, or a nullptr if the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> could not be found.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to get. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>, or a nullptr. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a23661e884436cbea6bc2d936eaf660a3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -292,7 +347,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function returns the part_gui_list . </p>
+<p>This function returns the part_gui_list. </p>
 
 </div>
 </div>
@@ -316,7 +371,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function returns a shared pointer to the root <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a>. </p>
+<p>This function returns a shared pointer to the root <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a>. </p><dl class="section return"><dt>Returns</dt><dd>A shared pointer pointing at the root <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a>. </dd></dl>
 
 </div>
 </div>
@@ -349,6 +404,48 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the UUID of the root bodypart. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="acba1ea49309153166e26dbcaf1e9b3af"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Body::makeDownstreamPartList </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>part_uuid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; string &gt; *&#160;</td>
+          <td class="paramname"><em>child_list</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function iterates recursively through all Parts downstream of the given <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> and adds - for Organs - all connected_organs, - for BodyParts - all children to the given vector. The first call to this function should therefore modify the vector to contain all children of all parts downstream of the given <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>, identified by the given UUID. Note that this function will not check for duplicates.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">part_uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to list the children and children's children of. </td></tr>
+    <tr><td class="paramname">child_list</td><td>A vector, which will be modified by this function to contain all children and children's children (...) of the given <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -400,12 +497,12 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
-<a class="anchor" id="a3be17fc9289ffdccddb6339239b21fec"></a>
+<a class="anchor" id="a18b5d3bd75fe06d7801db97b8ae7d283"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool Body::removePart </td>
+          <td class="memname">void Body::removePart </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>part_uuid</em></td><td>)</td>
@@ -413,14 +510,36 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function removes the a <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a>, identified by the given internal id. It also handles deregistering and destruction of the removed elements via their destructors.</p>
+<p>This function removes the a <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a>, identified by the given UUID. It also handles removal of all Parts downstream of that <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> and removal of now-empty Parts upstream of it.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">part_id</td><td>The UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to remove. </td></tr>
+    <tr><td class="paramname">part_uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to remove. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the operation was succesful, False otherwise. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7ef433b1d7299f8111b2d69cf00843ab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Body::removeParts </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; string &gt; *&#160;</td>
+          <td class="paramname"><em>part_uuids</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function removes several parts one after another. For that purpose, it calls <a class="el" href="class_body.html#a18b5d3bd75fe06d7801db97b8ae7d283">removePart()</a> on all elements of the given vector of UUIDs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">part_uuids</td><td>A vector of UUIDs to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -437,6 +556,37 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
       </table>
 </div><div class="memdoc">
 <p>This function removes a random <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8221e0307acce06fb6aea863769f1d1b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Body::unregisterPart </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>uuid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function removes an element from the part_map, identified by the given UUID. Due to the nature of the part_map (storing shared_pointers accessible by the UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> they point at), removal of the element will cause the destruction of the shared_pointer (because it should not be referenced anywhere else) and therefore, the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> it points at.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to unregister. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -557,7 +707,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_body.html">Body</a></li>
-    <li class="footer">Generated on Thu Aug 21 2014 14:11:35 for Rogue M.D. by
+    <li class="footer">Generated on Sat Aug 23 2014 13:51:55 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>
