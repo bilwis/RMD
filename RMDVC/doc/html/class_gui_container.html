@@ -180,8 +180,8 @@ virtual string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a516bc6ac69ea36034c82eee91a4dfe20"><td class="memItemLeft" align="right" valign="top">TCODList&lt; <a class="el" href="class_gui_element.html">GuiElement</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_container.html#a516bc6ac69ea36034c82eee91a4dfe20">elements</a></td></tr>
-<tr class="separator:a516bc6ac69ea36034c82eee91a4dfe20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3eafa1280ee09315ba5ae1f6b8e3e6e4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_gui_element.html">GuiElement</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_container.html#a3eafa1280ee09315ba5ae1f6b8e3e6e4">elements</a></td></tr>
+<tr class="separator:a3eafa1280ee09315ba5ae1f6b8e3e6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7197f4269e9ca514223a2b48483bfc08"><td class="memItemLeft" align="right" valign="top">TCODConsole *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gui_container.html#a7197f4269e9ca514223a2b48483bfc08">container_console</a></td></tr>
 <tr class="memdesc:a7197f4269e9ca514223a2b48483bfc08"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="class_gui_container.html" title="A class that can hold several GuiElement children. ">GuiContainer</a>'s TCODConsole.  <a href="#a7197f4269e9ca514223a2b48483bfc08">More...</a><br /></td></tr>
 <tr class="separator:a7197f4269e9ca514223a2b48483bfc08"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -262,7 +262,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Renders all 'child' GuiElements on the given console. </p>
-<p>This function calls the <a class="el" href="class_gui_container.html#adff211e462ef642435509c894d2390ba" title="Renders all &#39;child&#39; GuiElements on the given console. ">render()</a> function of all GuiElements contained in the elements TCODList, after calling <a class="el" href="class_gui_container.html#a9c06e639b2f395cceea46bbc0f47f52a" title="Renders only the GuiContainers own graphic elements onto the given console. ">renderSelf()</a> . These functions draw on the container_console, which is then blitted onto the given console. </p>
+<p>This function calls the <a class="el" href="class_gui_container.html#adff211e462ef642435509c894d2390ba" title="Renders all &#39;child&#39; GuiElements on the given console. ">render()</a> function of all GuiElements contained in the elements vector, after calling <a class="el" href="class_gui_container.html#a9c06e639b2f395cceea46bbc0f47f52a" title="Renders only the GuiContainers own graphic elements onto the given console. ">renderSelf()</a> . These functions draw on the container_console, which is then blitted onto the given console. </p>
 
 <p>Implements <a class="el" href="class_render_object.html">RenderObject</a>.</p>
 
@@ -334,7 +334,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a516bc6ac69ea36034c82eee91a4dfe20"></a>
+<a class="anchor" id="a3eafa1280ee09315ba5ae1f6b8e3e6e4"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -342,7 +342,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">TCODList&lt;<a class="el" href="class_gui_element.html">GuiElement</a>*&gt;* GuiContainer::elements</td>
+          <td class="memname">std::vector&lt;<a class="el" href="class_gui_element.html">GuiElement</a>*&gt;* GuiContainer::elements</td>
         </tr>
       </table>
   </td>
@@ -351,7 +351,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The TCODList holding pointers to the 'child' elements. Note: <em>Nesting GuiContainers (i.e. having a <a class="el" href="class_gui_container.html" title="A class that can hold several GuiElement children. ">GuiContainer</a> element be a child of a <a class="el" href="class_gui_container.html" title="A class that can hold several GuiElement children. ">GuiContainer</a>) is not supported</em> </p>
+<p>The vector holding pointers to the 'child' elements. Note: <em>Nesting GuiContainers (i.e. having a <a class="el" href="class_gui_container.html" title="A class that can hold several GuiElement children. ">GuiContainer</a> element be a child of a <a class="el" href="class_gui_container.html" title="A class that can hold several GuiElement children. ">GuiContainer</a>) is not supported</em> </p>
 
 </div>
 </div>
@@ -365,7 +365,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_gui_container.html">GuiContainer</a></li>
-    <li class="footer">Generated on Thu Aug 14 2014 14:13:23 for Rogue M.D. by
+    <li class="footer">Generated on Sat Aug 23 2014 13:51:55 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

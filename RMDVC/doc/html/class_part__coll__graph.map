@@ -1,3 +1,4 @@
 <map id="Part" name="Part">
 <area shape="rect" id="node2" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="5,95,65,121"/>
+<area shape="rect" id="node5" href="$class_body.html" title="The code representation of a body of an Actor. " alt="" coords="168,95,220,121"/>
 </map>

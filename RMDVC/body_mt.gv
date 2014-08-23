@@ -1,14 +1,6 @@
 digraph G {
 	subgraph cluster_ROOT {
 		label = "Body";
-	subgraph cluster_L_ARM {
-		label = "Left Arm";
-	subgraph cluster_L_UPPER_ARM {
-		label = "Left Upper Arm";
-		L_SHOULDER [label="Left Shoulder"];
-		L_UPPER_ARM_PROPER [label="Left Upper Arm Proper"];
-	 } 
-	 } 
 	subgraph cluster_R_ARM {
 		label = "Right Arm";
 	subgraph cluster_R_UPPER_ARM {
@@ -24,6 +16,12 @@ digraph G {
 	subgraph cluster_R_HAND {
 		label = "Right Hand";
 		R_WRIST [label="Right Wrist"];
+		R_PALM [label="Right Palm"];
+		R_THUMB [label="Right Thumb"];
+		R_INDEX [label="Right Index Finger"];
+		R_MIDDLE [label="Right Middle Finger"];
+		R_RING [label="Right Ring Finger"];
+		R_LITTLE [label="Right Little Finger"];
 	 } 
 	 } 
 	subgraph cluster_TORSO {
@@ -90,13 +88,17 @@ digraph G {
 	 } 
 	 } 
 
-UPPER_TORSO -> L_SHOULDER;
-L_SHOULDER -> L_UPPER_ARM_PROPER;
 UPPER_TORSO -> R_SHOULDER;
 R_SHOULDER -> R_UPPER_ARM_PROPER;
 R_UPPER_ARM_PROPER -> R_ELBOW;
 R_ELBOW -> R_LOWER_ARM_PROPER;
 R_LOWER_ARM_PROPER -> R_WRIST;
+R_WRIST -> R_PALM;
+R_PALM -> R_THUMB;
+R_PALM -> R_INDEX;
+R_PALM -> R_MIDDLE;
+R_PALM -> R_RING;
+R_PALM -> R_LITTLE;
 UPPER_TORSO -> ABDOMEN;
 ABDOMEN -> PELVIS;
 UPPER_TORSO -> NECK;

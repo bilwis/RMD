@@ -11,7 +11,7 @@ var class_gui_body_viewer =
     [ "body", "class_gui_body_viewer.html#aafc16e01a9a1e01c29a96a4a49f5dbfb", null ],
     [ "bp_browser", "class_gui_body_viewer.html#a434b607d58faa4d2c4f2f20e86ec8ab0", null ],
     [ "bp_info", "class_gui_body_viewer.html#a070e21887778a4a5f39f5dab7b5ca078", null ],
-    [ "part_list", "class_gui_body_viewer.html#aee19723ab19782489b01d65d2b908c42", null ],
+    [ "part_list", "class_gui_body_viewer.html#a62a2dc56655b38af7c2ed9dadcc6a771", null ],
     [ "tissue_browser", "class_gui_body_viewer.html#ae86a879efe51f2bea4e1c1a00bb297ad", null ],
-    [ "tissue_list", "class_gui_body_viewer.html#a758054cb65b904f0cb08e76804f7d50f", null ]
+    [ "tissue_list", "class_gui_body_viewer.html#abc2e2ee272ee9819a243d58ca4b8eef4", null ]
 ];

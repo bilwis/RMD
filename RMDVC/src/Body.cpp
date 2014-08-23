@@ -38,7 +38,7 @@ Tissue::~Tissue()
 {
 }
 
-Part::Part(string id, string name, float surface, PartType type) : Object()
+Part::Part(string id, string name, float surface, PartType type, Body* b) : Object()
 {
 
 	/* The XML parsing function works with pointers to strings only.
@@ -56,98 +56,74 @@ Part::Part(string id, string name, float surface, PartType type) : Object()
 	this->surface = surface;
 	this->type = type;
 
-	super = NULL;
+	this->body = b;
+
+	super = "";
 }
 
 Part::~Part()
 {
 }
 
-BodyPart::BodyPart(string id, string name, float surface) :
-		Part(id, name, surface, TYPE_BODYPART){
+BodyPart::BodyPart(string id, string name, float surface, Body* b) :
+		Part(id, name, surface, TYPE_BODYPART, b){
 
-	children = new std::vector<Part*>();
+	children = new std::vector<string>();
 }
 
 BodyPart::~BodyPart()
 {
 	debug_print("BodyPart %s is kill.\n", this->id.c_str());
 
-	slated_for_destruction = true;
-
-	//Organ children can be removed by calling their destructor.
-	//NOTE: Organs delete themselves in a chain reaction!!! When an upstream root
-	// gets deleted, it will delete all downstream branches as well. Therefore,
-	// the BodyPart has to check after deleting every Organ wheter or not there are still
-	// any Organs left to delete.
-	while (child_count > 0)
-	{
-		debug_print("%s is killing a child: %s. Count left: %i.\n", this->getId().c_str(), children->back()->getId().c_str(), child_count);
-		delete children->back();
-	}
-
 	delete children;
-	
-	//Remove self from parents (super) child list.
-	if (super != nullptr)
-	{
-		BodyPart* sup = static_cast<BodyPart*>(super);
-		sup->removeChild(this->getUUID());
-		super = nullptr;
+}
+
+void BodyPart::addChild(string child_uuid){
+	body->getPartByUUID(child_uuid)->setSuperPart(getUUID());
+	children->push_back(child_uuid);
+}
+
+void BodyPart::addChildren(std::vector<string>* child_uuid_vector){
+	for (std::vector<string>::iterator it = child_uuid_vector->begin();
+		it != child_uuid_vector->end(); it++){
+		children->push_back(*it);
+		body->getPartByUUID(*it)->setSuperPart(getUUID());
 	}
 }
 
-void BodyPart::addChild(Part *child){
-	child->setSuperPart(this);
-	children->push_back(child);
-	child_count++;
-}
-
-void BodyPart::addChildren(Part **child_array, int count){
-	for (int i=0; i < count; i++){
-		children->push_back(child_array[i]);
-		child_array[i]->setSuperPart(this);
-		child_count++;
-	}
-}
-
-std::vector<Part*>* BodyPart::getChildList()
+std::vector<string>* BodyPart::getChildList()
 {
-	return children;
+	return new std::vector<string>(children->begin(), children->end());
 }
 
 bool BodyPart::removeChild(string uuid){
 	
 	//Iterate though the list of children and remove the child with the matching UUID
-	for (std::vector<Part*>::iterator it = children->begin(); it != children->end(); it++)
+	for (std::vector<string>::iterator it = children->begin(); it != children->end(); it++)
 	{
-		Part *part = *it;
-		if (uuid.compare(part->getUUID()) == 0){
+		
+		if (uuid.compare(*it) == 0){
+			children->erase(it);
 
-			//If this is the last child,
-			// remove the child from the list and
-			// destroy the BodyPart entirely (if it is not slated for destruction already).
-			if (children->size() == 1)
+			//If the BodyPart is now empty, it removes itself
+			if (children->size() == 0)
 			{
-				child_count = 0;
-				children->erase(it);
-				if (!slated_for_destruction) { delete this; }
 				return true;
+				//body->removePart(getUUID(), false);
 			}
 
-			child_count--;
-			children->erase(it);
-			return true;
+			//Dont continue iterating, vector has been changed!
+			break;
 		}
 	}
 
 	return false;
 }
 
-Organ::Organ(string id, string name, float surface,
+Organ::Organ(string id, string name, float surface, Body* b,
 		tissue_def *tissues, int tissue_count, const char *connector_id, bool is_root):
-		Part(id, name, surface, TYPE_ORGAN), tissues(tissues), tissue_count(tissue_count),
-		root(is_root), connector(NULL){
+		Part(id, name, surface, TYPE_ORGAN, b), tissues(tissues), tissue_count(tissue_count),
+		root(is_root){
 
 	/* The XML parsing function works with pointers to strings only.
 	 * Every "id", "name" and any other string is only copied into memory ONCE, and that
@@ -158,149 +134,78 @@ Organ::Organ(string id, string name, float surface,
 	 * THE MEMORY to which the "parsing pointer" points and maintain a reference to it via their
 	 * own id and name (etc.) variables, which are pointers to the new, copied memory slot.
 	 */
-
-	this->connector_id = string(connector_id);
-	connected_organs = new std::map<string, Organ*>();
+	if (connector_id == "_ROOT")
+	{
+		this->connector_id = "_ROOT";
+		root = true;
+	}
+	else {
+		this->connector_id = string(connector_id);
+	}
+	
+	connected_organs = new std::vector<string>();
 }
 
 Organ::~Organ(){
-	//The organ destructor automatically removes it from the child
-	//list of it's BodyPart (if it is not slated for destruction itself).
-	//It also calls the destructor on all of its
-	//own children and calls the upstream root organ's removal function on itself.
-
 	debug_print("Organ %s is kill.\n", this->id.c_str());
-	
-	slated_for_destruction = true;
-	if (connector != nullptr && !connector->slated_for_destruction) 
-	{
-		connector->removeConnectedOrgan(getUUID()); 
-		connector->is_stump = true;
-		connector = nullptr; 
-	}
-	
-	BodyPart* bp = static_cast<BodyPart*>(super);
-	bp->removeChild(this->getUUID());
 
-	//destroy all elements as well
-	for (std::map<string, Organ*>::iterator it = connected_organs->begin(); it != connected_organs->end(); it++)
-	{
-		delete it->second;
-	}
 	delete connected_organs;
-
-	
 }
 
-void Organ::linkToConnector(std::map<std::string, Organ*, strless> *organ_map){
-	//Check if the Organ is the root, if yes, exit
-	if (!connector_id.compare("_ROOT")) { return; }
-
-	//Find the connector in the organ map
-	std::map<std::string, Organ*>::const_iterator pos = organ_map->find(connector_id);
-
-	//If not found, error
-	if (pos == organ_map->end()){ throw std::exception(); }
-
-	//Otherwise store pointer to connector in connector variable
-	connector = pos->second;
-
-	//Add this organ to the root's list of branches
-	connector->addConnectedOrgan(this);
-
-	debug_print("LINKED %s to connector %s\n", id.c_str(), pos->first.c_str());
+void Organ::linkToConnector(string connector_uuid){
+	this->connector_uuid = connector_uuid;
+	debug_print("LINKED %s to connector %s\n", getUUID().c_str(), connector_uuid.c_str());
 }
 
-string Organ::getConnectorUUID() {
-	if (connector == NULL) { return ""; }
-	return connector->getUUID();
-}
-
-string Organ::getConnectorId() {
-	if (connector == NULL) { return ""; }
-	return connector->getId();
-}
-
-void Organ::getConnectedOrganUUIDs(std::vector<string>* vector)
+std::vector<string>* Organ::getConnectedOrgans()
 {
-	vector->clear();
-
-	for (std::map<string, Organ*>::iterator it = connected_organs->begin(); it != connected_organs->end(); it++)
-	{
-		vector->push_back(it->first);
-	}
+	return new std::vector<string>(connected_organs->begin(), connected_organs->end());
 }
 
-void Organ::addConnectedOrgan(Organ* connectee){
-	connected_organs->insert(std::pair<string, Organ*>(connectee->getUUID(), connectee));
+void Organ::addConnectedOrgan(string connectee_uuid){
+	connected_organs->push_back(connectee_uuid);
+	std::dynamic_pointer_cast<Organ>(body->getPartByUUID(connectee_uuid))->linkToConnector(getUUID());
 }
 
 void Organ::removeConnectedOrgan(string uuid) {
-
-	std::map<string, Organ*>::iterator it = connected_organs->find(uuid);
-	if (it == connected_organs->end())
+	//This function just removes the UUID! It doesn't deregister the Organ from the Body!!!
+	for (std::vector<string>::iterator it = connected_organs->begin(); it != connected_organs->end(); it++)
 	{
-		debug_error("ERROR: Tried to remove Organ with UUID %s from root Organ %s, but it is not registered!",
-			uuid.c_str(),
-			getId().c_str());
-		return;
+		if (uuid.compare(*it) == 0)
+		{
+			connected_organs->erase(it);
+			is_stump = true;
+			//Dont continue iterating, vector has been changed!
+			break;
+		}
 	}
-	connected_organs->erase(it);
 }
 
 Body::Body(const char *filename){
-	root = loadBody(filename);
-	if (root != NULL)
-	{
-		//go through all of the parsed data and make a list with pointers to the organs
-		std::map<std::string, Organ*, strless>* organ_map = new std::map<std::string, Organ*, strless>();
-		organ_map = extractOrgans(root, organ_map);
-
-		//go through all of the parsed data and link the organ connections
-		// (that is, store the pointer to the connector as identified by
-		// "connector_id" in the connector variable)
-		linkOrgans(root, organ_map);
-
-		//Organ map is no longer needed
-		delete organ_map;
-
-		//go through all of the parsed data and make a list with pointers to every part of the Body
-		part_map = new std::map<std::string, Part*, strless>();
-		makePartMap(root, part_map);
-
-		//go through the part map and create the iID<->UUID linked map
-		iid_uuid_map = new std::map<std::string, std::string>();
-		makeIdMap(part_map);
-
-		//create the formatted and linked part list for the GUI
-		part_gui_list = new std::vector<GuiObjectLink*>();
-		buildPartList(part_gui_list, root, 0);
-
+	tissue_map = new std::map<std::string, std::shared_ptr<Tissue>>();
+	part_map = new std::map<std::string, std::shared_ptr<Part>>();
+	iid_uuid_map = new std::map<std::string, std::string>();
+	part_gui_list = new std::vector<GuiObjectLink*>();
+	
+	string root_uuid = loadBody(filename);
+	root = std::dynamic_pointer_cast<BodyPart>(getPartByUUID(root_uuid));
+	refreshLists();
+	
 #ifdef _DEBUG
-		printBodyMap("body.gv", root);
+		printBodyMap("body.gv", root.get());
 		debug_print("Printed Body Map! \n");
 #endif
-
-	}
-	else {
-		TCODConsole::root->setDefaultForeground(TCODColor::lightRed);
-		TCODConsole::root->print(10, 10, "ERROR WHILE CREATING ACTOR BODY - Press any key to continue.");
-		TCODConsole::root->print(10, 11, "For detailed error check console window.");
-		TCODConsole::root->flush();
-		TCODConsole::root->waitForKeypress(true);
-	}
 }
 
 Body::~Body(){
+	delete tissue_map;
 	delete part_map;
 	delete iid_uuid_map;
 	delete part_gui_list;
 }
 
-BodyPart* Body::loadBody(const char *filename){
-
-	BodyPart* temproot;
-
+string Body::loadBody(const char *filename){
+	
 	//###XML FILE HANDLING###
 	using namespace rapidxml;
 	char *buffer;
@@ -331,10 +236,8 @@ BodyPart* Body::loadBody(const char *filename){
 
 	//###TISSUE DATA###
 
-	//Temporary tissue map, list & variables
-	std::map<std::string, Tissue*, strless> tissue_map;
-
-	char *id = NULL, *name = NULL;
+	//Temporary variables
+	char *id = nullptr, *name = nullptr;
 	float pain = -1.0f, blood_flow = -1.0f, resistance = -1.0f, impairment = -1.0f; //Initialize with illegal values
 
 	//Load the tissue data (First first_node() is "body_def",
@@ -366,115 +269,142 @@ BodyPart* Body::loadBody(const char *filename){
 		debug_print("Read Tissue:\n\tID: %s \n\tName: %s \n\tBlood Flow: %f \n\tResistance: %f \n\tImpairment: %f\n",
 				id, name, blood_flow, resistance, impairment);
 
-		//Create a new Tissue and store the pointer to it in the tissue map
-		tissue_map.insert(std::pair<std::string, Tissue*>(std::string(id), new Tissue(id, name, pain, blood_flow, resistance, impairment)));
+		//Create a new Tissue and store the shared pointer to it in the tissue map
+		std::shared_ptr<Tissue> t_tissue(new Tissue(id, name, pain, blood_flow, resistance, impairment));
+		tissue_map->insert(std::pair<std::string, std::shared_ptr<Tissue>>(std::string(id), t_tissue));
 	}
 
 	//###BODYPART DATA###
 
-	//variables needed for init
-	id = NULL;
-	name = NULL;
+	//maps for child linking and organ linking
+	//K: UUID of the child, V: UUID of the parent
+	std::map<string, string>* child_map = new std::map<string, string>();
+	//K: UUID of the organ, V: IID(!) of its connector
+	std::map<string, string>* organ_link_map = new std::map<string, string>();
 
-	//Load the bodypart data (First first_node() is "body_def",
-	// data starts with the second level "body"
+	//Load the bodypart data (First first_node() is "body_def", 
+	// data starts with the second level "body" 
 	xml_node<> *body = doc.first_node()->first_node("body");
-
-	//recursively load the data
-	temproot = enter(body->first_node(), &tissue_map);
+	string root_uuid = enter(body->first_node(), child_map, organ_link_map);
 
 	//Destroy the XML data in memory
 	delete[] buffer;
 
+	//Build IID<->UUID map, which is required for linking 
+	makeIdMap();
+
+	//Link children and organs
+	for (std::map<string, string>::iterator ch_it = child_map->begin();
+		ch_it != child_map->end(); ch_it++) 
+	{
+		if (getPartByUUID(ch_it->first) == nullptr)
+		{
+			debug_error("ERROR during body part linking: Part UUID %s was requested, but is not in part map!\n",
+				ch_it->first.c_str());
+			return nullptr;
+		}
+		if (getPartByUUID(ch_it->second) == nullptr)
+		{
+			debug_error("ERROR during body part linking: Part UUID %s was requested, but is not in part map!\n",
+				ch_it->second.c_str());
+			return nullptr;
+		}
+		
+		BodyPart* parent = dynamic_cast<BodyPart*>(getPartByUUID(ch_it->second).get());
+		if (parent == nullptr) 
+		{
+			debug_error("ERROR during body part linking: Casting from Part* to BodyPart* on Part %s failed!\n",
+				ch_it->second.c_str());
+			return nullptr;
+		}
+
+		parent->addChild(ch_it->first);
+	}
+
+	for (std::map<string, string>::iterator or_it = organ_link_map->begin();
+		or_it != organ_link_map->end(); or_it++)
+	{
+		if (getPartByUUID(or_it->first) == nullptr)
+		{
+			debug_error("ERROR during body part linking: Part UUID %s was requested, but is not in part map!\n",
+				or_it->first.c_str());
+			return nullptr;
+		}
+		if (getPartByIID(or_it->second) == nullptr)
+		{
+			debug_error("ERROR during body part linking: Part IID %s was requested, but is not in part map!\n",
+				or_it->second.c_str());
+			return nullptr;
+		}
+		Part* temp = getPartByIID(or_it->second).get();
+		Organ* connector = dynamic_cast<Organ*>(temp);
+		if (connector == nullptr){
+			debug_error("ERROR during body part linking: Casting from Part* to Organ* on Part %s failed!\n",
+				or_it->second.c_str());
+			return nullptr;
+		}
+		connector->addConnectedOrgan(or_it->first);
+	}
+
 	//Successfully parsed the body definition file!
 	//Return the address of the newly created body part.
-	return temproot;
+	return root_uuid;
 
 	} catch (std::exception& e) {
-		std::cerr << "ERROR: " << e.what() << "\n";
+		debug_error("ERROR: %s \n", e.what());
 		return NULL;
 	}
 	catch (bdef_parse_error& pe) {
-		std::cerr << "ERROR: " << pe.what() << "\n";
-		
+		debug_error("ERROR: %s \n", pe.what());
 		return NULL;
 	}
 
 	return NULL;
 }
 
-std::map<std::string, Organ*, strless>* Body::extractOrgans(BodyPart* bp,
-		std::map<std::string, Organ*, strless> *organ_map) {
-	//Iterate through the children of the given BodyPart, if it is an Organ,
-	//add it to the organ_map; if it is a BodyPart, recursively call this function on it.
-
-	std::vector<Part*>* templ = bp->getChildList();
-	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
-		Part* p = *iterator;
-
-		if(p->getType() == TYPE_BODYPART){
-			organ_map = extractOrgans(static_cast<BodyPart*>(p), organ_map);
-		} else if (p->getType() == TYPE_ORGAN) {
-			organ_map->insert(std::pair<std::string, Organ*>(std::string(p->getId()), static_cast<Organ*>(p)));
-		}
-	}
-
-	return organ_map;
-}
-
-void Body::linkOrgans(BodyPart* bp, std::map<std::string, Organ*, strless> *organ_map){
-	//Iterate through the children of the given BodyPart, if it is an Organ,
-	//call its linkToConnector function with the organ_map parameter;
-	//if it is a BodyPart, recursively call this function on it.
-
-	std::vector<Part*>* templ = bp->getChildList();
-	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
-		Part* p = *iterator;
-
-		if(p->getType() == TYPE_BODYPART){
-			linkOrgans(static_cast<BodyPart*>(p), organ_map);
-		} else if (p->getType() == TYPE_ORGAN) {
-			static_cast<Organ*>(p)->linkToConnector(organ_map);
-		}
-	}
-}
-
-BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*, strless> *tissue_map) {
+string Body::enter(rapidxml::xml_node<> *node, std::map<string, string>* child_map, std::map<string, string>* organ_link_map) {
 	using namespace rapidxml;
 
 	int organ_count, bodyparts, it;
 	xml_node<> *temp;
 	xml_node<> **organ_node_list;
 
-	BodyPart *bp;
-	char *id = NULL, *name = NULL, *_name = NULL;
+	char *id = nullptr, *name = nullptr, *_name = nullptr;
 	float surface = 0.0f;
 
 	//Make a count of the body_part nodes in this node and parse all standard
 	// nodes for the bodypart of this node
 	temp = node->first_node();
 	bodyparts = 0;
-	while(temp != NULL){
+	while (temp != nullptr){
 		_name = temp->name();
 
 		if (!strcmp(_name, "body_part")) { bodyparts++; }
 
-		if (!strcmp(_name,"id")) { id = temp->value(); }
-		if (!strcmp(_name,"name")) { name = temp->value(); }
-		if (!strcmp(_name,"surface")) { surface = atof(temp->value()); }
+		if (!strcmp(_name, "id")) { id = temp->value(); }
+		if (!strcmp(_name, "name")) { name = temp->value(); }
+		if (!strcmp(_name, "surface")) { surface = atof(temp->value()); }
 
 
 		temp = temp->next_sibling();
 	}
 
 	//if any of the mandatory vars for bodyparts are NULL, ERROR!
-	if (id == NULL || name == NULL){
+	if (id == nullptr || name == nullptr){
 		throw new bdef_parse_error("Not all mandatory BodyPart variables defined!", node);
 	}
 
-	//make the bodypart, reset temporary variables for reuse with the organs
-	bp = new BodyPart((string)id, (string)name, surface);
-	id = NULL; name = NULL;
+	//make the bodypart, make the pointer to it shared and store it in the part_map
+	BodyPart* bp = new BodyPart((string)id, (string)name, surface, this);
+
+	std::shared_ptr<BodyPart> p (bp);
+
+	part_map->insert(
+		std::pair<std::string, std::shared_ptr<Part>>(
+		bp->getUUID(), std::static_pointer_cast<Part>(p)));
+
+	//reset temporary variables for reuse with the organs
+	id = nullptr; name = nullptr;
 
 	//DEBUG: Print new BodyPart
 	debug_print("New BodyPart created: \n\tID: %s \n\tName: %s \n\tSurface: %f\n",
@@ -484,11 +414,11 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 	if (bodyparts == 0){
 		//...there must be organs instead!
 		// variables
-		Part **organs;
+		Organ **organs;
 		xml_attribute<> *attr;
 		xml_node<> *tdef_node;
 
-		char *connector = NULL;
+		char *connector = nullptr;
 		bool symmetrical = false;
 
 		it = 0;
@@ -497,7 +427,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 		char *tdef_id, *tdef_custom_id, *tdef_name;
 		float tdef_hit_prob;
 
-		tissue_def *tdefs = NULL;
+		tissue_def *tdefs = nullptr;
 		int tdef_count = 0, tdef_it = 0;
 
 
@@ -506,7 +436,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 
 		//scan for organ nodes in the given node
 		organ_count = 0;
-		while(temp != NULL){
+		while (temp != nullptr){
 			if (!strcmp(temp->name(),"organ")) { organ_count++; }
 			temp = temp->next_sibling();
 		}
@@ -521,7 +451,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 		organ_node_list = new xml_node<>*[organ_count];
 		temp = node->first_node();
 
-		while(temp != NULL){
+		while (temp != nullptr){
 			_name = temp->name();
 
 			if (!strcmp(_name,"organ")) {
@@ -533,7 +463,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 		}
 
 		//create temporary organ array
-		organs = new Part*[organ_count];
+		organs = new Organ*[organ_count];
 
 		//parse each organ definition in the list
 		for (int i=0; i < organ_count; i++){
@@ -541,7 +471,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 			temp = organ_node_list[i]->first_node();
 
 			//Iterate through all nodes within the organ node
-			while(temp != NULL){
+			while (temp != nullptr){
 				_name = temp->name();
 
 				//Parse standard tags
@@ -554,17 +484,17 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 				// and add to the organs
 				if (!strcmp(_name,"organ_tissue")) {
 					attr = temp->first_attribute();
-					if (attr != NULL && !strcmp(attr->name(), "symmetrical")){
+					if (attr != nullptr && !strcmp(attr->name(), "symmetrical")){
 						symmetrical = true;
 					}
 
-					attr = NULL;
+					attr = nullptr;
 
 					//Get the count of tissue defs
 					tdef_count = 0;
 					tdef_node = temp->first_node();
 
-					while (tdef_node != NULL)
+					while (tdef_node != nullptr)
 					{
 						//If any other node than tissue_def, ERROR!
 						if (strcmp(tdef_node->name(), "tissue_def")) {
@@ -583,17 +513,17 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 					// each tissue_def child and store it in tdefs[] array
 					tdef_it = 0;
 					tdef_node = temp->first_node();
-					while (tdef_node != NULL){
+					while (tdef_node != nullptr){
 						//The value of a tissue_def node is the id of the tissue (e.g. M_ARTERY)
 						tdef_id = tdef_node->value();
 
 						tdef_hit_prob = 0;
-						tdef_name = NULL;
-						tdef_custom_id = NULL;
+						tdef_name = nullptr;
+						tdef_custom_id = nullptr;
 
 						//Get the other parameters
 						attr = tdef_node->first_attribute();
-						while (attr != NULL){
+						while (attr != nullptr){
 
 							if (!strcmp(attr->name(), "hit_prob")){ tdef_hit_prob = atof(attr->value()); }
 							if (!strcmp(attr->name(), "name")) { tdef_name = attr->value(); }
@@ -606,12 +536,12 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 
 
 						//Store the parameters in the tissue definition
-						if (tdef_custom_id != NULL) {
+						if (tdef_custom_id != nullptr) {
 							tdefs[tdef_it].custom_id = string(tdef_custom_id);
 						}
 						else { tdefs[tdef_it].custom_id = ""; }
 
-						if (tdef_name != NULL) {
+						if (tdef_name != nullptr) {
 							tdefs[tdef_it].name = string(tdef_name);
 						}
 						else { tdefs[tdef_it].name = ""; }
@@ -626,7 +556,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 
 						std::string key = tdef_id;
 
-						std::map<std::string, Tissue*>::const_iterator pos
+						std::map<std::string, std::shared_ptr<Tissue>>::const_iterator pos
 							= tissue_map->find(key);
 
 						if (pos == tissue_map->end()){ throw bdef_parse_error("Tissue not found!", tdef_node); }
@@ -641,7 +571,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 
 			//Check whether all necessary data for organ creation has been read
 			// if not, ERROR!
-			if (id == NULL || name == NULL || connector == NULL || tdefs == NULL){
+			if (id == nullptr || name == nullptr || connector == nullptr || tdefs == nullptr){
 				throw bdef_parse_error("Not all necessary data for organ creation found.", organ_node_list[i]);
 			}
 
@@ -655,7 +585,7 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 			}
 
 			//Create the organ
-			organs[i] = new Organ(string(id), string(name), surface, tdefs, tdef_count, connector, !strcmp(connector, "_ROOT"));
+			organs[i] = new Organ(string(id), string(name), surface, this, tdefs, tdef_count, connector, !strcmp(connector, "_ROOT"));
 
 			//DEBUG: Print Organ
 #ifdef _DEBUG
@@ -674,128 +604,287 @@ BodyPart* Body::enter(rapidxml::xml_node<> *node, std::map<std::string, Tissue*,
 #endif
 		}
 
-		//...and add all organs to the bodypart
+		//...and add all organs to the part map. Add the "child note"
+		// between the organs and the new bodypart to the child_map.
+		// Add the "connector note" between the organs and their connectors to 
+		// the organ_link_map.
+		for (int i = 0; i < organ_count; i++){
+			part_map->insert(
+				std::pair<string, std::shared_ptr<Part>>(
+				organs[i]->getUUID(),
+				std::static_pointer_cast<Part>(std::make_shared<Organ>(*(organs[i])))
+				));
 
-		bp->addChildren(organs, organ_count);
+			child_map->insert(
+				std::pair<string, string>(
+				organs[i]->getUUID(),
+				bp->getUUID()
+				));
+
+			if (organs[i]->getConnectorId() != "_ROOT"){
+				organ_link_map->insert(
+					std::pair<string, string>(
+					organs[i]->getUUID(),
+					dynamic_cast<Organ*>(organs[i])->getConnectorId()
+					));
+			}
+		}
+		
+
 	} else {
+		//...its another BodyPart
+
 		//Go through all nodes and call this function on every
 		// node containing a part definition, add the returned BodyPart/Organ
-		// to this ones' children
+		// to this ones' children (per child_map)
 		temp = node->first_node();
 
 		it = 0;
-		while(temp != NULL){
+		while (temp != nullptr){
 			_name = temp->name();
 
 			if (!strcmp(_name, "body_part")) {
-				bp->addChild(enter(temp, tissue_map));
+				string child_uuid = enter(temp, child_map, organ_link_map);
+				child_map->insert(
+					std::pair<string, string>(
+					child_uuid,
+					bp->getUUID()
+					));
+				//bp->addChild(enter(temp));
 			}
 
 			temp = temp->next_sibling();
 		}
 	}
 
-	//DEBUG: Print BodyPart Parts
-#ifdef _DEBUG
-	std::vector<Part*>* templ = bp->getChildList();
-
-	debug_print("\n\t Parts:");
-
-	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
-		Part* p = *iterator;
-
-		debug_print("\n\t\t Part Name: %s", p->getName().c_str());
-	}
-
-	debug_print("\nEND BodyPart.\n");
-#endif
-
-	//return this bodypart
-	return bp;
+	//return this bodyparts uuid
+	return bp->getUUID();
 }
 
-
-void Body::makePartMap(BodyPart* bp, std::map<std::string, Part*, strless> *part_map)
-{
-	part_map->clear();
-	//Because the extractParts function works recursively, it doesn't add the very first element
-	// (in this case, the root) to the part_map. It has to be inserted seperately.
-	part_map->insert(std::pair<std::string, Part*>(std::string(root->getUUID()), root));
-	part_map = extractParts(root, part_map);
-}
-
-std::map<std::string, Part*, strless>* Body::extractParts(BodyPart* bp,
-		std::map<std::string, Part*, strless>* part_map) {
-
-	std::vector<Part*>* templ = bp->getChildList();
-
-	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
-		Part* p = *iterator;
-
-		part_map->insert(std::pair<std::string, Part*>(std::string(p->getUUID()), p));
-		debug_print("Added to part_map: %s \n", p->getId().c_str());
-
-		if(p->getType() == TYPE_BODYPART){
-			part_map = extractParts(static_cast<BodyPart*>(p), part_map);
-		}
-	}
-
-	return part_map;
-}
-
-void Body::makeIdMap(std::map<std::string, Part*, strless>* part_map)
+void Body::makeIdMap()
 {
 	iid_uuid_map->clear();
 
-	for (part_map_iterator iterator = part_map->begin(); iterator != part_map->end(); iterator++) {
+	for (std::map<string, std::shared_ptr<Part>>::iterator iterator = part_map->begin(); iterator != part_map->end(); iterator++) {
 		iid_uuid_map->insert(std::pair<std::string, std::string>(iterator->second->getId(), iterator->first));
 	}
 }
 
-bool Body::removePart(std::string part_uuid) {
-	Part* part = NULL;
 
-	try{
-		part = part_map->at(part_uuid);
-	} catch (int e) {
-		debug_error("Part %s does not exist.\n", part_uuid.c_str());
-		return false;
+void Body::buildPartList(std::vector<GuiObjectLink*>* list, Part* p, int depth)
+{
+	//debug_print("Depth: %i, Part: %s \n", depth, p->getId());
+	if (p->getType() == PartType::TYPE_ORGAN)
+	{
+		//Append to end of list "gui_list_indent_char [times depth] ORGAN_NAME"
+		std::string str = "";
+
+		for (int i = 0; i <= depth; i++)
+		{
+			str.append(gui_list_indent_char);
+		}
+
+		str.append(p->getName());
+
+		list->push_back(
+			new GuiObjectLink(
+			p->getUUID(),
+			new ColoredText(str, part_gui_list_color_organ)
+			)
+			);
+
+		return;
+	}
+	if (p->getType() == PartType::TYPE_BODYPART)
+	{
+		//Append to end of list "gui_list_indent_char [times depth] BODYPART_NAME"
+		BodyPart *bp = (BodyPart*)p;
+		std::string str = "";
+
+		for (int i = 0; i <= depth; i++)
+		{
+			str.append(gui_list_indent_char);
+		}
+
+		str.append(bp->getName());
+
+		list->push_back(
+			new GuiObjectLink(
+			bp->getUUID(),
+			new ColoredText(str, part_gui_list_color_bodypart)
+			)
+			);
+
+		//Call this function on all children of the BodyPart
+		for (std::vector<string>::iterator it = bp->getChildListRW()->begin(); it != bp->getChildListRW()->end(); it++)
+		{
+			std::shared_ptr<Part> part = getPartByUUID(*it);
+			if (part == nullptr) { continue; }
+			buildPartList(list, part.get(), depth + 1);
+		}
+
+		bp = nullptr;
+
+		return;
 	}
 
-	//Remove the chosen part and all downstream elements
+	debug_error("ERROR: Tried to call recursive part list building function on invalid Part* (neither TYPE_BODYPART nor TYPE_ORGAN)!\n");
+	return;
+}
 
-	//Part is an Organ: remove it, destructor handles killing the children
-	if (part->getType() == TYPE_ORGAN){
-		debug_print("Part %s is type ORGAN, deleting...\n", part->getId().c_str());
-		Organ* o = static_cast<Organ*>(part);
-		delete o;
-		debug_print("done.\n");
-	}
-
-	//Part is a BodyPart: remove it, destructor handles killing the children
-	if (part->getType() == TYPE_BODYPART){
-		debug_print("Part %s is type BODYPART, deleting...\n", part->getId().c_str());
-		BodyPart* bp = static_cast<BodyPart*>(part);
-		delete bp;
-		debug_print("done.\n");
-	}
-
-	//Refresh part map
-	makePartMap(root, part_map);
-	makeIdMap(part_map);
-
-	//Refresh GUI part list
+void Body::refreshLists()
+{
+	makeIdMap();
 	part_gui_list->clear();
-	buildPartList(part_gui_list, root, 0);
+	buildPartList(part_gui_list, root.get());
+}
+
+void Body::removePart(std::string part_uuid) {
+	//Get shared pointer of the Part to be removed
+	std::shared_ptr<Part> part = getPartByUUID(part_uuid);
+	
+	//TODO: Handle removal of root BP or root Organ
+	if (part == nullptr || part->getId() == "ROOT" || part->getId() == "UPPER_TORSO")
+	{
+		return;
+	}
+
+	debug_print("Removing Part %s...\n", part->getId().c_str());
+
+	//Create a list of all parts to be removed 
+	std::vector<string>* rem_list = new std::vector<string>();
+
+	//Add the part given to the function...
+	rem_list->push_back(part_uuid);
+	//...and everything that lies downstream of it (Organs and Bodyparts)
+	makeDownstreamPartList(part_uuid, rem_list);
+
+	//Remove duplicates from the list
+	std::sort(rem_list->begin(), rem_list->end());
+	rem_list->erase(std::unique(rem_list->begin(), rem_list->end()), rem_list->end());
 
 #ifdef _DEBUG
-	printBodyMap("body_mt.gv", root);
+	for (auto it = rem_list->begin(); it != rem_list->end(); it++)
+	{
+		debug_print("UUID %s is Part %s \n", getPartByUUID(*it)->getUUID().c_str(), getPartByUUID(*it)->getId().c_str());
+	}
 #endif
 
-	return true;
+	//Make a temporary list, in which UUIDs of empty bodyparts are stored.
+	// Its contents are later added to the rem_list
+	std::vector<string>* bp_rem = new std::vector<string>();
+
+	//Iterate over all parts to be removed...
+	for (auto it_rl = rem_list->begin(); it_rl != rem_list->end(); it_rl++)
+	{
+		//...if the part is an Organ, remove it from its connectors connected_organs list
+		if (getPartByUUID(*it_rl)->getType() == TYPE_ORGAN)
+		{
+			Organ *o = static_cast<Organ*>(getPartByUUID(*it_rl).get());
+			Organ *con = static_cast<Organ*>(getPartByUUID(o->getConnectorUUID()).get());
+
+			con->removeConnectedOrgan(*it_rl);
+		}
+
+		//..for all parts: remove from super part child list.
+		// If the super part is found to be empty (removeChild() returns true), add it
+		// to the temporary bp_rem list. 
+		BodyPart* super = static_cast<BodyPart*>(getPartByUUID(getPartByUUID(*it_rl)->getSuperPartUUID()).get());
+		BodyPart* old_super;
+		if (super->removeChild(*it_rl))
+		{
+			debug_print("BodyPart %s is empty, add to unregister\n", super->getId().c_str());
+			bp_rem->push_back(super->getUUID());
+			bool done = false;
+
+			//For every BodyPart that is to be deleted as empty, remove it from its own
+			// super BodyPart and check wheter it needs to be removed as well!
+			while (!done)
+			{
+				old_super = super;
+				super = static_cast<BodyPart*>(getPartByUUID(super->getSuperPartUUID()).get());
+				if (super->removeChild(old_super->getUUID()))
+				{
+					debug_print("BodyPart %s is empty, add to unregister\n", super->getId().c_str());
+					bp_rem->push_back(super->getUUID());
+				}
+				else {
+					done = true;
+				}
+			}
+		}
+	}
+
+	//Merge the temporary removal list into the rem_list
+	rem_list->insert(rem_list->end(), bp_rem->begin(), bp_rem->end());
+
+	//Remove duplicates again
+	std::sort(rem_list->begin(), rem_list->end());
+	rem_list->erase(std::unique(rem_list->begin(), rem_list->end()), rem_list->end());
+
+	//Unregister the Parts, causing the shared pointers to destroy their references and themselves.
+	unregisterParts(rem_list);
+
+	//Clear the part variable. This should cause the last use of the shared pointer
+	// to the part to be freed, therefore destroying the part.
+	part.reset();
+	
+	//Refresh all lists and maps
+	refreshLists();
+
+#ifdef _DEBUG
+	printBodyMap("body_mt.gv", root.get());
+#endif
+
+	debug_print("done.\n");
+	
+}
+
+void Body::makeDownstreamPartList(string part_uuid, std::vector<string>* child_list)
+{
+	std::shared_ptr<Part> part = getPartByUUID(part_uuid);
+	if (part == nullptr)
+	{
+		return;
+	}
+
+	//Part is an Organ: Add all connected organs to the list
+	if (part->getType() == TYPE_ORGAN){
+		Organ* o = static_cast<Organ*>(part.get());
+		for (auto it = o->getConnectedOrgansRW()->begin(); it != o->getConnectedOrgansRW()->end(); it++)
+		{
+			child_list->push_back(*it);
+			makeDownstreamPartList(*it, child_list);
+		}
+	}
+
+	//Part is a BodyPart: Add all children to the list and call this function on them
+	if (part->getType() == TYPE_BODYPART)
+	{
+		BodyPart* bp = static_cast<BodyPart*>(part.get());
+		for (auto it = bp->getChildListRW()->begin(); it != bp->getChildListRW()->end(); it++)
+		{
+			child_list->push_back(*it);
+			makeDownstreamPartList(*it, child_list);
+		}
+	}
+}
+
+void Body::removeParts(std::vector<string>* part_uuids)
+{
+	//Copy into new vector, because given vector gets changed by removePart function
+	std::vector<string>* rem_list = new std::vector<string>(part_uuids->begin(), part_uuids->end());
+
+	for (std::vector<string>::iterator it = rem_list->begin(); it != rem_list->end(); it++)
+	{
+		removePart(*it);
+	}
+
+	delete rem_list;
 }
 
 void Body::removeRandomPart() {
+	/*
 	debug_print("Remove Random Part from Body:\n");
 
 	//choose one randomly from the list
@@ -825,10 +914,31 @@ void Body::removeRandomPart() {
 	if (random_part->getId() == "ROOT") { return; }
 	removePart(random_part->getUUID());
 	return;
+	*/
 }
 
+void Body::unregisterPart(string uuid)
+{
+	auto it = part_map->find(uuid);
 
-Part* Body::getPartByUUID(std::string uuid)
+	if (it == part_map->end())
+	{
+		debug_error("ERROR: No Part with UUID %s could be found for unregister!\n", uuid.c_str());
+		return;
+	}
+	
+	part_map->erase(it);
+}
+
+void Body::unregisterParts(std::vector<string>* uuids)
+{
+	for (auto it = uuids->begin(); it != uuids->end(); it++)
+	{
+		unregisterPart(*it);
+	}
+}
+
+std::shared_ptr<Part> Body::getPartByUUID(std::string uuid)
 {
 	if (part_map->count(uuid) == 0) 
 	{ 
@@ -838,7 +948,7 @@ Part* Body::getPartByUUID(std::string uuid)
 	return part_map->at(uuid);
 }
 
-Part* Body::getPartByIID(std::string iid)
+std::shared_ptr<Part> Body::getPartByIID(std::string iid)
 {
 	if (iid_uuid_map->count(iid) == 0)
 	{ 
@@ -848,64 +958,6 @@ Part* Body::getPartByIID(std::string iid)
 	return getPartByUUID(iid_uuid_map->at(iid));
 }
 
-void Body::buildPartList(std::vector<GuiObjectLink*>* list, Part* p, int depth)
-{
-	//debug_print("Depth: %i, Part: %s \n", depth, p->getId());
-	if (p->getType() == PartType::TYPE_ORGAN)
-	{
-		//Append to end of list "gui_list_indent_char [times depth] ORGAN_NAME"
-		std::string str = "";
-
-		for (int i = 0; i <= depth; i++)
-		{
-			str.append(gui_list_indent_char);
-		}
-
-		str.append(p->getName());
-
-		list->push_back(
-				new GuiObjectLink(
-					p->getUUID(),
-					new ColoredText(str, part_gui_list_color_organ)
-				)
-			);
-
-		return;
-	}
-	if (p->getType() == PartType::TYPE_BODYPART)
-	{
-		//Append to end of list "gui_list_indent_char [times depth] BODYPART_NAME"
-		BodyPart *bp = (BodyPart*)p;
-		std::string str = "";
-
-		for (int i = 0; i <= depth; i++)
-		{
-			str.append(gui_list_indent_char);
-		}
-
-		str.append(bp->getName());
-
-		list->push_back(
-				new GuiObjectLink(
-					bp->getUUID(),
-					new ColoredText(str, part_gui_list_color_bodypart)
-				)
-			);
-
-		//Call this function on all children of the BodyPart
-		for (std::vector<Part*>::iterator it = bp->getChildList()->begin(); it != bp->getChildList()->end(); it++)
-		{
-			buildPartList(list, *it, depth + 1);
-		}
-
-		bp = nullptr;
-
-		return;
-	}
-
-	debug_error("ERROR: Tried to call recursive part list building function on invalid Part* (neither TYPE_BODYPART nor TYPE_ORGAN)!\n");
-	return;
-}
 
 void Body::printBodyMap(const char* filename, BodyPart* mroot) {
 	std::ofstream file;
@@ -935,15 +987,15 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 
 	*stream << "\t\t" << "label = \"" << bp->getName() << "\";\n";
 
-	std::vector<Part*>* templ = bp->getChildList();
-	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
-		Part* p = *iterator;
+	for (std::vector<string>::iterator iterator = bp->getChildListRW()->begin(); iterator != bp->getChildListRW()->end(); iterator++){
+		std::shared_ptr<Part> part = getPartByUUID(*iterator);
+		if (part == nullptr) { continue; }
 
-		if(p->getType() == TYPE_BODYPART){
-			createSubgraphs(stream, static_cast<BodyPart*>(p));
+		if(part->getType() == TYPE_BODYPART){
+			createSubgraphs(stream, static_cast<BodyPart*>(part.get()));
 
-		} else if (p->getType() == TYPE_ORGAN) {
-			Organ* o = static_cast<Organ*>(p);
+		} else if (part->getType() == TYPE_ORGAN) {
+			Organ* o = static_cast<Organ*>(part.get());
 			*stream << "\t\t" << o->getId() << " [label=\"" << o->getName() << "\"];" << "\n";
 
 		}
@@ -953,14 +1005,14 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 }
 
 void Body::createLinks(std::ofstream* stream, BodyPart* bp) {
-	std::vector<Part*>* templ = bp->getChildList();
-	for (std::vector<Part*>::iterator iterator = templ->begin(); iterator != templ->end(); iterator++){
-		Part* p = *iterator;
+	for (std::vector<string>::iterator iterator = bp->getChildListRW()->begin(); iterator != bp->getChildListRW()->end(); iterator++){
+		std::shared_ptr<Part> part = getPartByUUID(*iterator);
+		if (part == nullptr) { continue; }
 
-		if(p->getType() == TYPE_BODYPART){
-			createLinks(stream, static_cast<BodyPart*>(p));
-		} else if (p->getType() == TYPE_ORGAN) {
-			Organ* o = static_cast<Organ*>(p);
+		if(part->getType() == TYPE_BODYPART){
+			createLinks(stream, static_cast<BodyPart*>(part.get()));
+		} else if (part->getType() == TYPE_ORGAN) {
+			Organ* o = static_cast<Organ*>(part.get());
 			if (!o->getConnectorId().empty()) {
 				*stream << o->getConnectorId() << " -> " << o->getId() << ";\n";
 			}

@@ -12,6 +12,6 @@ var class_gui_container =
     [ "container_console", "class_gui_container.html#a7197f4269e9ca514223a2b48483bfc08", null ],
     [ "draw_border", "class_gui_container.html#a88396a12a00253010a07be8a613f0fc3", null ],
     [ "dynamic", "class_gui_container.html#a730f2031999829fa7a30f642554776da", null ],
-    [ "elements", "class_gui_container.html#a516bc6ac69ea36034c82eee91a4dfe20", null ],
+    [ "elements", "class_gui_container.html#a3eafa1280ee09315ba5ae1f6b8e3e6e4", null ],
     [ "title", "class_gui_container.html#a3a52a46201b7ed625a8207eeb4394e73", null ]
 ];

@@ -9,8 +9,8 @@ GuiBodyViewer::GuiBodyViewer(string id, int x, int y,
 	//the BP info TextBox and the Tissue Browser ListChooser
 
 	//Create ObjectLink lists
-	part_list = new std::vector<GuiObjectLink*>();
-	tissue_list = new std::vector<GuiObjectLink*>();
+	//part_list = new std::vector<GuiObjectLink*>();
+	//tissue_list = new std::vector<GuiObjectLink*>();
 
 	//Declare GUI Parts
 	//TODO: Make GuiListChooser scrollable, set active element!
@@ -45,8 +45,10 @@ GuiBodyViewer::~GuiBodyViewer()
 {
 	//Destroy ObjectLink lists
 	//TODO: Remove GuiObjectLink elements?
-	delete part_list;
-	delete tissue_list;
+	//delete part_list;
+	//delete tissue_list;
+	part_list = nullptr;
+	tissue_list = nullptr;
 
 	//Destroy GUI Parts
 	delete bp_browser;
@@ -95,7 +97,7 @@ void GuiBodyViewer::update(TCOD_key_t key)
 
 		std::string uuid = p_uuid->at(0);
 
-		Part* p = body->getPartByUUID(uuid);
+		Part* p = body->getPartByUUID(uuid).get();
 		if (p == nullptr) 
 		{ 
 			debug_error("ERROR: No Part could be resolved from UUID %s.", uuid.c_str());
@@ -123,7 +125,7 @@ void GuiBodyViewer::update(TCOD_key_t key)
 			
 			Organ* o = (Organ*)p;
 			temp_info.append("\n\nBodyPart: ");
-			temp_info.append(o->getSuperPart()->getName().c_str());
+			temp_info.append(body->getPartByUUID(o->getSuperPartUUID())->getName().c_str());
 			temp_info.append("\nSurface Area: ");
 			temp_info.append(std::to_string((int)(o->getSurface() * 100)));
 			
@@ -137,8 +139,7 @@ void GuiBodyViewer::update(TCOD_key_t key)
 			temp_info.append("\nConnected Organs:");
 
 			//Add Connectees (derive from UUID list returned by o->getConnectedOrganUUIDs())
-			std::vector<std::string>* temp = new std::vector<std::string>();
-			o->getConnectedOrganUUIDs(temp);
+			std::vector<std::string>* temp = o->getConnectedOrgansRW();
 
 			for (std::vector<std::string>::iterator it = temp->begin(); it != temp->end(); it++)
 			{
@@ -150,6 +151,7 @@ void GuiBodyViewer::update(TCOD_key_t key)
 			if (o->isStump()){
 				temp_info.append("\n\nOrgan is a stump.");
 			}
+
 		}
 		
 		bp_info->setText(temp_info);

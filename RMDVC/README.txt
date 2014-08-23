@@ -14,6 +14,7 @@ libtcod-v.1.5.1-MSVC [http://doryen.eptalys.net/libtcod/]
 	lodepng 20120729
 	upx
 SDL 1.2.12 [https://www.libsdl.org/]
+RapidXML 1.13 [http://rapidxml.sourceforge.net/]
 
 b) Dependencies NOT included in repository (these must be added to the /lib folder in order to compile with the .sln settings)
 boost_1_56_0 [http://www.boost.org/]
