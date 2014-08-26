@@ -1,10 +1,11 @@
 <map id="RenderObject" name="RenderObject">
-<area shape="rect" id="node3" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="83,155,204,181"/>
-<area shape="rect" id="node2" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="113,5,173,32"/>
-<area shape="rect" id="node4" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="24,229,121,256"/>
-<area shape="rect" id="node6" href="$class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="158,229,249,256"/>
-<area shape="rect" id="node5" href="$class_gui_body_viewer.html" title="A class representing a &quot;body inspector&quot;, which can display a bodies composition and state..." alt="" coords="5,304,116,331"/>
-<area shape="rect" id="node7" href="$class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. " alt="" coords="141,304,266,331"/>
-<area shape="rect" id="node9" href="$class_gui_text_box.html" title="A simple multi&#45;line text box. " alt="" coords="290,304,381,331"/>
-<area shape="rect" id="node8" href="$class_gui_list_chooser.html" title="A class representing a list of objects on the GUI, from which one may be chosen. " alt="" coords="148,379,259,405"/>
+<area shape="rect" id="node3" href="$class_actor.html" title="Actor" alt="" coords="5,155,59,181"/>
+<area shape="rect" id="node4" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="83,155,205,181"/>
+<area shape="rect" id="node2" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="58,5,118,32"/>
+<area shape="rect" id="node5" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="25,229,122,256"/>
+<area shape="rect" id="node7" href="$class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="159,229,249,256"/>
+<area shape="rect" id="node6" href="$class_gui_body_viewer.html" title="A class representing a &quot;body inspector&quot;, which can display a bodies composition and state..." alt="" coords="6,304,117,331"/>
+<area shape="rect" id="node8" href="$class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. " alt="" coords="141,304,267,331"/>
+<area shape="rect" id="node10" href="$class_gui_text_box.html" title="A simple multi&#45;line text box. " alt="" coords="291,304,381,331"/>
+<area shape="rect" id="node9" href="$class_gui_list_chooser.html" title="A class representing a list of objects on the GUI, from which one may be chosen. " alt="" coords="149,379,259,405"/>
 </map>

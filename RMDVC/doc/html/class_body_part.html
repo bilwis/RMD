@@ -68,7 +68,9 @@ $(document).ready(function(){initNavTree('class_body_part.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="class_body_part-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">BodyPart Class Reference</div>  </div>
@@ -140,11 +142,24 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>testFunction<
 string&#160;</td><td class="memItemRight" valign="bottom"><b>getUUID</b> ()</td></tr>
 <tr class="separator:a867c339f032a7f639e0bdb426bb6a297 inherit pub_methods_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ac9489d207985a0543ea686ddfd775b07"><td class="memTemplParams" colspan="2"><a class="anchor" id="ac9489d207985a0543ea686ddfd775b07"></a>
+template&lt;class Archive &gt; </td></tr>
+<tr class="memitem:ac9489d207985a0543ea686ddfd775b07"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>serialize</b> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr class="separator:ac9489d207985a0543ea686ddfd775b07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a5c2fa6e21db025d80ea76e3855b0b03c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c2fa6e21db025d80ea76e3855b0b03c"></a>
 std::vector&lt; string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>children</b></td></tr>
 <tr class="separator:a5c2fa6e21db025d80ea76e3855b0b03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ac98d07dd8f7b70e16ccb9a01abf56b9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac98d07dd8f7b70e16ccb9a01abf56b9c"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization::access</b></td></tr>
+<tr class="separator:ac98d07dd8f7b70e16ccb9a01abf56b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -212,7 +227,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Creates a new instance of the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> class. See <a class="el" href="class_part.html#a94d0c9a44c329c2df52e0efd005d66d7">Part()</a> constructor.</p>
+<p>Creates a new instance of the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> class. See <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part()</a> constructor.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>The internal part identifier. </td></tr>
@@ -311,7 +326,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_body_part.html">BodyPart</a></li>
-    <li class="footer">Generated on Sat Aug 23 2014 13:51:55 for Rogue M.D. by
+    <li class="footer">Generated on Tue Aug 26 2014 03:47:07 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

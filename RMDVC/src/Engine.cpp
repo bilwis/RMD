@@ -1,59 +1,73 @@
 #include "Engine.hpp"
-#include <stdio.h>
+
+#include <boost/serialization/export.hpp>
+
+BOOST_CLASS_EXPORT_GUID(BodyPart, "BodyPart")
+BOOST_CLASS_EXPORT_GUID(Organ, "Organ")
 
 Engine::Engine() {
     TCODConsole::initRoot(120,80,"libtcod C++ tutorial",false);
 	gameConsole = new TCODConsole(120, 70);
 
-    player = new Actor(40,25,'@',TCODColor::white);
+	TCODConsole::root->print(1, 1, "Press 'n' for new game, Press 'l' to load...");
+	TCODConsole::root->flush();
 
-    player->destructible = new Destructible(100);
-    player->destructible->body = new Body("Body.xml");
+	TCOD_key_t key;
+	TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS, &key, nullptr, true);
 
-	actors = new std::vector<Actor*>();
+	if (key.c == 'n')
+	{
 
-    actors->push_back(player);
-    actors->push_back(new Actor(60,13,'@',TCODColor::yellow));
-    map = new Map(120,70);
+		player = new Actor(40, 25, '@', TCODColor::white);
 
-	gui = new Gui();
-	
-	
-	guiBodyViewer = new GuiBodyViewer("BodyViewer", 3, 3, 80, 40,
-		TCODColor::white, TCODColor::black, true, "BodyViewer");
+		player->destructible = new Destructible(100);
+		player->destructible->body = new Body("Body.xml");
 
-	guiBodyViewer->setVisibility(false);
+		actors = new std::vector<Actor*>();
 
-	gui->addContainer(guiBodyViewer);
-	
+		actors->push_back(player);
+		actors->push_back(new Actor(60, 13, '@', TCODColor::yellow));
+		map = new Map(120, 70);
 
-	/*
-	sampleContainer = new GuiContainer("sampleContainer", 10, 10, 40, 20,
-		TCODColor::yellow, TCODColor::darkBlue, true, "TestBox");
+		gui = new Gui();
 
-	sampleTextBox = new GuiTextBox("sampleTextBox", 1, 1, 38, 10,
-		"This is a test string to check the functionality of this TextBox",
-		TCODColor::red, TCODColor::green);
-	sampleContainer->addElement(sampleTextBox);
 
-	sampleList = new GuiListChooser("sampleList", 1, 11, 38, 8,
-		TCODColor::white, TCODColor::black,
-		TCODColor::darkYellow, TCODColor::blue,
-		TCODColor::darkerYellow, TCODColor::desaturatedBlue);
-	sampleList->addItem(std::shared_ptr<Object>(new Object("Item 1")),
-		new ColoredText("Item 1 - Red", TCODColor::darkRed, TCODColor::turquoise));
-	sampleList->addItem(std::shared_ptr<Object>(new Object("Item 2")),
-		new ColoredText("Item 2 - Default"));
-	sampleList->addItem(std::shared_ptr<Object>(new Object("Item 3")),
-		new ColoredText("Item 3 - Yellow", TCODColor::yellow));
-	sampleContainer->addElement(sampleList);
-	
-	gui->registerActiveElement(sampleList);
-	gui->addContainer(sampleContainer);
+		guiBodyViewer = new GuiBodyViewer("BodyViewer", 3, 3, 80, 40,
+			TCODColor::white, TCODColor::black, true, "BodyViewer");
 
-	sampleContainer->setVisibility(false);*/
+		guiBodyViewer->setVisibility(false);
 
-	state = GameState::GAME;
+		gui->addContainer(guiBodyViewer);
+
+		state = GameState::GAME;
+	}
+
+	if (key.c == 'l')
+	{
+		std::ifstream ifs("save.xml");
+		boost::archive::xml_iarchive ia(ifs);
+		ia & BOOST_SERIALIZATION_NVP(player);
+		ifs.close();
+
+		actors = new std::vector<Actor*>();
+
+		actors->push_back(player);
+		actors->push_back(new Actor(60, 13, '@', TCODColor::yellow));
+		map = new Map(120, 70);
+
+		gui = new Gui();
+
+
+		guiBodyViewer = new GuiBodyViewer("BodyViewer", 3, 3, 80, 40,
+			TCODColor::white, TCODColor::black, true, "BodyViewer");
+
+		guiBodyViewer->setVisibility(false);
+
+		gui->addContainer(guiBodyViewer);
+
+		state = GameState::GAME;
+	}
+
 }
 
 void createBasicUI(Gui gui)
@@ -90,23 +104,23 @@ void Engine::update() {
 	
 		switch(key.vk) {
 			case TCODK_UP :
-				if ( ! map->isWall(player->x,player->y-1)) {
-					player->y--;
+				if ( ! map->isWall(player->getPosX(),player->getPosY()-1)) {
+					player->moveByY(-1);
 				}
 			break;
 			case TCODK_DOWN :
-				if ( ! map->isWall(player->x,player->y+1)) {
-					player->y++;
+				if (!map->isWall(player->getPosX(), player->getPosY() + 1)) {
+					player->moveByY(1);
 				}
 			break;
 			case TCODK_LEFT :
-				if ( ! map->isWall(player->x-1,player->y)) {
-					player->x--;
+				if (!map->isWall(player->getPosX() - 1, player->getPosY())) {
+					player->moveByX(-1);
 				}
 			break;
 			case TCODK_RIGHT :
-				if ( ! map->isWall(player->x+1,player->y)) {
-					player->x++;
+				if (!map->isWall(player->getPosX() + 1, player->getPosY())) {
+					player->moveByX(1);
 				}
 			break;
 			case TCODK_CHAR:
@@ -119,6 +133,14 @@ void Engine::update() {
 						state = GameState::GUI;
 						guiBodyViewer->activate(player->destructible->body);
 						gui->makeActive(guiBodyViewer->getUUID());
+					break;
+					case 's':
+						debug_print("Saving...");
+						std::ofstream ofs("save.xml");
+						boost::archive::xml_oarchive oa(ofs);
+						oa << BOOST_SERIALIZATION_NVP(player);
+						ofs.close();
+						debug_print("done.\n");
         		}
         		break;
 			default:break;

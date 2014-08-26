@@ -77,6 +77,8 @@ $(document).ready(function(){initNavTree('class_body_part.html','');});
   <tr><td class="entry"><a class="el" href="class_body_part.html#ab15e8834c4e61e593863b7f8b7f40e83">addChildren</a>(std::vector&lt; string &gt; *child_uuid_vector)</td><td class="entry"><a class="el" href="class_body_part.html">BodyPart</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_part.html#a0c6af14c64736cf1c8d9075734b7aa8f">body</a></td><td class="entry"><a class="el" href="class_part.html">Part</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_body_part.html#ada5d9179c1ab1fcbb9e0215b739da871">BodyPart</a>(string id, string name, float surface, Body *b)</td><td class="entry"><a class="el" href="class_body_part.html">BodyPart</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>BodyPart</b>() (defined in <a class="el" href="class_body_part.html">BodyPart</a>)</td><td class="entry"><a class="el" href="class_body_part.html">BodyPart</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>boost::serialization::access</b> (defined in <a class="el" href="class_body_part.html">BodyPart</a>)</td><td class="entry"><a class="el" href="class_body_part.html">BodyPart</a></td><td class="entry"><span class="mlabel">friend</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>children</b> (defined in <a class="el" href="class_body_part.html">BodyPart</a>)</td><td class="entry"><a class="el" href="class_body_part.html">BodyPart</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_body_part.html#a18acc577bb9cd89010227a1064c28687">getChildList</a>()</td><td class="entry"><a class="el" href="class_body_part.html">BodyPart</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_body_part.html#a32520545c4c46abe0f1d0e67a49d84cc">getChildListRW</a>()</td><td class="entry"><a class="el" href="class_body_part.html">BodyPart</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -90,7 +92,9 @@ $(document).ready(function(){initNavTree('class_body_part.html','');});
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>name</b> (defined in <a class="el" href="class_part.html">Part</a>)</td><td class="entry"><a class="el" href="class_part.html">Part</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>Object</b>() (defined in <a class="el" href="class_object.html">Object</a>)</td><td class="entry"><a class="el" href="class_object.html">Object</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_part.html#a94d0c9a44c329c2df52e0efd005d66d7">Part</a>(string id, string name, float surface, PartType type, Body *b)</td><td class="entry"><a class="el" href="class_part.html">Part</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="class_body_part.html#a99ad7a3903c1e45f12e3403c37ad98c1">removeChild</a>(string uuid)</td><td class="entry"><a class="el" href="class_body_part.html">BodyPart</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>Part</b>() (defined in <a class="el" href="class_part.html">Part</a>)</td><td class="entry"><a class="el" href="class_part.html">Part</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_body_part.html#a99ad7a3903c1e45f12e3403c37ad98c1">removeChild</a>(string uuid)</td><td class="entry"><a class="el" href="class_body_part.html">BodyPart</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>serialize</b>(Archive &amp;ar, const unsigned int version) (defined in <a class="el" href="class_body_part.html">BodyPart</a>)</td><td class="entry"><a class="el" href="class_body_part.html">BodyPart</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_part.html#a43b03d95f469901867e117d51d96da61">setSuperPart</a>(string bp_uuid)</td><td class="entry"><a class="el" href="class_part.html">Part</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_part.html#a9120911ef04dcaf24d916e67151ea658">super</a></td><td class="entry"><a class="el" href="class_part.html">Part</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>surface</b> (defined in <a class="el" href="class_part.html">Part</a>)</td><td class="entry"><a class="el" href="class_part.html">Part</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
@@ -105,7 +109,7 @@ $(document).ready(function(){initNavTree('class_body_part.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Aug 23 2014 13:51:55 for Rogue M.D. by
+    <li class="footer">Generated on Tue Aug 26 2014 03:47:07 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

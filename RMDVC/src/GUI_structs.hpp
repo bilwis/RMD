@@ -29,6 +29,22 @@ const std::string gui_list_indent_char = " ";
 */
 class ColoredText
 {
+private:
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_NVP(foreground_color.r);
+		ar & BOOST_SERIALIZATION_NVP(foreground_color.g);
+		ar & BOOST_SERIALIZATION_NVP(foreground_color.b);
+
+		ar & BOOST_SERIALIZATION_NVP(background_color.r);
+		ar & BOOST_SERIALIZATION_NVP(background_color.g);
+		ar & BOOST_SERIALIZATION_NVP(background_color.b);
+
+		ar & BOOST_SERIALIZATION_NVP(text);
+	}
+
 protected:
 	TCODColor foreground_color;
 	TCODColor background_color;
@@ -44,6 +60,7 @@ public:
 		foreground_color = fore;
 		background_color = back;
 	};
+	ColoredText(){};
 	~ColoredText(){};
 
 	string getText(){ return text; }
@@ -59,10 +76,21 @@ public:
 */
 struct GuiObjectLink
 {
+private:
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_NVP(object_uuid);
+		ar & BOOST_SERIALIZATION_NVP(text);
+	}
+
+public:
 	std::string object_uuid;
 	ColoredText* text;
 
 	GuiObjectLink(std::string uuid, ColoredText* t){ object_uuid = uuid; text = t; };
+	GuiObjectLink(){};
 	~GuiObjectLink(){ delete text; };
 };
 

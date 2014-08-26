@@ -70,6 +70,8 @@ $(document).ready(function(){initNavTree('class_render_object.html','');});
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="class_render_object-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">RenderObject Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -85,7 +87,7 @@ Inheritance diagram for RenderObject:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_render_object__inherit__graph.png" border="0" usemap="#_render_object_inherit__map" alt="Inheritance graph"/></div>
 <map name="_render_object_inherit__map" id="_render_object_inherit__map">
-<area shape="rect" id="node3" href="class_gui_render_object.html" title="GuiRenderObject" alt="" coords="83,155,204,181"/><area shape="rect" id="node2" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="113,5,173,32"/><area shape="rect" id="node4" href="class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="24,229,121,256"/><area shape="rect" id="node6" href="class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="158,229,249,256"/><area shape="rect" id="node5" href="class_gui_body_viewer.html" title="A class representing a &quot;body inspector&quot;, which can display a bodies composition and state..." alt="" coords="5,304,116,331"/><area shape="rect" id="node7" href="class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. " alt="" coords="141,304,266,331"/><area shape="rect" id="node9" href="class_gui_text_box.html" title="A simple multi&#45;line text box. " alt="" coords="290,304,381,331"/><area shape="rect" id="node8" href="class_gui_list_chooser.html" title="A class representing a list of objects on the GUI, from which one may be chosen. " alt="" coords="148,379,259,405"/></map>
+<area shape="rect" id="node3" href="class_actor.html" title="Actor" alt="" coords="5,155,59,181"/><area shape="rect" id="node4" href="class_gui_render_object.html" title="GuiRenderObject" alt="" coords="83,155,205,181"/><area shape="rect" id="node2" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="58,5,118,32"/><area shape="rect" id="node5" href="class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="25,229,122,256"/><area shape="rect" id="node7" href="class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="159,229,249,256"/><area shape="rect" id="node6" href="class_gui_body_viewer.html" title="A class representing a &quot;body inspector&quot;, which can display a bodies composition and state..." alt="" coords="6,304,117,331"/><area shape="rect" id="node8" href="class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. " alt="" coords="141,304,267,331"/><area shape="rect" id="node10" href="class_gui_text_box.html" title="A simple multi&#45;line text box. " alt="" coords="291,304,381,331"/><area shape="rect" id="node9" href="class_gui_list_chooser.html" title="A class representing a list of objects on the GUI, from which one may be chosen. " alt="" coords="149,379,259,405"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for RenderObject:</div>
@@ -118,6 +120,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosX</b> (int x)</
 <tr class="memitem:a3462c5e14a4eb4dd2b4acc2d2c8f3ad6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3462c5e14a4eb4dd2b4acc2d2c8f3ad6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosY</b> (int y)</td></tr>
 <tr class="separator:a3462c5e14a4eb4dd2b4acc2d2c8f3ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7738c63843359ae1b643e98555886c07"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7738c63843359ae1b643e98555886c07"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>moveByX</b> (int delta)</td></tr>
+<tr class="separator:a7738c63843359ae1b643e98555886c07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21b042b5cda5aecf6e54fbc91401a685"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21b042b5cda5aecf6e54fbc91401a685"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>moveByY</b> (int delta)</td></tr>
+<tr class="separator:a21b042b5cda5aecf6e54fbc91401a685"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a001dc54ea1125f99d3b41000d5c32dc7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a001dc54ea1125f99d3b41000d5c32dc7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setForeColor</b> (TCODColor color)</td></tr>
 <tr class="separator:a001dc54ea1125f99d3b41000d5c32dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,6 +173,19 @@ wchar_t&#160;</td><td class="memItemRight" valign="bottom"><b>ch</b> = 20</td></
 <tr class="memitem:a65a486a9bc5fece2182bc1cd76071662 inherit pro_attribs_class_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a65a486a9bc5fece2182bc1cd76071662"></a>
 uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <tr class="separator:a65a486a9bc5fece2182bc1cd76071662 inherit pro_attribs_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a35a59ff8cc547ddf7ac686c456402abc"><td class="memTemplParams" colspan="2"><a class="anchor" id="a35a59ff8cc547ddf7ac686c456402abc"></a>
+template&lt;class Archive &gt; </td></tr>
+<tr class="memitem:a35a59ff8cc547ddf7ac686c456402abc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>serialize</b> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr class="separator:a35a59ff8cc547ddf7ac686c456402abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ac98d07dd8f7b70e16ccb9a01abf56b9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac98d07dd8f7b70e16ccb9a01abf56b9c"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization::access</b></td></tr>
+<tr class="separator:ac98d07dd8f7b70e16ccb9a01abf56b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class representing an object that may be rendered on screen. </p>
@@ -179,7 +200,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_render_object.html">RenderObject</a></li>
-    <li class="footer">Generated on Sat Aug 23 2014 13:51:55 for Rogue M.D. by
+    <li class="footer">Generated on Tue Aug 26 2014 03:47:08 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

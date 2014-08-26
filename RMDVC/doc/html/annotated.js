@@ -21,7 +21,6 @@ var annotated =
     [ "Organ", "class_organ.html", "class_organ" ],
     [ "Part", "class_part.html", "class_part" ],
     [ "RenderObject", "class_render_object.html", "class_render_object" ],
-    [ "strless", "classstrless.html", "classstrless" ],
     [ "Tile", "struct_tile.html", "struct_tile" ],
     [ "Tissue", "class_tissue.html", "class_tissue" ],
     [ "tissue_def", "structtissue__def.html", "structtissue__def" ]

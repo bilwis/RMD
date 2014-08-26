@@ -1,15 +1,16 @@
 var class_body =
 [
     [ "Body", "class_body.html#a2cda9c6f52963f15e85822bc2cbd4a1a", null ],
+    [ "Body", "class_body.html#a7727b0d8c998bbc2942e4c802e31e2eb", null ],
     [ "~Body", "class_body.html#abe1c4da65568cf7978b6247affc461e3", null ],
     [ "buildPartList", "class_body.html#add724ec6251171cfa88b859bfbc7f443", null ],
     [ "createLinks", "class_body.html#a53cd79ab7e465e8606bc117b7cd6a80c", null ],
     [ "createSubgraphs", "class_body.html#aa7e42bc5508c816b64a9f5b056190fc3", null ],
     [ "enter", "class_body.html#ac1cdc62215a8995b8982e6d183bf30ef", null ],
-    [ "getPartByIID", "class_body.html#a85f5689bbf2ec664a3aeddaf96a3fbf8", null ],
-    [ "getPartByUUID", "class_body.html#a7e86b799a725cb8100fb8a583fec59ed", null ],
+    [ "getPartByIID", "class_body.html#a24b3e1067038914dca48109e5e9c7ddc", null ],
+    [ "getPartByUUID", "class_body.html#a1261f6fee5cac27ae46d5306146c9a6c", null ],
     [ "getPartGUIList", "class_body.html#a23661e884436cbea6bc2d936eaf660a3", null ],
-    [ "getRootBP", "class_body.html#ab21101075be3644cfddb7a139507e38d", null ],
+    [ "getRootBP", "class_body.html#ad9567776622f213ee69c13a94f72c4b9", null ],
     [ "loadBody", "class_body.html#a112d5b13dcd38ba6fde06fa090982e6c", null ],
     [ "makeDownstreamPartList", "class_body.html#acba1ea49309153166e26dbcaf1e9b3af", null ],
     [ "makeIdMap", "class_body.html#aaf7e4a9b37a5f58f2495ff695b8dbbee", null ],
@@ -18,13 +19,15 @@ var class_body =
     [ "removePart", "class_body.html#a18b5d3bd75fe06d7801db97b8ae7d283", null ],
     [ "removeParts", "class_body.html#a7ef433b1d7299f8111b2d69cf00843ab", null ],
     [ "removeRandomPart", "class_body.html#aef5d3db270848d3de8530a59353312a4", null ],
+    [ "serialize", "class_body.html#a532eba0eb6a933d2a4f5f028e0db0da0", null ],
     [ "unregisterPart", "class_body.html#a8221e0307acce06fb6aea863769f1d1b", null ],
     [ "unregisterParts", "class_body.html#addbf9e884cf95d851f7dfb77972ce515", null ],
+    [ "boost::serialization::access", "class_body.html#ac98d07dd8f7b70e16ccb9a01abf56b9c", null ],
     [ "iid_uuid_map", "class_body.html#a3852b219150ea17df1fbae330b57f6eb", null ],
     [ "part_gui_list", "class_body.html#a4fd1c39d8d1ccf241da4a0f9ac2199bf", null ],
     [ "part_gui_list_color_bodypart", "class_body.html#ad806f0628dd0df5b30af09c4f57e1d74", null ],
     [ "part_gui_list_color_organ", "class_body.html#a1ac5a0ac81de32aba186cb005b215fad", null ],
-    [ "part_map", "class_body.html#addad18cf4358df4a6f9c3ff3024b5eb5", null ],
-    [ "root", "class_body.html#a72f242b4c8c56e867d8334e97a83964f", null ],
-    [ "tissue_map", "class_body.html#a6ef745a08b7ed1b27c0868118ab7186b", null ]
+    [ "part_map", "class_body.html#ad688c38975678f5eed81a8a71b1a4f38", null ],
+    [ "root", "class_body.html#a12118e81d6f023566f8aa964b7a906e6", null ],
+    [ "tissue_map", "class_body.html#a792b213d3ae5f54293aeb05231f954c3", null ]
 ];

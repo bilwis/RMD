@@ -7,6 +7,12 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_serialize.hpp>
+
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/base_object.hpp>
+#include <boost/archive/xml_oarchive.hpp> // saving
+#include <boost/archive/xml_iarchive.hpp> // loading
 
 using std::string;
 using boost::uuids::uuid;
@@ -16,6 +22,14 @@ using boost::uuids::uuid;
 */
 class Object
 {
+private:
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_NVP(id);
+	}
+
 protected:
 	uuid id;
 
@@ -36,6 +50,27 @@ public:
 */
 class RenderObject : public Object
 {
+private:
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
+		
+		ar & BOOST_SERIALIZATION_NVP(foreground_color.r);
+		ar & BOOST_SERIALIZATION_NVP(foreground_color.g);
+		ar & BOOST_SERIALIZATION_NVP(foreground_color.b);
+
+		ar & BOOST_SERIALIZATION_NVP(background_color.r);
+		ar & BOOST_SERIALIZATION_NVP(background_color.g);
+		ar & BOOST_SERIALIZATION_NVP(background_color.b);
+
+		ar & BOOST_SERIALIZATION_NVP(pos_x);
+		ar & BOOST_SERIALIZATION_NVP(pos_y);
+
+		ar & BOOST_SERIALIZATION_NVP(ch);
+	}
+
 protected:
 	TCODColor background_color;
 	TCODColor foreground_color;
@@ -59,6 +94,9 @@ public:
 	void setPosX(int x){ pos_x = x; }
 	void setPosY(int y){ pos_y = y; }
 
+	void moveByX(int delta) { pos_x += delta; }
+	void moveByY(int delta) { pos_y += delta; }
+
 	void setForeColor(TCODColor color){ foreground_color = color; }
 	void setBackColor(TCODColor color){ background_color = color; }
 
@@ -66,6 +104,7 @@ public:
 
 	virtual void render(TCODConsole* con) = 0;
 
+	RenderObject(){};
 	~RenderObject();
 };
 

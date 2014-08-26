@@ -70,6 +70,7 @@ $(document).ready(function(){initNavTree('class_body.html','');});
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="class_body-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Body Class Reference</div>  </div>
@@ -85,8 +86,8 @@ $(document).ready(function(){initNavTree('class_body.html','');});
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2cda9c6f52963f15e85822bc2cbd4a1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a2cda9c6f52963f15e85822bc2cbd4a1a">Body</a> (const char *filename)</td></tr>
 <tr class="separator:a2cda9c6f52963f15e85822bc2cbd4a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab21101075be3644cfddb7a139507e38d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_body_part.html">BodyPart</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#ab21101075be3644cfddb7a139507e38d">getRootBP</a> ()</td></tr>
-<tr class="separator:ab21101075be3644cfddb7a139507e38d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9567776622f213ee69c13a94f72c4b9"><td class="memItemLeft" align="right" valign="top">boost::shared_ptr&lt; <a class="el" href="class_body_part.html">BodyPart</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#ad9567776622f213ee69c13a94f72c4b9">getRootBP</a> ()</td></tr>
+<tr class="separator:ad9567776622f213ee69c13a94f72c4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18b5d3bd75fe06d7801db97b8ae7d283"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a18b5d3bd75fe06d7801db97b8ae7d283">removePart</a> (std::string part_uuid)</td></tr>
 <tr class="separator:a18b5d3bd75fe06d7801db97b8ae7d283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ef433b1d7299f8111b2d69cf00843ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a7ef433b1d7299f8111b2d69cf00843ab">removeParts</a> (std::vector&lt; string &gt; *part_uuids)</td></tr>
@@ -95,16 +96,20 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aef5d3db270848d3de8530a59353312a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23661e884436cbea6bc2d936eaf660a3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a23661e884436cbea6bc2d936eaf660a3">getPartGUIList</a> ()</td></tr>
 <tr class="separator:a23661e884436cbea6bc2d936eaf660a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e86b799a725cb8100fb8a583fec59ed"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a7e86b799a725cb8100fb8a583fec59ed">getPartByUUID</a> (std::string uuid)</td></tr>
-<tr class="separator:a7e86b799a725cb8100fb8a583fec59ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85f5689bbf2ec664a3aeddaf96a3fbf8"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a85f5689bbf2ec664a3aeddaf96a3fbf8">getPartByIID</a> (std::string iid)</td></tr>
-<tr class="separator:a85f5689bbf2ec664a3aeddaf96a3fbf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1261f6fee5cac27ae46d5306146c9a6c"><td class="memItemLeft" align="right" valign="top">boost::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a1261f6fee5cac27ae46d5306146c9a6c">getPartByUUID</a> (std::string uuid)</td></tr>
+<tr class="separator:a1261f6fee5cac27ae46d5306146c9a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24b3e1067038914dca48109e5e9c7ddc"><td class="memItemLeft" align="right" valign="top">boost::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a24b3e1067038914dca48109e5e9c7ddc">getPartByIID</a> (std::string iid)</td></tr>
+<tr class="separator:a24b3e1067038914dca48109e5e9c7ddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5438ad07de06d89c85714a5888fea492"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5438ad07de06d89c85714a5888fea492"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>printBodyMap</b> (const char *filename, <a class="el" href="class_body_part.html">BodyPart</a> *mroot)</td></tr>
 <tr class="separator:a5438ad07de06d89c85714a5888fea492"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
+<tr class="memitem:a532eba0eb6a933d2a4f5f028e0db0da0"><td class="memTemplParams" colspan="2"><a class="anchor" id="a532eba0eb6a933d2a4f5f028e0db0da0"></a>
+template&lt;class Archive &gt; </td></tr>
+<tr class="memitem:a532eba0eb6a933d2a4f5f028e0db0da0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>serialize</b> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr class="separator:a532eba0eb6a933d2a4f5f028e0db0da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a112d5b13dcd38ba6fde06fa090982e6c"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a112d5b13dcd38ba6fde06fa090982e6c">loadBody</a> (const char *filename)</td></tr>
 <tr class="separator:a112d5b13dcd38ba6fde06fa090982e6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1cdc62215a8995b8982e6d183bf30ef"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#ac1cdc62215a8995b8982e6d183bf30ef">enter</a> (rapidxml::xml_node&lt;&gt; *node, std::map&lt; string, string &gt; *child_map, std::map&lt; string, string &gt; *organ_link_map)</td></tr>
@@ -131,25 +136,31 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>createLinks</b> (std:
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a72f242b4c8c56e867d8334e97a83964f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_body_part.html">BodyPart</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a72f242b4c8c56e867d8334e97a83964f">root</a></td></tr>
-<tr class="separator:a72f242b4c8c56e867d8334e97a83964f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12118e81d6f023566f8aa964b7a906e6"><td class="memItemLeft" align="right" valign="top">boost::shared_ptr&lt; <a class="el" href="class_body_part.html">BodyPart</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a12118e81d6f023566f8aa964b7a906e6">root</a></td></tr>
+<tr class="separator:a12118e81d6f023566f8aa964b7a906e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad806f0628dd0df5b30af09c4f57e1d74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad806f0628dd0df5b30af09c4f57e1d74"></a>
 const TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>part_gui_list_color_bodypart</b> = TCODColor::azure</td></tr>
 <tr class="separator:ad806f0628dd0df5b30af09c4f57e1d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ac5a0ac81de32aba186cb005b215fad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ac5a0ac81de32aba186cb005b215fad"></a>
 const TCODColor&#160;</td><td class="memItemRight" valign="bottom"><b>part_gui_list_color_organ</b> = TCODColor::darkRed</td></tr>
 <tr class="separator:a1ac5a0ac81de32aba186cb005b215fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ef745a08b7ed1b27c0868118ab7186b"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <br class="typebreak" />
-std::shared_ptr&lt; <a class="el" href="class_tissue.html">Tissue</a> &gt; &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a6ef745a08b7ed1b27c0868118ab7186b">tissue_map</a></td></tr>
-<tr class="separator:a6ef745a08b7ed1b27c0868118ab7186b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addad18cf4358df4a6f9c3ff3024b5eb5"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <br class="typebreak" />
-std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt; &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#addad18cf4358df4a6f9c3ff3024b5eb5">part_map</a></td></tr>
-<tr class="separator:addad18cf4358df4a6f9c3ff3024b5eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a792b213d3ae5f54293aeb05231f954c3"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <br class="typebreak" />
+boost::shared_ptr&lt; <a class="el" href="class_tissue.html">Tissue</a> &gt; &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a792b213d3ae5f54293aeb05231f954c3">tissue_map</a></td></tr>
+<tr class="separator:a792b213d3ae5f54293aeb05231f954c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad688c38975678f5eed81a8a71b1a4f38"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <br class="typebreak" />
+boost::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt; &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#ad688c38975678f5eed81a8a71b1a4f38">part_map</a></td></tr>
+<tr class="separator:ad688c38975678f5eed81a8a71b1a4f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3852b219150ea17df1fbae330b57f6eb"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <br class="typebreak" />
 std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a3852b219150ea17df1fbae330b57f6eb">iid_uuid_map</a></td></tr>
 <tr class="separator:a3852b219150ea17df1fbae330b57f6eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fd1c39d8d1ccf241da4a0f9ac2199bf"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_gui_object_link.html">GuiObjectLink</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_body.html#a4fd1c39d8d1ccf241da4a0f9ac2199bf">part_gui_list</a></td></tr>
 <tr class="separator:a4fd1c39d8d1ccf241da4a0f9ac2199bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ac98d07dd8f7b70e16ccb9a01abf56b9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac98d07dd8f7b70e16ccb9a01abf56b9c"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization::access</b></td></tr>
+<tr class="separator:ac98d07dd8f7b70e16ccb9a01abf56b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The code representation of a body of an <a class="el" href="class_actor.html">Actor</a>. </p>
@@ -279,12 +290,12 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
-<a class="anchor" id="a85f5689bbf2ec664a3aeddaf96a3fbf8"></a>
+<a class="anchor" id="a24b3e1067038914dca48109e5e9c7ddc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt; Body::getPartByIID </td>
+          <td class="memname">boost::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt; Body::getPartByIID </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>iid</em></td><td>)</td>
@@ -303,12 +314,12 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
-<a class="anchor" id="a7e86b799a725cb8100fb8a583fec59ed"></a>
+<a class="anchor" id="a1261f6fee5cac27ae46d5306146c9a6c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt; Body::getPartByUUID </td>
+          <td class="memname">boost::shared_ptr&lt; <a class="el" href="class_part.html">Part</a> &gt; Body::getPartByUUID </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>uuid</em></td><td>)</td>
@@ -351,7 +362,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
-<a class="anchor" id="ab21101075be3644cfddb7a139507e38d"></a>
+<a class="anchor" id="ad9567776622f213ee69c13a94f72c4b9"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -359,7 +370,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_body_part.html">BodyPart</a>&gt; Body::getRootBP </td>
+          <td class="memname">boost::shared_ptr&lt;<a class="el" href="class_body_part.html">BodyPart</a>&gt; Body::getRootBP </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -634,7 +645,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
-<a class="anchor" id="addad18cf4358df4a6f9c3ff3024b5eb5"></a>
+<a class="anchor" id="ad688c38975678f5eed81a8a71b1a4f38"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -642,7 +653,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;std::string, std::shared_ptr&lt;<a class="el" href="class_part.html">Part</a>&gt; &gt;* Body::part_map</td>
+          <td class="memname">std::map&lt;std::string, boost::shared_ptr&lt;<a class="el" href="class_part.html">Part</a>&gt; &gt;* Body::part_map</td>
         </tr>
       </table>
   </td>
@@ -655,7 +666,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
-<a class="anchor" id="a72f242b4c8c56e867d8334e97a83964f"></a>
+<a class="anchor" id="a12118e81d6f023566f8aa964b7a906e6"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -663,7 +674,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_body_part.html">BodyPart</a>&gt; Body::root</td>
+          <td class="memname">boost::shared_ptr&lt;<a class="el" href="class_body_part.html">BodyPart</a>&gt; Body::root</td>
         </tr>
       </table>
   </td>
@@ -676,7 +687,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 
 </div>
 </div>
-<a class="anchor" id="a6ef745a08b7ed1b27c0868118ab7186b"></a>
+<a class="anchor" id="a792b213d3ae5f54293aeb05231f954c3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -684,7 +695,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;std::string, std::shared_ptr&lt;<a class="el" href="class_tissue.html">Tissue</a>&gt; &gt;* Body::tissue_map</td>
+          <td class="memname">std::map&lt;std::string, boost::shared_ptr&lt;<a class="el" href="class_tissue.html">Tissue</a>&gt; &gt;* Body::tissue_map</td>
         </tr>
       </table>
   </td>
@@ -707,7 +718,7 @@ std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_body.html">Body</a></li>
-    <li class="footer">Generated on Sat Aug 23 2014 13:51:55 for Rogue M.D. by
+    <li class="footer">Generated on Tue Aug 26 2014 03:47:07 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

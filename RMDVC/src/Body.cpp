@@ -164,7 +164,7 @@ std::vector<string>* Organ::getConnectedOrgans()
 
 void Organ::addConnectedOrgan(string connectee_uuid){
 	connected_organs->push_back(connectee_uuid);
-	std::dynamic_pointer_cast<Organ>(body->getPartByUUID(connectee_uuid))->linkToConnector(getUUID());
+	boost::dynamic_pointer_cast<Organ>(body->getPartByUUID(connectee_uuid))->linkToConnector(getUUID());
 }
 
 void Organ::removeConnectedOrgan(string uuid) {
@@ -182,13 +182,13 @@ void Organ::removeConnectedOrgan(string uuid) {
 }
 
 Body::Body(const char *filename){
-	tissue_map = new std::map<std::string, std::shared_ptr<Tissue>>();
-	part_map = new std::map<std::string, std::shared_ptr<Part>>();
+	tissue_map = new std::map<std::string, boost::shared_ptr<Tissue>>();
+	part_map = new std::map<std::string, boost::shared_ptr<Part>>();
 	iid_uuid_map = new std::map<std::string, std::string>();
 	part_gui_list = new std::vector<GuiObjectLink*>();
 	
 	string root_uuid = loadBody(filename);
-	root = std::dynamic_pointer_cast<BodyPart>(getPartByUUID(root_uuid));
+	root = boost::dynamic_pointer_cast<BodyPart>(getPartByUUID(root_uuid));
 	refreshLists();
 	
 #ifdef _DEBUG
@@ -270,8 +270,8 @@ string Body::loadBody(const char *filename){
 				id, name, blood_flow, resistance, impairment);
 
 		//Create a new Tissue and store the shared pointer to it in the tissue map
-		std::shared_ptr<Tissue> t_tissue(new Tissue(id, name, pain, blood_flow, resistance, impairment));
-		tissue_map->insert(std::pair<std::string, std::shared_ptr<Tissue>>(std::string(id), t_tissue));
+		boost::shared_ptr<Tissue> t_tissue(new Tissue(id, name, pain, blood_flow, resistance, impairment));
+		tissue_map->insert(std::pair<std::string, boost::shared_ptr<Tissue>>(std::string(id), t_tissue));
 	}
 
 	//###BODYPART DATA###
@@ -397,11 +397,11 @@ string Body::enter(rapidxml::xml_node<> *node, std::map<string, string>* child_m
 	//make the bodypart, make the pointer to it shared and store it in the part_map
 	BodyPart* bp = new BodyPart((string)id, (string)name, surface, this);
 
-	std::shared_ptr<BodyPart> p (bp);
+	boost::shared_ptr<BodyPart> p (bp);
 
 	part_map->insert(
-		std::pair<std::string, std::shared_ptr<Part>>(
-		bp->getUUID(), std::static_pointer_cast<Part>(p)));
+		std::pair<std::string, boost::shared_ptr<Part>>(
+		bp->getUUID(), boost::static_pointer_cast<Part>(p)));
 
 	//reset temporary variables for reuse with the organs
 	id = nullptr; name = nullptr;
@@ -556,7 +556,7 @@ string Body::enter(rapidxml::xml_node<> *node, std::map<string, string>* child_m
 
 						std::string key = tdef_id;
 
-						std::map<std::string, std::shared_ptr<Tissue>>::const_iterator pos
+						std::map<std::string, boost::shared_ptr<Tissue>>::const_iterator pos
 							= tissue_map->find(key);
 
 						if (pos == tissue_map->end()){ throw bdef_parse_error("Tissue not found!", tdef_node); }
@@ -610,9 +610,9 @@ string Body::enter(rapidxml::xml_node<> *node, std::map<string, string>* child_m
 		// the organ_link_map.
 		for (int i = 0; i < organ_count; i++){
 			part_map->insert(
-				std::pair<string, std::shared_ptr<Part>>(
+				std::pair<string, boost::shared_ptr<Part>>(
 				organs[i]->getUUID(),
-				std::static_pointer_cast<Part>(std::make_shared<Organ>(*(organs[i])))
+				boost::static_pointer_cast<Part>(boost::make_shared<Organ>(*(organs[i])))
 				));
 
 			child_map->insert(
@@ -665,7 +665,7 @@ void Body::makeIdMap()
 {
 	iid_uuid_map->clear();
 
-	for (std::map<string, std::shared_ptr<Part>>::iterator iterator = part_map->begin(); iterator != part_map->end(); iterator++) {
+	for (std::map<string, boost::shared_ptr<Part>>::iterator iterator = part_map->begin(); iterator != part_map->end(); iterator++) {
 		iid_uuid_map->insert(std::pair<std::string, std::string>(iterator->second->getId(), iterator->first));
 	}
 }
@@ -716,9 +716,9 @@ void Body::buildPartList(std::vector<GuiObjectLink*>* list, Part* p, int depth)
 			);
 
 		//Call this function on all children of the BodyPart
-		for (std::vector<string>::iterator it = bp->getChildListRW()->begin(); it != bp->getChildListRW()->end(); it++)
+		for (auto it = bp->getChildListRW()->begin(); it != bp->getChildListRW()->end(); it++)
 		{
-			std::shared_ptr<Part> part = getPartByUUID(*it);
+			boost::shared_ptr<Part> part = getPartByUUID(*it);
 			if (part == nullptr) { continue; }
 			buildPartList(list, part.get(), depth + 1);
 		}
@@ -741,7 +741,7 @@ void Body::refreshLists()
 
 void Body::removePart(std::string part_uuid) {
 	//Get shared pointer of the Part to be removed
-	std::shared_ptr<Part> part = getPartByUUID(part_uuid);
+	boost::shared_ptr<Part> part = getPartByUUID(part_uuid);
 	
 	//TODO: Handle removal of root BP or root Organ
 	if (part == nullptr || part->getId() == "ROOT" || part->getId() == "UPPER_TORSO")
@@ -842,7 +842,7 @@ void Body::removePart(std::string part_uuid) {
 
 void Body::makeDownstreamPartList(string part_uuid, std::vector<string>* child_list)
 {
-	std::shared_ptr<Part> part = getPartByUUID(part_uuid);
+	boost::shared_ptr<Part> part = getPartByUUID(part_uuid);
 	if (part == nullptr)
 	{
 		return;
@@ -938,7 +938,7 @@ void Body::unregisterParts(std::vector<string>* uuids)
 	}
 }
 
-std::shared_ptr<Part> Body::getPartByUUID(std::string uuid)
+boost::shared_ptr<Part> Body::getPartByUUID(std::string uuid)
 {
 	if (part_map->count(uuid) == 0) 
 	{ 
@@ -948,7 +948,7 @@ std::shared_ptr<Part> Body::getPartByUUID(std::string uuid)
 	return part_map->at(uuid);
 }
 
-std::shared_ptr<Part> Body::getPartByIID(std::string iid)
+boost::shared_ptr<Part> Body::getPartByIID(std::string iid)
 {
 	if (iid_uuid_map->count(iid) == 0)
 	{ 
@@ -988,7 +988,7 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 	*stream << "\t\t" << "label = \"" << bp->getName() << "\";\n";
 
 	for (std::vector<string>::iterator iterator = bp->getChildListRW()->begin(); iterator != bp->getChildListRW()->end(); iterator++){
-		std::shared_ptr<Part> part = getPartByUUID(*iterator);
+		boost::shared_ptr<Part> part = getPartByUUID(*iterator);
 		if (part == nullptr) { continue; }
 
 		if(part->getType() == TYPE_BODYPART){
@@ -1006,7 +1006,7 @@ void Body::createSubgraphs(std::ofstream* stream, BodyPart* bp) {
 
 void Body::createLinks(std::ofstream* stream, BodyPart* bp) {
 	for (std::vector<string>::iterator iterator = bp->getChildListRW()->begin(); iterator != bp->getChildListRW()->end(); iterator++){
-		std::shared_ptr<Part> part = getPartByUUID(*iterator);
+		boost::shared_ptr<Part> part = getPartByUUID(*iterator);
 		if (part == nullptr) { continue; }
 
 		if(part->getType() == TYPE_BODYPART){

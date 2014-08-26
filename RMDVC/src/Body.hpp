@@ -12,6 +12,7 @@
 #include "libtcod.hpp"
 #include "Diagnostics.hpp"
 #include "GUI_structs.hpp"
+
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -23,16 +24,13 @@
 #include <time.h>
 #include <vector>
 
-using std::string;
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/map.hpp>
 
-/**The comparator for the tissue_map and organ_map map keys, which are std::string instances.
- */
-class strless {
-public:
-	bool operator() (const string & first, const string & second) const {
-		return first.compare(second) < 0;
-	}
-};
+using std::string;
 
 /** This class holds the definition of a tissue, i.e. the 'leaves' of the body 'tree'.
  * Tissue definitions are generalized, not localized, so a 'muscle' tissue in the 'right leg'
@@ -49,6 +47,20 @@ private:
 	float blood_flow;
 	float resistance;
 	float impairment;
+
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_NVP(id);
+		ar & BOOST_SERIALIZATION_NVP(name);
+
+		ar & BOOST_SERIALIZATION_NVP(pain);
+		ar & BOOST_SERIALIZATION_NVP(blood_flow);
+		ar & BOOST_SERIALIZATION_NVP(resistance);
+		ar & BOOST_SERIALIZATION_NVP(impairment);
+	}
+
 
 public:
 	/**This value represents the amount of vascularisation of the Tissue in question.
@@ -124,6 +136,7 @@ public:
 	 */
 	Tissue(string id, string name, float pain,
 			float blood_flow, float resistance, float impairment);
+	Tissue(){};
 	~Tissue();
 };
 
@@ -150,8 +163,19 @@ public:
  * @brief This struct represents the link between an organ and its tissues.
  */
 struct tissue_def{
+private:
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_NVP(tissue);
+		ar & BOOST_SERIALIZATION_NVP(hit_prob);
+		ar & BOOST_SERIALIZATION_NVP(name);
+		ar & BOOST_SERIALIZATION_NVP(custom_id);
+	}
+
 public:
-	std::shared_ptr<Tissue> tissue;
+	boost::shared_ptr<Tissue> tissue;
 	float hit_prob;
 	string name;
 	string custom_id;
@@ -173,6 +197,23 @@ class Body;
  * @brief This class is the abstract superclass for all parts that make up a body.
  */
 class Part: public Object{
+private:
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Object);
+
+		ar & BOOST_SERIALIZATION_NVP(id);
+		ar & BOOST_SERIALIZATION_NVP(name);
+
+		ar & BOOST_SERIALIZATION_NVP(body);
+
+		ar & BOOST_SERIALIZATION_NVP(surface);
+
+		ar & BOOST_SERIALIZATION_NVP(type);
+		ar & BOOST_SERIALIZATION_NVP(super);
+	}
 
 protected:
 
@@ -297,6 +338,7 @@ public:
 		return;
 	};
 
+	Part(){};
 	virtual ~Part();
 };
 
@@ -330,6 +372,24 @@ private:
 	*/
 	void linkToConnector(string connector_uuid);
 
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Part);
+
+		ar & BOOST_SERIALIZATION_NVP(tissues);
+		ar & BOOST_SERIALIZATION_NVP(tissue_count);
+
+		ar & BOOST_SERIALIZATION_NVP(connector_id);
+		ar & BOOST_SERIALIZATION_NVP(connector_uuid);
+
+		ar & BOOST_SERIALIZATION_NVP(root);
+
+		ar & BOOST_SERIALIZATION_NVP(connected_organs);
+		ar & BOOST_SERIALIZATION_NVP(is_stump);
+	}
+
 public:
 	/**Creates a new instance of the organ class.
 	 *
@@ -347,6 +407,7 @@ public:
 	Organ(string id, string name, float surface, Body* b,
 			tissue_def *tissues, int tissue_count, const char *connector_id,
 			bool is_root=false);
+	Organ(){};
 
 	/**The destructor handles deregistering with the BodyPart that this Organ is a child of,
 	 * as well as the destruction of all downstream organs connected to this one.
@@ -411,6 +472,15 @@ class BodyPart: public Part{
 private:
 	std::vector<string>* children;
 
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Part);
+
+		ar & BOOST_SERIALIZATION_NVP(children);
+	}
+
 public:
 	/**@brief Adds a Part to the BodyPart's list of children.
 	 * @param child A shared pointer to the Part object to add.
@@ -450,6 +520,7 @@ public:
 	 * @param b The body this BodyPart is part of.
 	 */
 	BodyPart(string id, string name, float surface, Body* b);
+	BodyPart(){};
 	~BodyPart();
 };
 
@@ -469,7 +540,7 @@ private:
 	/**This shared pointer points to the root BodyPart of the stored Body. It can be used
 	* for recursive iteration through the child lists of the "attached" bodyparts, for example.
 	*/
-	std::shared_ptr<BodyPart> root;
+	boost::shared_ptr<BodyPart> root;
 
 	const TCODColor part_gui_list_color_bodypart = TCODColor::azure;
 	const TCODColor part_gui_list_color_organ = TCODColor::darkRed;
@@ -479,12 +550,12 @@ private:
 	* to the Tissue instance. This shared pointer is shared, for example, by the Organs in the part_map,
 	* who hold a list of shared pointers to the Tissue elements that they are "composed" of.
 	*/
-	std::map<std::string, std::shared_ptr<Tissue>>* tissue_map;
+	std::map<std::string, boost::shared_ptr<Tissue>>* tissue_map;
 
 	/**This map holds a list of all Parts (BodyParts and Organs) of a body, the key
 	 * being the UUID, and the value a shared pointer to the Part.
 	 */
-	std::map<std::string, std::shared_ptr<Part>>* part_map;
+	std::map<std::string, boost::shared_ptr<Part>>* part_map;
 
 	/**This map holds a list of all UUID's and all internal id's of all Parts (BodyParts and Organs)
 	* of a body. The key is the internal id, the value the UUID. 
@@ -500,6 +571,18 @@ private:
 	* of the part within the body structure. (See GuiBodyViewer class for "usage")
 	*/
 	std::vector<GuiObjectLink*>* part_gui_list;
+
+	friend class boost::serialization::access;
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+		ar & BOOST_SERIALIZATION_NVP(root);
+
+		ar & BOOST_SERIALIZATION_NVP(tissue_map);
+		ar & BOOST_SERIALIZATION_NVP(part_map);
+		ar & BOOST_SERIALIZATION_NVP(iid_uuid_map);
+		ar & BOOST_SERIALIZATION_NVP(part_gui_list);
+	}
 
 	/**This function loads and parses a [body-definition XML](xml_help.html).
 	 * The library used for this is RapidXML.
@@ -584,12 +667,13 @@ public:
 	 * @param filename The path to the [body-definition XML](xml_help.html).
 	 */
 	Body(const char *filename);
+	Body(){};
 	~Body();
 
 	/**This function returns a shared pointer to the root BodyPart.
 	* @return A shared pointer pointing at the root BodyPart.
 	*/
-	std::shared_ptr<BodyPart> getRootBP()
+	boost::shared_ptr<BodyPart> getRootBP()
 	{
 		if (root != nullptr) { return root; }
 	};
@@ -623,14 +707,14 @@ public:
 	* @param uuid The UUID of the Part to get.
 	* @return A shared pointer to the Part, or a nullptr.
 	*/
-	std::shared_ptr<Part> getPartByUUID(std::string uuid);
+	boost::shared_ptr<Part> getPartByUUID(std::string uuid);
 	/**This function returns a shared pointer to the Part identified by the given IID,
 	* or a nullptr if the Part could not be found.
 	*
 	* @param uuid The IID of the Part to get.
 	* @return A shared pointer to the Part, or a nullptr.
 	*/
-	std::shared_ptr<Part> getPartByIID(std::string iid);
+	boost::shared_ptr<Part> getPartByIID(std::string iid);
 
 	void printBodyMap(const char* filename, BodyPart* mroot);
 
