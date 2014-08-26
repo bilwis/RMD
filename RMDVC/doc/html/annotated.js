@@ -1,7 +1,13 @@
 var annotated =
 [
+    [ "Action", "class_action.html", "class_action" ],
+    [ "ActionQueueEntry", "struct_action_queue_entry.html", "struct_action_queue_entry" ],
+    [ "ActionResult", "class_action_result.html", "class_action_result" ],
+    [ "ActionScheduler", "class_action_scheduler.html", "class_action_scheduler" ],
     [ "ActiveGuiElement", "class_active_gui_element.html", "class_active_gui_element" ],
     [ "Actor", "class_actor.html", "class_actor" ],
+    [ "ActorMap", "class_actor_map.html", "class_actor_map" ],
+    [ "Ai", "class_ai.html", "class_ai" ],
     [ "bdef_parse_error", "classbdef__parse__error.html", "classbdef__parse__error" ],
     [ "Body", "class_body.html", "class_body" ],
     [ "BodyPart", "class_body_part.html", "class_body_part" ],
@@ -16,12 +22,17 @@ var annotated =
     [ "GuiObjectLink", "struct_gui_object_link.html", "struct_gui_object_link" ],
     [ "GuiRenderObject", "class_gui_render_object.html", "class_gui_render_object" ],
     [ "GuiTextBox", "class_gui_text_box.html", "class_gui_text_box" ],
+    [ "IdleAction", "class_idle_action.html", "class_idle_action" ],
     [ "Map", "class_map.html", "class_map" ],
+    [ "MeleeAi", "class_melee_ai.html", "class_melee_ai" ],
+    [ "MoveAction", "class_move_action.html", "class_move_action" ],
     [ "Object", "class_object.html", "class_object" ],
     [ "Organ", "class_organ.html", "class_organ" ],
     [ "Part", "class_part.html", "class_part" ],
+    [ "PlayerAi", "class_player_ai.html", "class_player_ai" ],
     [ "RenderObject", "class_render_object.html", "class_render_object" ],
     [ "Tile", "struct_tile.html", "struct_tile" ],
     [ "Tissue", "class_tissue.html", "class_tissue" ],
-    [ "tissue_def", "structtissue__def.html", "structtissue__def" ]
+    [ "tissue_def", "structtissue__def.html", "structtissue__def" ],
+    [ "Vector2", "struct_vector2.html", "struct_vector2" ]
 ];

@@ -2,8 +2,10 @@
 #define ACTOR_HPP
 
 #include "libtcod.hpp"
-#include "Destructible.hpp"
 #include "Object.hpp"
+
+class Ai;
+class Destructible;
 
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/base_object.hpp>
@@ -24,7 +26,8 @@ private:
 	}
 
 public :
-    Destructible *destructible;
+    Destructible* destructible;
+	Ai* ai;
 
 	const int getSpeed() { return speed; }
  

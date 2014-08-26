@@ -4,10 +4,12 @@
 #include "libtcod.hpp"
 #include "Object.hpp"
 #include "GUI_structs.hpp"
-#include "Body.hpp"
+
+class Body;
 
 #include <string>
 #include <vector>
+#include <map>
 #include <memory>
 
 #include "Diagnostics.hpp"

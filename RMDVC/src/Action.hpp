@@ -1,14 +1,14 @@
 #ifndef ACTION_HPP
 #define ACTION_HPP
 
-#include "libtcod.hpp"
-#include "Actor.hpp"
-#include "Map.hpp"
+#include "Object.hpp"
+
+class Actor;
+class Map;
+class ActorMap;
 
 #include <string>
 #include <list>
-
-#include <boost/shared_ptr.hpp>
 
 class Action;
 class ActionResult;
@@ -47,6 +47,8 @@ class ActionScheduler
 {
 	std::list<ActionQueueEntry*>* queue;
 
+	ActionQueueEntry* nextPlayerAction = nullptr;
+
 	/** This function calculates the time to execution as follows: (Action cost) / (Actor speed).
 	*
 	* @param actor_speed The speed of the actor (must be > 0).
@@ -56,7 +58,7 @@ class ActionScheduler
 	double calculateTimeToExec(int actor_speed, int action_cost)
 	{
 		assert(actor_speed > 0);
-		return action_cost / actor_speed;
+		return (double)action_cost / (double)actor_speed;
 	};
 
 public:
@@ -65,8 +67,10 @@ public:
 	* corresponding to its time to execution.
 	*
 	* @param action A pointer to the action to be scheduled.
+	* @param playerAction Wheter the action was scheduled by the PlayerAi, and will cause a block
+	*	after it was executed, waiting for the next input by the player.
 	*/
-	void scheduleAction(Action* action);
+	void scheduleAction(Action* action, bool playerAction = false);
 
 	/** This function returns the next action in queue. The action is deleted from the queue.
 	* _Important: The action instance must be destroyed by the caller after use, because it cannot be handled by
@@ -75,6 +79,8 @@ public:
 	* @return A pointer to the next action in queue or nullptr, if the queue is empty.
 	*/
 	Action* nextAction();
+
+	bool isPlayerActionScheduled() {if (nextPlayerAction == nullptr) { return false; } return true; }
 
 	ActionScheduler()
 	{
@@ -93,13 +99,13 @@ public:
 class Action : public Object
 {
 protected:
-	static const int cost = 0;
+
 	const ActionType type;
 	Actor* actor;
 	
 public:
-	const int getCost() { return cost; }
-	const int getActorSpeed() { return actor->getSpeed(); }
+	virtual const int getCost() = 0;
+	const int getActorSpeed();
 	const ActionType getActionType() { return type; }
 
 	/** This abstract function must be implemented by all Derivates of Action.
@@ -117,14 +123,18 @@ public:
 */
 class ActionResult
 {
-	bool success;
+	const bool success;
 	const Action* alternative;
+	const std::string actor_uuid;
 
 public:
-	bool wasSuccessful() const { return success; };
+	const bool wasSuccessful() const { return success; };
 	const Action* getAlternative() const { return alternative; };
 
-	ActionResult(bool success, const Action* alternative = nullptr) { this->success = success; this->alternative = alternative; };
+	const std::string getActorUUID() const { return actor_uuid; }
+
+	ActionResult(std::string actor_uuid, bool success, const Action* alternative = nullptr) 
+		: actor_uuid(actor_uuid), success(success), alternative(alternative) {};
 	~ActionResult(){};
 };
 
@@ -137,15 +147,28 @@ class MoveAction : public Action
 	static const int cost = 100;	
 
 	const Map* map;
-	
+	ActorMap* actor_map;
+
 	int d_x;
 	int d_y;
 
 public:
+	const int getCost() { return cost; }
+
 	const ActionResult* execute();
 
-	MoveAction(Actor* actor, const Map* map, int d_x, int d_y) : Action(actor, ACTION_MOVE), map(map), d_x(d_x), d_y(d_y){};
+	MoveAction(Actor* actor, const Map* map, ActorMap* actor_map, int d_x, int d_y) : Action(actor, ACTION_MOVE), map(map), actor_map(actor_map), d_x(d_x), d_y(d_y){};
 	~MoveAction(){};
+};
+
+class IdleAction : public Action
+{
+	const int cost;
+public:
+	const int getCost() { return cost; }
+
+	const ActionResult* execute();
+	IdleAction(Actor* actor);
 };
 
 #endif

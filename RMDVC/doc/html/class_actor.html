@@ -70,6 +70,7 @@ $(document).ready(function(){initNavTree('class_actor.html','');});
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_actor-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -88,14 +89,17 @@ Collaboration diagram for Actor:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_actor__coll__graph.png" border="0" usemap="#_actor_coll__map" alt="Collaboration graph"/></div>
 <map name="_actor_coll__map" id="_actor_coll__map">
-<area shape="rect" id="node2" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="5,184,107,211"/><area shape="rect" id="node3" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="26,95,86,121"/><area shape="rect" id="node5" href="class_destructible.html" title="Destructible" alt="" coords="131,184,221,211"/><area shape="rect" id="node6" href="class_body.html" title="The code representation of a body of an Actor. " alt="" coords="150,95,202,121"/></map>
+<area shape="rect" id="node2" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="5,184,107,211"/><area shape="rect" id="node3" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="26,95,86,121"/><area shape="rect" id="node5" href="class_ai.html" title="Ai" alt="" coords="131,184,170,211"/><area shape="rect" id="node6" href="class_destructible.html" title="Destructible" alt="" coords="195,184,285,211"/><area shape="rect" id="node7" href="class_body.html" title="The code representation of a body of an Actor. " alt="" coords="214,95,266,121"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0d11192a276d295a3424dd508e354e70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d11192a276d295a3424dd508e354e70"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Actor</b> (int x, int y, int ch, const TCODColor &amp;col)</td></tr>
-<tr class="separator:a0d11192a276d295a3424dd508e354e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bd84d02b903b411ab3bc1bd495bae4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0bd84d02b903b411ab3bc1bd495bae4f"></a>
+const int&#160;</td><td class="memItemRight" valign="bottom"><b>getSpeed</b> ()</td></tr>
+<tr class="separator:a0bd84d02b903b411ab3bc1bd495bae4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2297b942e99fcae979f3fdd9c8f1902e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2297b942e99fcae979f3fdd9c8f1902e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Actor</b> (int x, int y, int ch, const TCODColor &amp;col, int speed)</td></tr>
+<tr class="separator:a2297b942e99fcae979f3fdd9c8f1902e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a68b27d513a055e854712d3f0286550"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a68b27d513a055e854712d3f0286550"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>render</b> (TCODConsole *con)</td></tr>
 <tr class="separator:a1a68b27d513a055e854712d3f0286550"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,6 +153,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a5394fa50669705561368ddfc3f707fe9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5394fa50669705561368ddfc3f707fe9"></a>
 <a class="el" href="class_destructible.html">Destructible</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>destructible</b></td></tr>
 <tr class="separator:a5394fa50669705561368ddfc3f707fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e305f84776b7cedf7212357a12c21db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e305f84776b7cedf7212357a12c21db"></a>
+<a class="el" href="class_ai.html">Ai</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>ai</b></td></tr>
+<tr class="separator:a8e305f84776b7cedf7212357a12c21db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -156,6 +163,12 @@ Private Member Functions</h2></td></tr>
 template&lt;class Archive &gt; </td></tr>
 <tr class="memitem:ab6201adf7f18607cad8bc45fc87423bc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>serialize</b> (Archive &amp;ar, const unsigned int version)</td></tr>
 <tr class="separator:ab6201adf7f18607cad8bc45fc87423bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a0221db24a4bb6eae840d69c4ebcf85cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0221db24a4bb6eae840d69c4ebcf85cc"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>speed</b></td></tr>
+<tr class="separator:a0221db24a4bb6eae840d69c4ebcf85cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -200,7 +213,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_actor.html">Actor</a></li>
-    <li class="footer">Generated on Tue Aug 26 2014 03:47:07 for Rogue M.D. by
+    <li class="footer">Generated on Wed Aug 27 2014 00:29:53 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

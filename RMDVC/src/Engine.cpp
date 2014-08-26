@@ -1,4 +1,11 @@
 #include "Engine.hpp"
+#include "Map.hpp"
+#include "Actor.hpp"
+#include "Action.hpp"
+#include "GUI.hpp"
+#include "Body.hpp"
+#include "Destructible.hpp"
+#include "Ai.hpp"
 
 #include <boost/serialization/export.hpp>
 
@@ -15,16 +22,21 @@ Engine::Engine() {
 	TCOD_key_t key;
 	TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS, &key, nullptr, true);
 
-	actors = new std::vector<Actor*>();
+	actors = new ActorMap();
+	map = new Map(120, 70);
+	gui = new Gui();
+	scheduler = new ActionScheduler();
+
 
 	if (key.c == 'n')
 	{
-		player = new Actor(40, 25, '@', TCODColor::white, 100);
+		player = new Actor(40, 25, '@', TCODColor::white, 200);
 
 		player->destructible = new Destructible(100);
 		player->destructible->body = new Body("Body.xml");
-		
-		actors->push_back(player);
+		player->ai = new PlayerAi();
+
+		actors->addActor(player);
 	}
 
 	if (key.c == 'l')
@@ -34,14 +46,14 @@ Engine::Engine() {
 		ia & BOOST_SERIALIZATION_NVP(player);
 		ifs.close();
 
-		actors->push_back(player);
+		actors->addActor(player);
 	}
 
-	actors->push_back(new Actor(60, 13, '@', TCODColor::yellow, 100));
-	map = new Map(120, 70);
-	gui = new Gui();
-	scheduler = new ActionScheduler();
-
+	Actor* mob = new Actor(60, 13, '@', TCODColor::yellow, 100);
+	mob->ai = new MeleeAi();
+	mob->ai->update(mob, this, TCODConsole::checkForKeypress());
+	actors->addActor(mob);
+	
 
 	guiBodyViewer = new GuiBodyViewer("BodyViewer", 3, 3, 80, 40,
 		TCODColor::white, TCODColor::black, true, "BodyViewer");
@@ -60,14 +72,13 @@ void createBasicUI(Gui gui)
 }
 
 Engine::~Engine() {
-    actors->erase(actors->begin(), actors->end());
 	delete actors;
     delete map;
 }
 
 void Engine::update() {
 	TCOD_key_t key;
-	TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS, &key, NULL);
+	TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS, &key,NULL, NULL);
 
 	//No key pressed = nothing to do!
 	if (key.vk == TCODK_NONE) { return; }
@@ -85,22 +96,8 @@ void Engine::update() {
 	}
 
 	if (state == GameState::GAME) {
-
-		Action* action = nullptr;
-	
+		
 		switch(key.vk) {
-			case TCODK_UP :
-				action = new MoveAction(player, map, 0, -1);
-			break;
-			case TCODK_DOWN :
-				action = new MoveAction(player, map, 0, 1);
-			break;
-			case TCODK_LEFT :
-				action = new MoveAction(player, map, -1, 0);
-			break;
-			case TCODK_RIGHT :
-				action = new MoveAction(player, map, 1, 0);
-			break;
 			case TCODK_CHAR:
         		switch (key.c) {
         			case 'k':
@@ -121,34 +118,39 @@ void Engine::update() {
 						debug_print("done.\n");
         		}
         		break;
-			default:break;
+			default: //Any key that has not been overridden by the above
+				
+				break;
 		}
+		
+		//Try to update player (if no applicable key is pressed, no action will be scheduled,
+		// and action loop is not entered.
+		actors->updateActor(player->getUUID(), this, key);
 
-		if (action != nullptr) {
-			scheduler->scheduleAction(action);
+		//Perform actions until players turn
 
-			//Perform actions until players turn
-			Action* nextAction = nullptr;
-			do
-			{
-				//If an action was performed, delete it!
-				if (nextAction != nullptr)
-					delete nextAction;
+		Action* nextAction = nullptr;
+		while (scheduler->isPlayerActionScheduled())
+		{
+			nextAction = scheduler->nextAction();
+			assert(nextAction != nullptr); //If queue is empty, fail (queue must not be empty while state == GAME)
 
-				nextAction = scheduler->nextAction();
-				assert(nextAction != nullptr); //If queue is empty, fail (queue must not be empty while state == GAME)
+			//TODO: Add alternative action handling
+			const ActionResult* res = nextAction->execute();
 
-				//TODO: Add alternative action handling
-				const ActionResult* res = nextAction->execute();
+			//Call the Ai of the actor who just acted (and let it schedule a new action),
+			// unless it is the player, whose update is handled in the main update loop.
+			//key variable is ignored unless used for debug purposes.
+			if (res->getActorUUID() != player->getUUID())
+				actors->updateActor(res->getActorUUID(), this, key);
 
-				debug_print("Performed %s, result: %s \n", 
-					ActionTypeNames[nextAction->getActionType()], 
-					res->wasSuccessful() ? "true" : "false");
+			debug_print("Performed %s for Actor UUID %s, result: %s \n",
+				ActionTypeNames[nextAction->getActionType()],
+				res->getActorUUID().c_str(),
+				res->wasSuccessful() ? "true" : "false");
 
-			} while (nextAction != action);
-
-			delete nextAction; // also deletes action if loop ended successfully 
-		}
+			delete nextAction;
+		};
 	}
 
 }
@@ -167,10 +169,7 @@ void Engine::render() {
 	// draw the map
 	map->render(gameConsole);
 	// draw the actors
-	for (std::vector<Actor*>::iterator it = actors->begin();
-	    it != actors->end(); it++) {
-	    (*it)->render(gameConsole);
-	}
+	actors->render(gameConsole);
 
 	TCODConsole::blit(gameConsole, 0, 0, 0, 0, TCODConsole::root, 0, 0);
 

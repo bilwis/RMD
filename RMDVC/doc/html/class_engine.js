@@ -4,7 +4,7 @@ var class_engine =
     [ "~Engine", "class_engine.html#a8ef7030a089ecb30bbfcb9e43094717a", null ],
     [ "render", "class_engine.html#a7960743aefd62e846e7f3cd92c18bc73", null ],
     [ "update", "class_engine.html#ad2ff110d5a86c1cd60b541d65915ac48", null ],
-    [ "actors", "class_engine.html#a58892e8ca1d86d9a0b9b7a11b7233bc3", null ],
+    [ "actors", "class_engine.html#aa7fb2839787625ca1aebdd9d2e77a8f4", null ],
     [ "gameConsole", "class_engine.html#aa39ee3f0cba79904f7f459415e859af0", null ],
     [ "gui", "class_engine.html#a1595905a45a3ec71a45553b593cc7622", null ],
     [ "guiBodyViewer", "class_engine.html#a88aab6e95b666226a13bf66de235eda2", null ],
@@ -12,5 +12,6 @@ var class_engine =
     [ "player", "class_engine.html#ad602ebe47e9c5fd26cfdf06ba9e6c942", null ],
     [ "sampleList", "class_engine.html#aaedeaff2505a3369c724bd123152381c", null ],
     [ "sampleTextBox", "class_engine.html#a5eaba669db9f8bacf5683246fe894e29", null ],
+    [ "scheduler", "class_engine.html#aa661de9e8c08eef31a07861185405354", null ],
     [ "state", "class_engine.html#a5a9891e78d0929a3ccb1cb555691f221", null ]
 ];

@@ -1,4 +1,5 @@
 #include "GUI.hpp"
+#include "Body.hpp"
 
 GuiBodyViewer::GuiBodyViewer(string id, int x, int y,
 	int width, int height, TCODColor fore, TCODColor back,

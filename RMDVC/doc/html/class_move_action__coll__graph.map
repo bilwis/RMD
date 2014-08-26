@@ -1,0 +1,12 @@
+<map id="MoveAction" name="MoveAction">
+<area shape="rect" id="node2" href="$class_action.html" title="Action" alt="" coords="201,363,259,389"/>
+<area shape="rect" id="node3" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="269,95,329,121"/>
+<area shape="rect" id="node6" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="183,184,285,211"/>
+<area shape="rect" id="node5" href="$class_actor.html" title="Actor" alt="" coords="143,273,197,300"/>
+<area shape="rect" id="node7" href="$class_ai.html" title="Ai" alt="" coords="5,184,44,211"/>
+<area shape="rect" id="node8" href="$class_destructible.html" title="Destructible" alt="" coords="69,184,159,211"/>
+<area shape="rect" id="node9" href="$class_body.html" title="The code representation of a body of an Actor. " alt="" coords="88,95,140,121"/>
+<area shape="rect" id="node10" href="$class_actor_map.html" title="ActorMap" alt="" coords="284,363,363,389"/>
+<area shape="rect" id="node11" href="$class_map.html" title="Map" alt="" coords="396,363,443,389"/>
+<area shape="rect" id="node12" href="$struct_tile.html" title="Tile" alt="" coords="398,273,441,300"/>
+</map>

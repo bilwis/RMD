@@ -1,5 +1,13 @@
 var hierarchy =
 [
+    [ "ActionQueueEntry", "struct_action_queue_entry.html", null ],
+    [ "ActionResult", "class_action_result.html", null ],
+    [ "ActionScheduler", "class_action_scheduler.html", null ],
+    [ "ActorMap", "class_actor_map.html", null ],
+    [ "Ai", "class_ai.html", [
+      [ "MeleeAi", "class_melee_ai.html", null ],
+      [ "PlayerAi", "class_player_ai.html", null ]
+    ] ],
     [ "Body", "class_body.html", null ],
     [ "ColoredText", "class_colored_text.html", null ],
     [ "Destructible", "class_destructible.html", null ],
@@ -8,6 +16,10 @@ var hierarchy =
     [ "GuiObjectLink", "struct_gui_object_link.html", null ],
     [ "Map", "class_map.html", null ],
     [ "Object", "class_object.html", [
+      [ "Action", "class_action.html", [
+        [ "IdleAction", "class_idle_action.html", null ],
+        [ "MoveAction", "class_move_action.html", null ]
+      ] ],
       [ "Part", "class_part.html", [
         [ "BodyPart", "class_body_part.html", null ],
         [ "Organ", "class_organ.html", null ]
@@ -32,5 +44,6 @@ var hierarchy =
     ] ],
     [ "Tile", "struct_tile.html", null ],
     [ "Tissue", "class_tissue.html", null ],
-    [ "tissue_def", "structtissue__def.html", null ]
+    [ "tissue_def", "structtissue__def.html", null ],
+    [ "Vector2", "struct_vector2.html", null ]
 ];

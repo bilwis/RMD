@@ -1,0 +1,4 @@
+<map id="MoveAction" name="MoveAction">
+<area shape="rect" id="node2" href="$class_action.html" title="Action" alt="" coords="21,80,79,107"/>
+<area shape="rect" id="node3" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="20,5,80,32"/>
+</map>

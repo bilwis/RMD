@@ -8,7 +8,11 @@
 #ifndef DESTRUCTIBLE_HPP_
 #define DESTRUCTIBLE_HPP_
 
-#include "Body.hpp"
+#include <boost/serialization/access.hpp>
+#include <boost/archive/xml_oarchive.hpp> // saving
+#include <boost/archive/xml_iarchive.hpp> // loading
+
+class Body;
 
 class Destructible{
 
