@@ -8,6 +8,7 @@
 #include "Map.hpp"
 #include "GUI.hpp"
 #include "Body.hpp"
+#include "Action.hpp"
 
 #include <fstream>
 #include <stdio.h>
@@ -26,9 +27,10 @@ private:
 	/** During rendering, actors and the map are rendered on
 	* the gameConsole object, which is blitted onto the root Console.
 	*/
-	TCODConsole *gameConsole;
+	TCODConsole* gameConsole;
 
 	GameState state;
+	ActionScheduler* scheduler;
 
 public :
 

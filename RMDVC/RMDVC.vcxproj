@@ -204,6 +204,7 @@
     <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Action.cpp" />
     <ClCompile Include="src\Actor.cpp" />
     <ClCompile Include="src\Body.cpp" />
     <ClCompile Include="src\Destructible.cpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="include\wrappers.h" />
     <ClInclude Include="include\zip.h" />
     <ClInclude Include="include\zip.hpp" />
+    <ClInclude Include="src\Action.hpp" />
     <ClInclude Include="src\Actor.hpp" />
     <ClInclude Include="src\Body.hpp" />
     <ClInclude Include="src\Destructible.hpp" />

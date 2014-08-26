@@ -15,31 +15,16 @@ Engine::Engine() {
 	TCOD_key_t key;
 	TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS, &key, nullptr, true);
 
+	actors = new std::vector<Actor*>();
+
 	if (key.c == 'n')
 	{
-
-		player = new Actor(40, 25, '@', TCODColor::white);
+		player = new Actor(40, 25, '@', TCODColor::white, 100);
 
 		player->destructible = new Destructible(100);
 		player->destructible->body = new Body("Body.xml");
-
-		actors = new std::vector<Actor*>();
-
+		
 		actors->push_back(player);
-		actors->push_back(new Actor(60, 13, '@', TCODColor::yellow));
-		map = new Map(120, 70);
-
-		gui = new Gui();
-
-
-		guiBodyViewer = new GuiBodyViewer("BodyViewer", 3, 3, 80, 40,
-			TCODColor::white, TCODColor::black, true, "BodyViewer");
-
-		guiBodyViewer->setVisibility(false);
-
-		gui->addContainer(guiBodyViewer);
-
-		state = GameState::GAME;
 	}
 
 	if (key.c == 'l')
@@ -49,24 +34,23 @@ Engine::Engine() {
 		ia & BOOST_SERIALIZATION_NVP(player);
 		ifs.close();
 
-		actors = new std::vector<Actor*>();
-
 		actors->push_back(player);
-		actors->push_back(new Actor(60, 13, '@', TCODColor::yellow));
-		map = new Map(120, 70);
-
-		gui = new Gui();
-
-
-		guiBodyViewer = new GuiBodyViewer("BodyViewer", 3, 3, 80, 40,
-			TCODColor::white, TCODColor::black, true, "BodyViewer");
-
-		guiBodyViewer->setVisibility(false);
-
-		gui->addContainer(guiBodyViewer);
-
-		state = GameState::GAME;
 	}
+
+	actors->push_back(new Actor(60, 13, '@', TCODColor::yellow, 100));
+	map = new Map(120, 70);
+	gui = new Gui();
+	scheduler = new ActionScheduler();
+
+
+	guiBodyViewer = new GuiBodyViewer("BodyViewer", 3, 3, 80, 40,
+		TCODColor::white, TCODColor::black, true, "BodyViewer");
+
+	guiBodyViewer->setVisibility(false);
+
+	gui->addContainer(guiBodyViewer);
+
+	state = GameState::GAME;
 
 }
 
@@ -101,27 +85,21 @@ void Engine::update() {
 	}
 
 	if (state == GameState::GAME) {
+
+		Action* action = nullptr;
 	
 		switch(key.vk) {
 			case TCODK_UP :
-				if ( ! map->isWall(player->getPosX(),player->getPosY()-1)) {
-					player->moveByY(-1);
-				}
+				action = new MoveAction(player, map, 0, -1);
 			break;
 			case TCODK_DOWN :
-				if (!map->isWall(player->getPosX(), player->getPosY() + 1)) {
-					player->moveByY(1);
-				}
+				action = new MoveAction(player, map, 0, 1);
 			break;
 			case TCODK_LEFT :
-				if (!map->isWall(player->getPosX() - 1, player->getPosY())) {
-					player->moveByX(-1);
-				}
+				action = new MoveAction(player, map, -1, 0);
 			break;
 			case TCODK_RIGHT :
-				if (!map->isWall(player->getPosX() + 1, player->getPosY())) {
-					player->moveByX(1);
-				}
+				action = new MoveAction(player, map, 1, 0);
 			break;
 			case TCODK_CHAR:
         		switch (key.c) {
@@ -145,7 +123,32 @@ void Engine::update() {
         		break;
 			default:break;
 		}
-	
+
+		if (action != nullptr) {
+			scheduler->scheduleAction(action);
+
+			//Perform actions until players turn
+			Action* nextAction = nullptr;
+			do
+			{
+				//If an action was performed, delete it!
+				if (nextAction != nullptr)
+					delete nextAction;
+
+				nextAction = scheduler->nextAction();
+				assert(nextAction != nullptr); //If queue is empty, fail (queue must not be empty while state == GAME)
+
+				//TODO: Add alternative action handling
+				const ActionResult* res = nextAction->execute();
+
+				debug_print("Performed %s, result: %s \n", 
+					ActionTypeNames[nextAction->getActionType()], 
+					res->wasSuccessful() ? "true" : "false");
+
+			} while (nextAction != action);
+
+			delete nextAction; // also deletes action if loop ended successfully 
+		}
 	}
 
 }

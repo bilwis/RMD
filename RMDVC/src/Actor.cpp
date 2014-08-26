@@ -1,7 +1,7 @@
 #include "Actor.hpp"
  
-Actor::Actor(int x, int y, int ch, const TCODColor &col) :
-   RenderObject(x,y,col, TCODColor::black, ch), destructible(NULL) {
+Actor::Actor(int x, int y, int ch, const TCODColor &col, int speed) :
+   RenderObject(x,y,col, TCODColor::black, ch), speed(speed), destructible(NULL) {
 }
 
 Actor::~Actor()
