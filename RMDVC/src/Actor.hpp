@@ -12,6 +12,12 @@ class Destructible;
 #include <boost/archive/xml_oarchive.hpp> // saving
 #include <boost/archive/xml_iarchive.hpp> // loading
 
+/** It may be expanded by adding pointers to 'modules', such as Destructible, 
+* which makes it an entity that can be hurt and destroyed; or Ai, which makes it act 
+* by specified routines.
+*
+* @brief A class representing an entity that may perform actions.
+*/
 class Actor : public RenderObject {
 private:
 	int speed;
@@ -22,6 +28,7 @@ private:
 	{
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(RenderObject);
 		ar & BOOST_SERIALIZATION_NVP(destructible);
+		ar & BOOST_SERIALIZATION_NVP(ai);
 		ar & BOOST_SERIALIZATION_NVP(speed);
 	}
 

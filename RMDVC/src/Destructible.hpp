@@ -14,6 +14,8 @@
 
 class Body;
 
+/** @brief A class representing a Body associated with an Actor.
+*/
 class Destructible{
 
 private:

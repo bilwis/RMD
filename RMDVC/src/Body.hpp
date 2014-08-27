@@ -37,7 +37,7 @@ using std::string;
  * body part is not distinct from a 'muscle' tissue in the head, etc.
  * Exceptions to this must be added to the tissue_def declaration in the [body-definition XML](xml_help.html).
  *
- * @brief Holds the definition of a tissue, such as skin or bone.
+ * @brief A class that holds the definition of a tissue, such as skin or bone.
  */
 class Tissue{
 private:
@@ -160,7 +160,7 @@ public:
  *
  * et cetera.
  *
- * @brief This struct represents the link between an organ and its tissues.
+ * @brief A struct representing the link between an organ and its tissues.
  */
 struct tissue_def{
 private:
@@ -194,7 +194,7 @@ class Body;
  * the Name, the internal ID and the relative surface of a part as well as a pointer
  * to the node of the organ tree that it is a child of.
  *
- * @brief This class is the abstract superclass for all parts that make up a body.
+ * @brief Base class for all parts that make up a body.
  */
 class Part: public Object{
 private:
@@ -350,7 +350,7 @@ public:
  * organ to which this one is connected (upstream root) and a list of references to the organs
  * which are connected to this one (downstream branches).
  *
- * @brief The 'leaves' of the Body tree.
+ * @brief A class that represents the 'leaves' of the Body tree.
  */
 class Organ: public Part{
 private:
@@ -466,7 +466,7 @@ public:
  * Instances of this class contain a vector of the UUIDs of Part objects, which are the Organs or BodyParts
  * connected to this one.
  *
- *@brief The code representation of a part of the body (such as 'Left Arm').
+ *@brief A class representing a part of a body (such as 'Left Arm').
  */
 class BodyPart: public Part{
 private:
@@ -533,7 +533,7 @@ public:
  * composed of. It also contains functions related to damage handling, loading and
  * saving of body definitions.
  *
- * @brief The code representation of a body of an Actor.
+ * @brief A class representing the body of an Actor.
  */
 class Body{
 private:

@@ -1,7 +1,7 @@
 <map id="RenderObject" name="RenderObject">
-<area shape="rect" id="node3" href="$class_actor.html" title="Actor" alt="" coords="5,155,59,181"/>
-<area shape="rect" id="node4" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="83,155,205,181"/>
-<area shape="rect" id="node2" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="58,5,118,32"/>
+<area shape="rect" id="node3" href="$class_actor.html" title="A class representing an entity that may perform actions. " alt="" coords="5,155,59,181"/>
+<area shape="rect" id="node4" href="$class_gui_render_object.html" title="A class representing an object that may be rendered on screen as part of the GUI. ..." alt="" coords="83,155,205,181"/>
+<area shape="rect" id="node2" href="$class_object.html" title="Base class for all objects in the game. " alt="" coords="58,5,118,32"/>
 <area shape="rect" id="node5" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="25,229,122,256"/>
 <area shape="rect" id="node7" href="$class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="159,229,249,256"/>
 <area shape="rect" id="node6" href="$class_gui_body_viewer.html" title="A class representing a &quot;body inspector&quot;, which can display a bodies composition and state..." alt="" coords="6,304,117,331"/>

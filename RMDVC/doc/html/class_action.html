@@ -75,26 +75,28 @@ $(document).ready(function(){initNavTree('class_action.html','');});
 </div><!--header-->
 <div class="contents">
 
+<p>A class representing an <a class="el" href="class_action.html" title="A class representing an Action that may be executed by an Actor. ">Action</a> that may be executed by an <a class="el" href="class_actor.html" title="A class representing an entity that may perform actions. ">Actor</a>.  
+ <a href="class_action.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_action_8hpp_source.html">Action.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Action:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_action__inherit__graph.png" border="0" usemap="#_action_inherit__map" alt="Inheritance graph"/></div>
 <map name="_action_inherit__map" id="_action_inherit__map">
-<area shape="rect" id="node3" href="class_idle_action.html" title="IdleAction" alt="" coords="5,155,84,181"/><area shape="rect" id="node4" href="class_move_action.html" title="MoveAction" alt="" coords="108,155,197,181"/><area shape="rect" id="node2" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="68,5,128,32"/></map>
+<area shape="rect" id="node3" href="class_idle_action.html" title="A class representing an action that an actor may perform to &#39;pass&#39; its turn. " alt="" coords="5,155,84,181"/><area shape="rect" id="node4" href="class_move_action.html" title="A class representing an action that an actor may perform to move on the map. " alt="" coords="108,155,197,181"/><area shape="rect" id="node2" href="class_object.html" title="Base class for all objects in the game. " alt="" coords="68,5,128,32"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for Action:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_action__coll__graph.png" border="0" usemap="#_action_coll__map" alt="Collaboration graph"/></div>
 <map name="_action_coll__map" id="_action_coll__map">
-<area shape="rect" id="node2" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="269,95,329,121"/><area shape="rect" id="node5" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="183,184,285,211"/><area shape="rect" id="node4" href="class_actor.html" title="Actor" alt="" coords="131,273,185,300"/><area shape="rect" id="node6" href="class_ai.html" title="Ai" alt="" coords="5,184,44,211"/><area shape="rect" id="node7" href="class_destructible.html" title="Destructible" alt="" coords="69,184,159,211"/><area shape="rect" id="node8" href="class_body.html" title="The code representation of a body of an Actor. " alt="" coords="88,95,140,121"/></map>
+<area shape="rect" id="node2" href="class_object.html" title="Base class for all objects in the game. " alt="" coords="269,95,329,121"/><area shape="rect" id="node5" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="183,184,285,211"/><area shape="rect" id="node4" href="class_actor.html" title="A class representing an entity that may perform actions. " alt="" coords="131,273,185,300"/><area shape="rect" id="node6" href="class_ai.html" title="Base class for all Ai modules. " alt="" coords="5,184,44,211"/><area shape="rect" id="node7" href="class_destructible.html" title="A class representing a Body associated with an Actor. " alt="" coords="69,184,159,211"/><area shape="rect" id="node8" href="class_body.html" title="A class representing the body of an Actor. " alt="" coords="88,95,140,121"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a942d8d52004f0847a0377b4b2e1f4cbb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a942d8d52004f0847a0377b4b2e1f4cbb"></a>
-virtual const int&#160;</td><td class="memItemRight" valign="bottom"><b>getCost</b> ()=0</td></tr>
+<tr class="memitem:a942d8d52004f0847a0377b4b2e1f4cbb"><td class="memItemLeft" align="right" valign="top">virtual const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_action.html#a942d8d52004f0847a0377b4b2e1f4cbb">getCost</a> ()=0</td></tr>
 <tr class="separator:a942d8d52004f0847a0377b4b2e1f4cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a448321b40cd8361cf3237bf124d11f68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a448321b40cd8361cf3237bf124d11f68"></a>
 const int&#160;</td><td class="memItemRight" valign="bottom"><b>getActorSpeed</b> ()</td></tr>
@@ -129,7 +131,8 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <tr class="separator:a65a486a9bc5fece2182bc1cd76071662 inherit pro_attribs_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class represents an <a class="el" href="class_action.html">Action</a> that may be executed by an <a class="el" href="class_actor.html">Actor</a>. This is the abstract base class from which all action classes must be derived. It holds the cost, type and a pointer to the executing actor. </p>
+<div class="textblock"><p>A class representing an <a class="el" href="class_action.html" title="A class representing an Action that may be executed by an Actor. ">Action</a> that may be executed by an <a class="el" href="class_actor.html" title="A class representing an entity that may perform actions. ">Actor</a>. </p>
+<p>This is the abstract base class from which all action classes must be derived. It holds the cost, type and a pointer to the executing actor. See the <a href="action_help.html">action system reference</a> for more. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="aa1f0d767ce3dd38c691f9fcdf262d086"></a>
 <div class="memitem">
@@ -151,9 +154,35 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This abstract function must be implemented by all Derivates of <a class="el" href="class_action.html">Action</a>. It dictates what the <a class="el" href="class_action.html">Action</a> actually <em>does</em>. </p>
+<p>This abstract function must be implemented by all Derivates of <a class="el" href="class_action.html" title="A class representing an Action that may be executed by an Actor. ">Action</a>. It dictates what the <a class="el" href="class_action.html" title="A class representing an Action that may be executed by an Actor. ">Action</a> actually <em>does</em>. </p>
 
 <p>Implemented in <a class="el" href="class_idle_action.html#a2315bf4aea2065f807dd8327a4d7ab6f">IdleAction</a>, and <a class="el" href="class_move_action.html#a77424149383476100e9b717bf864aec7">MoveAction</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a942d8d52004f0847a0377b4b2e1f4cbb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const int Action::getCost </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function returns the cost of the action. </p>
+
+<p>Implemented in <a class="el" href="class_idle_action.html#a036de9f363e7c2ee425499f785730e55">IdleAction</a>, and <a class="el" href="class_move_action.html#a57658e71e59ece7e35d392d8b7e51204">MoveAction</a>.</p>
 
 </div>
 </div>
@@ -167,7 +196,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_action.html">Action</a></li>
-    <li class="footer">Generated on Wed Aug 27 2014 00:29:53 for Rogue M.D. by
+    <li class="footer">Generated on Wed Aug 27 2014 02:27:58 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

@@ -75,13 +75,16 @@ $(document).ready(function(){initNavTree('struct_action_queue_entry.html','');})
 </div><!--header-->
 <div class="contents">
 
+<p>A struct holding a pointer to an action, and the time to the actions execution (as double).  
+ <a href="struct_action_queue_entry.html#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_action_8hpp_source.html">Action.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for ActionQueueEntry:</div>
 <div class="dyncontent">
 <div class="center"><img src="struct_action_queue_entry__coll__graph.png" border="0" usemap="#_action_queue_entry_coll__map" alt="Collaboration graph"/></div>
 <map name="_action_queue_entry_coll__map" id="_action_queue_entry_coll__map">
-<area shape="rect" id="node2" href="class_action.html" title="Action" alt="" coords="229,363,287,389"/><area shape="rect" id="node3" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="269,95,329,121"/><area shape="rect" id="node6" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="183,184,285,211"/><area shape="rect" id="node5" href="class_actor.html" title="Actor" alt="" coords="131,273,185,300"/><area shape="rect" id="node7" href="class_ai.html" title="Ai" alt="" coords="5,184,44,211"/><area shape="rect" id="node8" href="class_destructible.html" title="Destructible" alt="" coords="69,184,159,211"/><area shape="rect" id="node9" href="class_body.html" title="The code representation of a body of an Actor. " alt="" coords="88,95,140,121"/></map>
+<area shape="rect" id="node2" href="class_action.html" title="A class representing an Action that may be executed by an Actor. " alt="" coords="229,363,287,389"/><area shape="rect" id="node3" href="class_object.html" title="Base class for all objects in the game. " alt="" coords="269,95,329,121"/><area shape="rect" id="node6" href="class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="183,184,285,211"/><area shape="rect" id="node5" href="class_actor.html" title="A class representing an entity that may perform actions. " alt="" coords="131,273,185,300"/><area shape="rect" id="node7" href="class_ai.html" title="Base class for all Ai modules. " alt="" coords="5,184,44,211"/><area shape="rect" id="node8" href="class_destructible.html" title="A class representing a Body associated with an Actor. " alt="" coords="69,184,159,211"/><area shape="rect" id="node9" href="class_body.html" title="A class representing the body of an Actor. " alt="" coords="88,95,140,121"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -99,7 +102,8 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>time_to_exec</b></t
 <tr class="separator:a60d7604c1b410fad8887614955969c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This struct holds a pointer to an action, and the time to the actions execution (as double). A (double-linked) list of these stucts is used in the <a class="el" href="class_action_scheduler.html">ActionScheduler</a> as the queue element. </p>
+<div class="textblock"><p>A struct holding a pointer to an action, and the time to the actions execution (as double). </p>
+<p>A (double-linked) list of these stucts is used in the <a class="el" href="class_action_scheduler.html" title="A class responsible for the correct execution order of actions scheduled for Actors. ">ActionScheduler</a> as the queue element. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a0cc5d5ba985deedd93c4b005a9dd6ee7"></a>
 <div class="memitem">
@@ -132,7 +136,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>time_to_exec</b></t
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Creates a new <a class="el" href="struct_action_queue_entry.html">ActionQueueEntry</a> with the given action and time to execution. </p>
+<p>Creates a new <a class="el" href="struct_action_queue_entry.html" title="A struct holding a pointer to an action, and the time to the actions execution (as double)...">ActionQueueEntry</a> with the given action and time to execution. </p>
 
 </div>
 </div>
@@ -145,7 +149,7 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>time_to_exec</b></t
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="struct_action_queue_entry.html">ActionQueueEntry</a></li>
-    <li class="footer">Generated on Wed Aug 27 2014 00:29:53 for Rogue M.D. by
+    <li class="footer">Generated on Wed Aug 27 2014 02:27:58 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

@@ -1,8 +1,8 @@
 <map id="GuiElement" name="GuiElement">
 <area shape="rect" id="node5" href="$class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. " alt="" coords="5,304,131,331"/>
 <area shape="rect" id="node7" href="$class_gui_text_box.html" title="A simple multi&#45;line text box. " alt="" coords="155,304,245,331"/>
-<area shape="rect" id="node2" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="73,155,194,181"/>
+<area shape="rect" id="node2" href="$class_gui_render_object.html" title="A class representing an object that may be rendered on screen as part of the GUI. ..." alt="" coords="73,155,194,181"/>
 <area shape="rect" id="node3" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="83,80,184,107"/>
-<area shape="rect" id="node4" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="103,5,163,32"/>
+<area shape="rect" id="node4" href="$class_object.html" title="Base class for all objects in the game. " alt="" coords="103,5,163,32"/>
 <area shape="rect" id="node6" href="$class_gui_list_chooser.html" title="A class representing a list of objects on the GUI, from which one may be chosen. " alt="" coords="13,379,123,405"/>
 </map>

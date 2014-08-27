@@ -25,6 +25,8 @@ enum class GameState { GUI, GAME, INIT };
 /** This class provides the render() and update() methods for the game loop,
 * as well as holding the loaded Actors, Map and providing
 * functions for GUI handling.
+*
+* @brief A class providing basic game functions and data.
 */
 class Engine {
 private:

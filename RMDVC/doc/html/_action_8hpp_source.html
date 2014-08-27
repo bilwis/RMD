@@ -91,133 +91,138 @@ $(document).ready(function(){initNavTree('_action_8hpp_source.html','');});
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">//Array length = enum length -&gt; compile error if one is updated without the other!</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* ActionTypeNames[SIZE_OF_ACTION_TYPE_ENUM] = { <span class="stringliteral">&quot;Move Action&quot;</span>, <span class="stringliteral">&quot;Idle Action&quot;</span> };</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="struct_action_queue_entry.html">   28</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_action_queue_entry.html">ActionQueueEntry</a></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="class_action.html">Action</a>* action;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">double</span> time_to_exec;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="struct_action_queue_entry.html#a0cc5d5ba985deedd93c4b005a9dd6ee7">   35</a></span>&#160;    <a class="code" href="struct_action_queue_entry.html#a0cc5d5ba985deedd93c4b005a9dd6ee7">ActionQueueEntry</a>(<a class="code" href="class_action.html">Action</a>* action, <span class="keywordtype">double</span> time_to_exec) : action(action), time_to_exec(time_to_exec) {};</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    ~<a class="code" href="struct_action_queue_entry.html">ActionQueueEntry</a>(){ };</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;};</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_action_scheduler.html">   46</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_action_scheduler.html">ActionScheduler</a></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    std::list&lt;ActionQueueEntry*&gt;* queue;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="struct_action_queue_entry.html">ActionQueueEntry</a>* nextPlayerAction = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="class_action_scheduler.html#afbb0f64e3b1338fb14fd92a25574231a">   58</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="class_action_scheduler.html#afbb0f64e3b1338fb14fd92a25574231a">calculateTimeToExec</a>(<span class="keywordtype">int</span> actor_speed, <span class="keywordtype">int</span> action_cost)</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        assert(actor_speed &gt; 0);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">return</span> (<span class="keywordtype">double</span>)action_cost / (double)actor_speed;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    };</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_action_scheduler.html#a4a51f77600c54597d753adcad3619795">scheduleAction</a>(<a class="code" href="class_action.html">Action</a>* action, <span class="keywordtype">bool</span> playerAction = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="class_action.html">Action</a>* <a class="code" href="class_action_scheduler.html#a0a67c5a6ce35e5f334d250c610c0e1ce">nextAction</a>();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">bool</span> isPlayerActionScheduled() {<span class="keywordflow">if</span> (nextPlayerAction == <span class="keyword">nullptr</span>) { <span class="keywordflow">return</span> <span class="keyword">false</span>; } <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <a class="code" href="class_action_scheduler.html">ActionScheduler</a>()</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        queue = <span class="keyword">new</span> std::list&lt;ActionQueueEntry*&gt;();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    };</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    ~<a class="code" href="class_action_scheduler.html">ActionScheduler</a>()</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keyword">delete</span> queue;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    };</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;};</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="class_action.html">   99</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_action.html">Action</a> : <span class="keyword">public</span> <a class="code" href="class_object.html">Object</a></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;{</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">const</span> ActionType type;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <a class="code" href="class_actor.html">Actor</a>* actor;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">int</span> getCost() = 0;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> getActorSpeed();</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keyword">const</span> ActionType getActionType() { <span class="keywordflow">return</span> type; }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="class_action_result.html">ActionResult</a>* <a class="code" href="class_action.html#aa1f0d767ce3dd38c691f9fcdf262d086">execute</a>() = 0;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <a class="code" href="class_action.html">Action</a>(<a class="code" href="class_actor.html">Actor</a>* actor, ActionType type) : actor(actor), type(type) {};</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_action.html">Action</a>(){};</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;};</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
-<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="class_action_result.html">  124</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_action_result.html">ActionResult</a></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;{</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">bool</span> success;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_action.html">Action</a>* alternative;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">const</span> std::string actor_uuid;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">bool</span> wasSuccessful()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> success; };</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_action.html">Action</a>* getAlternative()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> alternative; };</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keyword">const</span> std::string getActorUUID()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> actor_uuid; }</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <a class="code" href="class_action_result.html">ActionResult</a>(std::string actor_uuid, <span class="keywordtype">bool</span> success, <span class="keyword">const</span> <a class="code" href="class_action.html">Action</a>* alternative = <span class="keyword">nullptr</span>) </div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        : actor_uuid(actor_uuid), success(success), alternative(alternative) {};</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    ~<a class="code" href="class_action_result.html">ActionResult</a>(){};</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;};</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
-<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="class_move_action.html">  145</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_move_action.html">MoveAction</a> : <span class="keyword">public</span> <a class="code" href="class_action.html">Action</a></div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;{</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> cost = 100;    </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="struct_action_queue_entry.html">   30</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_action_queue_entry.html">ActionQueueEntry</a></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="class_action.html">Action</a>* action;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">double</span> time_to_exec;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="struct_action_queue_entry.html#a0cc5d5ba985deedd93c4b005a9dd6ee7">   37</a></span>&#160;    <a class="code" href="struct_action_queue_entry.html#a0cc5d5ba985deedd93c4b005a9dd6ee7">ActionQueueEntry</a>(<a class="code" href="class_action.html">Action</a>* action, <span class="keywordtype">double</span> time_to_exec) : action(action), time_to_exec(time_to_exec) {};</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    ~<a class="code" href="struct_action_queue_entry.html">ActionQueueEntry</a>(){ };</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;};</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_action_scheduler.html">   50</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_action_scheduler.html">ActionScheduler</a></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    std::list&lt;ActionQueueEntry*&gt;* queue;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="class_action_scheduler.html#a2e8e45656eab7d8af89b9658301c167d">   59</a></span>&#160;    <a class="code" href="struct_action_queue_entry.html">ActionQueueEntry</a>* <a class="code" href="class_action_scheduler.html#a2e8e45656eab7d8af89b9658301c167d">nextPlayerAction</a> = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="class_action_scheduler.html#afbb0f64e3b1338fb14fd92a25574231a">   67</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="class_action_scheduler.html#afbb0f64e3b1338fb14fd92a25574231a">calculateTimeToExec</a>(<span class="keywordtype">int</span> actor_speed, <span class="keywordtype">int</span> action_cost)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        assert(actor_speed &gt; 0);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">return</span> (<span class="keywordtype">double</span>)action_cost / (double)actor_speed;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    };</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_action_scheduler.html#a4a51f77600c54597d753adcad3619795">scheduleAction</a>(<a class="code" href="class_action.html">Action</a>* action, <span class="keywordtype">bool</span> playerAction = <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <a class="code" href="class_action.html">Action</a>* <a class="code" href="class_action_scheduler.html#a0a67c5a6ce35e5f334d250c610c0e1ce">nextAction</a>();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="class_action_scheduler.html#a173acdc4d148dcf527187f46d4c447b1">   96</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_action_scheduler.html#a173acdc4d148dcf527187f46d4c447b1">isPlayerActionScheduled</a>() {<span class="keywordflow">if</span> (<a class="code" href="class_action_scheduler.html#a2e8e45656eab7d8af89b9658301c167d">nextPlayerAction</a> == <span class="keyword">nullptr</span>) { <span class="keywordflow">return</span> <span class="keyword">false</span>; } <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <a class="code" href="class_action_scheduler.html">ActionScheduler</a>()</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        queue = <span class="keyword">new</span> std::list&lt;ActionQueueEntry*&gt;(); };</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    ~<a class="code" href="class_action_scheduler.html">ActionScheduler</a>()</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keyword">delete</span> queue;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    };</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;};</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="class_action.html">  114</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_action.html">Action</a> : <span class="keyword">public</span> <a class="code" href="class_object.html">Object</a></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;{</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keyword">const</span> ActionType type;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="class_actor.html">Actor</a>* actor;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_action.html#a942d8d52004f0847a0377b4b2e1f4cbb">getCost</a>() = 0;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> getActorSpeed();</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keyword">const</span> ActionType getActionType() { <span class="keywordflow">return</span> type; }</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="class_action_result.html">ActionResult</a>* <a class="code" href="class_action.html#aa1f0d767ce3dd38c691f9fcdf262d086">execute</a>() = 0;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <a class="code" href="class_action.html">Action</a>(<a class="code" href="class_actor.html">Actor</a>* actor, ActionType type) : actor(actor), type(type) {};</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="class_action.html">Action</a>(){};</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;};</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="class_action_result.html">  143</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_action_result.html">ActionResult</a></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;{</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">bool</span> success;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_action.html">Action</a>* alternative;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keyword">const</span> std::string actor_uuid;</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_map.html">Map</a>* map;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <a class="code" href="class_actor_map.html">ActorMap</a>* actor_map;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keywordtype">int</span> d_x;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordtype">int</span> d_y;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">bool</span> wasSuccessful()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> success; };</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_action.html">Action</a>* getAlternative()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> alternative; };</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keyword">const</span> std::string getActorUUID()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> actor_uuid; }</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> getCost() { <span class="keywordflow">return</span> cost; }</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_action_result.html">ActionResult</a>* <a class="code" href="class_move_action.html#a77424149383476100e9b717bf864aec7">execute</a>();</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <a class="code" href="class_action_result.html">ActionResult</a>(std::string actor_uuid, <span class="keywordtype">bool</span> success, <span class="keyword">const</span> <a class="code" href="class_action.html">Action</a>* alternative = <span class="keyword">nullptr</span>) </div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        : actor_uuid(actor_uuid), success(success), alternative(alternative) {};</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    ~<a class="code" href="class_action_result.html">ActionResult</a>(){};</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;};</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <a class="code" href="class_move_action.html">MoveAction</a>(<a class="code" href="class_actor.html">Actor</a>* actor, <span class="keyword">const</span> <a class="code" href="class_map.html">Map</a>* map, <a class="code" href="class_actor_map.html">ActorMap</a>* actor_map, <span class="keywordtype">int</span> d_x, <span class="keywordtype">int</span> d_y) : <a class="code" href="class_action.html">Action</a>(actor, ACTION_MOVE), map(map), actor_map(actor_map), d_x(d_x), d_y(d_y){};</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    ~<a class="code" href="class_move_action.html">MoveAction</a>(){};</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;};</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
-<div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="class_idle_action.html">  164</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_idle_action.html">IdleAction</a> : <span class="keyword">public</span> <a class="code" href="class_action.html">Action</a></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;{</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> cost;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> getCost() { <span class="keywordflow">return</span> cost; }</div>
+<div class="line"><a name="l00166"></a><span class="lineno"><a class="line" href="class_move_action.html">  166</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_move_action.html">MoveAction</a> : <span class="keyword">public</span> <a class="code" href="class_action.html">Action</a></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;{</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> cost = 100;    </div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_action_result.html">ActionResult</a>* <a class="code" href="class_idle_action.html#a2315bf4aea2065f807dd8327a4d7ab6f">execute</a>();</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <a class="code" href="class_idle_action.html">IdleAction</a>(<a class="code" href="class_actor.html">Actor</a>* actor);</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;};</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_map.html">Map</a>* map;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <a class="code" href="class_actor_map.html">ActorMap</a>* actor_map;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="keywordtype">int</span> d_x;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordtype">int</span> d_y;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="comment">//TODO: Add dynamic cost depending on terrain etc.</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno"><a class="line" href="class_move_action.html#a57658e71e59ece7e35d392d8b7e51204">  178</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_move_action.html#a57658e71e59ece7e35d392d8b7e51204">getCost</a>() { <span class="keywordflow">return</span> cost; }</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_action_result.html">ActionResult</a>* <a class="code" href="class_move_action.html#a77424149383476100e9b717bf864aec7">execute</a>();</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <a class="code" href="class_move_action.html">MoveAction</a>(<a class="code" href="class_actor.html">Actor</a>* actor, <span class="keyword">const</span> <a class="code" href="class_map.html">Map</a>* map, <a class="code" href="class_actor_map.html">ActorMap</a>* actor_map, <span class="keywordtype">int</span> d_x, <span class="keywordtype">int</span> d_y) : <a class="code" href="class_action.html">Action</a>(actor, ACTION_MOVE), map(map), actor_map(actor_map), d_x(d_x), d_y(d_y){};</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    ~<a class="code" href="class_move_action.html">MoveAction</a>(){};</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;};</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;</div>
+<div class="line"><a name="l00192"></a><span class="lineno"><a class="line" href="class_idle_action.html">  192</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_idle_action.html">IdleAction</a> : <span class="keyword">public</span> <a class="code" href="class_action.html">Action</a></div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;{</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> cost;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00196"></a><span class="lineno"><a class="line" href="class_idle_action.html#a036de9f363e7c2ee425499f785730e55">  196</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_idle_action.html#a036de9f363e7c2ee425499f785730e55">getCost</a>() { <span class="keywordflow">return</span> cost; }</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keyword">const</span> <a class="code" href="class_action_result.html">ActionResult</a>* <a class="code" href="class_idle_action.html#a2315bf4aea2065f807dd8327a4d7ab6f">execute</a>();</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <a class="code" href="class_idle_action.html">IdleAction</a>(<a class="code" href="class_actor.html">Actor</a>* actor);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;};</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="class_action_html_aa1f0d767ce3dd38c691f9fcdf262d086"><div class="ttname"><a href="class_action.html#aa1f0d767ce3dd38c691f9fcdf262d086">Action::execute</a></div><div class="ttdeci">virtual const ActionResult * execute()=0</div></div>
-<div class="ttc" id="class_idle_action_html"><div class="ttname"><a href="class_idle_action.html">IdleAction</a></div><div class="ttdef"><b>Definition:</b> Action.hpp:164</div></div>
-<div class="ttc" id="struct_action_queue_entry_html_a0cc5d5ba985deedd93c4b005a9dd6ee7"><div class="ttname"><a href="struct_action_queue_entry.html#a0cc5d5ba985deedd93c4b005a9dd6ee7">ActionQueueEntry::ActionQueueEntry</a></div><div class="ttdeci">ActionQueueEntry(Action *action, double time_to_exec)</div><div class="ttdef"><b>Definition:</b> Action.hpp:35</div></div>
+<div class="ttc" id="class_move_action_html_a57658e71e59ece7e35d392d8b7e51204"><div class="ttname"><a href="class_move_action.html#a57658e71e59ece7e35d392d8b7e51204">MoveAction::getCost</a></div><div class="ttdeci">const int getCost()</div><div class="ttdef"><b>Definition:</b> Action.hpp:178</div></div>
+<div class="ttc" id="class_idle_action_html"><div class="ttname"><a href="class_idle_action.html">IdleAction</a></div><div class="ttdoc">A class representing an action that an actor may perform to &#39;pass&#39; its turn. </div><div class="ttdef"><b>Definition:</b> Action.hpp:192</div></div>
+<div class="ttc" id="struct_action_queue_entry_html_a0cc5d5ba985deedd93c4b005a9dd6ee7"><div class="ttname"><a href="struct_action_queue_entry.html#a0cc5d5ba985deedd93c4b005a9dd6ee7">ActionQueueEntry::ActionQueueEntry</a></div><div class="ttdeci">ActionQueueEntry(Action *action, double time_to_exec)</div><div class="ttdef"><b>Definition:</b> Action.hpp:37</div></div>
 <div class="ttc" id="class_move_action_html_a77424149383476100e9b717bf864aec7"><div class="ttname"><a href="class_move_action.html#a77424149383476100e9b717bf864aec7">MoveAction::execute</a></div><div class="ttdeci">const ActionResult * execute()</div><div class="ttdef"><b>Definition:</b> Action.cpp:67</div></div>
 <div class="ttc" id="class_action_scheduler_html_a4a51f77600c54597d753adcad3619795"><div class="ttname"><a href="class_action_scheduler.html#a4a51f77600c54597d753adcad3619795">ActionScheduler::scheduleAction</a></div><div class="ttdeci">void scheduleAction(Action *action, bool playerAction=false)</div><div class="ttdef"><b>Definition:</b> Action.cpp:5</div></div>
 <div class="ttc" id="class_idle_action_html_a2315bf4aea2065f807dd8327a4d7ab6f"><div class="ttname"><a href="class_idle_action.html#a2315bf4aea2065f807dd8327a4d7ab6f">IdleAction::execute</a></div><div class="ttdeci">const ActionResult * execute()</div><div class="ttdef"><b>Definition:</b> Action.cpp:96</div></div>
-<div class="ttc" id="class_action_scheduler_html"><div class="ttname"><a href="class_action_scheduler.html">ActionScheduler</a></div><div class="ttdef"><b>Definition:</b> Action.hpp:46</div></div>
-<div class="ttc" id="class_action_html"><div class="ttname"><a href="class_action.html">Action</a></div><div class="ttdef"><b>Definition:</b> Action.hpp:99</div></div>
-<div class="ttc" id="class_actor_html"><div class="ttname"><a href="class_actor.html">Actor</a></div><div class="ttdef"><b>Definition:</b> Actor.hpp:15</div></div>
-<div class="ttc" id="class_map_html"><div class="ttname"><a href="class_map.html">Map</a></div><div class="ttdef"><b>Definition:</b> Map.hpp:24</div></div>
+<div class="ttc" id="class_action_scheduler_html"><div class="ttname"><a href="class_action_scheduler.html">ActionScheduler</a></div><div class="ttdoc">A class responsible for the correct execution order of actions scheduled for Actors. </div><div class="ttdef"><b>Definition:</b> Action.hpp:50</div></div>
+<div class="ttc" id="class_action_html"><div class="ttname"><a href="class_action.html">Action</a></div><div class="ttdoc">A class representing an Action that may be executed by an Actor. </div><div class="ttdef"><b>Definition:</b> Action.hpp:114</div></div>
+<div class="ttc" id="class_action_html_a942d8d52004f0847a0377b4b2e1f4cbb"><div class="ttname"><a href="class_action.html#a942d8d52004f0847a0377b4b2e1f4cbb">Action::getCost</a></div><div class="ttdeci">virtual const int getCost()=0</div></div>
+<div class="ttc" id="class_action_scheduler_html_a2e8e45656eab7d8af89b9658301c167d"><div class="ttname"><a href="class_action_scheduler.html#a2e8e45656eab7d8af89b9658301c167d">ActionScheduler::nextPlayerAction</a></div><div class="ttdeci">ActionQueueEntry * nextPlayerAction</div><div class="ttdef"><b>Definition:</b> Action.hpp:59</div></div>
+<div class="ttc" id="class_actor_html"><div class="ttname"><a href="class_actor.html">Actor</a></div><div class="ttdoc">A class representing an entity that may perform actions. </div><div class="ttdef"><b>Definition:</b> Actor.hpp:21</div></div>
+<div class="ttc" id="class_map_html"><div class="ttname"><a href="class_map.html">Map</a></div><div class="ttdoc">A class encapsulating functions and members representing a map. </div><div class="ttdef"><b>Definition:</b> Map.hpp:30</div></div>
+<div class="ttc" id="class_action_scheduler_html_a173acdc4d148dcf527187f46d4c447b1"><div class="ttname"><a href="class_action_scheduler.html#a173acdc4d148dcf527187f46d4c447b1">ActionScheduler::isPlayerActionScheduled</a></div><div class="ttdeci">bool isPlayerActionScheduled()</div><div class="ttdef"><b>Definition:</b> Action.hpp:96</div></div>
 <div class="ttc" id="class_action_scheduler_html_a0a67c5a6ce35e5f334d250c610c0e1ce"><div class="ttname"><a href="class_action_scheduler.html#a0a67c5a6ce35e5f334d250c610c0e1ce">ActionScheduler::nextAction</a></div><div class="ttdeci">Action * nextAction()</div><div class="ttdef"><b>Definition:</b> Action.cpp:42</div></div>
-<div class="ttc" id="class_action_scheduler_html_afbb0f64e3b1338fb14fd92a25574231a"><div class="ttname"><a href="class_action_scheduler.html#afbb0f64e3b1338fb14fd92a25574231a">ActionScheduler::calculateTimeToExec</a></div><div class="ttdeci">double calculateTimeToExec(int actor_speed, int action_cost)</div><div class="ttdef"><b>Definition:</b> Action.hpp:58</div></div>
-<div class="ttc" id="class_action_result_html"><div class="ttname"><a href="class_action_result.html">ActionResult</a></div><div class="ttdef"><b>Definition:</b> Action.hpp:124</div></div>
-<div class="ttc" id="struct_action_queue_entry_html"><div class="ttname"><a href="struct_action_queue_entry.html">ActionQueueEntry</a></div><div class="ttdef"><b>Definition:</b> Action.hpp:28</div></div>
-<div class="ttc" id="class_actor_map_html"><div class="ttname"><a href="class_actor_map.html">ActorMap</a></div><div class="ttdef"><b>Definition:</b> Map.hpp:43</div></div>
-<div class="ttc" id="class_object_html"><div class="ttname"><a href="class_object.html">Object</a></div><div class="ttdoc">The base class for all objects in the game. </div><div class="ttdef"><b>Definition:</b> Object.hpp:23</div></div>
-<div class="ttc" id="class_move_action_html"><div class="ttname"><a href="class_move_action.html">MoveAction</a></div><div class="ttdef"><b>Definition:</b> Action.hpp:145</div></div>
+<div class="ttc" id="class_action_scheduler_html_afbb0f64e3b1338fb14fd92a25574231a"><div class="ttname"><a href="class_action_scheduler.html#afbb0f64e3b1338fb14fd92a25574231a">ActionScheduler::calculateTimeToExec</a></div><div class="ttdeci">double calculateTimeToExec(int actor_speed, int action_cost)</div><div class="ttdef"><b>Definition:</b> Action.hpp:67</div></div>
+<div class="ttc" id="class_action_result_html"><div class="ttname"><a href="class_action_result.html">ActionResult</a></div><div class="ttdoc">A class encapsulating the result of a call to Action::execute(). </div><div class="ttdef"><b>Definition:</b> Action.hpp:143</div></div>
+<div class="ttc" id="struct_action_queue_entry_html"><div class="ttname"><a href="struct_action_queue_entry.html">ActionQueueEntry</a></div><div class="ttdoc">A struct holding a pointer to an action, and the time to the actions execution (as double)...</div><div class="ttdef"><b>Definition:</b> Action.hpp:30</div></div>
+<div class="ttc" id="class_actor_map_html"><div class="ttname"><a href="class_actor_map.html">ActorMap</a></div><div class="ttdoc">A class holding pointers and positions to the actors currently loaded. </div><div class="ttdef"><b>Definition:</b> Map.hpp:51</div></div>
+<div class="ttc" id="class_object_html"><div class="ttname"><a href="class_object.html">Object</a></div><div class="ttdoc">Base class for all objects in the game. </div><div class="ttdef"><b>Definition:</b> Object.hpp:23</div></div>
+<div class="ttc" id="class_move_action_html"><div class="ttname"><a href="class_move_action.html">MoveAction</a></div><div class="ttdoc">A class representing an action that an actor may perform to move on the map. </div><div class="ttdef"><b>Definition:</b> Action.hpp:166</div></div>
+<div class="ttc" id="class_idle_action_html_a036de9f363e7c2ee425499f785730e55"><div class="ttname"><a href="class_idle_action.html#a036de9f363e7c2ee425499f785730e55">IdleAction::getCost</a></div><div class="ttdeci">const int getCost()</div><div class="ttdef"><b>Definition:</b> Action.hpp:196</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>Action.hpp</b></li>
-    <li class="footer">Generated on Wed Aug 27 2014 00:29:53 for Rogue M.D. by
+    <li class="footer">Generated on Wed Aug 27 2014 02:27:58 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

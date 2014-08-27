@@ -1,7 +1,7 @@
 <map id="GuiTextBox" name="GuiTextBox">
 <area shape="rect" id="node2" href="$class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="63,425,153,452"/>
-<area shape="rect" id="node3" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="102,247,223,273"/>
+<area shape="rect" id="node3" href="$class_gui_render_object.html" title="A class representing an object that may be rendered on screen as part of the GUI. ..." alt="" coords="102,247,223,273"/>
 <area shape="rect" id="node7" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="59,336,157,363"/>
 <area shape="rect" id="node4" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="112,171,213,197"/>
-<area shape="rect" id="node5" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="133,95,193,121"/>
+<area shape="rect" id="node5" href="$class_object.html" title="Base class for all objects in the game. " alt="" coords="133,95,193,121"/>
 </map>

@@ -1,3 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$struct_action_queue_entry.html" title="ActionQueueEntry" alt="" coords="5,5,133,32"/>
+<area shape="rect" id="node1" href="$struct_action_queue_entry.html" title="A struct holding a pointer to an action, and the time to the actions execution (as double)..." alt="" coords="5,5,133,32"/>
 </map>

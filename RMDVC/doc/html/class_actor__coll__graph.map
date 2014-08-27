@@ -1,6 +1,7 @@
 <map id="Actor" name="Actor">
 <area shape="rect" id="node2" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="5,184,107,211"/>
-<area shape="rect" id="node3" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="26,95,86,121"/>
-<area shape="rect" id="node5" href="$class_destructible.html" title="Destructible" alt="" coords="131,184,221,211"/>
-<area shape="rect" id="node6" href="$class_body.html" title="The code representation of a body of an Actor. " alt="" coords="150,95,202,121"/>
+<area shape="rect" id="node3" href="$class_object.html" title="Base class for all objects in the game. " alt="" coords="26,95,86,121"/>
+<area shape="rect" id="node5" href="$class_ai.html" title="Base class for all Ai modules. " alt="" coords="131,184,170,211"/>
+<area shape="rect" id="node6" href="$class_destructible.html" title="A class representing a Body associated with an Actor. " alt="" coords="195,184,285,211"/>
+<area shape="rect" id="node7" href="$class_body.html" title="A class representing the body of an Actor. " alt="" coords="214,95,266,121"/>
 </map>

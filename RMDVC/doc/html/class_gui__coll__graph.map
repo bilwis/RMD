@@ -1,6 +1,6 @@
 <map id="Gui" name="Gui">
 <area shape="rect" id="node2" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="101,336,199,363"/>
-<area shape="rect" id="node3" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="5,247,127,273"/>
+<area shape="rect" id="node3" href="$class_gui_render_object.html" title="A class representing an object that may be rendered on screen as part of the GUI. ..." alt="" coords="5,247,127,273"/>
 <area shape="rect" id="node4" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="15,171,117,197"/>
-<area shape="rect" id="node5" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="36,95,96,121"/>
+<area shape="rect" id="node5" href="$class_object.html" title="Base class for all objects in the game. " alt="" coords="36,95,96,121"/>
 </map>

@@ -91,45 +91,45 @@ $(document).ready(function(){initNavTree('_engine_8hpp_source.html','');});
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">enum class</span> GameState { GUI, GAME, INIT };</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="class_engine.html">   29</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_engine.html">Engine</a> {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_engine.html#aa39ee3f0cba79904f7f459415e859af0">   34</a></span>&#160;    TCODConsole* <a class="code" href="class_engine.html#aa39ee3f0cba79904f7f459415e859af0">gameConsole</a>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    GameState state;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="class_engine.html">   31</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_engine.html">Engine</a> {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="class_engine.html#aa39ee3f0cba79904f7f459415e859af0">   36</a></span>&#160;    TCODConsole* <a class="code" href="class_engine.html#aa39ee3f0cba79904f7f459415e859af0">gameConsole</a>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">public</span> :</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    GameState state;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="class_actor_map.html">ActorMap</a>* actors;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">public</span> :</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="class_actor.html">Actor</a>* player;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="class_map.html">Map</a>* map;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="class_action_scheduler.html">ActionScheduler</a>* scheduler;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="class_actor_map.html">ActorMap</a>* actors;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="class_actor.html">Actor</a>* player;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="class_map.html">Map</a>* map;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="class_gui.html">Gui</a>* gui;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="class_gui_body_viewer.html">GuiBodyViewer</a>* guiBodyViewer;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="class_gui_text_box.html">GuiTextBox</a>* sampleTextBox;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="class_gui_list_chooser.html">GuiListChooser</a>* sampleList;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="class_engine.html">Engine</a>();</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    ~<a class="code" href="class_engine.html">Engine</a>();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> update();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_engine.html#a7960743aefd62e846e7f3cd92c18bc73">render</a>();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;};</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="class_action_scheduler.html">ActionScheduler</a>* scheduler;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="class_gui.html">Gui</a>* gui;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="class_gui_body_viewer.html">GuiBodyViewer</a>* guiBodyViewer;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="class_gui_text_box.html">GuiTextBox</a>* sampleTextBox;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="class_gui_list_chooser.html">GuiListChooser</a>* sampleList;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="class_engine.html">Engine</a>();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    ~<a class="code" href="class_engine.html">Engine</a>();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> update();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_engine.html#a7960743aefd62e846e7f3cd92c18bc73">render</a>();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;};</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="class_engine_html_a7960743aefd62e846e7f3cd92c18bc73"><div class="ttname"><a href="class_engine.html#a7960743aefd62e846e7f3cd92c18bc73">Engine::render</a></div><div class="ttdeci">void render()</div><div class="ttdoc">Rendering function. </div><div class="ttdef"><b>Definition:</b> Engine.cpp:164</div></div>
 <div class="ttc" id="class_gui_html"><div class="ttname"><a href="class_gui.html">Gui</a></div><div class="ttdoc">A class which provides Gui handling functions to the Engine. </div><div class="ttdef"><b>Definition:</b> GUI.hpp:308</div></div>
-<div class="ttc" id="class_action_scheduler_html"><div class="ttname"><a href="class_action_scheduler.html">ActionScheduler</a></div><div class="ttdef"><b>Definition:</b> Action.hpp:46</div></div>
-<div class="ttc" id="class_actor_html"><div class="ttname"><a href="class_actor.html">Actor</a></div><div class="ttdef"><b>Definition:</b> Actor.hpp:15</div></div>
-<div class="ttc" id="class_map_html"><div class="ttname"><a href="class_map.html">Map</a></div><div class="ttdef"><b>Definition:</b> Map.hpp:24</div></div>
+<div class="ttc" id="class_action_scheduler_html"><div class="ttname"><a href="class_action_scheduler.html">ActionScheduler</a></div><div class="ttdoc">A class responsible for the correct execution order of actions scheduled for Actors. </div><div class="ttdef"><b>Definition:</b> Action.hpp:50</div></div>
+<div class="ttc" id="class_actor_html"><div class="ttname"><a href="class_actor.html">Actor</a></div><div class="ttdoc">A class representing an entity that may perform actions. </div><div class="ttdef"><b>Definition:</b> Actor.hpp:21</div></div>
+<div class="ttc" id="class_map_html"><div class="ttname"><a href="class_map.html">Map</a></div><div class="ttdoc">A class encapsulating functions and members representing a map. </div><div class="ttdef"><b>Definition:</b> Map.hpp:30</div></div>
 <div class="ttc" id="class_gui_text_box_html"><div class="ttname"><a href="class_gui_text_box.html">GuiTextBox</a></div><div class="ttdoc">A simple multi-line text box. </div><div class="ttdef"><b>Definition:</b> GUI.hpp:137</div></div>
-<div class="ttc" id="class_engine_html_aa39ee3f0cba79904f7f459415e859af0"><div class="ttname"><a href="class_engine.html#aa39ee3f0cba79904f7f459415e859af0">Engine::gameConsole</a></div><div class="ttdeci">TCODConsole * gameConsole</div><div class="ttdef"><b>Definition:</b> Engine.hpp:34</div></div>
-<div class="ttc" id="class_actor_map_html"><div class="ttname"><a href="class_actor_map.html">ActorMap</a></div><div class="ttdef"><b>Definition:</b> Map.hpp:43</div></div>
+<div class="ttc" id="class_engine_html_aa39ee3f0cba79904f7f459415e859af0"><div class="ttname"><a href="class_engine.html#aa39ee3f0cba79904f7f459415e859af0">Engine::gameConsole</a></div><div class="ttdeci">TCODConsole * gameConsole</div><div class="ttdef"><b>Definition:</b> Engine.hpp:36</div></div>
+<div class="ttc" id="class_actor_map_html"><div class="ttname"><a href="class_actor_map.html">ActorMap</a></div><div class="ttdoc">A class holding pointers and positions to the actors currently loaded. </div><div class="ttdef"><b>Definition:</b> Map.hpp:51</div></div>
 <div class="ttc" id="class_gui_body_viewer_html"><div class="ttname"><a href="class_gui_body_viewer.html">GuiBodyViewer</a></div><div class="ttdoc">A class representing a "body inspector", which can display a bodies composition and state...</div><div class="ttdef"><b>Definition:</b> GUI.hpp:277</div></div>
-<div class="ttc" id="class_engine_html"><div class="ttname"><a href="class_engine.html">Engine</a></div><div class="ttdef"><b>Definition:</b> Engine.hpp:29</div></div>
+<div class="ttc" id="class_engine_html"><div class="ttname"><a href="class_engine.html">Engine</a></div><div class="ttdoc">A class providing basic game functions and data. </div><div class="ttdef"><b>Definition:</b> Engine.hpp:31</div></div>
 <div class="ttc" id="class_gui_list_chooser_html"><div class="ttname"><a href="class_gui_list_chooser.html">GuiListChooser</a></div><div class="ttdoc">A class representing a list of objects on the GUI, from which one may be chosen. </div><div class="ttdef"><b>Definition:</b> GUI.hpp:242</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -137,7 +137,7 @@ $(document).ready(function(){initNavTree('_engine_8hpp_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><b>Engine.hpp</b></li>
-    <li class="footer">Generated on Wed Aug 27 2014 00:29:53 for Rogue M.D. by
+    <li class="footer">Generated on Wed Aug 27 2014 02:27:58 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

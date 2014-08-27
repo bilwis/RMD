@@ -11,6 +11,10 @@
 
 BOOST_CLASS_EXPORT_GUID(BodyPart, "BodyPart")
 BOOST_CLASS_EXPORT_GUID(Organ, "Organ")
+BOOST_CLASS_EXPORT_GUID(PlayerAi, "PlayerAi")
+BOOST_CLASS_EXPORT_GUID(MeleeAi, "MeleeAi")
+BOOST_CLASS_EXPORT_GUID(MoveAction, "MoveAction")
+BOOST_CLASS_EXPORT_GUID(IdleAction, "IdleAction")
 
 Engine::Engine() {
     TCODConsole::initRoot(120,80,"libtcod C++ tutorial",false);
@@ -22,14 +26,15 @@ Engine::Engine() {
 	TCOD_key_t key;
 	TCODSystem::waitForEvent(TCOD_EVENT_KEY_PRESS, &key, nullptr, true);
 
-	actors = new ActorMap();
-	map = new Map(120, 70);
 	gui = new Gui();
-	scheduler = new ActionScheduler();
 
 
 	if (key.c == 'n')
 	{
+		actors = new ActorMap();
+		map = new Map(120, 70);
+		scheduler = new ActionScheduler();
+
 		player = new Actor(40, 25, '@', TCODColor::white, 200);
 
 		player->destructible = new Destructible(100);
@@ -37,23 +42,26 @@ Engine::Engine() {
 		player->ai = new PlayerAi();
 
 		actors->addActor(player);
+
+		Actor* mob = new Actor(60, 13, '@', TCODColor::yellow, 100);
+		mob->ai = new MeleeAi();
+		mob->ai->update(mob, this, TCODConsole::checkForKeypress());
+
+		actors->addActor(mob);
 	}
 
 	if (key.c == 'l')
 	{
 		std::ifstream ifs("save.xml");
 		boost::archive::xml_iarchive ia(ifs);
+		ia & BOOST_SERIALIZATION_NVP(actors);
+		ia & BOOST_SERIALIZATION_NVP(map);
+		ia & BOOST_SERIALIZATION_NVP(scheduler);
 		ia & BOOST_SERIALIZATION_NVP(player);
 		ifs.close();
 
 		actors->addActor(player);
 	}
-
-	Actor* mob = new Actor(60, 13, '@', TCODColor::yellow, 100);
-	mob->ai = new MeleeAi();
-	mob->ai->update(mob, this, TCODConsole::checkForKeypress());
-	actors->addActor(mob);
-	
 
 	guiBodyViewer = new GuiBodyViewer("BodyViewer", 3, 3, 80, 40,
 		TCODColor::white, TCODColor::black, true, "BodyViewer");
@@ -110,10 +118,15 @@ void Engine::update() {
 						gui->makeActive(guiBodyViewer->getUUID());
 					break;
 					case 's':
+
 						debug_print("Saving...");
 						std::ofstream ofs("save.xml");
 						boost::archive::xml_oarchive oa(ofs);
+						oa << BOOST_SERIALIZATION_NVP(actors);
+						oa << BOOST_SERIALIZATION_NVP(map);
+						oa << BOOST_SERIALIZATION_NVP(scheduler);
 						oa << BOOST_SERIALIZATION_NVP(player);
+						
 						ofs.close();
 						debug_print("done.\n");
         		}

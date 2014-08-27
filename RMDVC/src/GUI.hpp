@@ -20,7 +20,7 @@ using std::string;
 /** It includes width and height information as well as a switch to toggle rendering
 * on and off (bool visible).
 *
-* @ A class representing an object that may be rendered on screen as part of the GUI.
+* @brief A class representing an object that may be rendered on screen as part of the GUI.
 */
 class GuiRenderObject : public RenderObject
 {

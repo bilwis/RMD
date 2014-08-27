@@ -1,13 +1,13 @@
 <map id="GuiBodyViewer" name="GuiBodyViewer">
 <area shape="rect" id="node2" href="$class_gui_container.html" title="A class that can hold several GuiElement children. " alt="" coords="5,336,103,363"/>
 <area shape="rect" id="node10" href="$class_gui_element.html" title="Base class for gui elements (controls). " alt="" coords="94,425,185,452"/>
-<area shape="rect" id="node3" href="$class_gui_render_object.html" title="GuiRenderObject" alt="" coords="47,247,168,273"/>
+<area shape="rect" id="node3" href="$class_gui_render_object.html" title="A class representing an object that may be rendered on screen as part of the GUI. ..." alt="" coords="47,247,168,273"/>
 <area shape="rect" id="node4" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="57,171,158,197"/>
-<area shape="rect" id="node5" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="77,95,137,121"/>
+<area shape="rect" id="node5" href="$class_object.html" title="Base class for all objects in the game. " alt="" coords="77,95,137,121"/>
 <area shape="rect" id="node11" href="$struct_gui_object_link.html" title="A struct encapsulating an Objects UUID and a pointer to an associated ColoredText. " alt="" coords="209,425,313,452"/>
 <area shape="rect" id="node12" href="$class_colored_text.html" title="A class encapsulating a string and background and foreground color information. " alt="" coords="298,336,389,363"/>
 <area shape="rect" id="node13" href="$class_gui_text_box.html" title="A simple multi&#45;line text box. " alt="" coords="377,501,467,528"/>
 <area shape="rect" id="node8" href="$class_gui_list_chooser.html" title="A class representing a list of objects on the GUI, from which one may be chosen. " alt="" coords="120,577,231,604"/>
 <area shape="rect" id="node9" href="$class_active_gui_element.html" title="Base class for active GUI elements, i.e. elements reacting to input. " alt="" coords="77,501,202,528"/>
-<area shape="rect" id="node14" href="$class_body.html" title="The code representation of a body of an Actor. " alt="" coords="492,577,544,604"/>
+<area shape="rect" id="node14" href="$class_body.html" title="A class representing the body of an Actor. " alt="" coords="492,577,544,604"/>
 </map>

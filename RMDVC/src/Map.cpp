@@ -38,12 +38,6 @@ void Map::render(TCODConsole* con) const {
 	}
 }
 
-ActorMap::ActorMap()
-{
-	actors = new std::map <std::string, Actor*>();
-	actor_pos = new std::map <std::string, Vector2*>();
-}
-
 ActorMap::~ActorMap()
 {
 	delete actor_pos;

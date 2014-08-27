@@ -77,7 +77,7 @@ $(document).ready(function(){initNavTree('class_body.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>The code representation of a body of an <a class="el" href="class_actor.html">Actor</a>.  
+<p>A class representing the body of an <a class="el" href="class_actor.html" title="A class representing an entity that may perform actions. ">Actor</a>.  
  <a href="class_body.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_body_8hpp_source.html">Body.hpp</a>&gt;</code></p>
@@ -163,8 +163,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
 <tr class="separator:ac98d07dd8f7b70e16ccb9a01abf56b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The code representation of a body of an <a class="el" href="class_actor.html">Actor</a>. </p>
-<p>This class represents the uppermost level of the body definition. It holds several maps that are necessary for code handling of <a class="el" href="class_actor.html">Actor</a> bodies, the two most important being the part_map and the tissue_map, which hold shared pointers to every <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> and <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> element that the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> is "composed" of. The shared pointers are shared with the Parts themselves (e.g., the child vector of the BodyParts holds some of the shared pointers (namely those pointing to it's children)). This means that the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> instance is effectively "managing" the Parts and Tissues that it is composed of. It also contains functions related to damage handling, loading and saving of body definitions. </p>
+<div class="textblock"><p>A class representing the body of an <a class="el" href="class_actor.html" title="A class representing an entity that may perform actions. ">Actor</a>. </p>
+<p>This class represents the uppermost level of the body definition. It holds several maps that are necessary for code handling of <a class="el" href="class_actor.html" title="A class representing an entity that may perform actions. ">Actor</a> bodies, the two most important being the part_map and the tissue_map, which hold shared pointers to every <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> and <a class="el" href="class_tissue.html" title="A class that holds the definition of a tissue, such as skin or bone. ">Tissue</a> element that the <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a> is "composed" of. The shared pointers are shared with the Parts themselves (e.g., the child vector of the BodyParts holds some of the shared pointers (namely those pointing to it's children)). This means that the <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a> instance is effectively "managing" the Parts and Tissues that it is composed of. It also contains functions related to damage handling, loading and saving of body definitions. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a2cda9c6f52963f15e85822bc2cbd4a1a"></a>
 <div class="memitem">
@@ -179,7 +179,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function creates a new instance of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> class and loads and parses the body definition from a <a href="xml_help.html">body-definition XML</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>This function creates a new instance of the <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a> class and loads and parses the body definition from a <a href="xml_help.html">body-definition XML</a>. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>The path to the <a href="xml_help.html">body-definition XML</a>. </td></tr>
   </table>
@@ -226,11 +226,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function recursively builds a list of <a class="el" href="struct_gui_object_link.html" title="A struct encapsulating an Objects UUID and a pointer to an associated ColoredText. ">GuiObjectLink</a> for all Parts of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> - it links the UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to a <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a> containing the name of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>. The text is colored corresponding to part_gui_list_color_bodypart or part_gui_list_color_organ.</p>
+<p>This function recursively builds a list of <a class="el" href="struct_gui_object_link.html" title="A struct encapsulating an Objects UUID and a pointer to an associated ColoredText. ">GuiObjectLink</a> for all Parts of the <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a> - it links the UUID of the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> to a <a class="el" href="class_colored_text.html" title="A class encapsulating a string and background and foreground color information. ">ColoredText</a> containing the name of the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a>. The text is colored corresponding to part_gui_list_color_bodypart or part_gui_list_color_organ.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">list</td><td>The vector to modify. </td></tr>
-    <tr><td class="paramname">p</td><td>The <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to start from. </td></tr>
+    <tr><td class="paramname">p</td><td>The <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> to start from. </td></tr>
     <tr><td class="paramname">depth</td><td>This should be 0 on first call and is increased by the recursive calling of this function to correcly indent the texts. </td></tr>
   </table>
   </dd>
@@ -275,10 +275,10 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This is the function that is recursively called on all nodes of the body definition XML. The node it is pointed at <em>must</em> be a '&lt;body_part&gt;' node. The function will create the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> that is defined in that node and return its UUID.</p>
-<p>If the node contains organ definitions, the function creates the <a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a> objects, and adds an "link note" into a temporary map, which is used in the <a class="el" href="class_body.html#a112d5b13dcd38ba6fde06fa090982e6c">loadBody()</a> function to link the newly created Parts together.</p>
+<p>This is the function that is recursively called on all nodes of the body definition XML. The node it is pointed at <em>must</em> be a '&lt;body_part&gt;' node. The function will create the <a class="el" href="class_body_part.html" title="A class representing a part of a body (such as &#39;Left Arm&#39;). ">BodyPart</a> that is defined in that node and return its UUID.</p>
+<p>If the node contains organ definitions, the function creates the <a class="el" href="class_organ.html" title="A class that represents the &#39;leaves&#39; of the Body tree. ">Organ</a> objects, and adds an "link note" into a temporary map, which is used in the <a class="el" href="class_body.html#a112d5b13dcd38ba6fde06fa090982e6c">loadBody()</a> function to link the newly created Parts together.</p>
 <p>If the node contains further '&lt;body_part&gt;' nodes, the function calls itself on all of them.</p>
-<p>Please refer to the <a href="xml_help.html">body-definition XML help</a> or the source code for more information on the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> XML Parsing. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Please refer to the <a href="xml_help.html">body-definition XML help</a> or the source code for more information on the <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a> XML Parsing. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">node</td><td>The '&lt;body_part&gt;' XML node to parse. </td></tr>
     <tr><td class="paramname">child_map</td><td>A map of Parts to be linked as parent &lt;-&gt; child, the child UUID being the key and the parent UUID being the value. </td></tr>
@@ -286,7 +286,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The UUID of the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> that is defined by node. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The UUID of the <a class="el" href="class_body_part.html" title="A class representing a part of a body (such as &#39;Left Arm&#39;). ">BodyPart</a> that is defined by node. </dd></dl>
 
 </div>
 </div>
@@ -303,14 +303,14 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function returns a shared pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> identified by the given IID, or a nullptr if the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> could not be found.</p>
+<p>This function returns a shared pointer to the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> identified by the given IID, or a nullptr if the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> could not be found.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">uuid</td><td>The IID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to get. </td></tr>
+    <tr><td class="paramname">uuid</td><td>The IID of the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> to get. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A shared pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>, or a nullptr. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared pointer to the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a>, or a nullptr. </dd></dl>
 
 </div>
 </div>
@@ -327,14 +327,14 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function returns a shared pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> identified by the given UUID, or a nullptr if the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> could not be found.</p>
+<p>This function returns a shared pointer to the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> identified by the given UUID, or a nullptr if the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> could not be found.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to get. </td></tr>
+    <tr><td class="paramname">uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> to get. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A shared pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>, or a nullptr. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared pointer to the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a>, or a nullptr. </dd></dl>
 
 </div>
 </div>
@@ -382,7 +382,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function returns a shared pointer to the root <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a>. </p><dl class="section return"><dt>Returns</dt><dd>A shared pointer pointing at the root <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a>. </dd></dl>
+<p>This function returns a shared pointer to the root <a class="el" href="class_body_part.html" title="A class representing a part of a body (such as &#39;Left Arm&#39;). ">BodyPart</a>. </p><dl class="section return"><dt>Returns</dt><dd>A shared pointer pointing at the root <a class="el" href="class_body_part.html" title="A class representing a part of a body (such as &#39;Left Arm&#39;). ">BodyPart</a>. </dd></dl>
 
 </div>
 </div>
@@ -449,11 +449,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function iterates recursively through all Parts downstream of the given <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> and adds - for Organs - all connected_organs, - for BodyParts - all children to the given vector. The first call to this function should therefore modify the vector to contain all children of all parts downstream of the given <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>, identified by the given UUID. Note that this function will not check for duplicates.</p>
+<p>This function iterates recursively through all Parts downstream of the given <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> and adds - for Organs - all connected_organs, - for BodyParts - all children to the given vector. The first call to this function should therefore modify the vector to contain all children of all parts downstream of the given <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a>, identified by the given UUID. Note that this function will not check for duplicates.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">part_uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to list the children and children's children of. </td></tr>
-    <tr><td class="paramname">child_list</td><td>A vector, which will be modified by this function to contain all children and children's children (...) of the given <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>. </td></tr>
+    <tr><td class="paramname">part_uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> to list the children and children's children of. </td></tr>
+    <tr><td class="paramname">child_list</td><td>A vector, which will be modified by this function to contain all children and children's children (...) of the given <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -480,7 +480,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function iterates through the given <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> map and creates a map whose keys are the internal id's and whose values are the UUID (the iid_uuid_map !) and refreshes iid_uuid_map. </p>
+<p>This function iterates through the given <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> map and creates a map whose keys are the internal id's and whose values are the UUID (the iid_uuid_map !) and refreshes iid_uuid_map. </p>
 
 </div>
 </div>
@@ -521,10 +521,10 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function removes the a <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a>, identified by the given UUID. It also handles removal of all Parts downstream of that <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> and removal of now-empty Parts upstream of it.</p>
+<p>This function removes the a <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> of the <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a>, identified by the given UUID. It also handles removal of all Parts downstream of that <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> and removal of now-empty Parts upstream of it.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">part_uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to remove. </td></tr>
+    <tr><td class="paramname">part_uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> to remove. </td></tr>
   </table>
   </dd>
 </dl>
@@ -566,7 +566,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function removes a random <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a>. </p>
+<p>This function removes a random <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> of the <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a>. </p>
 
 </div>
 </div>
@@ -591,10 +591,10 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function removes an element from the part_map, identified by the given UUID. Due to the nature of the part_map (storing shared_pointers accessible by the UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> they point at), removal of the element will cause the destruction of the shared_pointer (because it should not be referenced anywhere else) and therefore, the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> it points at.</p>
+<p>This function removes an element from the part_map, identified by the given UUID. Due to the nature of the part_map (storing shared_pointers accessible by the UUID of the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> they point at), removal of the element will cause the destruction of the shared_pointer (because it should not be referenced anywhere else) and therefore, the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> it points at.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a> to unregister. </td></tr>
+    <tr><td class="paramname">uuid</td><td>The UUID of the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a> to unregister. </td></tr>
   </table>
   </dd>
 </dl>
@@ -662,7 +662,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This map holds a list of all Parts (BodyParts and Organs) of a body, the key being the UUID, and the value a shared pointer to the <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>. </p>
+<p>This map holds a list of all Parts (BodyParts and Organs) of a body, the key being the UUID, and the value a shared pointer to the <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a>. </p>
 
 </div>
 </div>
@@ -683,7 +683,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This shared pointer points to the root <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> of the stored <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a>. It can be used for recursive iteration through the child lists of the "attached" bodyparts, for example. </p>
+<p>This shared pointer points to the root <a class="el" href="class_body_part.html" title="A class representing a part of a body (such as &#39;Left Arm&#39;). ">BodyPart</a> of the stored <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a>. It can be used for recursive iteration through the child lists of the "attached" bodyparts, for example. </p>
 
 </div>
 </div>
@@ -704,7 +704,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This map holds a list of all <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> elements that are defined in the <a href="xml_help.html">body-definition XML</a> that was used to create this <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> instance. The key is the UUID, the value a shared pointer to the <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> instance. This shared pointer is shared, for example, by the Organs in the part_map, who hold a list of shared pointers to the <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> elements that they are "composed" of. </p>
+<p>This map holds a list of all <a class="el" href="class_tissue.html" title="A class that holds the definition of a tissue, such as skin or bone. ">Tissue</a> elements that are defined in the <a href="xml_help.html">body-definition XML</a> that was used to create this <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a> instance. The key is the UUID, the value a shared pointer to the <a class="el" href="class_tissue.html" title="A class that holds the definition of a tissue, such as skin or bone. ">Tissue</a> instance. This shared pointer is shared, for example, by the Organs in the part_map, who hold a list of shared pointers to the <a class="el" href="class_tissue.html" title="A class that holds the definition of a tissue, such as skin or bone. ">Tissue</a> elements that they are "composed" of. </p>
 
 </div>
 </div>
@@ -718,7 +718,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_body.html">Body</a></li>
-    <li class="footer">Generated on Wed Aug 27 2014 00:29:54 for Rogue M.D. by
+    <li class="footer">Generated on Wed Aug 27 2014 02:27:58 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

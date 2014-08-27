@@ -1,4 +1,4 @@
 <map id="Actor" name="Actor">
 <area shape="rect" id="node2" href="$class_render_object.html" title="A class representing an object that may be rendered on screen. " alt="" coords="5,80,107,107"/>
-<area shape="rect" id="node3" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="26,5,86,32"/>
+<area shape="rect" id="node3" href="$class_object.html" title="Base class for all objects in the game. " alt="" coords="26,5,86,32"/>
 </map>

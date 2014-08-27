@@ -77,7 +77,7 @@ $(document).ready(function(){initNavTree('class_organ.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>The 'leaves' of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> tree.  
+<p>A class that represents the 'leaves' of the <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a> tree.  
  <a href="class_organ.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_body_8hpp_source.html">Body.hpp</a>&gt;</code></p>
@@ -86,14 +86,14 @@ Inheritance diagram for Organ:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_organ__inherit__graph.png" border="0" usemap="#_organ_inherit__map" alt="Inheritance graph"/></div>
 <map name="_organ_inherit__map" id="_organ_inherit__map">
-<area shape="rect" id="node2" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. " alt="" coords="12,80,59,107"/><area shape="rect" id="node3" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="5,5,65,32"/></map>
+<area shape="rect" id="node2" href="class_part.html" title="Base class for all parts that make up a body. " alt="" coords="12,80,59,107"/><area shape="rect" id="node3" href="class_object.html" title="Base class for all objects in the game. " alt="" coords="5,5,65,32"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for Organ:</div>
 <div class="dyncontent">
 <div class="center"><img src="class_organ__coll__graph.png" border="0" usemap="#_organ_coll__map" alt="Collaboration graph"/></div>
 <map name="_organ_coll__map" id="_organ_coll__map">
-<area shape="rect" id="node2" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. " alt="" coords="109,215,156,241"/><area shape="rect" id="node3" href="class_object.html" title="The base class for all objects in the game. " alt="" coords="5,95,65,121"/><area shape="rect" id="node7" href="structtissue__def.html" title="This struct represents the link between an organ and its tissues. " alt="" coords="199,215,280,241"/><area shape="rect" id="node6" href="class_body.html" title="The code representation of a body of an Actor. " alt="" coords="89,95,141,121"/></map>
+<area shape="rect" id="node2" href="class_part.html" title="Base class for all parts that make up a body. " alt="" coords="109,215,156,241"/><area shape="rect" id="node3" href="class_object.html" title="Base class for all objects in the game. " alt="" coords="5,95,65,121"/><area shape="rect" id="node7" href="structtissue__def.html" title="A struct representing the link between an organ and its tissues. " alt="" coords="199,215,280,241"/><area shape="rect" id="node6" href="class_body.html" title="A class representing the body of an Actor. " alt="" coords="89,95,141,121"/></map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -221,8 +221,8 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <tr class="separator:a65a486a9bc5fece2182bc1cd76071662 inherit pro_attribs_class_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The 'leaves' of the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> tree. </p>
-<p>This class represents the second-deepest level of the body definition, "above" the <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> objects and "below" the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> objects. <em>This definition of '<a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a>' is very much different from the common meaning of '<a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a>', as in internal organs such as the stomach or liver.</em> Instances of this class contain an array of tissue definitions, a reference to the organ to which this one is connected (upstream root) and a list of references to the organs which are connected to this one (downstream branches). </p>
+<div class="textblock"><p>A class that represents the 'leaves' of the <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a> tree. </p>
+<p>This class represents the second-deepest level of the body definition, "above" the <a class="el" href="class_tissue.html" title="A class that holds the definition of a tissue, such as skin or bone. ">Tissue</a> objects and "below" the <a class="el" href="class_body_part.html" title="A class representing a part of a body (such as &#39;Left Arm&#39;). ">BodyPart</a> objects. <em>This definition of '<a class="el" href="class_organ.html" title="A class that represents the &#39;leaves&#39; of the Body tree. ">Organ</a>' is very much different from the common meaning of '<a class="el" href="class_organ.html" title="A class that represents the &#39;leaves&#39; of the Body tree. ">Organ</a>', as in internal organs such as the stomach or liver.</em> Instances of this class contain an array of tissue definitions, a reference to the organ to which this one is connected (upstream root) and a list of references to the organs which are connected to this one (downstream branches). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="abbd80dad7bd18d8dbbe5fe30556146ce"></a>
 <div class="memitem">
@@ -288,9 +288,9 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
   <table class="params">
     <tr><td class="paramname">id</td><td>The organ's unique internal identifier. </td></tr>
     <tr><td class="paramname">name</td><td>The name of the organ. </td></tr>
-    <tr><td class="paramname">surface</td><td>The relative surface area of the organ, see <a class="el" href="class_part.html" title="This class is the abstract superclass for all parts that make up a body. ">Part</a>. </td></tr>
-    <tr><td class="paramname">b</td><td>The body this <a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a> is part of. </td></tr>
-    <tr><td class="paramname">tissues</td><td>A pointer to the first element of the <a class="el" href="structtissue__def.html" title="This struct represents the link between an organ and its tissues. ">tissue_def</a> array. </td></tr>
+    <tr><td class="paramname">surface</td><td>The relative surface area of the organ, see <a class="el" href="class_part.html" title="Base class for all parts that make up a body. ">Part</a>. </td></tr>
+    <tr><td class="paramname">b</td><td>The body this <a class="el" href="class_organ.html" title="A class that represents the &#39;leaves&#39; of the Body tree. ">Organ</a> is part of. </td></tr>
+    <tr><td class="paramname">tissues</td><td>A pointer to the first element of the <a class="el" href="structtissue__def.html" title="A struct representing the link between an organ and its tissues. ">tissue_def</a> array. </td></tr>
     <tr><td class="paramname">tissue_count</td><td>The number of elements in the array pointed at by tissues. </td></tr>
     <tr><td class="paramname">connector_id</td><td>The internal id of the connector organ, later used when the organ map is available. See linkToConnector(std::map&lt;std::string, Organ*&gt; *organ_map). </td></tr>
     <tr><td class="paramname">is_root</td><td>Whether or not this is the root element, which is the only organ without a connector. </td></tr>
@@ -312,7 +312,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The destructor handles deregistering with the <a class="el" href="class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). ">BodyPart</a> that this <a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a> is a child of, as well as the destruction of all downstream organs connected to this one. </p>
+<p>The destructor handles deregistering with the <a class="el" href="class_body_part.html" title="A class representing a part of a body (such as &#39;Left Arm&#39;). ">BodyPart</a> that this <a class="el" href="class_organ.html" title="A class that represents the &#39;leaves&#39; of the Body tree. ">Organ</a> is a child of, as well as the destruction of all downstream organs connected to this one. </p>
 
 </div>
 </div>
@@ -363,7 +363,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Whether or not this is the root element, which is the only organ without a connector.</p>
-<dl class="section return"><dt>Returns</dt><dd>true, if the <a class="el" href="class_organ.html" title="The &#39;leaves&#39; of the Body tree. ">Organ</a> is the root; false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true, if the <a class="el" href="class_organ.html" title="A class that represents the &#39;leaves&#39; of the Body tree. ">Organ</a> is the root; false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -409,7 +409,7 @@ uuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_organ.html">Organ</a></li>
-    <li class="footer">Generated on Wed Aug 27 2014 00:29:54 for Rogue M.D. by
+    <li class="footer">Generated on Wed Aug 27 2014 02:27:58 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

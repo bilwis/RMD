@@ -18,7 +18,7 @@ using std::string;
 using boost::uuids::uuid;
 
 /** 
-* @brief The base class for all objects in the game.
+* @brief Base class for all objects in the game.
 */
 class Object
 {

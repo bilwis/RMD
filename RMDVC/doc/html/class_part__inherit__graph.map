@@ -1,5 +1,5 @@
 <map id="Part" name="Part">
-<area shape="rect" id="node3" href="$class_body_part.html" title="The code representation of a part of the body (such as &#39;Left Arm&#39;). " alt="" coords="5,155,81,181"/>
-<area shape="rect" id="node4" href="$class_organ.html" title="The &#39;leaves&#39; of the Body tree. " alt="" coords="105,155,163,181"/>
-<area shape="rect" id="node2" href="$class_object.html" title="The base class for all objects in the game. " alt="" coords="59,5,119,32"/>
+<area shape="rect" id="node3" href="$class_body_part.html" title="A class representing a part of a body (such as &#39;Left Arm&#39;). " alt="" coords="5,155,81,181"/>
+<area shape="rect" id="node4" href="$class_organ.html" title="A class that represents the &#39;leaves&#39; of the Body tree. " alt="" coords="105,155,163,181"/>
+<area shape="rect" id="node2" href="$class_object.html" title="Base class for all objects in the game. " alt="" coords="59,5,119,32"/>
 </map>

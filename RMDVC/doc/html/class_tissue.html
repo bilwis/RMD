@@ -77,7 +77,7 @@ $(document).ready(function(){initNavTree('class_tissue.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>Holds the definition of a tissue, such as skin or bone.  
+<p>A class that holds the definition of a tissue, such as skin or bone.  
  <a href="class_tissue.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_body_8hpp_source.html">Body.hpp</a>&gt;</code></p>
@@ -140,8 +140,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
 <tr class="separator:ac98d07dd8f7b70e16ccb9a01abf56b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Holds the definition of a tissue, such as skin or bone. </p>
-<p>This class holds the definition of a tissue, i.e. the 'leaves' of the body 'tree'. <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> definitions are generalized, not localized, so a 'muscle' tissue in the 'right leg' body part is not distinct from a 'muscle' tissue in the head, etc. Exceptions to this must be added to the <a class="el" href="structtissue__def.html" title="This struct represents the link between an organ and its tissues. ">tissue_def</a> declaration in the <a href="xml_help.html">body-definition XML</a>. </p>
+<div class="textblock"><p>A class that holds the definition of a tissue, such as skin or bone. </p>
+<p>This class holds the definition of a tissue, i.e. the 'leaves' of the body 'tree'. <a class="el" href="class_tissue.html" title="A class that holds the definition of a tissue, such as skin or bone. ">Tissue</a> definitions are generalized, not localized, so a 'muscle' tissue in the 'right leg' body part is not distinct from a 'muscle' tissue in the head, etc. Exceptions to this must be added to the <a class="el" href="structtissue__def.html" title="A struct representing the link between an organ and its tissues. ">tissue_def</a> declaration in the <a href="xml_help.html">body-definition XML</a>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9050e8e0b3df39f8e6c24d6709aaa822"></a>
 <div class="memitem">
@@ -192,7 +192,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
 </div><div class="memdoc">
 
 <p>Creates a new tissue definition. </p>
-<p>This function creates a new tissue definition. It should only be called by the <a class="el" href="class_body.html" title="The code representation of a body of an Actor. ">Body</a> constructor parsing the body XML file!</p>
+<p>This function creates a new tissue definition. It should only be called by the <a class="el" href="class_body.html" title="A class representing the body of an Actor. ">Body</a> constructor parsing the body XML file!</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>Internal tissue identifier. </td></tr>
@@ -200,7 +200,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
     <tr><td class="paramname">pain</td><td>The pain damage to this tissue causes. </td></tr>
     <tr><td class="paramname">blood_flow</td><td>The blood loss damage to this tissue causes. </td></tr>
     <tr><td class="paramname">resistance</td><td>How much this tissue absorbs energy. </td></tr>
-    <tr><td class="paramname">impairment</td><td>How much damage to this tissue impairs the <a class="el" href="class_actor.html">Actor</a>. </td></tr>
+    <tr><td class="paramname">impairment</td><td>How much damage to this tissue impairs the <a class="el" href="class_actor.html" title="A class representing an entity that may perform actions. ">Actor</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -228,7 +228,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This value represents the amount of vascularisation of the <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> in question. The higher the value, the more blood flows from the tissue when it is destroyed.</p>
+<p>This value represents the amount of vascularisation of the <a class="el" href="class_tissue.html" title="A class that holds the definition of a tissue, such as skin or bone. ">Tissue</a> in question. The higher the value, the more blood flows from the tissue when it is destroyed.</p>
 <dl class="section return"><dt>Returns</dt><dd>A float value representing the blood flow from/through the tissue. </dd></dl>
 
 </div>
@@ -280,7 +280,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This value represents how much an <a class="el" href="class_actor.html">Actor</a> is impaired by damage to this tissue.</p>
+<p>This value represents how much an <a class="el" href="class_actor.html" title="A class representing an entity that may perform actions. ">Actor</a> is impaired by damage to this tissue.</p>
 <dl class="section return"><dt>Returns</dt><dd>A float value representing the impairment that is inflicted upon tissue damage. </dd></dl>
 
 </div>
@@ -305,7 +305,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The name of the <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> is what is reported to the player when he inspects a body. It is distinct from its internal id returned by <a class="el" href="class_tissue.html#ae31f68d5b1a408d6b864feabe16d7faf">getId()</a>.</p>
+<p>The name of the <a class="el" href="class_tissue.html" title="A class that holds the definition of a tissue, such as skin or bone. ">Tissue</a> is what is reported to the player when he inspects a body. It is distinct from its internal id returned by <a class="el" href="class_tissue.html#ae31f68d5b1a408d6b864feabe16d7faf">getId()</a>.</p>
 <dl class="section return"><dt>Returns</dt><dd>The 'given name' of the tissue. </dd></dl>
 
 </div>
@@ -330,7 +330,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This value represents the amount (quality) of nervous innervation of the <a class="el" href="class_tissue.html" title="Holds the definition of a tissue, such as skin or bone. ">Tissue</a> in question. The higher the value, the more pain the <a class="el" href="class_actor.html">Actor</a> experiences when the tissue is destroyed.</p>
+<p>This value represents the amount (quality) of nervous innervation of the <a class="el" href="class_tissue.html" title="A class that holds the definition of a tissue, such as skin or bone. ">Tissue</a> in question. The higher the value, the more pain the <a class="el" href="class_actor.html" title="A class representing an entity that may perform actions. ">Actor</a> experiences when the tissue is destroyed.</p>
 <dl class="section return"><dt>Returns</dt><dd>A float value representing the pain that damage to this tissue causes. </dd></dl>
 
 </div>
@@ -370,7 +370,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::serialization
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_tissue.html">Tissue</a></li>
-    <li class="footer">Generated on Wed Aug 27 2014 00:29:54 for Rogue M.D. by
+    <li class="footer">Generated on Wed Aug 27 2014 02:27:58 for Rogue M.D. by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>
